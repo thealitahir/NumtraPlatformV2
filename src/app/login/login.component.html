@@ -1,0 +1,58 @@
+
+<div class="h100" fxLayout="row" fxLayout.xs="column" fxLayoutAlign="center center">
+  <mat-card fxFlex="40%;" fxFlex.xs="100%">
+
+      <mat-card-title fxLayoutAlign="center center">
+          <img src="./src/assets/img/numtra-login-logo.png">
+      </mat-card-title>
+
+      <mat-card-content fxLayout="column">
+
+
+          <!-- Form -->
+  <form (submit)="onCheckLogin(loginForm)" #loginForm="ngForm">
+
+      <!-- Email -->
+      <mat-form-field>
+        <!-- <input matInput type="text" name=email placeholder="Email address" ngModel required> -->
+        <input matInput type="text" name=email placeholder="Email address" #email="ngModel" ngModel required>
+        <mat-error *ngIf="email.invalid">Please enter email</mat-error>
+      </mat-form-field>
+
+      <!-- Password -->
+      <mat-form-field>
+        <input matInput type="password" name="password" placeholder="Password" ngModel required>
+        <input matInput type="password" name="password" placeholder="Password" #password="ngModel" ngModel required>
+        <mat-error *ngIf="password.invalid">Please enter password</mat-error>
+      </mat-form-field>
+
+      <div class="remember-me" fxLayout fxLayoutAlign="space-around center">
+        <div fxFlex="45%;" >
+          <!-- Remember me -->
+          <mat-checkbox>Remember me</mat-checkbox>
+        </div>
+        <div fxFlex="45%;" fxLayoutAlign="end">
+          <!-- Forgot password -->
+          <a href="">Forgot password?</a>
+        </div>
+      </div>
+
+      <!-- Sign in button -->
+      <div fxLayout="row" fxLayoutAlign="center center">
+      <button fxFlex="50%" mat-stroked-button color="accent" type="submit">Login</button>
+    </div>
+
+      <!-- Register -->
+      <div class="member" fxLayout="row" fxLayoutAlign="center center">Not a member?
+        <a href="">Register</a>
+      </div>
+
+    </form>
+    <!-- Form -->
+
+      </mat-card-content>
+
+
+  </mat-card>
+</div>
+<!-- Material form login -->
