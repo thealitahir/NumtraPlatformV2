@@ -1,0 +1,159 @@
+<div class="sub-nav" fxLayout fxLayoutAlign="start center">
+  <ul class="sub-nav-left" fxFlex>
+    <li [ngClass]="{'active': selectedItem == 'sub-nav-1'}"><a (click)="selectTab(0, 'sub-nav-1')">Sources</a></li>
+    <li [ngClass]="{'active': selectedItem == 'sub-nav-2'}"><a (click)="selectTab(1, 'sub-nav-2')">Operations</a></li>
+    <li [ngClass]="{'active': selectedItem == 'sub-nav-3'}"><a (click)="selectTab(2, 'sub-nav-3')">Sinks</a></li>
+    <li [ngClass]="{'active': selectedItem == 'sub-nav-4'}"><a (click)="selectTab(3, 'sub-nav-4')">Internet of things</a></li>
+    <li [ngClass]="{'active': selectedItem == 'sub-nav-5'}"><a (click)="selectTab(4, 'sub-nav-5')">Machine Learning </a></li>
+    <li [ngClass]="{'active': selectedItem == 'sub-nav-6'}"><a (click)="selectTab(5, 'sub-nav-6')">Extensions</a></li>
+    <li [ngClass]="{'active': selectedItem == 'sub-nav-7'}"><a (click)="selectTab(6, 'sub-nav-7')">Custom
+        Transformation</a></li>
+    <li [ngClass]="{'active': selectedItem == 'sub-nav-8'}"><a (click)="selectTab(7, 'sub-nav-8')">Templates</a></li>
+  </ul>
+
+  <ul class="sub-nav-right" fxFlex="nogrow">
+    <li [ngClass]="{'active': selectedRightNav == 'configurations'}"><i class="material-icons" (click)="selectRightNav('configurations')"
+        matTooltip="Configurations">settings</i></li>
+    <li [ngClass]="{'active': selectedRightNav == 'data-explorer'}"><i class="material-icons" (click)="selectRightNav('data-explorer')"
+        matTooltip="Data Explorer">chrome_reader_mode</i></li>
+    <li [ngClass]="{'active': selectedRightNav == 'developers-interface'}"><i class="material-icons" (click)="selectRightNav('developers-interface')"
+        matTooltip="Developers Interface">dvr</i></li>
+    <li [ngClass]="{'active': selectedRightNav == 'scheduling'}"><i class="material-icons" (click)="selectRightNav('scheduling')"
+        matTooltip="Scheduling">play_circle_outline</i></li>
+    <li [ngClass]="{'active': selectedRightNav == 'execution'}"><i class="material-icons" (click)="selectRightNav('execution')"
+        matTooltip="Execution">playlist_play</i></li>
+    <li [ngClass]="{'active': selectedRightNav == 'parameters'}"><i class="material-icons" (click)="selectRightNav('parameters')"
+        matTooltip="Parameters">category</i></li>
+  </ul>
+</div>
+
+<mat-tab-group class="sub-nav-tab" [selectedIndex]="selectedIndex" [ngClass]="{'show-sub-nav': showSubNav == true}">
+
+  <mat-tab>
+    <div class="hide-sub-menu" (click)="hideSubNav()">
+      <i class="material-icons">clear</i>
+    </div>
+
+    <!-- Souraces -->
+    <div class="sub-nav-content">
+      <ul>
+        <li *ngFor="let source of sources">
+          <span class="custom-icon icon-{{source.name}}"></span>
+          <label>{{source.label}}</label>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <div class="hide-sub-menu" (click)="hideSubNav()">
+      <i class="material-icons">clear</i>
+    </div>
+
+    <!-- Operations -->
+    <div class="sub-nav-content">
+      <ul>
+        <li *ngFor="let operation of operations">
+          <span class="custom-icon icon-{{operation.name}}"></span>
+          <label>{{operation.label}}</label>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <div class="hide-sub-menu" (click)="hideSubNav()">
+      <i class="material-icons">clear</i>
+    </div>
+
+    <!-- Sinks -->
+    <div class="sub-nav-content">
+      <ul>
+        <li *ngFor="let sink of sinks">
+          <span class="custom-icon icon-{{sink.name}}"></span>
+          <label>{{sink.label}}</label>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <div class="hide-sub-menu" (click)="hideSubNav()">
+      <i class="material-icons">clear</i>
+    </div>
+
+    <!-- Internet of things -->
+    <div class="sub-nav-content">
+      <ul>
+        <li *ngFor="let IOT of IOTs">
+          <span class="custom-icon icon-{{IOT.name}}"></span>
+          <label>{{IOT.label}}</label>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <div class="hide-sub-menu" (click)="hideSubNav()">
+      <i class="material-icons">clear</i>
+    </div>
+
+    <!-- Machine Learning  -->
+    <div class="sub-nav-content">
+      <ul>
+        <li *ngFor="let ML of MLs">
+          <span class="custom-icon icon-{{ML.name}}"></span>
+          <label>{{ML.label}}</label>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <div class="hide-sub-menu" (click)="hideSubNav()">
+      <i class="material-icons">clear</i>
+    </div>
+
+    <!-- Extensions  -->
+    <div class="sub-nav-content">
+      <ul>
+        <li *ngFor="let extension of extensions">
+          <span class="custom-icon icon-{{extension.name}}"></span>
+          <label>{{extension.label}}</label>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <div class="hide-sub-menu" (click)="hideSubNav()">
+      <i class="material-icons">clear</i>
+    </div>
+
+    <!-- Custom Transformation  -->
+    <div class="sub-nav-content">
+      <ul>
+        <li *ngFor="let CT of CTs">
+          <span class="custom-icon icon-{{CT.name}}"></span>
+          <label>{{CT.label}}</label>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+
+  <mat-tab>
+    <div class="hide-sub-menu" (click)="hideSubNav()">
+      <i class="material-icons">clear</i>
+    </div>
+
+    <!-- Templates  -->
+    <div class="sub-nav-content">
+      <ul>
+        <li *ngFor="let template of templates">
+          <span class="custom-icon icon-{{template.name}}"></span>
+          <label>{{template.label}}</label>
+        </li>
+      </ul>
+    </div>
+  </mat-tab>
+</mat-tab-group>

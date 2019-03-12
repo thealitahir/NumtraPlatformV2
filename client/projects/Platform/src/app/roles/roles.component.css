@@ -1,0 +1,126 @@
+main {
+  padding: 1rem 2rem;
+}
+
+mat-grid-tile {
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  transition: all 0.3s cubic-bezier(.25, .8, .25, 1);
+  text-align: center;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+mat-grid-tile:hover,
+mat-grid-tile.active {
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+mat-grid-tile img {
+  width: 50px;
+}
+
+mat-grid-tile .project-icon {
+  font-size: 50px;
+  color: #3272a0;
+}
+mat-grid-tile.active {
+  background: rgba(50, 114, 160, .1);
+}
+
+
+/* Projects
+---------------------------------------- */
+/* #projects{
+  width: 100%;
+}
+#projects.show-application{
+  width: 50%;
+} */
+
+
+
+.add-new-project mat-icon {
+  font-size: 66px;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+}
+
+.project-name {
+  margin-top: 0.5rem;
+  color: #3272a0;
+  font-weight: 700;
+}
+
+.project-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36px;
+  display: none;
+}
+
+.project-action button {
+  width: 26px;
+  height: 26px;
+  margin: 3px;
+}
+
+.project-action mat-icon {
+  font-size: 14px;
+}
+
+mat-grid-tile:hover .project-action {
+  display: block;
+}
+/* ---------------- */
+
+
+
+/* Applications
+---------------------------------------- */
+/* #applications{
+  display: none;
+  width: 0;
+}
+#applications.show-application{
+  display: block;
+  width: 50%;
+} */
+
+.add-new-application mat-icon {
+  font-size: 66px;
+  width: auto;
+  height: auto;
+  cursor: pointer;
+}
+
+.application-name {
+  margin-top: 0.5rem;
+  color: #64953b;
+  font-weight: 700;
+}
+
+.application-action {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 36px;
+  display: none;
+}
+
+.application-action button {
+  width: 26px;
+  height: 26px;
+  margin: 3px;
+}
+
+.application-action mat-icon {
+  font-size: 14px;
+}
+
+mat-grid-tile:hover .application-action {
+  display: block;
+}
+/* ---------------- */

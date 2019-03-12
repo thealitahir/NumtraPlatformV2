@@ -1,0 +1,175 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* START - Comment
+------------------------------------------- */
+
+/* ---- END - Comment ---- */
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+body {
+  /* font-family: 'Roboto', sans-serif; */
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  font-weight: 400;
+  background: #f5f5f5;
+  color: #2a3338;
+  /* background: rgba(63, 81, 181, .15); */
+  /* background: rgba(74, 144, 226, .15); */
+}
+
+/* START - General Classes
+------------------------------------------- */
+a {
+  color: #3272a0;
+}
+
+li {
+  list-style-type: none;
+}
+
+h2 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: #333333;
+}
+
+h3 {
+  font-family: 'Roboto', sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: #333333;
+}
+
+.h100 {
+  height: 100%;
+}
+
+/* ---- END - General Classes ---- */
+
+
+
+/* START - Project View
+------------------------------------------- */
+.project-action .mat-fab .mat-button-wrapper {
+  padding: 0;
+}
+
+.mat-menu-panel i {
+  position: relative;
+  top: 5px;
+}
+
+.models .mat-grid-tile .mat-figure {
+  padding: 0px 15px;
+}
+
+/* ---- END - Comment ---- */
+
+
+/* START - Tabs Custom Header
+------------------------------------------- */
+.sub-nav-tab .mat-tab-label-container {
+  display: none;
+}
+
+.sub-nav-tab .mat-tab-body-wrapper {
+  box-shadow: 0px 6px 12px -6px rgba(0, 0, 0, 0.25);
+}
+
+/* ---- END - Comment ---- */
+
+
+
+/* START - Stencil Classes for Drag & Drop View
+------------------------------------------- */
+.joint-stencil.joint-theme-modern.not-found:after,
+.joint-stencil.joint-theme-modern>.content {
+  position: relative;
+  left: 50px;
+  width: calc(100% - 100px);
+  background: #ffffff;
+  box-shadow: 0px 10px 20px -10px rgba(0,0,0, .25);
+}
+
+.stencil-wrap h3.group-label {
+  display: none;
+}
+
+.stencil-wrap .group {
+  display: none;
+}
+
+.stencil-wrap [data-name="source"]{
+  display: block;
+}
+
+
+.stencil-wrap .joint-paper {
+  width: 100% !important;
+  height: 90px !important;
+}
+.stencil-wrap .joint-paper svg {
+  top: -6px;
+}
+
+.joint-paper-scroller.joint-theme-modern{
+  border: solid 3px #3272a0;
+  overflow: hidden;
+}
+
+.joint-stencil .joint-element[data-type="standard.Image"] text,
+.joint-stencil .joint-element[data-type="standard.Cylinder"] text,
+.joint-stencil .joint-element[data-type="standard.InscribedImage"] text,
+.joint-stencil .joint-element[data-type="devs.Atomic"] .inPorts text,
+.joint-stencil .joint-element[data-type="devs.Atomic"] .outPorts text,
+.joint-stencil .joint-element[data-type="pn.Transition"] text,
+.joint-stencil .joint-element .joint-port text {
+  display: inherit;
+}
+
+/* ---- END - Comment ---- */
+
+
+
+/* START - Toolbar Classes
+------------------------------------------- */
+.toolbar-container .joint-toolbar{
+  justify-content: center;
+}
+/* ---- END - Toolbar ---- */
+
+
+/* START - Paper Classes
+------------------------------------------- */
+.paper-container{
+  left: 0;
+}
+.joint-paper-background{
+  background: #ffffff;
+}
+/* ---- END - Paper ---- */
+
+
+/* main{
+  position: relative;
+  padding: 1rem;
+  height: calc(100% - 116px);
+  background-color: #fff;
+  margin: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px 0px rgba(0,0,0,.15);
+  overflow: auto;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill-rule='evenodd'%3E%3Cg id='hexagons' fill='%23f7f7f7' fill-opacity='.7' fill-rule='nonzero'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5zM3 17.9v12.7l10.99 6.34 11-6.35V17.9l-11-6.34L3 17.9zM0 15l12.98-7.5V0h-2v6.35L0 12.69v2.3zm0 18.5L12.98 41v8h-2v-6.85L0 35.81v-2.3zM15 0v7.5L27.99 15H28v-2.31h-.01L17 6.35V0h-2zm0 49v-8l12.99-7.5H28v2.31h-.01L17 42.15V49h-2z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+} */
