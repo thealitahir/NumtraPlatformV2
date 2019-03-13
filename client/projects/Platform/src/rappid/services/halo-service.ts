@@ -2,7 +2,7 @@
 
 Copyright (c) 2015 client IO
 
- 2019-01-28 
+ 2019-01-28
 
 
 This Source Code Form is subject to the terms of the Rappid Trial License
@@ -11,16 +11,27 @@ file, You can obtain one at http://jointjs.com/license/rappid_v2.txt
  or from the Rappid archive as was distributed by client IO. See the LICENSE file.*/
 
 
-import * as joint from '../../vendor/rappid';
+import * as joint from '../library/js/rappid';
 import Position = joint.ui.Halo.HandlePosition;
 
 export class HaloService {
 
     create(cellView: joint.dia.CellView) {
-        new joint.ui.Halo({
+        // new joint.ui.Halo({
+        //     cellView,
+        //     handles: this.getHaloConfig()
+        // }).render();
+
+        let halo = new joint.ui.Halo({
             cellView,
             handles: this.getHaloConfig()
         }).render();
+
+        halo.on('action:link:add', function(link) {
+            if (!link.get('source').id || !link.get('target').id) {
+                link.remove();
+            }
+        });
     }
 
     getHaloConfig() {

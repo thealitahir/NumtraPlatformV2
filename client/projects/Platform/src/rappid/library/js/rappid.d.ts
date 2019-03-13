@@ -2,7 +2,7 @@
 
 Copyright (c) 2015 client IO
 
- 2019-01-28 
+ 2019-01-28
 
 
 This Source Code Form is subject to the terms of the Rappid Trial License

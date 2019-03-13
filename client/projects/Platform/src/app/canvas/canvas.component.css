@@ -1,0 +1,297 @@
+/* Overwrite Classes
+---------------------------*/
+.canvas-wrap{
+  position: relative;
+  z-index: 10;
+  width: 100%;
+  height: calc(100% - 91px);
+}
+.canvas-block{
+  position: absolute;
+  top: 0px;
+  left: 47px;
+  width: calc(100% - 97px);
+  height: 100%;
+}
+.icon-save{
+  position: absolute;
+  z-index: 100;
+  right: 35px;
+  bottom: 35px;
+
+  background: #64953b;
+  padding: 12px;
+  font-size: 30px;
+  color: #ffffff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+/* ---------- */
+
+
+/* Overwrite Classes
+---------------------------*/
+.toolbar-container {
+  height: auto;
+}
+/* ---------- */
+
+
+/* Navigation Classes
+---------------------------*/
+.sub-nav {
+  background: #4295d1;
+  width: 100%;
+}
+
+.sub-nav .sub-nav-left{
+  margin: 12px 0;
+  padding: 0 1.5rem 0 4.5rem;
+
+}
+.sub-nav .sub-nav-right{
+  margin: 0;
+  padding: 0 2rem 0 1rem;;
+}
+
+.sub-nav li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.sub-nav li a {
+  font-size: 14px;
+  margin-right: 20px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.85);
+  text-decoration: none;
+  border-bottom: solid 2px transparent;
+  cursor: pointer;
+}
+
+.sub-nav li.active a {
+  color: rgba(255, 255, 255, 1);
+  border-bottom: solid 2px #fff;
+}
+
+
+.sub-nav li i {
+  font-size: 22px;
+  margin-left: 2px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, .75);
+  text-decoration: none;
+  border-bottom: solid 2px transparent;
+  cursor: pointer;
+  /* background: rgba(255, 255, 255, .75); */
+  /* border-radius: 4px; */
+  padding: 2px;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -khtml-user-select: none;
+  -ms-user-select: none;
+}
+
+.sub-nav li.active i {
+  color: rgba(255, 255, 255, 1);
+}
+/* ---------- */
+
+
+/* Stencil Classes
+---------------------------*/
+.stencil-wrap{
+  position: relative;
+}
+.stencil-container {
+  width: 100%;
+  z-index: 100;
+}
+.close-stencil-container {
+  /* display: none; */
+  position: absolute;
+  right: 55px;
+  top: 95px;
+  z-index: 101;
+}
+.close-stencil-container i {
+  display: inline-block;
+  cursor: pointer;
+  /* color: #ff4081;
+  border: solid 1px #ff4081; */
+  color: #888888;
+  border: solid 1px #888888;
+  border-radius: 50%;
+  font-size: 24px;
+}
+.close-stencil-container i:hover {
+  color: #333333;
+  border: solid 1px #333333;
+}
+/* ---------- */
+
+
+
+/* Stencil Classes
+---------------------------*/
+.toolbar-container{
+  display: none;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  box-shadow: 0px 6px 12px -6px rgba(0, 0, 0, 0.25);
+  z-index: 100;
+}
+/* ---------- */
+
+
+/* Right Nav Classes
+---------------------------*/
+.left-col{
+  position: absolute;
+  left: 0;
+  top: 91px;
+  z-index: 1000;
+  height: calc(100% - 91px);
+  background: #3272a0;
+  border-right: solid 3px #3272a0;
+}
+.left-col li{
+  display: block;
+  color: #ffffff;
+  width: 47px;
+  text-align: center;
+  position: relative;
+  padding: 15px 0px;
+  /* padding-bottom: 5px; */
+  background: #4295d1;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-bottom: solid 1px rgba(255, 255, 255, .25);
+}
+/* .left-col li.first{
+  padding-top: 15px;
+}
+.left-col li.last{
+  padding-bottom: 15px;
+  border-bottom: solid 1px #ffffff;
+}
+.left-col li.last:before {
+display: none;
+}
+.left-col li.last:after {
+  display: none;
+} */
+.left-col li span{
+  display: block;
+  font-size: 12px;
+  line-height: 12px;
+}
+
+/*.left-col li:before {
+  content: " ";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 25px solid transparent;
+  border-right: 25px solid transparent;
+  border-top: 15px solid white;
+  position: absolute;
+  margin-bottom: -1px;
+  z-index: 1;
+  bottom: -15px;
+}
+.left-col li:after {
+  content: " ";
+    display: block;
+    width: 0;
+    height: 0;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    border-top: 15px solid #cccccc;
+    position: absolute;
+    z-index: 2;
+    bottom: -15px;
+}
+
+.left-col li.active{
+  background: #3272a0;
+  color: #ffffff;
+}
+
+.left-col li.active:after {
+    border-top: 15px solid #3272a0;
+} */
+
+
+.left-col li.active {
+	position: relative;
+  background: #3272a0;
+  color: #ffffff;
+}
+.left-col li.active:after {
+	left: 100%;
+	top: 50%;
+	border: solid transparent;
+	content: " ";
+	height: 0;
+	width: 0;
+	position: absolute;
+	pointer-events: none;
+	border-color: rgba(50, 114, 160, 0);
+	border-left-color: #3272a0;
+	border-width: 15px;
+	margin-top: -15px;
+}
+
+.publish-button{
+  border-bottom: solid 1px rgba(255,255,255,.25);
+  text-align: center;
+}
+.publish-button button{
+  padding: 5px 10px;
+  min-width: inherit;
+  margin: 10px;
+}
+.publish-button button span{
+  display: block;
+  line-height: 12px;
+  font-weight: normal;
+  text-transform: uppercase;
+  font-size: 11px;
+}
+.publish-button i{
+  display: inline-block;
+  font-size: 24px;
+  font-size: 30px;
+  color: rgba(255, 255, 255, .75);
+  padding: .75rem 0;
+  cursor: pointer;
+}
+.publish-button i:hover{
+  color: rgba(255, 255, 255, .95);
+}
+/* ---------- */
+
+
+/* Right Nav Classes
+---------------------------*/
+.right-nav-col{
+  position: absolute;
+  right: 0;
+  top: 91px;
+  z-index: 1000;
+  height: calc(100% - 91px);
+  background: #3272a0;
+}
+.right-nav-col li{
+  /* background: #3272a0; */
+  color: #ffffff;
+  padding: 10px;
+  border-bottom: solid 1px rgba(255,255,255,.25);
+}
+.right-nav-col li i{
+  font-size: 30px;
+}
+/* ---------- */

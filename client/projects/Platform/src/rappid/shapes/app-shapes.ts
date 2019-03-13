@@ -2,7 +2,7 @@
 
 Copyright (c) 2015 client IO
 
- 2019-01-28 
+ 2019-01-28
 
 
 This Source Code Form is subject to the terms of the Rappid Trial License
@@ -11,7 +11,7 @@ file, You can obtain one at http://jointjs.com/license/rappid_v2.txt
  or from the Rappid archive as was distributed by client IO. See the LICENSE file.*/
 
 
-import * as joint from '../../vendor/rappid';
+import * as joint from '../library/js/rappid';
 import { memoize } from 'lodash';
 
 export namespace app {

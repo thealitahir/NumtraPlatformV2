@@ -1,0 +1,189 @@
+<!-- <div class="right-nav-col">
+  <app-sub-nav (rightColMenu)="openRightCol($event)"></app-sub-nav>
+</div> 
+
+<div class="right-nav-col">
+  <ul class="sub-nav-right" fxFlex="nogrow">
+    <li (click)="showCanvasSetting()"><i class="material-icons" matTooltip="Settings">settings</i></li>
+    <li>
+      <i class="material-icons" [matMenuTriggerFor]="menu" matTooltip="more options">apps</i>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <i class="material-icons">settings</i>
+          Configurations
+        </button>
+        <button mat-menu-item>
+          <i class="material-icons">chrome_reader_mode</i>
+          Data Explorer
+        </button>
+        <button mat-menu-item>
+          <i class="material-icons">dvr</i>
+          Developers Interface
+        </button>
+        <button mat-menu-item>
+          <i class="material-icons">play_circle_outline</i>
+          Scheduling
+        </button>
+        <button mat-menu-item>
+          <i class="material-icons">playlist_play</i>
+          Execution
+        </button>
+        <button mat-menu-item>
+          <i class="material-icons">category</i>
+          Parameters
+        </button>
+      </mat-menu>
+    </li>
+  </ul>
+</div> -->
+
+<!--The content below is only a placeholder and can be replaced.-->
+<app-header></app-header>
+
+<div class="left-col">
+  <!-- <span class="publish-button">Publish</span> -->
+
+  <div class="publish-button">
+  <button mat-raised-button color="warn">
+    <span>P</span>
+    <span>u</span>
+    <span>b</span>
+    <span>l</span>
+    <span>i</span>
+    <span>s</span>
+    <span>h</span>
+  </button>
+</div>
+<div class="publish-button" matTooltip="Publish">
+    <i class="icon-iot-app-deploy"></i>
+</div>
+
+  <ul>
+    <li [ngClass]="{'active' : selectedMode == 'development'}" (click)="selectMode('development')">
+      <span>D</span>
+      <span>e</span>
+      <span>v</span>
+      <span>e</span>
+      <span>l</span>
+      <span>o</span>
+      <span>p</span>
+      <span>m</span>
+      <span>e</span>
+      <span>n</span>
+      <span>t</span>
+    </li>
+    <li [ngClass]="{'active' : selectedMode == 'staging'}" (click)="selectMode('staging')">
+      <span>S</span>
+      <span>t</span>
+      <span>a</span>
+      <span>g</span>
+      <span>i</span>
+      <span>n</span>
+      <span>g</span>
+    </li>
+    <li class="last" [ngClass]="{'active' : selectedMode == 'production'}" (click)="selectMode('production')">
+      <span>P</span>
+      <span>r</span>
+      <span>o</span>
+      <span>d</span>
+      <span>u</span>
+      <span>c</span>
+      <span>t</span>
+      <span>i</span>
+      <span>o</span>
+      <span>n</span>
+    </li>
+  </ul>
+</div>
+
+<div class="right-nav-col">
+  <ul class="sub-nav-right" fxFlex="nogrow">
+    <li matTooltip="settings" (click)="showCanvasSetting($event)">
+      <i class="material-icons">gamepad</i>
+    </li>
+    <li matTooltip="Configurations"><i class="material-icons">settings</i></li>
+    <!-- <li matTooltip="Data Explorer"><i class="material-icons">chrome_reader_mode</i></li> -->
+    <li matTooltip="Developers Interface"><i class="material-icons">dvr</i></li>
+    <li matTooltip="Scheduling">
+      <i class="material-icons">play_circle_outline</i>
+    </li>
+    <li matTooltip="Execution"><i class="material-icons">playlist_play</i></li>
+    <!-- <li matTooltip="Parameters"><i class="material-icons">category</i></li> -->
+  </ul>
+</div>
+
+<div class="sub-nav" fxLayout fxLayoutAlign="start center">
+  <ul class="sub-nav-left" fxFlex>
+    <li class="active" (click)="showStencilGroup($event, 'source')">
+      <a>Sources</a>
+    </li>
+    <li (click)="showStencilGroup($event, 'operation')">
+      <a>Transformations</a>
+    </li>
+    <li (click)="showStencilGroup($event, 'ml')"><a>Machine Learning </a></li>
+    <li (click)="showStencilGroup($event, 'sink')"><a>Sinks</a></li>
+    <li (click)="showStencilGroup($event, 'iot')"><a>Internet of things</a></li>
+    <!-- <li (click)="showStencilGroup('extension')"><a>Extensions</a></li> -->
+    <li (click)="showStencilGroup($event, 'extension')"><a>Library</a></li>
+    <li (click)="showStencilGroup($event, 'ct')">
+      <a>Custom Transformation</a>
+    </li>
+    <li (click)="showStencilGroup($event, 'template')"><a>Templates</a></li>
+  </ul>
+</div>
+
+<div class="close-stencil-container" (click)="hideStencilGroup()">
+  <i class="material-icons">clear</i>
+</div>
+
+<div class="stencil-wrap">
+  <div class="stencil-container"></div>
+  <div class="toolbar-container"></div>
+</div>
+
+<div class="canvas-wrap">
+  <!-- <div class="toolbar-container"></div> -->
+
+
+
+  <div class="canvas-block">
+    <!-- <div class="stencil-container"></div> -->
+    <div class="paper-container">
+        <span class="icon-save"></span>
+    </div>
+    <div class="inspector-container"></div>
+    <div class="navigator-container"></div>
+  </div>
+</div>
+
+<!-- <div class="right-nav-col">
+
+<app-sub-nav (rightColMenu)="openRightCol($event)"></app-sub-nav>
+
+<div class="right-col" *ngIf="selectedRightNav">
+
+  <div *ngIf="selectedRightNav == 'configurations'">
+    <h3>Configurations</h3>
+  </div>
+
+  <div *ngIf="selectedRightNav == 'data-explorer'">
+    <h3>Data Explorer</h3>
+  </div>
+  <div *ngIf="selectedRightNav == 'developers-interface'">
+    <h3>Developers Interface</h3>
+  </div>
+
+  <div *ngIf="selectedRightNav == 'scheduling'">
+    <h3>Scheduling</h3>
+  </div>
+
+  <div *ngIf="selectedRightNav == 'execution'">
+    <h3>Execution</h3>
+  </div>
+
+  <div *ngIf="selectedRightNav == 'parameters'">
+    <h3>Parameters</h3>
+  </div>
+
+</div>
+</div> -->

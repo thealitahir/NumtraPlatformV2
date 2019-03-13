@@ -24,6 +24,7 @@ import { routing } from './platform.routing';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CanvasComponent } from './canvas/canvas.component';
 import { RolesComponent } from './roles/roles.component';
 import { SubNavComponent } from './sub-nav/sub-nav.component';
 import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } from './filter.pipe';
@@ -39,6 +40,7 @@ import { ComponentsService } from './services/components.service';
     AppComponent,
     HeaderComponent,
     DashboardComponent,
+    CanvasComponent,
     SubNavComponent,
     RolesComponent,
 

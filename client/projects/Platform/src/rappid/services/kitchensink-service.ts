@@ -2,7 +2,7 @@
 
 Copyright (c) 2015 client IO
 
- 2019-01-28 
+ 2019-01-28
 
 
 This Source Code Form is subject to the terms of the Rappid Trial License
@@ -11,7 +11,7 @@ file, You can obtain one at http://jointjs.com/license/rappid_v2.txt
  or from the Rappid archive as was distributed by client IO. See the LICENSE file.*/
 
 
-import * as joint from '../../vendor/rappid';
+import * as joint from '../library/js/rappid';
 import * as _ from 'lodash';
 import {StencilService} from './stencil-service';
 import {ToolbarService} from './toolbar-service';
@@ -95,9 +95,23 @@ class KitchenSinkService {
             cellViewNamespace: appShapes,
             defaultLink: <joint.dia.Link>new appShapes.app.Link({
                 attrs: {
-                    '.marker-target': { d: 'M 10 0 L 0 5 L 10 10 z' }
+                    '.marker-target': {
+                        d: 'M 10 0 L 0 5 L 10 10 z'
+                    }
                 }
-            })
+            }),
+
+            /* ---------------------------------------
+                Remove Link Vertex Functionality
+            ----------------------------------------- */
+            interactive: function(cellView): any {
+                if (cellView.model instanceof joint.dia.Link) {
+                    // Disable the default vertex add functionality on pointerdown.
+                    return { vertexAdd: false };
+                }
+                return true;
+            }
+
         });
 
         paper.on('blank:mousewheel', _.partial(this.onMousewheel, null), this);
@@ -171,12 +185,16 @@ class KitchenSinkService {
 
                 if (cell.isElement()) {
 
-                    new joint.ui.FreeTransform({
+
+                    /* ---------------------------------------
+                          Stage Icon Resize Functionality
+                    ----------------------------------------- */
+                    /* new joint.ui.FreeTransform({
                         cellView,
                         allowRotation: false,
                         preserveAspectRatio: !!cell.get('preserveAspectRatio'),
                         allowOrthogonalResize: cell.get('allowOrthogonalResize') !== false
-                    }).render();
+                    }).render(); */
 
                     this.haloService.create(cellView);
                     this.selection.collection.reset([]);

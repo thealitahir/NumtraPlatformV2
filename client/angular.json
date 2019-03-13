@@ -30,18 +30,23 @@
                 "glob": "**/*",
                 "input": "projects/BFAI/src/assets",
                 "output": "./assets"
+              },
+              {
+                "glob": "**/*",
+                "input": "projects/Platform/src/rappid",
+                "output": "./rappid"
               }
             ],
             "styles": [
               {
                 "input": "src/theme/my-theme.scss"
               },
-              {
-                "input": "./projects/Platform/src/styles.css"
-              },
-              {
-                "input": "./projects/BFAI/src/styles.css"
-              },
+              "./projects/Platform/src/assets/font-icon/font-icon.css",
+              "./projects/Platform/src/rappid/library/css/rappid.css",
+              "./projects/Platform/src/rappid/library/css/style.modern.css",
+              "./projects/Platform/src/rappid/library/css/style.css",
+              "./projects/Platform/src/styles.css",
+              "./projects/BFAI/src/styles.css",
               "src/styles.css"
             ],
             "scripts": []
