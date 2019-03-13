@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit {
           localStorage.setItem('permissions', JSON.stringify(roleDetail.data.permissions));
         });
 
-        this.router.navigate(['/platform/dashboard']);
+        this.router.navigate(['/select-application']);
       } else {
         this.userInvalid = true;
       }
