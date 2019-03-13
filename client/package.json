@@ -23,12 +23,8 @@
     "@angular/platform-browser": "^6.1.0",
     "@angular/platform-browser-dynamic": "^6.1.0",
     "@angular/router": "^6.1.0",
-<<<<<<< HEAD
-    "backbone": "^1.3.3",
-=======
     "@swimlane/ngx-charts": "^10.1.0",
     "backbone": "^1.4.0",
->>>>>>> 9665e78f35f8a520d9f85adb6d375755557c079f
     "canvg-rappid": "^1.0.0",
     "chart.js": "^2.7.3",
     "core-js": "^2.5.4",
