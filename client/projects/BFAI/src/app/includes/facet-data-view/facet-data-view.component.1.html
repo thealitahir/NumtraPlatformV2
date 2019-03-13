@@ -1,0 +1,687 @@
+<link rel="import" href="https://raw.githubusercontent.com/PAIR-code/facets/master/facets-dist/facets-jupyter.html" >
+
+<app-header></app-header>
+
+<main>
+
+  <div *ngIf="mainloader == 1">
+    <div class="loader-gloabl">
+      <mat-spinner></mat-spinner>
+      <!-- <div style="z-index: 9999; text-align: center; margin-top: 100px">
+        <h3>Please wait!</h3>
+      </div> -->
+    </div>
+  </div>
+  <div class="h100" *ngIf="mainloader == 0">
+    <div fxLayout="row">
+      <h2 fxLayout fxLayoutAlign="start center">Data Source Details</h2>
+    </div>
+
+
+
+    <mat-tab-group>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">file_copy</mat-icon>
+          First
+        </ng-template>
+
+        <div class="facets-container">
+
+          <mat-drawer-container>
+
+            <mat-drawer mode="side" opened>
+              <ul class="left-col">
+                <li [ngClass]="{'activeTab' : selectedIndex == 0}" (click)="selectTab(0)">Stats</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 1}" (click)="selectTab(1)">Features Overview</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 2}" (click)="selectTab(2)">Select Features</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 3}" (click)="selectTab(3)">Visualization</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 4}" (click)="selectTab(4)">Ali Mehdi</li>
+              </ul>
+            </mat-drawer>
+
+            <mat-drawer-content>
+              <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+                <mat-tab>
+                  <div class="tab-content">
+                    <facets-overview id="elem" [protoInput]=protoInput></facets-overview>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <div class="tab-content">
+                    <facets-dive id="element" [data]=facetdata></facets-dive>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <div class="tab-content" *ngIf="loader == 1">
+                    <div class="loader-gloabl">
+                      <mat-spinner></mat-spinner>
+                    </div>
+                    <div style="z-index: 9999; text-align: center; margin-top: 100px">
+                      <h3>Features transformation in process. Please wait!</h3>
+                    </div>
+                  </div>
+                  <div class="tab-content" *ngIf="loader == 0 || tfd_status == 1">
+
+                    <form (submit)="onSubmitDataFeatures(dataForm)" #dataForm="ngForm" class="facet-feature-list" *ngIf="tfd_status == 0">
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden">
+                      <input name="datasourcelocation" value="" [(ngModel)]="datasourcelocation" type="hidden">
+
+                      <mat-checkbox color="primary" [(ngModel)]="selectAll" (change)="checkAll()" name='selectAll'><b>Select
+                          All</b></mat-checkbox>
+
+                      <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                        <ng-container *ngFor='let dataf of features'>
+                          <mat-grid-tile *ngIf="dataf.type !== 'string'">
+                            <mat-checkbox color="primary" [(ngModel)]="dataf.checked" value='dataf.checked' name='datafeatures'>{{dataf.feature}}</mat-checkbox>
+                          </mat-grid-tile>
+                        </ng-container>
+                      </mat-grid-list>
+
+                      <mat-grid-list cols="2" rowHeight="55px" class="feature-label-list">
+                        <ng-container *ngFor='let dataf of features'>
+                          <mat-grid-tile *ngIf="dataf.type == 'string'">
+
+                            <mat-checkbox color="primary" [(ngModel)]="dataf.checked" value='dataf.checked' name='datafeatures'>{{dataf.feature}}</mat-checkbox>
+                            <mat-form-field *ngIf="dataf.type == 'string'" class="feature-transformation">
+                              <mat-select name="transformation" [(ngModel)]="dataf.transformation">
+                                <mat-option value="">Select Transformation</mat-option>
+                                <mat-option value="Bag of Words">Bag of Words</mat-option>
+                                <mat-option value="Vectorizer"> Vectorizer </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+
+                          </mat-grid-tile>
+                        </ng-container>
+                      </mat-grid-list>
+
+                      <button type="submit" class="mat-raised-button mat-primary">Submit</button>
+                    </form>
+
+
+
+
+                    <form (submit)="onSubmitTransFeatures(dataForm)" #dataForm="ngForm" class="facet-feature-list" *ngIf=" tfd_status == 1">
+                      <!-- <mat-form-field>
+                        <mat-select name="transformation" required [(ngModel)]="tfd_label">
+                          <mat-option value="">Select Label</mat-option>
+                          <mat-option *ngFor='let dataf of transformedfeatures' value="{{dataf.feature}}">{{dataf.feature}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden"> -->
+
+                      <!-- <div *ngIf="tfd_label != ''">
+                        <table mat-table [dataSource]="dataSourcetable" class="mat-elevation-z8">
+
+
+                          <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+
+                              <mat-checkbox color ="primary" [(ngModel)]="selectAllTrans" (change)="checkTransAll()" name='selectAllTrans'></mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                              <mat-checkbox color ="primary" (change)="null" [(ngModel)]="element.checked" name='element.feature'></mat-checkbox>
+
+                            </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef> No. </th>
+                            <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Feature">
+                            <th mat-header-cell *matHeaderCellDef> Feature </th>
+                            <td mat-cell *matCellDef="let element"> {{element.feature}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Type">
+                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Transformation">
+                            <th mat-header-cell *matHeaderCellDef> Transformation </th>
+                            <td mat-cell *matCellDef="let element"> {{element.transformation}} </td>
+                          </ng-container>
+
+
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                        </table> -->
+
+                      <mat-form-field>
+                        <mat-select name="transformation" required [(ngModel)]="tfd_label">
+                          <mat-option value="">Select Label</mat-option>
+                          <mat-option *ngFor='let dataf of transformedfeatures' value="{{dataf.feature}}">{{dataf.feature}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden">
+
+                      <div *ngIf="tfd_label != ''">
+                        <mat-checkbox color="primary" [(ngModel)]="selectAllTrans" (change)="checkTransAll()" name='selectAllTrans'>
+                          <b>Select All</b>
+                        </mat-checkbox>
+
+                        <h3>Features</h3>
+
+                        <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                          <ng-container *ngFor='let dataf of transformedfeatures'>
+                            <mat-grid-tile *ngIf="dataf.type !== 'transformed' && tfd_label !== dataf.feature">
+                              <mat-checkbox color="primary" [(ngModel)]="dataf.checked" name='{{dataf.feature}}'>{{dataf.feature}}</mat-checkbox>
+                            </mat-grid-tile>
+                          </ng-container>
+                        </mat-grid-list>
+
+                        <h3>Transformed Features</h3>
+
+
+                        <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                          <ng-container *ngFor='let dataf of transformedfeatures'>
+                            <mat-grid-tile *ngIf="dataf.type == 'transformed' && tfd_label !== dataf.feature">
+                              <mat-checkbox color="primary" [(ngModel)]="dataf.checked" name='{{dataf.feature}}'>{{dataf.feature}}</mat-checkbox>
+                            </mat-grid-tile>
+                          </ng-container>
+                        </mat-grid-list>
+
+                        <!-- </div> -->
+
+                        <div>
+                          <button type="submit" class="mat-raised-button mat-primary">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                </mat-tab>
+
+                <mat-tab>
+                  <div class="tab-content">
+                    <img [src] ="graphFileNameUrl" />
+
+                  </div>
+                </mat-tab>
+
+                <mat-tab>
+                  Ali Mehdi
+                </mat-tab>
+
+              </mat-tab-group>
+
+            </mat-drawer-content>
+          </mat-drawer-container>
+
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon">file_copy</mat-icon>
+          Second
+        </ng-template>
+        <div class="facets-container">
+
+          <mat-drawer-container>
+
+            <mat-drawer mode="side" opened>
+              <ul class="left-col">
+                <li [ngClass]="{'activeTab' : selectedIndex == 0}" (click)="selectTab(0)">Stats</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 1}" (click)="selectTab(1)">Features Overview</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 2}" (click)="selectTab(2)">Select Features</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 3}" (click)="selectTab(3)">Visualization</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 4}" (click)="selectTab(4)">Ali Mehdi</li>
+              </ul>
+            </mat-drawer>
+
+            <mat-drawer-content>
+              <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+                <mat-tab>
+                  <div class="tab-content">
+                    <facets-overview id="elem" [protoInput]=protoInput></facets-overview>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <div class="tab-content">
+                    <facets-dive id="element" [data]=facetdata></facets-dive>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <div class="tab-content" *ngIf="loader == 1">
+                    <div class="loader-gloabl">
+                      <mat-spinner></mat-spinner>
+                    </div>
+                    <div style="z-index: 9999; text-align: center; margin-top: 100px">
+                      <h3>Features transformation in process. Please wait!</h3>
+                    </div>
+                  </div>
+                  <div class="tab-content" *ngIf="loader == 0 || tfd_status == 1">
+
+                    <form (submit)="onSubmitDataFeatures(dataForm)" #dataForm="ngForm" class="facet-feature-list" *ngIf="tfd_status == 0">
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden">
+                      <input name="datasourcelocation" value="" [(ngModel)]="datasourcelocation" type="hidden">
+
+                      <mat-checkbox color="primary" [(ngModel)]="selectAll" (change)="checkAll()" name='selectAll'><b>Select
+                          All</b></mat-checkbox>
+
+                      <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                        <ng-container *ngFor='let dataf of features'>
+                          <mat-grid-tile *ngIf="dataf.type !== 'string'">
+                            <mat-checkbox color="primary" [(ngModel)]="dataf.checked" value='dataf.checked' name='datafeatures'>{{dataf.feature}}</mat-checkbox>
+                          </mat-grid-tile>
+                        </ng-container>
+                      </mat-grid-list>
+
+                      <mat-grid-list cols="2" rowHeight="55px" class="feature-label-list">
+                        <ng-container *ngFor='let dataf of features'>
+                          <mat-grid-tile *ngIf="dataf.type == 'string'">
+
+                            <mat-checkbox color="primary" [(ngModel)]="dataf.checked" value='dataf.checked' name='datafeatures'>{{dataf.feature}}</mat-checkbox>
+                            <mat-form-field *ngIf="dataf.type == 'string'" class="feature-transformation">
+                              <mat-select name="transformation" [(ngModel)]="dataf.transformation">
+                                <mat-option value="">Select Transformation</mat-option>
+                                <mat-option value="Bag of Words">Bag of Words</mat-option>
+                                <mat-option value="Vectorizer"> Vectorizer </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+
+                          </mat-grid-tile>
+                        </ng-container>
+                      </mat-grid-list>
+
+                      <button type="submit" class="mat-raised-button mat-primary">Submit</button>
+                    </form>
+
+
+
+
+                    <form (submit)="onSubmitTransFeatures(dataForm)" #dataForm="ngForm" class="facet-feature-list" *ngIf=" tfd_status == 1">
+                      <!-- <mat-form-field>
+                        <mat-select name="transformation" required [(ngModel)]="tfd_label">
+                          <mat-option value="">Select Label</mat-option>
+                          <mat-option *ngFor='let dataf of transformedfeatures' value="{{dataf.feature}}">{{dataf.feature}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden"> -->
+
+                      <!-- <div *ngIf="tfd_label != ''">
+                        <table mat-table [dataSource]="dataSourcetable" class="mat-elevation-z8">
+
+
+                          <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+
+                              <mat-checkbox color ="primary" [(ngModel)]="selectAllTrans" (change)="checkTransAll()" name='selectAllTrans'></mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                              <mat-checkbox color ="primary" (change)="null" [(ngModel)]="element.checked" name='element.feature'></mat-checkbox>
+
+                            </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef> No. </th>
+                            <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Feature">
+                            <th mat-header-cell *matHeaderCellDef> Feature </th>
+                            <td mat-cell *matCellDef="let element"> {{element.feature}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Type">
+                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Transformation">
+                            <th mat-header-cell *matHeaderCellDef> Transformation </th>
+                            <td mat-cell *matCellDef="let element"> {{element.transformation}} </td>
+                          </ng-container>
+
+
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                        </table> -->
+
+                      <mat-form-field>
+                        <mat-select name="transformation" required [(ngModel)]="tfd_label">
+                          <mat-option value="">Select Label</mat-option>
+                          <mat-option *ngFor='let dataf of transformedfeatures' value="{{dataf.feature}}">{{dataf.feature}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden">
+
+                      <div *ngIf="tfd_label != ''">
+                        <mat-checkbox color="primary" [(ngModel)]="selectAllTrans" (change)="checkTransAll()" name='selectAllTrans'>
+                          <b>Select All</b>
+                        </mat-checkbox>
+
+                        <h3>Features</h3>
+
+                        <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                          <ng-container *ngFor='let dataf of transformedfeatures'>
+                            <mat-grid-tile *ngIf="dataf.type !== 'transformed' && tfd_label !== dataf.feature">
+                              <mat-checkbox color="primary" [(ngModel)]="dataf.checked" name='{{dataf.feature}}'>{{dataf.feature}}</mat-checkbox>
+                            </mat-grid-tile>
+                          </ng-container>
+                        </mat-grid-list>
+
+                        <h3>Transformed Features</h3>
+
+
+                        <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                          <ng-container *ngFor='let dataf of transformedfeatures'>
+                            <mat-grid-tile *ngIf="dataf.type == 'transformed' && tfd_label !== dataf.feature">
+                              <mat-checkbox color="primary" [(ngModel)]="dataf.checked" name='{{dataf.feature}}'>{{dataf.feature}}</mat-checkbox>
+                            </mat-grid-tile>
+                          </ng-container>
+                        </mat-grid-list>
+
+                        <!-- </div> -->
+
+                        <div>
+                          <button type="submit" class="mat-raised-button mat-primary">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                </mat-tab>
+
+                <mat-tab>
+                  <div class="tab-content">
+                    <img [src] ="graphFileNameUrl" />
+
+                  </div>
+                </mat-tab>
+
+                <mat-tab>
+                  Ali Mehdi
+                </mat-tab>
+
+              </mat-tab-group>
+
+            </mat-drawer-content>
+          </mat-drawer-container>
+
+        </div>
+      </mat-tab>
+
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <mat-icon class="tab-icon-relation">swap_horiz</mat-icon>
+          Third
+        </ng-template>
+
+        <div class="facets-container">
+
+          <mat-drawer-container>
+
+            <mat-drawer mode="side" opened>
+              <ul class="left-col">
+                <li [ngClass]="{'activeTab' : selectedIndex == 0}" (click)="selectTab(0)">Features Set</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 1}" (click)="selectTab(1)">Features Overview</li>
+                <li [ngClass]="{'activeTab' : selectedIndex == 2}" (click)="selectTab(2)">Visualization</li>
+
+              </ul>
+            </mat-drawer>
+
+            <mat-drawer-content>
+              <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+                <mat-tab>
+                  <div class="tab-content">
+                    <facets-overview id="elem" [protoInput]=protoInput></facets-overview>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <div class="tab-content">
+                    <facets-dive id="element" [data]=facetdata></facets-dive>
+                  </div>
+                </mat-tab>
+                <mat-tab>
+                  <div class="tab-content" *ngIf="loader == 1">
+                    <div class="loader-gloabl">
+                      <mat-spinner></mat-spinner>
+                    </div>
+                    <div style="z-index: 9999; text-align: center; margin-top: 100px">
+                      <h3>Features transformation in process. Please wait!</h3>
+                    </div>
+                  </div>
+                  <div class="tab-content" *ngIf="loader == 0 || tfd_status == 1">
+
+                    <form (submit)="onSubmitDataFeatures(dataForm)" #dataForm="ngForm" class="facet-feature-list" *ngIf="tfd_status == 0">
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden">
+                      <input name="datasourcelocation" value="" [(ngModel)]="datasourcelocation" type="hidden">
+
+                      <mat-checkbox color="primary" [(ngModel)]="selectAll" (change)="checkAll()" name='selectAll'><b>Select
+                          All</b></mat-checkbox>
+
+                      <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                        <ng-container *ngFor='let dataf of features'>
+                          <mat-grid-tile *ngIf="dataf.type !== 'string'">
+                            <mat-checkbox color="primary" [(ngModel)]="dataf.checked" value='dataf.checked' name='datafeatures'>{{dataf.feature}}</mat-checkbox>
+                          </mat-grid-tile>
+                        </ng-container>
+                      </mat-grid-list>
+
+                      <mat-grid-list cols="2" rowHeight="55px" class="feature-label-list">
+                        <ng-container *ngFor='let dataf of features'>
+                          <mat-grid-tile *ngIf="dataf.type == 'string'">
+
+                            <mat-checkbox color="primary" [(ngModel)]="dataf.checked" value='dataf.checked' name='datafeatures'>{{dataf.feature}}</mat-checkbox>
+                            <mat-form-field *ngIf="dataf.type == 'string'" class="feature-transformation">
+                              <mat-select name="transformation" [(ngModel)]="dataf.transformation">
+                                <mat-option value="">Select Transformation</mat-option>
+                                <mat-option value="Bag of Words">Bag of Words</mat-option>
+                                <mat-option value="Vectorizer"> Vectorizer </mat-option>
+                              </mat-select>
+                            </mat-form-field>
+
+                          </mat-grid-tile>
+                        </ng-container>
+                      </mat-grid-list>
+
+                      <button type="submit" class="mat-raised-button mat-primary">Submit</button>
+                    </form>
+
+
+
+
+                    <form (submit)="onSubmitTransFeatures(dataForm)" #dataForm="ngForm" class="facet-feature-list" *ngIf=" tfd_status == 1">
+                      <!-- <mat-form-field>
+                        <mat-select name="transformation" required [(ngModel)]="tfd_label">
+                          <mat-option value="">Select Label</mat-option>
+                          <mat-option *ngFor='let dataf of transformedfeatures' value="{{dataf.feature}}">{{dataf.feature}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden"> -->
+
+                      <!-- <div *ngIf="tfd_label != ''">
+                        <table mat-table [dataSource]="dataSourcetable" class="mat-elevation-z8">
+
+
+                          <ng-container matColumnDef="select">
+                            <th mat-header-cell *matHeaderCellDef>
+
+                              <mat-checkbox color ="primary" [(ngModel)]="selectAllTrans" (change)="checkTransAll()" name='selectAllTrans'></mat-checkbox>
+                            </th>
+                            <td mat-cell *matCellDef="let element">
+                              <mat-checkbox color ="primary" (change)="null" [(ngModel)]="element.checked" name='element.feature'></mat-checkbox>
+
+                            </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="No">
+                            <th mat-header-cell *matHeaderCellDef> No. </th>
+                            <td mat-cell *matCellDef="let element; let i = index;"> {{i + 1}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Feature">
+                            <th mat-header-cell *matHeaderCellDef> Feature </th>
+                            <td mat-cell *matCellDef="let element"> {{element.feature}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Type">
+                            <th mat-header-cell *matHeaderCellDef> Type </th>
+                            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
+                          </ng-container>
+
+
+                          <ng-container matColumnDef="Transformation">
+                            <th mat-header-cell *matHeaderCellDef> Transformation </th>
+                            <td mat-cell *matCellDef="let element"> {{element.transformation}} </td>
+                          </ng-container>
+
+
+                          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                          <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index;"></tr>
+                        </table> -->
+
+                      <mat-form-field>
+                        <mat-select name="transformation" required [(ngModel)]="tfd_label">
+                          <mat-option value="">Select Label</mat-option>
+                          <mat-option *ngFor='let dataf of transformedfeatures' value="{{dataf.feature}}">{{dataf.feature}}</mat-option>
+                        </mat-select>
+                      </mat-form-field>
+                      <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden">
+
+                      <div *ngIf="tfd_label != ''">
+                        <mat-checkbox color="primary" [(ngModel)]="selectAllTrans" (change)="checkTransAll()" name='selectAllTrans'>
+                          <b>Select All</b>
+                        </mat-checkbox>
+
+                        <h3>Features</h3>
+
+                        <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                          <ng-container *ngFor='let dataf of transformedfeatures'>
+                            <mat-grid-tile *ngIf="dataf.type !== 'transformed' && tfd_label !== dataf.feature">
+                              <mat-checkbox color="primary" [(ngModel)]="dataf.checked" name='{{dataf.feature}}'>{{dataf.feature}}</mat-checkbox>
+                            </mat-grid-tile>
+                          </ng-container>
+                        </mat-grid-list>
+
+                        <h3>Transformed Features</h3>
+
+
+                        <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                          <ng-container *ngFor='let dataf of transformedfeatures'>
+                            <mat-grid-tile *ngIf="dataf.type == 'transformed' && tfd_label !== dataf.feature">
+                              <mat-checkbox color="primary" [(ngModel)]="dataf.checked" name='{{dataf.feature}}'>{{dataf.feature}}</mat-checkbox>
+                            </mat-grid-tile>
+                          </ng-container>
+                        </mat-grid-list>
+
+                        <!-- </div> -->
+
+                        <div>
+                          <button type="submit" class="mat-raised-button mat-primary">Submit</button>
+                        </div>
+                      </div>
+                    </form>
+
+                  </div>
+                </mat-tab>
+
+                <mat-tab>
+                  <div class="tab-content">
+                    <img [src] ="graphFileNameUrl" />
+
+                  </div>
+                </mat-tab>
+
+                <mat-tab>
+                  Ali Mehdi
+                </mat-tab>
+
+              </mat-tab-group>
+
+            </mat-drawer-content>
+          </mat-drawer-container>
+
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- <div class="facetdive">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <h3>Select Features</h3>
+        </mat-expansion-panel-header>
+        <hr/>
+        <br/>
+
+        <form (submit)="onSubmitDataFeatures(dataForm)" #dataForm="ngForm">
+        <div *ngFor='let dataf of features'>
+          <input name="datasourceid" value="" [(ngModel)]="datasourceid" type="hidden">
+          <input name="datasourcelocation" value="" [(ngModel)]="datasourcelocation" type="hidden">
+          <span  style="margin-right:150px">
+            <mat-checkbox [(ngModel)]="dataf.checked" value='dataf.checked' name='datafeatures' >{{dataf.feature}}</mat-checkbox>
+
+          </span>
+          <span >
+            <mat-form-field *ngIf="dataf.type == 'string'">
+              <mat-select name="transformation" [(ngModel)]="dataf.transformation">
+                <mat-option value="">Select Transformation</mat-option>
+                <mat-option value="Bag of Words">Bag of Words</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+          </span>
+          <br/><br/>
+
+        </div>
+        <hr/>
+        <button type="submit" class="mat-raised-button mat-accent" >Submit</button>
+      </form>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div> -->
+
+    <!-- <div class="facetdive">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <h3>Features Overview</h3>
+        </mat-expansion-panel-header>
+        <hr>
+        <facets-dive id="element" [data]=datasources.data.facets_dive height="600"></facets-dive>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div> -->
+
+    <!-- <div class="facetoverview">
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <h3>Stats</h3>
+        </mat-expansion-panel-header>
+        <hr>
+        <facets-overview id="elem" [protoInput]=datasources.data.facets_overview></facets-overview>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div> -->
+  </div>
+</main>

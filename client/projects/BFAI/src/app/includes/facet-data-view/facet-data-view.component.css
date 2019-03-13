@@ -1,0 +1,249 @@
+/*.facetoverview,.facetdive{
+  padding-bottom:20px;
+  padding-left:100px;
+  padding-right:100px;
+}
+ .model-tabs{
+  margin-left: 1rem;
+}
+.model-tabs mat-icon{
+  color: #aaa;
+  margin-left: 0.5rem;
+  cursor: pointer;
+}
+.model-tabs .active-tab {
+  color: #3f51b5;
+} */
+
+h2.sub-heading{
+  padding: 0px 15px 15px 0px;
+}
+h3{
+  margin-top: 20px;
+}
+
+mat-drawer-content{
+  margin-left: 261px;
+}
+.tab-icon{
+  color: #3f51b5;
+  margin-right: 0.5rem;
+}
+.tab-icon-relation{
+  background: #3f51b5;
+  color: #fff;
+  margin-right: 0.5rem;
+  border-radius: 3px;
+}
+
+
+.data-file-tabs{
+  height: calc(100% - 49px);
+}
+
+
+.data-loading-status{
+  position: absolute;
+  right: 17px;
+  top: 15px;
+  z-index: 10;
+  width: 250px;
+  background: #ffffff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, .25);
+
+}
+.data-loading-status ul{
+  padding: 15px 15px 5px 15px;
+}
+.data-loading-status li{
+  margin-bottom: 10px;
+}
+.data-loading-status li mat-spinner{
+  display: inline-block;
+}
+.data-loading-status li mat-icon{
+  display: inline-block;
+}
+.data-loading-status li span{
+  display: inline-block;
+  margin-left: 0.5rem;
+  position: relative;
+  top: -6px;
+}
+
+
+.facets-container{
+  height: 100%;
+}
+mat-drawer-container {
+  background-color: #ffffff;
+  height: 100%;
+}
+.custom-tabs-content{
+  height: 100%;
+}
+.tab-content{
+  height: calc(100% - 40px);
+  padding: 20px;
+}
+
+mat-drawer{
+  border-right: solid 1px #ccc;
+}
+.left-col{
+  width: 220px;
+  padding: 20px;
+}
+.left-col li{
+  margin-bottom: 15px;
+  cursor: pointer;
+}
+.left-col li.activeTab{
+  font-weight: bold;
+  color: #3f51b5;
+}
+
+.facet-feature-list button{
+  margin-top: 20px;
+}
+.feature-transformation{
+  padding-right: 50px;
+}
+
+.feature-label-list{
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.data-source-relation-col{
+  height: calc(100% - 30px);
+}
+.data-source-relation-col-left{
+  border-right: solid 1px #eee;
+}
+
+.data-source-relation-button{
+  margin-top: 10px;
+  text-align: right;
+}
+
+.radio-group {
+  display: inline-flex;
+  flex-direction: column;
+}
+
+.radio-button {
+  margin: 5px;
+}
+
+.selected-value {
+  margin: 15px 0;
+}
+
+.fixed-header{
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  background: #ffffff;
+  left: 0px;
+  top: 0px;
+  -webkit-box-shadow: 0px 0px 10px rgba(0,0,0,.25);
+  -moz-box-shadow: 0px 0px 10px rgba(0,0,0,.25);
+  box-shadow: 0px 0px 10px rgba(0,0,0,.25);
+}
+
+.data-source-feature-button{
+  text-align: right;
+}
+
+.data-source-relation-label{
+  height: calc(100% - 45px);
+  overflow: auto;
+}
+
+.feature-vis{
+  padding-top: 60px;
+}
+.feature-vis .col{
+  border-right: solid 1px #ccc;
+  width: 150px;
+}
+.feature-vis .col:first-child{
+  border-left: solid 1px #ccc;
+}
+.feature-vis-data label{
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 5px;
+}
+.feature-vis-check{
+  text-align: center;
+    margin-bottom: 10px;
+    border-top: solid 1px #eee;
+    clear: both;
+    border-bottom: solid 1px #eee;
+}
+.feature-vis-data-title{
+  margin-bottom: 0.5rem;
+}
+.feature-vis-data .feature-vis-data-title-blue{
+  margin-bottom: 0.5rem;
+  background: #3f51b5;
+  color: #ffffff;
+  padding: 5px 0px;
+}
+
+.graph-block{
+  -webkit-transition: width 1s;
+  -moz-transition: width 1s;
+  transition: width 1s;
+}
+.graph-block img{
+  max-width: 100%;
+}
+.graph-label{
+  position: relative;
+  -webkit-transition: width 1s;
+  -moz-transition: width 1s;
+  transition: width 1s;
+}
+.graph-label h3{
+  margin-bottom: 0.75em;
+}
+.graph-label .slide-icon{
+  color: #333333;
+  border: solid 1px #333333;
+  cursor: pointer;
+  border-radius: 50%;
+}
+.graph-label li{
+  line-height: 26px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #999999;
+}
+.graph-label .graph-label-key{
+  width: 30px;
+  font-weight: bold;
+  display: inline-block;
+}
+.graph-label .graph-label-icon{
+  width: 30px;
+  display: inline-block;
+  font-size: 14px;
+  height: auto;
+}
+.graph-label .graph-label-value{
+  color: #333333;
+}

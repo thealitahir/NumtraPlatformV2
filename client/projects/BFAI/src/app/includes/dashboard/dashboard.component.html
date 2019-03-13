@@ -1,0 +1,132 @@
+<!--The content below is only a placeholder and can be replaced.-->
+
+<app-header></app-header>
+
+<main>
+
+  <!-- <div class="loader-gloabl">
+    <mat-spinner></mat-spinner>
+  </div> -->
+
+  <div fxLayout="row">
+    <h2 fxLayout fxLayoutAlign="start center">My Models</h2>
+
+    <div class="model-tabs" fxLayout fxLayoutAlign="start center">
+      <mat-icon [ngClass]="activeTab1" (click)="selectTab(0)">grid_on</mat-icon>
+      <mat-icon [ngClass]="activeTab2" (click)="selectTab(1)">format_list_bulleted</mat-icon>
+    </div>
+
+    <div class="model-search-block" fxFlex fxLayoutAlign="end center" *ngIf="selectedIndex == 0">
+
+      <div class="cat-initial">
+        <button mat-fab color="primary" matTooltip="Bussiness Value Creation">B</button>
+        <button mat-fab color="accent" matTooltip="Supporting Insights">S</button>
+        <button mat-fab color="warn" matTooltip="Internal Cost Reduction">I</button>
+        <button mat-fab color="primary" matTooltip="Risk Reduction">R</button>
+      </div>
+
+
+      <mat-form-field>
+        <input type="text" matInput [(ngModel)]="modelNameSearchQuery" placeholder="Filter Model" />
+        <mat-icon matSuffix color="primary">search</mat-icon>
+      </mat-form-field>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon color="primary">more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <!-- <button mat-menu-item>
+                    <mat-icon>dialpad</mat-icon>
+                    <span>Redial</span>
+                  </button> -->
+
+        <button mat-menu-item *ngFor="let category of categories">
+          <mat-checkbox name="category" value="{{category.value}}" [(ngModel)]="category.selected" (click)="$event.stopPropagation()">
+
+            {{category.name}}
+
+          </mat-checkbox>
+        </button>
+
+      </mat-menu>
+    </div>
+  </div>
+
+
+  <!-- <button mat-button (click)="selectTab(0)">Show Tab 1</button>
+    <button mat-button (click)="selectTab(1)">Show Tab 2</button> -->
+
+
+
+
+  <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+    <mat-tab>
+      <mat-grid-list class="models" gutterSize="20px" [cols]="breakpoint" rowHeight="2:1.25" (window:resize)="onResize($event)">
+
+        <mat-grid-tile class="add-new-model" matTooltip="Add new model" matTooltipPosition="above" [routerLink]="['/add-model']">
+          <div class="model-tile-content">
+            <mat-icon color="primary">add_circle_outline</mat-icon>
+            <!-- <div class="model-name">
+                        Add new Modal
+                      </div> -->
+          </div>
+        </mat-grid-tile>
+
+        <mat-grid-tile *ngFor="let model of models
+                    | modelNameFilter:modelNameSearchQuery
+                    | modelCategoryFilter:modelcategorySearchQuery">
+
+          <div class="model-action">
+            <button mat-fab color="primary" matTooltip="use this model" matTooltipPosition="right">
+              <mat-icon>touch_app</mat-icon>
+            </button>
+            <button mat-fab color="accent" matTooltip="view data source" matTooltipPosition="right">
+              <mat-icon>view_module</mat-icon>
+            </button>
+            <button mat-fab color="warn" matTooltip="show more details" matTooltipPosition="right">
+              <mat-icon>more</mat-icon>
+            </button>
+          </div>
+
+          <div>
+            <img src="assets/img/models/{{model.img}}" alt="{{model.name}}" />
+            <div class="model-name">
+              {{model.name}}
+            </div>
+          </div>
+        </mat-grid-tile>
+      </mat-grid-list>
+    </mat-tab>
+
+    <mat-tab>
+
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="img">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+          <td mat-cell *matCellDef="let element">
+            <img src="assets/img/models/{{element.img}}" alt="{{element.name}}" style="max-height: 30px;" />
+          </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="category">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+          <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </mat-tab>
+  </mat-tab-group>
+
+</main>

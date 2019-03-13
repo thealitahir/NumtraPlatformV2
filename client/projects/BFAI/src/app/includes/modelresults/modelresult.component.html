@@ -1,0 +1,80 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<app-header></app-header>
+
+<main>
+  <div *ngIf="loader == 1">
+    <div class="loader-gloabl">
+      <mat-spinner></mat-spinner>
+      <!-- <div style="z-index: 9999; text-align: center; margin-top: 100px">
+        <h3> Please wait!</h3>
+      </div> -->
+    </div>
+  </div>
+  <div *ngIf="loader == 0">
+    <div fxLayout="row">
+      <h2 fxLayout fxLayoutAlign="start center">Data Source Result</h2>
+
+      <div class="model-tabs" fxLayout fxLayoutAlign="start center">
+        <mat-icon [ngClass]="activeTab1" (click)="selectTab(0)">grid_on</mat-icon>
+        <mat-icon [ngClass]="activeTab2" (click)="selectTab(1)">format_list_bulleted</mat-icon>
+      </div>
+
+      <div class="model-search-block" fxFlex fxLayoutAlign="end center" *ngIf="selectedIndex == 0">
+        <mat-form-field>
+          <input type="text" matInput [(ngModel)]="modelNameSearchQuery" placeholder="Filter data source" />
+          <mat-icon matSuffix color="primary">search</mat-icon>
+        </mat-form-field>
+      </div>
+    </div>
+
+    <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+      <mat-tab>
+        <mat-grid-list class="models" gutterSize="20px" [cols]="breakpoint" rowHeight="2:1.25" (window:resize)="onResize($event)">
+
+          <mat-grid-tile *ngFor="let datasource of alldatasources | modelNameFilter:modelNameSearchQuery" routerLink="/model-comparison/{{datasource._id}}">
+
+            <div>
+              <img src="assets/img/data-source-result.svg" alt="{{datasource.name}}" />
+              <div class="model-name">
+                {{datasource.name}} Model
+              </div>
+            </div>
+          </mat-grid-tile>
+
+        </mat-grid-list>
+      </mat-tab>
+
+      <mat-tab>
+
+        <table mat-table [dataSource]="dataSource" matSort>
+
+          <!-- Position Column -->
+          <ng-container matColumnDef="img">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> </th>
+            <td mat-cell *matCellDef="let element">
+              <img src="assets/img/data-source-result.svg" alt="{{element.name}}" style="max-height: 30px;" />
+            </td>
+          </ng-container>
+
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} Model </td>
+          </ng-container>
+
+          <!-- Weight Column -->
+          <ng-container matColumnDef="type">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Category </th>
+            <td mat-cell *matCellDef="let element"> {{element.data_type}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;" routerLink="/model-comparison/{{row._id}}"></tr>
+        </table>
+
+      </mat-tab>
+    </mat-tab-group>
+
+  </div>
+
+</main>

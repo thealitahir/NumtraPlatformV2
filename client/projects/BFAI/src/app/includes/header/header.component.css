@@ -1,0 +1,35 @@
+mat-toolbar {
+  height: 50px;
+  background: #ffffff;
+  border-bottom: solid 1px #e1e2e7;
+}
+
+img {
+  width: 170px;
+}
+
+.user-icon {
+  font-size: 32px;
+  margin-right: 0.25rem;
+  color: #64953b;
+}
+
+.top-nav li {
+  font-family: 'Lato', sans-serif;
+  font-size: 13px;
+  list-style-type: none;
+  display: inline-block;
+}
+
+.top-nav li a {
+  margin-left: 20px;
+  font-weight: normal;
+  color: #676767;
+  text-decoration: none;
+  border-bottom: solid 2px transparent;
+  text-transform: uppercase;
+}
+.top-nav li.active a {
+  color: #3272a0;
+  border-bottom: solid 2px #3272a0;
+}

@@ -9,7 +9,7 @@ module.exports = function(passport,flash){
         },
 
         function(req,username, password, done) {
-           // console.log('passport file');
+            //console.log('passport file');
             UserModel.findOne({ username: username.toLowerCase()}, function (err, user) {
 
                 if (err) { return done(err); }

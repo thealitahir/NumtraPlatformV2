@@ -1,0 +1,31 @@
+<app-header></app-header>
+
+<main>
+  <div class="tab-content" *ngIf="loader == 1">
+    <div class="loader-gloabl">
+      <mat-spinner></mat-spinner>
+    </div>
+  </div>
+  <div *ngIf="loader == 0">
+    <h2>DataSource Relations</h2>
+    <div class="container">
+      <mat-expansion-panel *ngFor='let dataf of features' style="margin-bottom:15px;">
+          <mat-expansion-panel-header  style="background-color: aliceblue;">
+            <mat-panel-title>
+                <b>{{dataf.Entity}}</b>
+            </mat-panel-title>
+
+          </mat-expansion-panel-header>
+            <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                <ng-container *ngFor='let efeatures of dataf.Features'>
+                  <mat-grid-tile>
+                      {{efeatures}}
+                  </mat-grid-tile>
+                </ng-container>
+                <button mat-raised-button color="primary" routerLink = "/data-features/{{dataf.Sample_path}}"  >View Features</button><br/>
+              </mat-grid-list>
+        </mat-expansion-panel>
+        <br/><br/>
+    </div>
+  </div>
+</main>

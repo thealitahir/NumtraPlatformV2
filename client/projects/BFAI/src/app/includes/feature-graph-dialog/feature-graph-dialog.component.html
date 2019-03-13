@@ -1,0 +1,26 @@
+<h3 mat-dialog-title class="text-center">Feature Graph <i>{{data.dialogfeature}}</i></h3>
+<h2 style="color:red">{{error}}</h2>
+<div mat-dialog-content>
+  <div fxLayout fxLayoutAlign="start center">
+    <div class="feature-vis-graph" >
+      <ngx-charts-bar-vertical
+         [results]="data.dialogfdata"
+         [view]="view"
+         [barPadding]="1"
+         [scheme]="colorScheme"
+         [xAxis]="showXAxis"
+         [xAxisTicks]="xAxisTicks"
+       >
+         <ng-template
+           #tooltipTemplate
+           let-model="model"
+         >
+         </ng-template>
+       </ngx-charts-bar-vertical>
+     </div>
+  </div>
+</div>
+
+<div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+  <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+</div>

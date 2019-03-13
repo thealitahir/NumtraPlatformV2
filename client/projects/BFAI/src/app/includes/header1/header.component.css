@@ -1,0 +1,24 @@
+img {
+  width: 250px;
+}
+.user-icon {
+  font-size: 32px;
+  margin-right: 0.25rem;
+}
+.top-nav li {
+  list-style-type: none;
+  display: inline-block;
+}
+
+.top-nav li a {
+  font-size: 14px;
+  margin-left: 20px;
+  font-weight: normal;
+  color: rgba(255, 255, 255, 0.7);
+  text-decoration: none;
+  border-bottom: solid 2px transparent;
+}
+.top-nav li.active a {
+  color: rgba(255, 255, 255, 1);
+  border-bottom: solid 2px #fff;
+}

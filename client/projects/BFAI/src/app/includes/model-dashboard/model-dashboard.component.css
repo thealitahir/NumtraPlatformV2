@@ -1,0 +1,25 @@
+table {
+  width: 100%;
+}
+
+th.mat-sort-header-sorted {
+  color: black;
+}
+
+.mat-column-sn {
+  width: 100px;
+}
+.mat-column-action {
+  width: 100px;
+  text-align: center;
+}
+.mat-column-sn {
+  width: 50px;
+}
+.mat-header-cell{
+  color: rgba(0, 0, 0, 1);
+  font-weight: bold;
+}
+.black-label{
+  color: rgba(0, 0, 0, 1);
+}
