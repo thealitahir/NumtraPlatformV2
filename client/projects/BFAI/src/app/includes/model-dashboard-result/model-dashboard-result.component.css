@@ -1,0 +1,157 @@
+mat-progress-bar{
+  height: 10px;
+  border-radius: 6px;
+  /* width: 80%;
+  margin: auto; */
+}
+easy-pie-chart{
+  text-align: center;
+}
+.predictions-container{
+  height: 100%;
+}
+.box{
+  background: #fff;
+  width: 100%;
+  padding: 10px 20px;
+  text-align: left;
+  box-shadow: 0px 0px 4px rgba(0,0,0,0.15);
+}
+.box-margin{
+  margin-bottom: 20px;
+}
+.box-row{
+  padding: 10px 0px;
+}
+.graph-box{
+  height: 100%;
+  position: relative;
+  -webkit-transition: width 1s;
+  -moz-transition: width 1s;
+  transition: width 1s;
+}
+.graph-box img{
+  max-width: 100%;
+}
+.graph-box button{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  margin: 0;
+  width: 36px;
+  height: 36px;
+}
+.graph-box .graph-full-screen{
+  display: none;
+}
+.graph-box:hover .graph-full-screen{
+  display: block;
+}
+h3{
+  font-weight: normal;
+}
+.progress-bar-wrap{
+  position: relative;
+}
+.progress-bar-value{
+  position: absolute;
+  text-align: center;
+  width: 100%;
+  top: 0px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  z-index: 10;
+}
+
+.table{
+  border-spacing: 0;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 12px;
+}
+.table td{
+  padding: 10px 20px;
+}
+.table td.border{
+  border: solid 1px #ccc;
+}
+
+
+  .table-top-heading{
+    text-align: center;
+    background: rgba(63, 81, 181, .35);
+    color: #fff;
+    margin-bottom: 5px;
+  }
+
+  .table-left-heading {
+    -webkit-transform: rotate(-90deg);
+    -moz-transform: rotate(-90deg);
+    -ms-transform: rotate(-90deg);
+    -o-transform: rotate(-90deg);
+    filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
+
+    text-align: center;
+
+    margin: -65px;
+    background: rgba(63, 81, 181, .35);
+    width: 159px;
+    color: #fff;
+    }
+
+  .true{
+   background: rgba(0, 150, 136, 0.15);
+   border: solid 1px #ccc;
+  }
+  .false{
+    background: rgba(57, 73, 171, 0.15);
+    border: solid 1px #ccc;
+  }
+  .positive{
+    color: #3f51b5;
+    border: solid 1px #ccc;
+  }
+  .negative{
+    color: #009688;
+    border: solid 1px #ccc;
+  }
+  input {
+    width: 100%;
+  }
+  button{
+    margin-top: 2rem;
+  }
+  mat-form-field{
+    display: block;
+    margin-top: 0.5rem;
+  }
+
+  mat-drawer{
+    border-right: solid 1px #ccc;
+  }
+  .left-col{
+    width: 220px;
+    padding: 20px;
+    border-right: solid 1px #ccc;
+  }
+  .left-col li{
+    margin-bottom: 15px;
+  }
+  .right-col{
+    padding: 20px;
+  }
+
+  .tab-group{
+    height: calc(100% - 45px);
+  }
+
+.tab-content-row{
+  height: calc(100% - 50px);
+}
+
+canvas{
+  display: none;
+  width: 1000px !important;
+  height: 345px !important;
+}

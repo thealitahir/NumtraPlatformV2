@@ -1,0 +1,559 @@
+<link rel="import" href="https://raw.githubusercontent.com/PAIR-code/facets/master/facets-dist/facets-jupyter.html" />
+
+<app-header></app-header>
+
+<main>
+  <div *ngIf="mainloader == 1">
+    <div class="loader-gloabl">
+      <mat-spinner></mat-spinner>
+      <!--
+        <div style="z-index: 9999; text-align: center; margin-top: 100px">
+          <h3>Please wait!</h3>
+        </div>
+      -->
+    </div>
+  </div>
+
+  <div class="data-loading-status"  *ngIf='dataSourceSet.length > 0'>
+    <div *ngIf=' dataSourceSet[0].dataSrc_status < 3' >
+      <mat-progress-bar
+      color="primary"
+      mode="indeterminate">
+      </mat-progress-bar>
+
+      <ul>
+          <li>
+            <mat-spinner *ngIf=" dataSourceSet[0].dataSrc_status == 0 " [diameter]="20" color="accent"></mat-spinner>
+            <!-- <mat-icon color="warn">timer</mat-icon> -->
+            <mat-icon color="primary" *ngIf=" dataSourceSet[0].dataSrc_status > 0 ">done_all</mat-icon>
+            <span>Feature Stats</span>
+          </li>
+          <li *ngIf='problemStatus == 1'>
+            <mat-spinner *ngIf=' dataSourceSet[0].Labelstatus == 0' [diameter]="20" color="accent"></mat-spinner>
+            <!-- <mat-icon color="warn">timer</mat-icon> -->
+            <mat-icon color="primary" *ngIf=" dataSourceSet[0].Labelstatus > 0 ">done_all</mat-icon>
+            <span>Relation Labels</span>
+          </li>
+          <li>
+            <mat-spinner *ngIf=' dataSourceSet[0].dataSrc_status < 3' [diameter]="20" color="accent"></mat-spinner>
+            <!-- <mat-icon color="warn">timer</mat-icon> -->
+            <mat-icon color="primary" *ngIf=" dataSourceSet[0].dataSrc_status > 2 ">done_all</mat-icon>
+            <span>Relation Feature Stats</span>
+          </li>
+
+
+      </ul>
+    </div>
+    </div>
+
+
+  <div class="h100" *ngIf="mainloader == 0">
+    <div fxLayout="row">
+      <h2 fxLayout fxLayoutAlign="start center">Data Source Details</h2>
+    </div>
+
+    <mat-tab-group class="data-file-tabs">
+      <ng-container *ngFor="let dSet of dataSourceSet">
+        <mat-tab *ngIf="dSet.relFeature == 0">
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon">file_copy</mat-icon>
+            {{ dSet.filename }}
+          </ng-template>
+
+          <div class="facets-container">
+            <mat-drawer-container>
+              <mat-drawer mode="side" opened>
+                <ul class="left-col">
+                  <li [ngClass]="{ activeTab: selectedIndex == 0 }" (click)="selectTab(0)">
+                    Stats
+                  </li>
+                  <li [ngClass]="{ activeTab: selectedIndex == 1 }" (click)="selectTab(1)">
+                    Features Overview
+                  </li>
+                  <li [ngClass]="{ activeTab: selectedIndex == 2 }" (click)="selectTab(2)">
+                    Select Features
+                  </li>
+                  <li [ngClass]="{ activeTab: selectedIndex == 3 }" (click)="selectTab(3)">
+                    Visualization
+                  </li>
+                </ul>
+              </mat-drawer>
+
+              <mat-drawer-content>
+                <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+                  <mat-tab>
+                    <div class="tab-content">
+                      <facets-overview id="elem" [protoInput]="dSet.protoInput"></facets-overview>
+                    </div>
+                  </mat-tab>
+                  <mat-tab>
+                    <div class="tab-content">
+                      <facets-dive style="height:500px" id="element" [data]="dSet.facetdata"></facets-dive>
+                    </div>
+                  </mat-tab>
+                  <mat-tab>
+                    <div class="tab-content" *ngIf="loader == 1">
+                      <div class="loader-gloabl">
+                        <mat-spinner></mat-spinner>
+                      </div>
+                      <div style="z-index: 9999; text-align: center; margin-top: 100px">
+                        <h3>
+                          Features transformation in process. Please wait!
+                        </h3>
+                      </div>
+                    </div>
+                    <div class="tab-content" *ngIf="loader == 0 || tfd_status == 1">
+                      <!-- <div class="tab-content" > -->
+
+                      <form (submit)="onSubmitDataFeatures(dSet)" #dataForm="ngForm" class="facet-feature-list" *ngIf="tfd_status !== 1">
+                        <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden" />
+                        <input name="datasourcelocation" value="" [(ngModel)]="dSet.filePath" type="hidden" />
+                        <input name="featureIndex" value="" [(ngModel)]="dSet.featureindex" type="hidden" />
+                        <mat-checkbox color="primary" [(ngModel)]="selectAll" (change)="checkAll()" name="selectAll"><b>Select
+                            All</b></mat-checkbox>
+
+                        <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                          <ng-container *ngFor="let dataf of dSet.features">
+                            <mat-grid-tile *ngIf="dataf.type !== 'string'">
+                              <mat-checkbox color="primary" [(ngModel)]="dataf.checked" value="dataf.checked" name="datafeatures">{{
+                                dataf.feature }}</mat-checkbox>
+                            </mat-grid-tile>
+                          </ng-container>
+                        </mat-grid-list>
+
+                        <mat-grid-list cols="2" rowHeight="55px" class="feature-label-list">
+                          <ng-container *ngFor="let dataf of dSet.features">
+                            <mat-grid-tile *ngIf="dataf.type == 'string'">
+                              <mat-checkbox color="primary" [(ngModel)]="dataf.checked" value="dataf.checked" name="datafeatures">{{
+                                dataf.feature }}</mat-checkbox>
+                              <mat-form-field *ngIf="dataf.type == 'string'" class="feature-transformation">
+                                <mat-select name="transformation" [(ngModel)]="dataf.transformation">
+                                  <mat-option value="">Select Transformation</mat-option>
+                                  <mat-option value="Bag of Words">Bag of Words</mat-option>
+                                  <mat-option value="Vectorizer">
+                                    Vectorizer
+                                  </mat-option>
+                                </mat-select>
+                              </mat-form-field>
+                            </mat-grid-tile>
+                          </ng-container>
+                        </mat-grid-list>
+
+                        <button type="submit" class="mat-raised-button mat-primary">
+                          Submit
+                        </button>
+                      </form>
+
+                      <form (submit)="onSubmitTransFeatures(dataForm)" #dataForm="ngForm" class="facet-feature-list"
+                        *ngIf="
+                          tfd_status == 1 && dataindex == dSet.featureindex
+                        ">
+                        <input name="dataindex" value="" [(ngModel)]="dataindex" type="hidden" />
+                        <mat-form-field>
+                          <mat-select name="transformation" required [(ngModel)]="tfd_label">
+                            <mat-option value="">Select Label</mat-option>
+                            <mat-option *ngFor="let dataf of transformedfeatures" value="{{dataf.feature}}">{{
+                              dataf.feature }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden" />
+
+                        <div *ngIf="tfd_label != ''">
+                          <mat-checkbox color="primary" [(ngModel)]="selectAllTrans" (change)="checkTransAll()" name="selectAllTrans">
+                            <b>Select All</b>
+                          </mat-checkbox>
+
+                          <h3>Features</h3>
+
+                          <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                            <ng-container *ngFor="let dataf of transformedfeatures">
+                              <mat-grid-tile *ngIf="
+                                  dataf.type !== 'transformed' &&
+                                  tfd_label !== dataf.feature
+                                ">
+                                <mat-checkbox color="primary" [(ngModel)]="dataf.checked" name="{{dataf.feature}}">{{
+                                  dataf.feature }}</mat-checkbox>
+                              </mat-grid-tile>
+                            </ng-container>
+                          </mat-grid-list>
+
+                          <h3>Transformed Features</h3>
+
+                          <mat-grid-list cols="4" rowHeight="55px" class="feature-label-list">
+                            <ng-container *ngFor="let dataf of transformedfeatures">
+                              <mat-grid-tile *ngIf="
+                                  dataf.type == 'transformed' &&
+                                  tfd_label !== dataf.feature
+                                ">
+                                <mat-checkbox color="primary" [(ngModel)]="dataf.checked" name="{{dataf.feature}}">{{
+                                  dataf.feature }}</mat-checkbox>
+                              </mat-grid-tile>
+                            </ng-container>
+                          </mat-grid-list>
+
+                          <!-- </div> -->
+
+                          <div>
+                            <button type="submit" class="mat-raised-button mat-primary">
+                              Submit
+                            </button>
+                          </div>
+                        </div>
+                      </form>
+                    </div>
+                  </mat-tab>
+
+                  <mat-tab>
+                    <div class="tab-content">
+                      <img [src]="dSet.graphFileNameUrl" />
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </mat-drawer-content>
+            </mat-drawer-container>
+          </div>
+        </mat-tab>
+
+        <mat-tab *ngIf="dSet.relFeature == 1">
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon-relation">swap_horiz</mat-icon>
+            {{ dSet.filename }}
+          </ng-template>
+
+          <div class="facets-container">
+            <mat-drawer-container>
+              <mat-drawer mode="side" opened>
+                <ul class="left-col">
+                  <li [ngClass]="{ activeTab: selectedIndex == 0 }" (click)="selectTab(0)">
+                    Features Set
+                  </li>
+                  <li [ngClass]="{ activeTab: selectedIndex == 1 }" (click)="selectTab(1)">
+                    Visualization
+                  </li>
+                </ul>
+              </mat-drawer>
+
+              <mat-drawer-content>
+                <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+                  <mat-tab>
+                    <div class="tab-content" *ngIf="loader == 1">
+                      <div class="loader-gloabl">
+                        <mat-spinner></mat-spinner>
+                      </div>
+                    </div>
+                    <div class="tab-content" *ngIf="
+                        (relFeatureStatus == 0 && loader == 0) ||
+                        dSet.featureindex !== relfeatureIndex
+                      ">
+                      <h2>DataSource Relations</h2>
+
+                      <div class="data-source-relation-col" fxLayout>
+                        <div class="data-source-relation-col-left" fxFlex="22">
+                          <mat-radio-group class="radio-group">
+                            <mat-radio-button class="radio-button" [value]="dSet.filename" [checked]="true">
+                              {{ dSet.filename }}
+                            </mat-radio-button>
+                          </mat-radio-group>
+                        </div>
+                        <div class="data-source-relation-col-right" fxFlex>
+                          <div class="data-source-relation-label">
+                            <mat-grid-list cols="2" rowHeight="55px" class="feature-label-list">
+                              <ng-container *ngFor="let efeatures of dSet.features">
+                                <mat-grid-tile> {{ efeatures }} </mat-grid-tile>
+                              </ng-container>
+                            </mat-grid-list>
+                          </div>
+
+                          <div class="data-source-relation-button">
+                            <button mat-raised-button color="primary" (click)="datafeatures(dSet)">
+                              View Features
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+
+                      <!--
+                        <div class="selected-value">Your favorite season is: {{favoriteSeason}}</div>
+                      -->
+                    </div>
+
+                    <div class="tab-content" *ngIf="
+                        relFeatureStatus == 1 &&
+                        loader == 0 &&
+                        dSet.featureindex == relfeatureIndex
+                      ">
+
+
+
+                      <div class="fixed-header" fxLayout fxLayoutAlign="space-between center">
+                        <h2 fxFlex="nogrow">DataSource Features:</h2>
+                        <div fxFlex="nogrow">
+                          <mat-form-field>
+                            <mat-select name="transformation" required [(ngModel)]="tfd_label">
+                              <mat-option value="">Select Label</mat-option>
+                              <mat-option *ngFor="let reldata of relfeaturesdata" value="{{reldata.feature}}">{{
+                                reldata.feature }}</mat-option>
+                            </mat-select>
+                          </mat-form-field>
+                        </div>
+
+                        <div fxFlex class="data-source-feature-button"style="text-align: right;">
+                          <button mat-raised-button color="primary" type="submit" (click)="onRelationDataFeatures(dSet)">
+                            Create
+                          </button>
+                        </div>
+                      </div>
+
+                      <ng-container *ngIf="tfd_label != ''">
+                        <div class="feature-vis" fxLayout>
+                          <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden" />
+
+                          <!-- <div class="col" *ngFor="let key of graphKeys"> -->
+
+                          <div class="col" *ngFor="let reldata of relfeaturesdata">
+                            <ng-container *ngIf="
+                                tfd_label !== reldata.feature
+                              ">
+
+                              <!-- <ng-container *ngIf="
+                                tfd_label !== reldata.feature &&
+                                gdata[reldata.feature].length > 10
+                              "> -->
+
+                              <!-- <div class="feature-vis-graph" >
+                               <ngx-charts-bar-vertical
+                                  [results]="gdata[reldata.feature]"
+                                  [view]="view"
+                                  [barPadding]="1"
+                                  [scheme]="colorScheme"
+                                  [xAxis]="showXAxis"
+                                  [xAxisTicks]="xAxisTicks"
+                                >
+                                  <ng-template
+                                    #tooltipTemplate
+                                    let-model="model"
+                                  >
+                                    <div style="padding: 8px;">
+                                      Count: gdata[reldata.feature]['value']
+                                    </div>
+                                  </ng-template>
+                                </ngx-charts-bar-vertical>
+                              </div> -->
+                              <div>
+                                  <button mat-button (click)="openDialog(gdata[reldata.feature], reldata.feature)">Visualize Data</button>
+                                </div>
+                              <div class="feature-vis-check">
+                                <mat-checkbox color="primary" [(ngModel)]="reldata.checked" value="reldata.checked"
+                                  name="datafeatures" class="example-margin"></mat-checkbox>
+                              </div>
+
+                              <div class="feature-vis-data">
+                                <label class="feature-vis-data-title" matTooltip="{{reldata.feature}}">
+                                  <b>{{ reldata.feature }}</b>
+                                </label>
+                                <label *ngFor="let df of fdata">
+                                  {{ df[reldata.feature] }} </label><br />
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+
+                      </ng-container>
+                    </div>
+                  </mat-tab>
+
+                  <mat-tab>
+                    <div class="tab-content" fxLayout fxLayoutGap="20px">
+                      <div class="graph-block" [style.width.%]="graphWidth">
+                        <img [src]="dSet.graphFileNameUrl" />
+                        <!-- <img src="src/assets/img/plotCorrelation.png" /> -->
+                      </div>
+                      <div class="graph-label" [style.width.%]="grapLabelhWidth">
+                        <div fxLayout fxLayoutAlign="space-between center">
+                          <h3>Labels</h3>
+                          <mat-icon class="slide-icon" *ngIf="fullGraph !== true" (click)="labelFullWidth()">keyboard_arrow_left</mat-icon>
+                          <mat-icon class="slide-icon" *ngIf="fullGraph === true" (click)="graphFullWidth()">keyboard_arrow_right</mat-icon>
+                        </div>
+                        <ul>
+                          <ng-container *ngFor="let efeatures of dSet.corelfeatures">
+                            <li *ngFor="let flabel of efeatures.featureLabel; let i = index">
+                              <span class="graph-label-key">{{flabel}}</span>
+                              <mat-icon class="graph-label-icon">arrow_forward</mat-icon>
+                              <span class="graph-label-value">{{efeatures.feautureName[i]}}</span>
+                            </li>
+                          </ng-container>
+
+                        </ul>
+                      </div>
+                    </div>
+                  </mat-tab>
+                </mat-tab-group>
+              </mat-drawer-content>
+            </mat-drawer-container>
+          </div>
+        </mat-tab>
+        <mat-tab *ngIf="dSet.relLabel == 1 && problemStatus == 1">
+          <ng-template mat-tab-label>
+            <mat-icon class="tab-icon-relation">swap_horiz</mat-icon>
+            Labels
+          </ng-template>
+
+          <div class="facets-container">
+            <mat-drawer-container>
+              <mat-drawer mode="side" opened>
+                <ul class="left-col">
+                  <li [ngClass]="{ activeTab: selectedIndex == 0 }" (click)="selectTab(0)">
+                    Features Label
+                  </li>
+
+                </ul>
+              </mat-drawer>
+
+              <mat-drawer-content>
+                <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+                  <mat-tab>
+                    <div class="tab-content" *ngIf="loader == 1">
+                      <div class="loader-gloabl">
+                        <mat-spinner></mat-spinner>
+                      </div>
+                    </div>
+
+
+                    <div class="tab-content" *ngIf="
+                        relLabelStatus == 1 &&
+                        loader == 0
+                      ">
+                       <div class="fixed-header" fxLayout fxLayoutAlign="space-between center">
+
+
+                        <!-- <div fxFlex class="data-source-feature-button"style="text-align: left;">
+                          <button mat-raised-button color="primary" type="submit" (click)="onRelationDataFeatures(dSet)">
+                            Create
+                          </button>
+                        </div> -->
+                      </div>
+
+                      <ng-container >
+                        <div class="feature-vis" fxLayout>
+
+                          <!-- <input name="datasourceid" required="required" value="" [(ngModel)]="datasourceid" type="hidden" /> -->
+
+                          <!-- <div class="col" *ngFor="let key of graphKeys"> -->
+
+                          <div class="col" *ngFor="let reldata of relLabeldata">
+                            <ng-container >
+                              <!-- <div class="feature-vis-graph">
+                               <ngx-charts-bar-vertical
+                                  [results]="gdata[reldata.Label]"
+                                  [view]="view"
+                                  [barPadding]="1"
+                                  [scheme]="colorScheme"
+                                  [xAxis]="showXAxis"
+                                  [xAxisTicks]="xAxisTicks"
+                                >
+                                  <ng-template
+                                    #tooltipTemplate
+                                    let-model="model"
+                                  >
+                                    <div style="padding: 8px;">
+                                      Count: gdata[reldata.Label]['value']
+                                    </div>
+                                  </ng-template>
+                                </ngx-charts-bar-vertical>
+                              </div> -->
+
+                              <!-- <div class="feature-vis-check">
+                                <mat-checkbox color="primary" [(ngModel)]="reldata.checked" value="reldata.checked"
+                                  name="datafeatures" class="example-margin"></mat-checkbox>
+                              </div> -->
+
+                              <div class="feature-vis-data">
+                                <label class="feature-vis-data-title-blue" matTooltip="{{reldata.Label}}">
+                                  <b>{{ reldata.Label }}</b>
+                                </label>
+                                <label *ngFor="let df of ldata">
+                                  {{ df[reldata.Label] }} </label><br />
+                              </div>
+                            </ng-container>
+                          </div>
+                        </div>
+
+                      </ng-container>
+                    </div>
+                  </mat-tab>
+
+                </mat-tab-group>
+              </mat-drawer-content>
+            </mat-drawer-container>
+          </div>
+        </mat-tab>
+      </ng-container>
+    </mat-tab-group>
+
+    <!--
+      <div class="facetdive">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <h3>Select Features</h3>
+            </mat-expansion-panel-header>
+            <hr/>
+            <br/>
+
+            <form (submit)="onSubmitDataFeatures(dataForm)" #dataForm="ngForm">
+            <div *ngFor='let dataf of features'>
+              <input name="datasourceid" value="" [(ngModel)]="datasourceid" type="hidden">
+              <input name="datasourcelocation" value="" [(ngModel)]="datasourcelocation" type="hidden">
+              <span  style="margin-right:150px">
+                <mat-checkbox [(ngModel)]="dataf.checked" value='dataf.checked' name='datafeatures' >{{dataf.feature}}</mat-checkbox>
+
+              </span>
+              <span >
+                <mat-form-field *ngIf="dataf.type == 'string'">
+                  <mat-select name="transformation" [(ngModel)]="dataf.transformation">
+                    <mat-option value="">Select Transformation</mat-option>
+                    <mat-option value="Bag of Words">Bag of Words</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+              </span>
+              <br/><br/>
+
+            </div>
+            <hr/>
+            <button type="submit" class="mat-raised-button mat-accent" >Submit</button>
+          </form>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    -->
+
+    <!--
+      <div class="facetdive">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <h3>Features Overview</h3>
+            </mat-expansion-panel-header>
+            <hr>
+            <facets-dive id="element" [data]=datasources.data.facets_dive height="600"></facets-dive>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    -->
+
+    <!--
+      <div class="facetoverview">
+        <mat-accordion>
+          <mat-expansion-panel>
+            <mat-expansion-panel-header>
+              <h3>Stats</h3>
+            </mat-expansion-panel-header>
+            <hr>
+            <facets-overview id="elem" [protoInput]=datasources.data.facets_overview></facets-overview>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </div>
+    -->
+  </div>
+</main>

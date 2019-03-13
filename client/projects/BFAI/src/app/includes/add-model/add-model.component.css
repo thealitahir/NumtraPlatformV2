@@ -1,0 +1,21 @@
+input {
+  width: 100%;
+}
+button{
+  margin-top: 2rem;
+}
+mat-form-field{
+  display: block;
+  margin-top: 0.5rem;
+}
+
+.container{
+  background: #fff;
+  padding: 25px;
+  height: calc(100% - 119px);
+  overflow: auto;
+}
+
+.add-model-action button{
+  margin-right: 0.5rem;
+}

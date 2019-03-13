@@ -11,6 +11,7 @@ export class UsersService {
   }
 
   userLogin(user): Observable<any> {
+    console.log(user);
     return this.http.post(GLOBAL.serviceUrl + '/api/userlogin' , user );
   }
 

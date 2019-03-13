@@ -1,0 +1,556 @@
+<app-header></app-header>
+
+<main>
+  <div class="container modal-upload-stepper">
+    <form #dataForm="ngForm" class="h100">
+      <mat-horizontal-stepper #stepper [linear]="true" [selectedIndex]="selectedIndex" class="custom-tabs-content data-source-stepper">
+        <ng-template matStepperIcon="done" let-index="index">
+          add_shopping_cart
+        </ng-template>
+
+        <mat-step>
+          <div fxLayout fxLayoutGap="50px">
+            <div fxFlex="50%">
+              <h2 fxLayout fxLayoutAlign="start center">
+                Data File Information
+              </h2>
+
+              <mat-form-field>
+                <input type="text" matInput [(ngModel)]="name" required="required" name="name" placeholder="Name" />
+              </mat-form-field>
+
+              <mat-form-field>
+                <input type="text" matInput [(ngModel)]="description" required="required" name="description"
+                  placeholder="Description" />
+              </mat-form-field>
+              <!--
+                <mat-form-field>
+                  <input type="text" matInput [(ngModel)]='datatype' name='datatype' placeholder="Data type" >
+                </mat-form-field>
+              -->
+
+              <mat-form-field>
+                <mat-select name="transformation" required="required" name="datatype" [(ngModel)]="datatype">
+                  <mat-option value="">Select Data Type </mat-option>
+                  <mat-option value="classification">Classification</mat-option>
+                  <mat-option value="regression">Regression</mat-option>
+                  <mat-option value="clustering">Clustering</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div>
+                <!-- <button mat-raised-button color="primary" (click)="selectTab(1)"> -->
+                <button mat-raised-button color="primary" matStepperNext>
+                  Get Files
+                </button>
+              </div>
+            </div>
+
+            <div fxFlex="50%">
+              <h2 fxLayout fxLayoutAlign="start center">Problem Type</h2>
+
+              <mat-form-field>
+                <mat-select name="problemtype" required="required" name="problemtype" [(ngModel)]="problemtype">
+                  <mat-option value="">Select Problem Type </mat-option>
+                  <mat-option *ngFor="let prob of problemslist" (click)="getProbParameter(prob.problemparameters)"
+                    value="churnPrediction">{{prob.problemname}}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <div *ngIf="problemtype !== ''">
+                <mat-form-field *ngFor="let parameter of paramdata">
+                  <input type="text" matInput required="required" name="{{parameter.paramName}}" [(ngModel)]="parameter.paramValue"
+                    placeholder="{{parameter.paramName}}" />
+                </mat-form-field>
+
+              </div>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step *ngIf="fileSource == 'file-upload'">
+          <div style="color:red">{{ error }}</div>
+
+          <div fxLayout fxLayoutGap="50px">
+            <div fxFlex="50%">
+              <h2 fxLayout fxLayoutAlign="start center">Upload Data File(s)</h2>
+
+              <mat-form-field>
+                <mat-select name="fileType" required="required" [(ngModel)]="fileType">
+                  <mat-option value="">Select File Type </mat-option>
+                  <mat-option value="csv">.CSV</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field *ngIf="fileType == 'csv'">
+                <mat-select name="delimeter" required="required" [(ngModel)]="delimeter">
+                  <mat-option value="">Select Delimeter </mat-option>
+                  <mat-option value=",">, (comma)</mat-option>
+                  <mat-option value=";">; (semicolon)</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <input type="file" *ngIf="fileType !== ''" id="recordedFeed" class="form-control" required [(ngModel)]="sourceLink"
+                name="sourceLink" id="sourceFile" (change)="onSourceFileSelect($event)" />
+
+              <div>
+                <!-- <button class="back-button" mat-raised-button color="accent" (click)="selectTab(0)"> -->
+                <button class="back-button" mat-raised-button color="accent" matStepperPrevious>
+                  <mat-icon>arrow_back_ios</mat-icon>
+                </button>
+
+                <button [disabled]="createButtonDisabled" mat-raised-button color="primary" type="submit" (click)="onSubmitDataSource(dataForm)">
+                  Create
+                </button>
+                <!-- <button *ngIf="files?.length >= 2" mat-raised-button color="primary" (click)="selectTab(2)"> -->
+                <button *ngIf="files?.length >= 2" mat-raised-button color="primary" matStepperNext>
+                  Create Relationship
+                </button>
+              </div>
+            </div>
+
+            <div fxFlex="50%" *ngIf="files?.length > 0">
+              <h2 fxLayout fxLayoutAlign="start center">Uploaded Files</h2>
+
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Path</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let fileData of files">
+                    <td>{{ fileData.filename }}</td>
+                    <td>{{ fileData.fileType }}</td>
+                    <td> <input type="text" class="file-control" matInput required name="fileData.filePath" [(ngModel)]="fileData.filepath" /></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step *ngIf="fileSource == 's3-bucket'">
+          <div fxLayout fxLayoutGap="50px">
+            <div class="s3-profile" fxFlex="50%">
+              <div fxLayout fxLayoutAlign="space-between center">
+                <mat-form-field fxFlex>
+                  <mat-select name="profile" [(ngModel)]="profile">
+                    <mat-option value="">Select Profile </mat-option>
+                    <mat-option (click)="selectedProfile(prod)" *ngFor="let prod of profilesData" value="{{ prod.profileId }}">{{
+                      prod.profileName }}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+
+                <mat-icon class="form-icon" color="accent" fxFlex="nogrow" (click)="profileFieldDisabled = false"
+                  matTooltip="Add new profile" matTooltipPosition="right">
+                  add_box
+                </mat-icon>
+              </div>
+
+              <div fxLayout fxLayoutAlign="space-between center">
+                <mat-form-field fxFlex>
+                  <input matInput type="text" required="required" name="accessKey" placeholder="Access Key" [disabled]="profileFieldDisabled"
+                    [(ngModel)]="accessKey" />
+                </mat-form-field>
+
+                <mat-icon class="form-icon"></mat-icon>
+              </div>
+
+              <div fxLayout fxLayoutAlign="space-between center">
+                <mat-form-field fxFlex>
+                  <input matInput type="{{ secretKeyType }}" required="required" name="secretKey" placeholder="Secret Key"
+                    [disabled]="profileFieldDisabled" [(ngModel)]="secretKey" />
+                </mat-form-field>
+
+                <mat-icon class="form-icon" color="accent" (mousedown)="secretKeyType = 'text'" (mouseup)="secretKeyType = 'password'"
+                  (mouseleave)="secretKeyType = 'password'" matTooltip="Watch access key" matTooltipPosition="right">
+                  remove_red_eye
+                </mat-icon>
+              </div>
+
+              <div fxLayout fxLayoutAlign="space-between center" *ngIf="profileFieldDisabled == false">
+                <mat-form-field fxFlex>
+                  <input type="text" matInput [(ngModel)]="profileName" required="required" name="profileName"
+                    placeholder="Profile Name" />
+                </mat-form-field>
+
+                <mat-icon></mat-icon>
+              </div>
+
+              <div *ngIf="profileFieldDisabled == false">
+                <button mat-raised-button color="primary" (click)="addProfile()">
+                  Save
+                </button>
+                <button mat-raised-button color="accent" (click)="profileFieldDisabled = true">
+                  Cancel
+                </button>
+              </div>
+
+              <div *ngIf="profileFieldDisabled == true">
+                <!-- <button mat-raised-button color="primary" (click)="selectTab(2)">
+                  Select File(s)
+                </button> -->
+                <button class="back-button" mat-raised-button color="accent" matStepperPrevious>
+                  <mat-icon>arrow_back_ios</mat-icon>
+                </button>
+                <button mat-raised-button color="primary" type="submit" matStepperNext (click)="getBucket('')">
+                  Select File(s)
+                </button>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+
+        <mat-step class="h100" *ngIf="fileSource == 's3-bucket'">
+
+          <div class="s3-bucket-wrap" fxLayout fxLayoutGap="10px">
+
+            <div class="h100" fxFlex="25">
+
+              <div fxLayout fxLayoutGap="50px">
+                <mat-form-field>
+                  <input type="text" matInput [(ngModel)]="s3Path" name="s3Path" placeholder="File Path" />
+                </mat-form-field>
+              </div>
+
+              <div class="bucket-header">Explore</div>
+
+              <div class="bucket-list">
+                <div *ngFor="let bData of bucketdataExplore">
+                  <label *ngIf="bData.type == 'directory'" (click)="getBucket(bData.bucket)" fxLayout fxLayoutAlign="start center">
+                    <i class="material-icons" fxFlex="nogrow"> folder_open </i>
+                    <span class="file-label" fxFlex>{{ bData.bucket }}</span>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <div class="h100" fxFlex="50">
+
+              <div fxLayout fxLayoutGap="50px">
+                <mat-form-field>
+                  <input type="text" matInput (keyup)="S3FileSearch($event.target.value, '')" placeholder="Filter File" />
+                  <mat-icon matSuffix color="primary">search</mat-icon>
+                </mat-form-field>
+
+                <mat-form-field>
+                  <mat-select (selectionChange)="S3FileSearch('', $event.value)" placeholder="Filter Type">
+                    <mat-option>None</mat-option>
+                    <mat-option value="file">File</mat-option>
+                    <mat-option value="directory">Directory</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <!-- https://stackblitz.com/edit/angular-hbakxo-5jeaic?file=app%2Ftable-filtering-example.ts -->
+
+
+              <!-- <div fxLayout fxLayoutGap="1px">
+                <div fxFlex="70">
+                  <div class="bucket-header">Name</div>
+
+                  <div class="bucket-lits">
+                    <label *ngFor="let bData of bucketdata">
+                      <span  (click)="getBucketFile(bData)">{{ bData.name }}</span>
+                      <span (click)="bucketFileSelected(bData.name)">{{ bData.name }}</span>
+                    </label>
+                  </div>
+                </div>
+
+                <div fxFlex="15">
+                  <div class="bucket-header text-center">Type</div>
+
+                  <div class="bucket-lits text-center">
+                    <label *ngFor="let bData of bucketdata">
+                      {{ bData.type }}
+                    </label>
+                  </div>
+                </div>
+
+                <div fxFlex="15">
+                  <div class="bucket-header text-center">Size</div>
+
+                  <div class="bucket-lits text-right">
+                    <label *ngFor="let bData of bucketdata">
+                      {{bData.size}}
+                    </label>
+                  </div>
+                </div>
+              </div> -->
+
+              <div class="bucket-list-table">
+                <table class="s3-bucket-table" mat-table [dataSource]="dataSource" matSort>
+                  <!-- Position Column -->
+                  <ng-container matColumnDef="name">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Name
+                    </th>
+                    <td mat-cell *matCellDef="let element; let i = index">
+                      <ng-container *ngIf="element.type === 'directory'">
+                        <label fxLayout fxLayoutAlign="strat center" (click)="getBucket(element.path)">
+                          <i class="material-icons" fxFlex="nogrow"> folder_open </i>
+                          <span class="file-label" fxFlex>
+                            {{ element.name }}
+                          </span>
+                        </label>
+                      </ng-container>
+
+                      <ng-container *ngIf="element.type === 'file'">
+                        <label fxLayout fxLayoutAlign="strat center" (click)="bucketFileSelected(element, i)">
+                          <i class="material-icons" fxFlex="nogrow"> insert_drive_file </i>
+                          <span class="file-label" fxFlex>
+                            {{ element.name }}
+                          </span>
+                        </label>
+                      </ng-container>
+
+                    </td>
+                  </ng-container>
+
+                  <!-- Name Column -->
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Type
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+                  </ng-container>
+
+                  <!-- Weight Column -->
+                  <ng-container matColumnDef="size">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                      Size
+                    </th>
+                    <td mat-cell *matCellDef="let element">{{ element.size }}</td>
+                  </ng-container>
+
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns; let i = index" [style.background]="
+                    highlightedRows.indexOf(i) != -1
+                      ? 'rgba(63, 81, 181, .25)'
+                      : ''
+                  "></tr>
+                </table>
+              </div>
+
+            </div>
+
+            <div class="h100" fxFlex="25">
+
+              <div fxLayout fxLayoutGap="50px">
+                <mat-form-field>
+                  <input type="text" matInput [(ngModel)]="bucketFileSelectedObj.length" name="totalFiles" placeholder="Total Selected Files" />
+                </mat-form-field>
+              </div>
+
+              <div class="bucket-header">Selected Files</div>
+
+              <div class="bucket-list">
+                <label *ngFor="let selectedFile of bucketFileSelectedObj; let i = index" fxLayout fxLayoutAlign="start center">
+                  <i class="material-icons" fxFlex="none"> insert_drive_file </i>
+                  <span fxFlex class="file-label">{{ selectedFile.filepath }}</span>
+                  <i class="material-icons file-delete" fxFlex="nogrow" (click)="removeS3File(i)"> delete_outline </i>
+                </label>
+              </div>
+            </div>
+
+          </div>
+
+          <div>
+            <button class="back-button" mat-raised-button color="accent" matStepperPrevious>
+              <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+            <button [disabled]="createButtonDisabled" mat-raised-button color="primary" type="submit" (click)="onSubmitDataSource(dataForm)">
+              Create
+            </button>
+            <button [disabled]="createRelationshipButtonDisabled" mat-raised-button color="primary" matStepperNext (click)="getBucketFile()">
+              Create Relationship
+            </button>
+          </div>
+
+          <!-- <table>
+            <thead>
+              <tr>
+                <th>Bucket</th>
+                <th>Name</th>
+                <th>Path</th>
+                <th>Type</th>
+                <th>Size</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let bData of bucketdata">
+                <td>{{ bData.bucket }}</td>
+                <td>{{ bData.name }}</td>
+                <td>{{ bData.type }}</td>
+                <td>{{bData.size}}</td>
+              </tr>
+            </tbody>
+          </table> -->
+        </mat-step>
+
+        <mat-step>
+          <h2 fxLayout fxLayoutAlign="start center">
+            Select Unique Identifier
+          </h2>
+
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Unique Identifier</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let fileData of files">
+                <td>{{ fileData.filename }}</td>
+                <td>{{ fileData.fileType }}</td>
+                <td>
+                  <mat-form-field>
+                    <mat-select name="fileIdentifier" required="required" [(ngModel)]="fileData.fileIdentifier">
+                      <mat-option value="">Select File Identifier </mat-option>
+                      <mat-option value="{{ header }}" *ngFor="let header of fileData.fileheader">{{ header }}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!--
+            <span *ngFor="let fileData of files">
+              <label>File Path:</label>{{ fileData.filepath }}<br />
+              <label>File Type:</label>{{ fileData.fileType }}<br />
+              <label>File Name:</label>{{ fileData.filename }}<br />
+            </span>
+          -->
+
+          <div>
+            <!-- <button class="back-button" mat-raised-button color="accent" (click)="selectTab(1)"> -->
+            <button class="back-button" mat-raised-button color="accent" matStepperPrevious>
+              <mat-icon>arrow_back_ios</mat-icon>
+            </button>
+
+            <!-- <button *ngIf="files?.length >= 2" mat-raised-button color="primary" (click)="selectTab(3)"> -->
+            <button *ngIf="files?.length >= 2" mat-raised-button color="primary" matStepperNext>
+              Add Relations
+            </button>
+          </div>
+
+        </mat-step>
+
+        <mat-step>
+          <h2 fxLayout fxLayoutAlign="start center">Add Relationship</h2>
+
+          <div fxLayout fxLayoutGap="50px">
+            <div fxFlex="50%">
+              <div *ngIf="files.length > 1">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>File</th>
+                      <th>Key</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>
+                        <mat-form-field>
+                          <mat-select name="fileRel" required="required" [(ngModel)]="relation.fileRel1">
+                            <mat-option value="">Select File </mat-option>
+                            <mat-option value="{{ fileData.filename }}" (click)="getHeaders(fileData.fileheader)"
+                              *ngFor="let fileData of files">{{ fileData.filename }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field>
+                          <mat-select name="colRel" required="required" [(ngModel)]="relation.colRel1">
+                            <mat-option value="">Select File Relation
+                            </mat-option>
+                            <mat-option value="{{ fheader }}" *ngFor="let fheader of selectFileHeader1">{{ fheader }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                    </tr>
+
+                    <tr>
+                      <td>
+                        <mat-form-field>
+                          <mat-select name="fileType" required="required" [(ngModel)]="relation.fileRel2">
+                            <mat-option value="">Select File </mat-option>
+                            <ng-container *ngFor="let fileData of files">
+                              <mat-option value="{{ fileData.filename }}" *ngIf="relation.fileRel1 !== fileData.filename"
+                                (click)="getHeaders2(fileData.fileheader)">{{ fileData.filename }}</mat-option>
+                            </ng-container>
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                      <td>
+                        <mat-form-field>
+                          <mat-select name="fileType" required="required" [(ngModel)]="relation.colRel2">
+                            <mat-option value="">Select File Relation
+                            </mat-option>
+                            <mat-option value="{{ fheader2 }}" *ngFor="let fheader2 of selectFileHeader2">{{ fheader2
+                              }}</mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+
+                <div>
+                  <!-- <button class="back-button" mat-raised-button color="accent" (click)="selectTab(2)"> -->
+                  <button class="back-button" mat-raised-button color="accent" matStepperPrevious>
+                    <mat-icon>arrow_back_ios</mat-icon>
+                  </button>
+
+                  <button mat-raised-button color="primary" type="submit" (click)="onRelationSet()">
+                    Add Realtion
+                  </button>
+
+                  <button *ngIf="fileRelation.length > 0" mat-raised-button color="primary" type="submit" (click)="onSubmitDataSource(dataForm)">
+                    Create
+                  </button>
+
+                </div>
+              </div>
+            </div>
+
+            <div fxFlex="50%">
+              <!-- <h3>relation</h3> -->
+              <div class="relation-container" fxLayout fxLayoutGap="5px" *ngFor="let rel of fileRelation; let i = index">
+                <!-- <b>{{ i + 1 }}</b> -->
+
+                <div class="relation-block" fxFlex>
+                  <div class="relation-file-name">{{ rel.fileRel1 }}</div>
+                  <div class="relation-column-name">{{ rel.colRel1 }}</div>
+                </div>
+
+                <div class="relation-icon" fxFlex="nogrow" fxLayoutAlign="center center">
+                  <mat-icon>arrow_forward</mat-icon>
+                </div>
+
+                <div class="relation-block" fxFlex>
+                  <div class="relation-file-name">{{ rel.fileRel2 }}</div>
+                  <div class="relation-column-name">{{ rel.colRel2 }}</div>
+                </div>
+
+                <div fxFlex="nogrow" fxLayoutAlign="center center">
+                  <i class="material-icons relation-close" (click)="removeRelation(i)">
+                    close
+                  </i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-step>
+      </mat-horizontal-stepper>
+    </form>
+
+  </div>
+</main>

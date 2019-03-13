@@ -32,11 +32,13 @@ export class LoginComponent implements OnInit {
     }
 
     this.userService.userLogin(form.value).subscribe(userdata => {
+      console.log(userdata);
       this.user = userdata.user;
       if (this.user.status == true) {
         this.userId = this.user.data._id;
         localStorage.setItem('currentUser', JSON.stringify(this.user.data));
         localStorage.setItem('currUserID', this.user.data._id);
+
         this.roleService.getById(this.user.data.role).subscribe(roleDetail => {
           localStorage.setItem('role', JSON.stringify(roleDetail.data));
           localStorage.setItem('permissions', JSON.stringify(roleDetail.data.permissions));
