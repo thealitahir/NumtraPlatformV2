@@ -44,9 +44,9 @@
               "./projects/Platform/src/rappid/library/css/rappid.css",
               "./projects/Platform/src/rappid/library/css/style.modern.css",
               "./projects/Platform/src/rappid/library/css/style.css",
+              "./projects/Platform/src/assets/font-icon/font-icon.css",
               "./projects/Platform/src/styles.css",
               "./projects/BFAI/src/styles.css",
-              "src/assets/font-icon/font-icon.css",
               "src/styles.css"
             ],
             "scripts": []
