@@ -1,0 +1,68 @@
+<app-header></app-header>
+
+<main>
+  <div fxLayout="row">
+    <h2 fxLayout fxLayoutAlign="start center">Add new models</h2>
+  </div>
+
+  <div class="container">
+
+    <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+      <mat-tab>
+        <div fxLayout="column" fxFlex="50%">
+
+            <mat-form-field>
+                <input matInput type="text" name="modelName" placeholder="Model name">
+                <!-- <input matInput type="text" name="modelName" placeholder="Model name" #modelName="ngModel" ngModel required> -->
+                <!-- <mat-error *ngIf="modelName.invalid">Please enter model name</mat-error> -->
+              </mat-form-field>
+
+              <mat-form-field>
+                <input matInput type="text" name="modelCategory" placeholder="Model category">
+                <!-- <input matInput type="text" name="modelCategory" placeholder="Model category" #modelCategory="ngModel" ngModel required> -->
+                <!-- <mat-error *ngIf="modelCategory.invalid">Please enter model category</mat-error> -->
+              </mat-form-field>
+
+          <div class="add-model-action">
+            <button mat-raised-button color="accent" (click)="selectTab(1)">Next</button>
+          </div>
+
+        </div>
+      </mat-tab>
+
+
+
+      <mat-tab>
+        <div fxLayout="column" fxFlex="50%">
+
+            <mat-form-field>
+                <input matInput type="text" name="modelId" placeholder="Model ID">
+                <!-- <input matInput type="text" name="modelName" placeholder="Model name" #modelName="ngModel" ngModel required> -->
+                <!-- <mat-error *ngIf="modelName.invalid">Please enter model name</mat-error> -->
+              </mat-form-field>
+
+              <mat-form-field>
+                  <input matInput type="text" name="modelDescription" placeholder="Model description">
+              </mat-form-field>
+
+              <mat-form-field>
+                  <input matInput type="text" name="modelType" placeholder="Model type">
+              </mat-form-field>
+
+              <mat-form-field>
+                  <input matInput type="text" name="modelValue" placeholder="Model value">
+              </mat-form-field>
+
+          <div class="add-model-action">
+            <button mat-raised-button color="accent" (click)="selectTab(0)">Previous</button>
+            <button mat-raised-button color="primary" [routerLink]="['/dashboard']">Submit</button>
+          </div>
+
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+
+
+
+  </div>
+</main>

@@ -11,7 +11,7 @@
 
           <!-- Form -->
   <form (submit)="onCheckLogin(loginForm)" #loginForm="ngForm">
-
+      <mat-error *ngIf=" userInvalid ">Incorrect Username or Password! Try again.</mat-error>
       <!-- Email -->
       <mat-form-field>
         <!-- <input matInput type="text" name=email placeholder="Email address" ngModel required> -->

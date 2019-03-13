@@ -1,0 +1,550 @@
+<app-header></app-header>
+
+<main>
+  <div class="tab-content" *ngIf="mainloader == 1">
+    <div class="loader-gloabl"><mat-spinner></mat-spinner></div>
+  </div>
+  <div class="predictions-container" *ngIf="mainloader == 0">
+    <h2>Model Dashboard Results</h2>
+
+    <mat-tab-group class="tab-group" (selectedTabChange)="onLinkClick($event)">
+      <!-- <mat-tab label="Data View"> Content 3 </mat-tab> -->
+
+      <mat-tab label="Model Results">
+        <!-- <h2>{{mresult.dataSourceName}} {{mresult.modelName}}</h2> -->
+        <h2>Top Models</h2>
+
+        <div class="tab-content-row" fxLayout="row">
+          <div fxFlex="20" class="left-col">
+            <!-- <h3>List of models</h3> -->
+            <ul>
+              <li fxLayout>
+                <div fxFlex="75"><strong>Model</strong></div>
+                <div fxFlex="25"><strong>Accuracy</strong></div>
+              </li>
+              <li
+                fxLayout
+                *ngFor="let modresult of mresult.ml_result.List_of_all_models"
+              >
+                <div fxFlex="75">{{ modresult.model_name }}</div>
+                <div fxFlex="25">{{ modresult.accuracy | number }}%</div>
+                <!--
+                  <table>
+                    <th>Model</th>
+                    <th>Accuracy</th>
+                    <tr *ngFor='let modresult of mresult.ml_result.List_of_all_models'>
+                        <td>{{modresult.model_name}}</td><td>{{modresult.accuracy}}%</td>
+                    </tr>
+                  </table>
+                -->
+              </li>
+            </ul>
+          </div>
+
+          <div
+            class="right-col"
+            fxFlex="80"
+            fxLayout="row"
+            fxLayoutGap="20px"
+            fxLayoutAlign="end start"
+          >
+            <div fxFlex="50" fxLayout="column" *ngIf="fullGraph !== true" style="height: 100%;">
+              <div
+                class="box box-margin"
+                fxLayout
+                fxLayoutAlign="space-between center"
+                style="text-align: center; height: 60%;"
+              >
+                <div fxFlex="50">
+                  <h3>Best Model : {{ mresult.ml_result.Best_Model }}</h3>
+                </div>
+                <div
+                  fxLayout="column"
+                  fxFlex="50"
+                  style="text-align: center;"
+                  *ngIf="mresult.ml_result.train_accuracy"
+                >
+                  <easy-pie-chart
+                    [options]="{
+                      animate: 2000,
+                      lineWidth: 12,
+                      size: 150,
+                      barColor: '#009688',
+                      trackColor: 'rgba(0, 150, 136, 0.2)'
+                    }"
+                    [percent]="mresult.ml_result.train_accuracy"
+                  ></easy-pie-chart>
+                  <label>Accuracy: {{ mresult.ml_result.train_accuracy }}%</label>
+                </div>
+                <div
+                  fxLayout="column"
+                  fxFlex="50"
+                  style="text-align: center;"
+                  *ngIf="mresult.ml_result.Error_rate"
+                >
+                  <easy-pie-chart
+                    [options]="{
+                      animate: 2000,
+                      lineWidth: 12,
+                      size: 150,
+                      barColor: '#009688',
+                      trackColor: 'rgba(0, 150, 136, 0.2)'
+                    }"
+                    [percent]="mresult.ml_result.Error_rate"
+                  ></easy-pie-chart>
+                  <label>Error Rate: {{ mresult.ml_result.Error_rate }}%</label>
+                </div>
+              </div>
+
+              <!--
+                <div class="box" fxLayout="row" fxLayoutAlign="center center" *ngIf="data_type !== 'regression'">
+
+                  <div class="table-left-heading">Predictor</div>
+
+                  <div fxLayout="column">
+                    <div class="table-top-heading">Actual</div>
+
+                    <table class="table">
+
+                      <tr>
+                        <td></td>
+                        <td class="positive">Positive</td>
+                        <td class="negative">Negative</td>
+                      </tr>
+
+                      <tr>
+                        <td class="positive">Positive</td>
+                        <td class="true">
+                          True Positive
+                          <br>
+                          {{mresult.ml_result.true_positive}}
+                        </td>
+                        <td class="false">
+                          False Positive
+                          <br>
+                          {{mresult.ml_result.false_positive}}
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <td class="negative">Negative</td>
+                        <td class="false">
+                          False Negative
+                          <br>
+                          {{mresult.ml_result.False_negative}}
+                        </td>
+                        <td class="true">
+                          True Negative
+                          <br>
+                          {{mresult.ml_result.true_negative}}
+                        </td>
+                      </tr>
+
+                    </table>
+                  </div>
+                </div>
+              -->
+
+              <div
+                class="box"
+                fxLayout="column"
+                fxLayoutAlign="center"
+                *ngIf="data_type == 'classification'"
+                style="height: 50%;"
+              >
+                <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="25">Test Accuracy: {{ mresult.ml_result.Accuracy }}%</label>
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{mresult.ml_result.Accuracy}}"
+                  ></mat-progress-bar>
+                </div>
+                <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="25">F1: {{ mresult.ml_result.F1 }}%</label>
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{mresult.ml_result.F1}}"
+                  ></mat-progress-bar>
+                </div>
+
+                <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="25"
+                    >Precision: {{ mresult.ml_result.Precision }}%</label
+                  >
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{mresult.ml_result.Precision}}"
+                  ></mat-progress-bar>
+                </div>
+
+                <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="25"
+                    >Recall: {{ mresult.ml_result.Recall }}%</label
+                  >
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{mresult.ml_result.Recall}}"
+                  ></mat-progress-bar>
+                </div>
+                <div *ngIf="graphFile == 0">
+                  <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="35"
+                    >True Classified: {{total_correctly_classify}} %</label
+                  >
+                  <mat-progress-bar
+                  fxFlex="50%"
+                  mode="determinate"
+                  value="{{total_correctly_classify}}"
+                ></mat-progress-bar>
+
+                  </div>
+                  <div
+                    class="box-row"
+                    fxLayout
+                    fxLayoutAlign="space-between center"
+                  >
+                    <label fxFlex="35"
+                    >False Classified: {{total_not_correctly_classify}} %</label
+                    >
+                    <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{total_not_correctly_classify}}"
+                  ></mat-progress-bar>
+                  </div>
+                </div>
+
+
+
+
+              </div>
+              <div
+                class="box"
+                fxLayout="column"
+                fxLayoutAlign="center"
+                *ngIf="data_type == 'regression'"
+                style="height: 50%;"
+              >
+                <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="25">R2: {{ mresult.ml_result.R2 }}%</label>
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{mresult.ml_result.R2}}"
+                  ></mat-progress-bar>
+                </div>
+
+                <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="25%"
+                    >Mean Squared Error:
+                    {{ mresult.ml_result.Mean_Squared_Error }}%</label
+                  >
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{mresult.ml_result.Mean_Squared_Error}}"
+                  ></mat-progress-bar>
+                </div>
+
+                <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="25%"
+                    >Mean Absolute Error:
+                    {{ mresult.ml_result.Mean_Absolute_Error }}%</label
+                  >
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{mresult.ml_result.Mean_Absolute_Error}}"
+                  ></mat-progress-bar>
+                </div>
+
+                <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="25%"
+                    >Median Absolute Error:
+                    {{ mresult.ml_result.Median_Absolute_Error }}%</label
+                  >
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{mresult.ml_result.Median_Absolute_Error}}"
+                  ></mat-progress-bar>
+                </div>
+                <div *ngIf="graphFile == 0">
+                  <div
+                  class="box-row"
+                  fxLayout
+                  fxLayoutAlign="space-between center"
+                >
+                  <label fxFlex="50"
+                    >True Classified:  {{total_correctly_classify}} %</label
+                  >
+                  <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value="{{total_correctly_classify}}"
+                  ></mat-progress-bar>
+
+                  </div>
+                  <div
+                    class="box-row"
+                    fxLayout
+                    fxLayoutAlign="space-between center"
+                  >
+                    <label fxFlex="50"
+                    >False Classified:  {{total_not_correctly_classify}} %</label
+                    >
+                    <mat-progress-bar
+                    fxFlex="50%"
+                    mode="determinate"
+                    value=" {{total_not_correctly_classify}}"
+                  ></mat-progress-bar>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="graph-box" *ngIf="graphFile !== 0"  [style.width.%]="fullGraphWidth">
+
+              <div
+                class="box"
+                fxLayoutAlign="center center"
+                *ngIf="data_type !== 'regression'"
+                style="height: 100%;"
+              >
+
+                <img [src]="graphFile" />
+
+                <button class="graph-full-screen" mat-fab color="accent" *ngIf="fullGraph !== true">
+                  <mat-icon (click)="fulScreenGraph()">fullscreen</mat-icon>
+                </button>
+
+                <button mat-fab color="accent" *ngIf="fullGraph === true">
+                    <mat-icon (click)="exitFulScreenGraph()">fullscreen_exit</mat-icon>
+                </button>
+
+              </div>
+            </div>
+
+            <div class="graph-box" [style.width.%]="fullGraphWidth">
+
+              <div
+                class="box"
+                fxLayoutAlign="center center"
+                *ngIf="data_type !== 'regression'"
+                style="height: 100%;"
+              >
+                <!-- <img src="assets/img/Figure_1.png" /> -->
+                <img [src]="auc_plot" />
+
+                <button class="graph-full-screen" mat-fab color="accent" *ngIf="fullGraph !== true">
+                  <mat-icon (click)="fulScreenGraph()">fullscreen</mat-icon>
+                </button>
+
+                <button mat-fab color="accent" *ngIf="fullGraph === true">
+                    <mat-icon (click)="exitFulScreenGraph()">fullscreen_exit</mat-icon>
+                </button>
+
+              </div>
+            </div>
+
+          </div>
+
+
+
+        </div>
+
+      </mat-tab>
+
+      <mat-tab label="Predictions">
+        <div *ngIf="loader == 1" class="loader-gloabl">
+          <mat-spinner></mat-spinner>
+          <div style="z-index: 9999; text-align: center; margin-top: 100px">
+            <h3>Data is processing. Please wait!</h3>
+          </div>
+        </div>
+
+        <div *ngIf="prediction_status !== 1 && loader == 0">
+          <h2>Predictions</h2>
+
+          <div style="color:red">{{ error }}</div>
+
+          <div fxLayout="row tab-content-row" style="padding: 20px;">
+            <form
+              fxLayout="column"
+              fxFlex="30"
+              (submit)="onSubmitPrediction(dataForm)"
+              #dataForm="ngForm"
+            >
+              <mat-form-field>
+                <input
+                  type="text"
+                  matInput
+                  [(ngModel)]="description"
+                  required="required"
+                  name="description"
+                  placeholder="Description"
+                />
+              </mat-form-field>
+
+              <mat-form-field>
+                <input
+                  type="text"
+                  required
+                  matInput
+                  [(ngModel)]="testlocation"
+                  name="testlocation"
+                  placeholder="File Path"
+                />
+              </mat-form-field>
+
+              <input
+                type="hidden"
+                [(ngModel)]="modelLocation"
+                name="modelLocation"
+              />
+              <input
+                type="file"
+                id="recordedFeed"
+                class="form-control"
+                required
+                [(ngModel)]="sourceLink"
+                name="sourceLink"
+                id="sourceFile"
+                (change)="onPredicitionFileSelect($event)"
+              />
+
+              <div>
+                <button
+                  mat-raised-button
+                  color="primary"
+                  type="submit"
+                  (click)="
+                    openSnackBar('SUCCESS:', 'Form submitted successfully.')
+                  "
+                >
+                  Create
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+
+        <div *ngIf="prediction_status == 1">
+          <!-- <h2>{{mresult.modelName}}</h2> -->
+          <h2>Model Predicition</h2>
+
+          <div fxLayout="row tab-content-row" style="padding: 20px;">
+            <!--
+              <h3>Predicton</h3>
+              {{prediction_data.prediction}}<br />
+              <h3>True label</h3>
+              {{prediction_data.True_label}}<br />
+
+              <h3>Score</h3>
+              {{prediction_data.score}}<br />
+              <h3>Model Name</h3>
+              {{mresult.modelName}}
+              <h3>Best Model</h3>
+              {{mresult.ml_result.Best_Model}}
+            -->
+
+            <div fxLayout="row" fxLayoutGap="20px">
+              <div
+                class="box"
+                fxLayout="column"
+                fxLayoutAlign="space-between center"
+                style="text-align: center;"
+              >
+                <div fxLayout>
+                  <h3>Model : {{ mresult.ml_result.Best_Model }}</h3>
+                </div>
+                <div
+                  fxLayout
+                  style="text-align: center;"
+                  style="margin: 10px 0px;"
+                >
+                  <easy-pie-chart
+                    [options]="{
+                      animate: 2000,
+                      lineWidth: 15,
+                      size: 200,
+                      barColor: '#009688',
+                      trackColor: 'rgba(0, 150, 136, 0.2)'
+                    }"
+                    [percent]="prediction_data.score"
+                  ></easy-pie-chart>
+                </div>
+                <label>Score {{ prediction_data.score }}%</label>
+              </div>
+
+              <!--
+                <div class="box" fxFlex="60">
+                    <canvas baseChart
+                    [data]="lineChartData"
+                    [labels]="lineChartLabels"
+                    [options]="lineChartOptions"
+                    [chartType]="lineChartType"
+                    (chartHover)="chartHovered($event)"
+                    (chartClick)="chartClicked($event)"></canvas>
+                </div>
+              -->
+
+              <canvas
+                baseChart
+                class="box"
+                fxFlex="75"
+                [datasets]="lineChartData"
+                [labels]="lineChartLabels"
+                [options]="lineChartOptions"
+                [legend]="lineChartLegend"
+                [chartType]="lineChartType"
+                (chartHover)="chartHovered($event)"
+                (chartClick)="chartClicked($event)"
+              ></canvas>
+            </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</main>

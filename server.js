@@ -16,6 +16,9 @@ var app = express();
 var routes = require('./routes/index');
 var user = require('./routes/users');
 var roles=  require('./routes/roles');
+var dataSourceRoute = require('./routes/datasource');
+var modelDataRoute = require('./routes/modelsroute');
+
 const port = 3100;
 
 const allowedExt = [
@@ -39,10 +42,9 @@ global.CONFIGURATIONS ={
   username: '',
   password: '',
   authdb: '',
-  ssl: false
+  ssl: false,
+  bFAIrequestApi: 'http://24.16.119.69:7799'
 }
-
-
 
 // Add headers
 app.use(function (req, res, next) {
@@ -90,6 +92,8 @@ app.use(passport.session());
 app.use('/api', routes);
 app.use('/user',user);
 app.use('/role',roles);
+app.use('/dataSourceApi', dataSourceRoute);
+app.use('/modelApi', modelDataRoute);
 
 
 

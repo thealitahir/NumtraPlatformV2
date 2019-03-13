@@ -1,0 +1,46 @@
+<h3 mat-dialog-title class="text-center">Select File Type</h3>
+<h2 style="color:red">{{error}}</h2>
+<div mat-dialog-content>
+
+  <div fxLayout fxLayoutAlign="start center">
+    <label fxFlex="25">File Name:</label>
+    <span></span>
+
+    <mat-form-field>
+        <input matInput type="text" name="dialogS3filename" [(ngModel)]="data.dialogS3filename" readonly>
+    </mat-form-field>
+
+  </div>
+
+  <div fxLayout fxLayoutAlign="start center">
+    <label fxFlex="25">File Type:</label>
+    <mat-form-field>
+      <mat-select name="fileType" required="required" [(ngModel)]="fileType">
+        <mat-option value="">Select File Type </mat-option>
+        <mat-option value="csv">.CSV</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <div fxLayout fxLayoutAlign="start center" *ngIf="fileType == 'csv'">
+    <label fxFlex="25">Delimeter:</label>
+    <mat-form-field>
+      <mat-select name="delimeter" required="required" [(ngModel)]="delimeter">
+        <mat-option value="">Select Delimeter </mat-option>
+        <mat-option value=",">, (comma)</mat-option>
+        <mat-option value=";">; (semicolon)</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</div>
+
+<div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+  <!-- <button mat-raised-button color="primary" (click)="s3selecetedfile()">
+  Select
+  </button> -->
+  <!-- <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button> -->
+
+  <button mat-raised-button color="primary" (click)="save()" cdkFocusInitial>Ok</button>
+  <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+</div>

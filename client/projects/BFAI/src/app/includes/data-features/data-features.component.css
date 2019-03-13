@@ -1,0 +1,25 @@
+.feature-vis .col{
+  border-right: solid 1px #ccc;
+  width: 150px;
+}
+.feature-vis .col:first-child{
+  border-left: solid 1px #ccc;
+}
+.feature-vis-data label{
+  display: block;
+  text-align: center;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  padding: 0 5px;
+}
+.feature-vis-check{
+  text-align: center;
+    margin-bottom: 10px;
+    border-top: solid 1px #eee;
+    clear: both;
+    border-bottom: solid 1px #eee;
+}
+.feature-vis-data-title{
+  margin-bottom: 0.5rem;
+}

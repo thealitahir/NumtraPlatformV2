@@ -18,9 +18,16 @@ router.get('/', function(req, res) {
     res.json({user: user});
 });
 
+router.get('/login',function( req,res ) {
+    var user = {};
+    user.status= false;
+    user.msg = "Failed! Incorrect Username or Password.";
+    res.json({user: user});
+});
+
 router.post('/userlogin' , passport.authenticate('local', {    
     successRedirect: '/api/',
-    failureRedirect: '/login',
+    failureRedirect: '/api/login',
     failureFlash: true,
 }));
 
