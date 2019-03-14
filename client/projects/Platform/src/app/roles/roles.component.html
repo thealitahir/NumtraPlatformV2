@@ -10,14 +10,14 @@
         <h2>Roles</h2>
 
         <div class="project-search-block">
-          
+
           <button mat-button>Add Roles</button>
 
         </div>
       </div>
 
       <!-- ----------------------------------------Roles View------------------------------------ -->
-      <div>
+      <div *ngIf='view == 1'>
         <table mat-table>
           <thead>
               <tr>
@@ -29,10 +29,10 @@
               <tbody>
               <tr *ngFor="let dataObj of allRoles">
                   <td class="col-md-1">{{dataObj.title}}</td>
-  
+
                   <td>
                       <div class="col-md-12 user-permission-status" >
-  
+
                           <div class="row">
                               <div class="col-md-1">
                                   &nbsp;
@@ -43,7 +43,7 @@
                                   </div>
                               </div>
                           </div>
-  
+
                           <div class="row">
                               <div class="col-md-1">
                                   View
@@ -59,7 +59,7 @@
                                   <span *ngIf="item.name=='Sinks' && item.permissions.indexOf('view')==-1" class="col-md-2 glyphicons glyphicons-minus-sign" > </span>
                               </div>
                           </div>
-  
+
                           <div class="row">
                               <div class="col-md-1">
                                   Create
@@ -75,7 +75,7 @@
                                   <span *ngIf="item.name=='Sinks' && item.permissions.indexOf('create')==-1" class="col-md-2 glyphicons glyphicons-minus-sign" > </span>
                               </div>
                           </div>
-  
+
                           <div class="row">
                               <div class="col-md-1">
                                   Share
@@ -91,7 +91,7 @@
                                   <span *ngIf="item.name=='Sinks' && item.permissions.indexOf('share')==-1" class="col-md-2 glyphicons glyphicons-minus-sign" > </span>
                               </div>
                           </div>
-  
+
                           <div class="row">
                               <div class="col-md-1">
                                   Delete
@@ -107,24 +107,25 @@
                                   <span *ngIf="item.name=='Sinks' && item.permissions.indexOf('delete')==-1" class="col-md-2 glyphicons glyphicons-minus-sign" > </span>
                               </div>
                           </div>
-  
+
                       </div>
                   </td>
-  
+
                   <td class="text-center col-md-1">
                   <span class="user-actions">
-                      <span ng-model="status" click="editRole('edit', dataObj._id)"  title="Edit user">Edit</span>
-                      <span ng-model="status" click="editRole('remove', dataObj._id)" title="Delete user">Delete</span>
+                      <button mat-button ng-model="status" (click)="editRoles(dataObj._id)"  title="Edit user">Edit</button>
+                      <!-- <span ng-model="status" click="editRole('edit', dataObj._id)"  title="Edit user">Edit</span> -->
+                      <button mat-button ng-model="status" (click)="editRoles(dataObj._id)" title="Delete user">Delete</button>
                   </span>
                   </td>
-  
+
               </tr>
               </tbody>
         </table>
       </div>
    <!-- -----------------------------------------Edit / Add Role ---------------------------------- -->
 
-   <!-- <div class="table-block fullHeight">
+   <div class="table-block fullHeight"  *ngIf='view == 2'>
        <div class="roles-block row">
            <form role="form">
                <div class="col-md-12">
@@ -138,43 +139,54 @@
                        <input type="text" ng-disabled="disable_title" class="form-control" ng-model="role.title" id="name" placeholder="Name..." required>                        <span class="alert-danger" ng-show="vaidateSchemaFieldsName(schema.selected_schema[$index].alias)"> Please do not enter sql keywords</span>
                        <span class="alert-danger" ng-show="checkAvailability(role.title)"> Role already exists</span>
                    </div>
-   
+
                    <div class="form-group">
                        <label>Modules</label>
-                       <ng-dropdown-multiselect class="user-permission" selected-model="role.selectedFields" options="resources" extra-settings="custom_settings" translation-texts="customTexts_modules" search-filter="customFilter" events="events"></ng-dropdown-multiselect>
-                   </div>
-   
-                   <div ng-repeat="permission in role.modules">
-   
+                       <!-- <ng-dropdown-multiselect class="user-permission" selected-model="role.selectedFields" options="resources" extra-settings="custom_settings" translation-texts="customTexts_modules" search-filter="customFilter" events="events"></ng-dropdown-multiselect> -->
+
+                       <!-- <mat-form-field>
+                          <mat-select  name="transformation" required="required" name="datatype" [(ngModel)]="" multiple>
+                            <mat-option value="">Select Problem Type </mat-option>
+                            <mat-option *ngFor="let prob of problemslist" (click)="getProbParameter(prob.problemparameters)"
+                              value="churnPrediction">{{prob.problemname}}</mat-option>
+                          </mat-select>
+                        </mat-form-field> -->
+
+                      </div>
+
+
+
+                   <div *ngFor='let permission of role.modules'>
+
                        <div class="form-group legend" ng-show="permission.name=='Pipelines' || permission.name=='Dashboards'">
                            <label>{{permission.name}} Permission</label>
                        </div>
-   
+
                        <div class="form-group" ng-show="permission.name=='Pipelines' || permission.name=='Dashboards'">
                            <label>Permissions</label>
-                           <ng-dropdown-multiselect class="user-permission" selected-model="permission.selectedPermissions" options="permissions" extra-settings="custom_settings" search-filter="customFilter" translation-texts="customTexts_permissions"></ng-dropdown-multiselect>
+                           <!-- <ng-dropdown-multiselect class="user-permission" selected-model="permission.selectedPermissions" options="permissions" extra-settings="custom_settings" search-filter="customFilter" translation-texts="customTexts_permissions"></ng-dropdown-multiselect> -->
                        </div>
-   
+
                        <div ng-if="permission.name == 'Pipelines'">
                            <div ng-if="_.findIndex(role.selectedFields,{label:'Pipelines'})>-1">
                                <div class="form-group" ng-init="set_sections(permission.name)">
                                    <label>Sections </label>
-                                   <ng-dropdown-multiselect class="user-permission" selected-model="role.pipelinePermissions" options="sections[permission.name]" extra-settings="custom_settings" translation-texts="customTexts_sections" search-filter="customFilter"></ng-dropdown-multiselect>
+                                   <!-- <ng-dropdown-multiselect class="user-permission" selected-model="role.pipelinePermissions" options="sections[permission.name]" extra-settings="custom_settings" translation-texts="customTexts_sections" search-filter="customFilter"></ng-dropdown-multiselect> -->
                                </div>
                            </div>
                        </div>
-   
+
                        <div ng-if="permission.name == 'Dashboards'">
                            <div ng-if="_.findIndex(role.selectedFields,{label:'Dashboards'})>-1">
                                <div class="form-group" ng-init="set_sections(permission.name)">
                                    <label>Sections </label>
-                                   <ng-dropdown-multiselect class="user-permission" selected-model="role.dashboardPermissions" options="sections[permission.name]" extra-settings="custom_settings" translation-texts="customTexts_sections" search-filter="customFilter"></ng-dropdown-multiselect>
+                                   <!-- <ng-dropdown-multiselect class="user-permission" selected-model="role.dashboardPermissions" options="sections[permission.name]" extra-settings="custom_settings" translation-texts="customTexts_sections" search-filter="customFilter"></ng-dropdown-multiselect> -->
                                </div>
                            </div>
                        </div>
-   
+
                    </div>
-   
+
                    <div class="text-right">
                        <button class="btn btn-danger" ng-click="cancel()">Cancel</button>
                        <button class="btn btn-success" ng-click="save()">Save</button>
@@ -184,22 +196,22 @@
                    <div class="form-group legend">
                        <label>Components</label>
                    </div>
-                   <div ng-repeat="permission in role.pipelinePermissions">
+                   <div *ngFor="let permission of role.pipelinePermissions">
                        <div class="form-group" ng-init="set_components(permission)">
                            <label>{{permission.label}}</label>
-                           <ng-dropdown-multiselect class="user-permission" selected-model="permission.section_permissions" options="components[permission.label]" extra-settings="custom_settings" translation-texts="customTexts_components" search-filter="customFilter"></ng-dropdown-multiselect>
+                           <!-- <ng-dropdown-multiselect class="user-permission" selected-model="permission.section_permissions" options="components[permission.label]" extra-settings="custom_settings" translation-texts="customTexts_components" search-filter="customFilter"></ng-dropdown-multiselect> -->
                        </div>
                    </div>
                </div>
            </form>
        </div>
-   </div> -->
-   
+   </div>
+
 <!-- -----------------------------End Edit / Add Roles--------------------------- -->
 
-      
+
     </div>
-    
+
 
   </div>
 

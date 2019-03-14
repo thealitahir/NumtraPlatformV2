@@ -17,6 +17,7 @@ import {
   MatTabsModule,
   MatInputModule,
   MatCardModule,
+  MatSelectModule,
 } from '@angular/material';
 
 import { routing } from './platform.routing';
@@ -59,7 +60,7 @@ import { ComponentsService } from './services/components.service';
 
     MatCheckboxModule,
     MatIconModule,
-
+    MatSelectModule,
     MatInputModule,
     MatCardModule,
     MatToolbarModule,
