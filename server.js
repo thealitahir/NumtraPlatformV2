@@ -18,6 +18,7 @@ var user = require('./routes/users');
 var roles=  require('./routes/roles');
 var dataSourceRoute = require('./routes/datasource');
 var modelDataRoute = require('./routes/modelsroute');
+var dbfs=  require('./routes/dbfs');
 
 const port = 3100;
 
@@ -43,7 +44,9 @@ global.CONFIGURATIONS ={
   password: '',
   authdb: '',
   ssl: false,
-  bFAIrequestApi: 'http://24.16.119.69:7799'
+  bFAIrequestApi: 'http://24.16.119.69:7799',
+  dbfsToken: 'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
+  dbfsDomain: 'westus.azuredatabricks.net'
 }
 
 // Add headers
@@ -95,7 +98,7 @@ app.use('/role',roles);
 app.use('/dataSourceApi', dataSourceRoute);
 app.use('/modelApi', modelDataRoute);
 
-
+app.use('/dbfs',dbfs);
 
 app.get('/user', (req, res) => res.json({
   application: 'Reibo collection'

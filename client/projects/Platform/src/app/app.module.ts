@@ -16,8 +16,22 @@ import {
   MatButtonModule,
   MatTabsModule,
   MatInputModule,
+  MatSelectModule,
   MatCardModule,
+  MatRadioModule,
+  MatTableModule,
+  MatSortModule,
+  MatExpansionModule,
+  MatOptionModule,
+  MatSnackBarModule,
+  MatProgressBarModule,
+  MatSidenavModule,
+  MatProgressSpinnerModule,
+  MatStepperModule,
+  MatDialogModule
 } from '@angular/material';
+
+
 
 import { routing } from './platform.routing';
 
@@ -28,6 +42,8 @@ import { CanvasComponent } from './canvas/canvas.component';
 import { RolesComponent } from './roles/roles.component';
 import { SubNavComponent } from './sub-nav/sub-nav.component';
 import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } from './filter.pipe';
+
+import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 
 import { UsersService } from './services/user.service';
 import { PlatRolesService } from './services/platroles.service';
@@ -43,6 +59,8 @@ import { ComponentsService } from './services/components.service';
     CanvasComponent,
     SubNavComponent,
     RolesComponent,
+
+    DbfsComponent,
 
     ProjectFilterPipe,
     ApplicationFilterPipe,
@@ -61,7 +79,7 @@ import { ComponentsService } from './services/components.service';
 
     MatCheckboxModule,
     MatIconModule,
-
+    MatSelectModule,
     MatInputModule,
     MatCardModule,
     MatToolbarModule,
@@ -69,6 +87,18 @@ import { ComponentsService } from './services/components.service';
     MatMenuModule,
     MatTabsModule,
     MatTooltipModule,
+    MatRadioModule,
+    MatTableModule,
+    MatSortModule,
+    MatExpansionModule,
+
+    MatOptionModule,
+    MatSnackBarModule,
+    MatProgressBarModule,
+    MatSidenavModule,
+    MatProgressSpinnerModule,
+    MatStepperModule,
+    MatDialogModule,
     HttpClientModule,
     HttpModule
   ],
