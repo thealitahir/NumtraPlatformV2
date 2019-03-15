@@ -46,7 +46,7 @@ global.CONFIGURATIONS ={
   ssl: false,
   bFAIrequestApi: 'http://24.16.119.69:7799',
   dbfsToken: 'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
-  dbfsDomain: 'westus.azuredatabricks.net'
+  dbfsDomain: 'https://westus.azuredatabricks.net'
 }
 
 // Add headers
@@ -105,6 +105,10 @@ app.get('/user', (req, res) => res.json({
 }));
 
 app.get('/api', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/dbfs', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 
