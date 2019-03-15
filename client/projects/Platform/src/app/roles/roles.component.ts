@@ -1,8 +1,9 @@
-import { Component, OnInit } from "@angular/core";
-import { PlatRolesService } from "../services/platroles.service";
-import { ResourcesService } from "../services/resources.service";
-import { SectionsService } from "../services/sections.service";
-import { ComponentsService } from "../services/components.service";
+import { Component, OnInit } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { PlatRolesService } from '../services/platroles.service';
+import { ResourcesService } from '../services/resources.service';
+import { SectionsService } from '../services/sections.service';
+import { ComponentsService } from '../services/components.service';
 
 @Component({
   selector: "app-roles",
@@ -17,7 +18,7 @@ export class RolesComponent {
   sections: any;
   components: any;
   title_text: any;
-
+  view = 1;
   constructor(
     public platroleService: PlatRolesService,
     public resourceService: ResourcesService,
@@ -27,6 +28,7 @@ export class RolesComponent {
     this.platroleService.getRolesAndPermissions().subscribe(data => {
       console.log(data);
       this.allRoles = data.data;
+      this.view = 1;
       for (var i = 0; i < this.allRoles.length; i++) {
         this.allRoles[i].temp_array = [];
         for (var j = 0; j < this.allRoles[i].modules.length; j++) {
@@ -38,31 +40,37 @@ export class RolesComponent {
     });
   }
 
-  // editRoles() {
-  //   this.title_text= 'Edit Role';
-  //   this.roleService.getById(localStorage.role.role).subscribe(rolesdata => {
-  //     console.log(rolesdata.data);
-  //     this.role='';
-  //   });
+  editRoles(roleid) {
+    this.view = 2;
+    this.title_text = 'Edit Role';
+    this.platroleService.getById(roleid).subscribe(rolesdata => {
+      console.log('role');
+      console.log( rolesdata.data);
+      this.role = rolesdata.data;
+    });
 
-  //   this.resourceService.getResources().subscribe(resourcedata => {
-  //     console.log(resourcedata.data);
-  //     this.role='';
-  //   });
+    this.resourceService.getResources().subscribe(resourcedata => {
+      console.log('resources');
+      console.log(resourcedata.data);
+      this.resources = resourcedata.data;
+    });
 
-  //   this.roleService.getExistingRoles().subscribe(rolesdata => {
-  //     console.log(rolesdata.data);
-  //     this.roles='';
-  //   });
+    this.platroleService.getExistingRoles().subscribe(rolesdata => {
+      console.log('roles');
+      console.log(rolesdata.data);
+      this.roles = rolesdata.data;
+    });
 
-  //   this.sectionService.getSections().subscribe(sectionsdata => {
-  //     console.log(sectionsdata.data);
-  //     this.sections='';
-  //   });
+    this.sectionService.getSections().subscribe(sectionsdata => {
+      console.log('sections');
+      console.log(sectionsdata.data);
+      this.sections = sectionsdata.data;
+    });
 
-  //   this.componentService.getComponents().subscribe(componentdata => {
-  //     console.log(componentdata.data);
-  //     this.components='';
-  //   });
-  // }
+    this.componentService.getComponents().subscribe(componentdata => {
+      console.log('components');
+      console.log(componentdata.data);
+      this.components = componentdata.data;
+    });
+  }
 }
