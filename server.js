@@ -50,7 +50,7 @@ global.CONFIGURATIONS ={
   ssl: false,
   bFAIrequestApi: 'http://24.16.119.69:7799',
   dbfsToken: 'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
-  dbfsDomain: 'westus.azuredatabricks.net'
+  dbfsDomain: 'https://westus.azuredatabricks.net'
 }
 
 // Add headers
@@ -116,6 +116,7 @@ app.get('/api', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 
+<<<<<<< HEAD
 app.get('/resources', (req, res) => res.json({
   application: 'Reibo collection'
 }));
@@ -136,6 +137,12 @@ app.get('/modelApi', (req, res) => res.json({
 }));
 
 
+=======
+app.get('/dbfs', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+>>>>>>> b7897eddd319df3baa9b4d58bd3824bae1ad1b19
 app.get('*', (req, res) => {
     if (allowedExt.filter(ext => req.url.indexOf(ext) > 0).length > 0) {
       res.sendFile(path.resolve(`client/dist/numtraPlatformV2/${req.url}`));
