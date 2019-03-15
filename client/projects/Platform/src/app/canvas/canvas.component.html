@@ -1,6 +1,6 @@
 <!-- <div class="right-nav-col">
   <app-sub-nav (rightColMenu)="openRightCol($event)"></app-sub-nav>
-</div> 
+</div>
 
 <div class="right-nav-col">
   <ul class="sub-nav-right" fxFlex="nogrow">
@@ -129,6 +129,7 @@
       <a>Custom Transformation</a>
     </li>
     <li (click)="showStencilGroup($event, 'template')"><a>Templates</a></li>
+    <li [routerLink]="['/platform/dbfs']" >DBFS Source</li>
   </ul>
 </div>
 
