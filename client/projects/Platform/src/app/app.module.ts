@@ -50,7 +50,11 @@ import { PlatRolesService } from './services/platroles.service';
 import { ResourcesService } from './services/resources.service';
 import { SectionsService } from './services/sections.service';
 import { ComponentsService } from './services/components.service';
+
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
+
+import { DbfsService } from './services/dbfs.service';
+
 
 @NgModule({
   declarations: [
@@ -114,7 +118,7 @@ export class PlatformSharedModule{
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AppModule,
-      providers: [ PlatRolesService , UsersService, ResourcesService, SectionsService, ComponentsService ]
+      providers: [ PlatRolesService , UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService ]
     }
   }
 }
