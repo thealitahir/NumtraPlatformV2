@@ -28,6 +28,7 @@ router.get('/getDataSource', function(req,res) {
             var fileheader=[];
             fileheader = filedata[0].split(",");
             filedata.shift();
+            filedata.length =10;
             var fh=[];
             var fd=[];
            
