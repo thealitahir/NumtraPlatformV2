@@ -98,7 +98,7 @@ app.use('/role',roles);
 app.use('/dataSourceApi', dataSourceRoute);
 app.use('/modelApi', modelDataRoute);
 
-app.use('/dbfs',dbfs);
+//app.use('/dbfs',dbfs);
 
 app.get('/user', (req, res) => res.json({
   application: 'Reibo collection'

@@ -50,6 +50,7 @@ import { PlatRolesService } from './services/platroles.service';
 import { ResourcesService } from './services/resources.service';
 import { SectionsService } from './services/sections.service';
 import { ComponentsService } from './services/components.service';
+import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +65,8 @@ import { ComponentsService } from './services/components.service';
 
     ProjectFilterPipe,
     ApplicationFilterPipe,
-    ModelCategoryFilterPipe
+    ModelCategoryFilterPipe,
+    PipelineDesignerComponent
 
   ],
   imports: [

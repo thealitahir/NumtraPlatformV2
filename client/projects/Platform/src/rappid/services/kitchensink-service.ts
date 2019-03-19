@@ -19,13 +19,14 @@ import {InspectorService} from './inspector-service';
 import {HaloService} from './halo-service';
 import {KeyboardService} from './keyboard-service';
 import * as appShapes from '../shapes/app-shapes';
+import {   } from '@angular/core';
 
-class KitchenSinkService {
+export class KitchenSinkService {
 
     el: Element;
 
     graph: joint.dia.Graph;
-    paper: joint.dia.Paper;
+    public paper: joint.dia.Paper;
     paperScroller: joint.ui.PaperScroller;
 
     commandManager: joint.dia.CommandManager;
@@ -59,7 +60,16 @@ class KitchenSinkService {
         this.haloService = haloService;
         this.keyboardService = keyboardService;
     }
-
+    
+    getPaper(){
+        return this.paper;
+    }
+    getSelection(){
+        return this.selection;
+    }
+    getKeyboard(){
+        return this.keyboardService;
+    }
     startRappid() {
 
         joint.setTheme('modern');
@@ -161,12 +171,11 @@ class KitchenSinkService {
             if (keyboard.isActive('ctrl meta', evt)) {
                 this.selection.collection.add(elementView.model);
             }
-
         });
 
         this.paper.on('link:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
             if(elementView.model.attributes.target.id != null)    
-                debugger;
+                //debugger;
             // Select an element if CTRL/Meta key is pressed while the element is clicked.
             if (keyboard.isActive('ctrl meta', evt)) {
                 this.selection.collection.add(elementView.model);
