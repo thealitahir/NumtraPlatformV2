@@ -3,6 +3,11 @@ var router =  express.Router();
 var request = require("request");
 // var Roles = require('../models/rolesModel');
 
+router.post('/updateStage',function(req,res){
+    console.log('update stage');
+    console.log(req.body);
+})
+
 router.get('/getDataSource', function(req,res) {
     console.log('node routes');
    // console.log(req.params);
@@ -43,8 +48,9 @@ router.get('/getDataSource', function(req,res) {
                     fdobj[head]= filedata[j].split(",")[i] ;  
                 }
                 fd.push(fdobj);               
-            }    
-                res.send(fd);
+            }
+            var fdata={fileheader:fh, filedata:fd}    
+                res.send(fdata);
     });
 });
 

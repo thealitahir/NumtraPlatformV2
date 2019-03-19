@@ -44,12 +44,14 @@ import { SubNavComponent } from './sub-nav/sub-nav.component';
 import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } from './filter.pipe';
 
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
+import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 
 import { UsersService } from './services/user.service';
 import { PlatRolesService } from './services/platroles.service';
 import { ResourcesService } from './services/resources.service';
 import { SectionsService } from './services/sections.service';
 import { ComponentsService } from './services/components.service';
+import { StageService } from './services/stage.service';
 
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 
@@ -66,6 +68,7 @@ import { DbfsService } from './services/dbfs.service';
     RolesComponent,
 
     DbfsComponent,
+    DiscoverDataComponent,
 
     ProjectFilterPipe,
     ApplicationFilterPipe,
@@ -108,6 +111,7 @@ import { DbfsService } from './services/dbfs.service';
     HttpClientModule,
     HttpModule
   ],
+  entryComponents: [ DiscoverDataComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
@@ -118,7 +122,7 @@ export class PlatformSharedModule{
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AppModule,
-      providers: [ PlatRolesService , UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService ]
+      providers: [ PlatRolesService, StageService, UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService ]
     }
   }
 }
