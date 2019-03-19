@@ -1,35 +1,34 @@
-<main>
+
+<div style="position:fixed; z-index: 999999; right: 80px; top:200px; width:250;height:500px; overflow: auto;">
+  <h3>DBFS Source</h3>
+  <form (submit)="saveDbfs(dbfsForm)" #dbfsForm="ngForm">
+
+
+    <mat-form-field>
+      <!-- <label>URL</label> -->
+      <input matInput type="text" name="url" placeholder="URL" #url="ngModel" ngModel required>
+    </mat-form-field>
+    <br />
+    <mat-form-field>
+      <!-- <label>File Type</label> -->
+      <mat-select name="fileType" required="required" name="filetype" #filetype="ngModel" ngModel required>
+        <mat-option value="">Select File Type </mat-option>
+        <mat-option value="xml">XML</mat-option>
+        <mat-option value="json">JSON</mat-option>
+        <mat-option value="parquet">Parquet</mat-option>
+        <mat-option value="geojson">Geojson</mat-option>
+        <mat-option value="shapefile">Shapefile</mat-option>
+        <mat-option value="rlg/dlg">RLG/DLG</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <br />
     <div>
-      <h3>DBFS Source</h3>
-        <form (submit)="saveDbfs(dbfsForm)" #dbfsForm="ngForm">
-
-          <mat-form-field>
-            <!-- <label>URL</label> -->
-            <input matInput type="text" name="url" placeholder="URL" #url="ngModel" ngModel required>
-          </mat-form-field>
-          <br/>
-          <mat-form-field>
-            <!-- <label>File Type</label> -->
-            <mat-select name="fileType" required="required" name="filetype" #filetype="ngModel" ngModel required>
-              <mat-option value="">Select File Type </mat-option>
-              <mat-option value="xml">XML</mat-option>
-              <mat-option value="json">JSON</mat-option>
-              <mat-option value="parquet">Parquet</mat-option>
-              <mat-option value="geojson">Geojson</mat-option>
-              <mat-option value="shapefile">Shapefile</mat-option>
-              <mat-option value="rlg/dlg">RLG/DLG</mat-option>
-            </mat-select>
-          </mat-form-field>
-          <br/>
-          <div>
-            <button mat-stroked-button color="accent" (click)='discoverData()'>Discover Data</button>
-          </div>
-          <br/>
-          <div>
-            <button mat-stroked-button color="accent" type="submit">Save</button>
-          </div>
-
-        </form>
+      <button mat-stroked-button color="accent" (click)="d()">Discover Data</button>
     </div>
-</main>
+    <br />
+    <div>
+      <button mat-stroked-button color="accent" type="submit">Save</button>
+    </div>
 
+  </form>
+</div>
