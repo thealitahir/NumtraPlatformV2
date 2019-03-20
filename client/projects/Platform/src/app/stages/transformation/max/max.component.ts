@@ -12,11 +12,13 @@ import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
 export class MaxComponent {
   fileheader: any;
   data: any ;
-  stage: any = 'Top';
+  stage: any;
+  stagename: any = 'Top';
   stageSchema: any;
   constructor(public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stage).subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stagename).subscribe(schemadata => {
       console.log(schemadata);
+      this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;
     });
   }

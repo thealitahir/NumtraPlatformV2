@@ -9,6 +9,7 @@ import { AuthGuard } from '../../../../src/app/guards/index';
 
 const APP_ROUTES: Routes = [
   { path: 'platform/dbfs', component: DbfsComponent, canActivate: [AuthGuard] },
+  { path: 'platform/max', component: MaxComponent },
   { path: 'platform/dashboard', component: DashboardComponent },
   { path: 'platform/canvas', component: PipelineDesignerComponent },
   { path: 'platform/roles', component: RolesComponent, canActivate: [AuthGuard] },
