@@ -8,6 +8,7 @@ import { HaloService } from '../../rappid/services/halo-service';
 import { KeyboardService } from '../../rappid/services/keyboard-service';
 import RappidService from '../../rappid/services/kitchensink-service';
 //import KitchenSinkService from 'dist/numtraPlatformV2/rappid/services/kitchensink-service';
+import { CanvasService } from '../services/canvas.service';
 
 @Component({
   selector: 'app-canvas',
@@ -24,7 +25,10 @@ export class CanvasComponent implements OnInit {
   selection: any;
   keyboardService: any;
   title = 'Rappid App';
-  constructor(private element: ElementRef) {}
+  constructor(
+    private element: ElementRef,
+    public canvasService: CanvasService
+    ) {}
 
   ngOnInit() {
     this.rappid = new RappidService(
@@ -48,8 +52,22 @@ export class CanvasComponent implements OnInit {
       this.onSearch.emit(elementView);
       
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
-
     });
+    this.paper.on('link:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
+      console.log(elementView.sourceView.model.attributes.attrs.label.text);
+      console.log(elementView.targetView.model.attributes.attrs.label.text);
+      if(elementView.model.attributes.target.id != null){
+        this.canvasService.onConnection(elementView.sourceView.model.attributes.attrs.label.text,
+          elementView.targetView.model.attributes.attrs.label.text).subscribe(data => {
+            console.log(data);
+          });
+      }
+      // Select an element if CTRL/Meta key is pressed while the element is clicked.
+      if (keyboard.isActive('ctrl meta', evt)) {
+          this.selection.collection.add(elementView.model);
+      }
+
+  });
   }
 
   
