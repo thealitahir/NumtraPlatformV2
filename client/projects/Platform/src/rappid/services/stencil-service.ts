@@ -26,7 +26,8 @@ export interface Source {
 
 export interface Sink {
     name: string,
-    label: string
+    label: string,
+    type?: string
 }
 
 export interface Operation {
@@ -127,7 +128,7 @@ export class StencilService {
 
     sinks: Sink[] = [
         { name: 'staging-sink', label: 'Datalake' },
-        { name: 'hdfs-sink', label: 'HDFS' },
+        { name: 'dbfs-sink', label: 'DBFS', type:"sink"},
         { name: 'kafka-sink', label: 'Kafka' },
         { name: 'amazonS3-sink', label: 'S3' },
         { name: 'sql-server-sink', label: 'RDBMS' },

@@ -20,8 +20,9 @@ router.post('/updateStage',function(req,res){
 })
 
 router.post('/linkStages',function(req,res){
-  var target=req.body.data.target;
-  var source=req.body.data.source;
+  console.log("in link Stages");
+  var target=req.body.target;
+  var source=req.body.source;
   StageVersionModel.findOne({name: source }, function (err, source) {
     if (!err) {
       StageVersionModel.update({"name": target}, { $set:{ "original_schema": source.original_schema} }, function (err, lsdata) {

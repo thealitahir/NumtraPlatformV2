@@ -10,11 +10,15 @@ import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
   templateUrl: './DBFS.component.html',
   styleUrls: ['./DBFS.component.css']
 })
-export class DbfsComponent {
+export class DbfsComponent implements OnInit{
   fileheader: any;
   data: any ;
   constructor(public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
 
+  }
+
+  ngOnInit(){
+    
   }
 
   saveDbfs(form: NgForm) {
