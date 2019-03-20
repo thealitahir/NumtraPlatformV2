@@ -1,7 +1,7 @@
 
-<div style="position:fixed; z-index: 999999; right: 80px; top:200px; width:250;height:500px; overflow: auto;">
+<div style="position:fixed; z-index: 999; right: 80px; top:200px; width:250;height:500px; overflow: auto;">
   <h3>DBFS Source</h3>
-  <form (submit)="saveDbfs(dbfsForm)" #dbfsForm="ngForm">
+  <form #dbfsForm="ngForm">
 
 
     <mat-form-field>
@@ -22,12 +22,20 @@
       </mat-select>
     </mat-form-field>
     <br />
+    <mat-form-field>
+        <!-- <label>File Type</label> -->
+        <mat-select name="fileDelimeter" required="required" name="filedelimeter" #filetype="ngModel" ngModel required>
+          <mat-option value="">Select Source Delimeter </mat-option>
+          <mat-option value="comma ,">comma ,</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <br/>
     <div>
-      <button mat-stroked-button color="accent" (click)="d()">Discover Data</button>
+      <button mat-stroked-button color="accent" (click)="discoverData()">Discover Data</button>
     </div>
     <br />
     <div>
-      <button mat-stroked-button color="accent" type="submit">Save</button>
+      <button mat-stroked-button color="accent" (click)="saveDbfs(dbfsForm)" type="submit">Save</button>
     </div>
 
   </form>

@@ -1,0 +1,22 @@
+<h3 mat-dialog-title class="text-center">Sample Data</h3>
+<h2 style="color:red"></h2>
+<div mat-dialog-content>
+  <div fxLayout fxLayoutAlign="start center">
+    <div>
+      <table>
+        <thead >
+          <th *ngFor='let fh of data.sampleData.fileheader'>{{fh}}</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let ds of data.sampleData.filedata">
+            <td *ngFor='let fhs of data.sampleData.fileheader'>{{ds[fhs]}}</td>
+          </tr>
+        </tbody>
+      </table>
+     </div>
+  </div>
+</div>
+
+<div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+  <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+</div>
