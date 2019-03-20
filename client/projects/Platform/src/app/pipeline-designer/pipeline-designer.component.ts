@@ -15,12 +15,11 @@ export class PipelineDesignerComponent implements OnInit {
   }
 
   stageClicked(value){
-    console.log(this.showStage);
+    console.log(value);
     if(value && !this.showStage)
       this.showStage = true;
     else if(value && this.showStage)
       this.showStage = false;
-    console.log(this.showStage);
   }
 
 }

@@ -20,7 +20,8 @@ import { createLNodeObject } from '@angular/core/src/render3/instructions';
 
 export interface Source {
     name: string,
-    label: string
+    label: string,
+    _id?:any
 }
 
 export interface Sink {
@@ -55,7 +56,7 @@ export interface CT {
 
 export interface Template {
     name: string,
-    label: string
+    label: string,
 }
 
 
@@ -65,7 +66,7 @@ export class StencilService {
 
 
     sources: Source[] = [
-        { name: 'hdfs-source', label: 'HDFS' },
+        { name: 'hdfs-source', label: 'DBFS', _id:'123'},
         { name: 'amazonS3-source', label: 'S3' },
         { name: 'kafka-source', label: 'Kafka' },
         { name: 'staging-source', label: 'Data Lake' },
@@ -241,9 +242,11 @@ export class StencilService {
         let labelSize = 10;
         let sourceObj = [];
         let sourceLabel = '';
+        let sourceId = '';
         this.sources.forEach((source) => {
 
             sourceLabel = source.label;
+            sourceId = source._id;
             if (source.label.length > labelSize) {
                 sourceLabel = source.label.slice(0, labelSize) + '...';
             }
@@ -267,6 +270,7 @@ export class StencilService {
                         strokeDasharray: '0'
                     },
                     label: {
+                        id:sourceId,
                         text: sourceLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',
