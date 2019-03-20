@@ -22,7 +22,6 @@ export class DbfsComponent {
     console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
       console.log(data);
-      this.openDialog(data);
     });
   }
 

@@ -19,6 +19,7 @@ var roles=  require('./routes/roles');
 var dataSourceRoute = require('./routes/datasource');
 var modelDataRoute = require('./routes/modelsroute');
 var dbfs=  require('./routes/dbfs');
+var stage=  require('./routes/stages');
 
 const port = 3100;
 
@@ -98,6 +99,7 @@ app.use('/role',roles);
 app.use('/dataSourceApi', dataSourceRoute);
 app.use('/modelApi', modelDataRoute);
 app.use('/dbfs',dbfs);
+app.use('/stage',stage);
 
 app.get('/user', (req, res) => res.json({
   application: 'Reibo collection'
@@ -108,6 +110,10 @@ app.get('/api', (req, res) => res.json({
 }));
 
 app.get('/dbfs', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/stage', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 

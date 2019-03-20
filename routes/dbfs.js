@@ -2,11 +2,12 @@ var express = require('express');
 var router =  express.Router();
 var request = require("request");
 // var Roles = require('../models/rolesModel');
+//var StageVersionModel = require("../models/stageVersionModel");
 
-router.post('/updateStage',function(req,res){
-    console.log('update stage');
-    console.log(req.body);
-})
+// router.post('/updateStage',function(req,res){
+//     console.log('update stage');
+//     console.log(req.body);
+// })
 
 router.get('/getDataSource', function(req,res) {
     console.log('node routes');
@@ -36,16 +37,26 @@ router.get('/getDataSource', function(req,res) {
             filedata.length =10;
             var fh=[];
             var fd=[];
-           
+            
             for(var i=0 ; fileheader.length > i; i++){
-                var head = fileheader[i].split(":")[0];
+                var head= { 
+                    field : String,
+                    alias : String,
+                    position : String,
+                    type : String,
+               };
+                head.field = fileheader[i].split(":")[0];
+                head.alias = fileheader[i].split(":")[0];
+                head.type = fileheader[i].split(":")[1];
+                head.position = i+1;
                 fh.push(head);
             }
+            console.log(fh);
             for(var j=0 ; j < filedata.length; j++){
                 var fdobj={};
                 for(var i=0 ; i < fh.length; i++){
                     var head = fh[i];
-                    fdobj[head]= filedata[j].split(",")[i] ;  
+                    fdobj[head.field]= filedata[j].split(",")[i] ;  
                 }
                 fd.push(fdobj);               
             }

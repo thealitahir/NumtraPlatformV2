@@ -10,7 +10,10 @@ export class StageService {
     }
 
     updateStage(data): Observable<any> {
-        return this.http.post(GLOBAL.serviceUrl + '/dbfs/updateStage', data);
+        return this.http.post(GLOBAL.serviceUrl + '/stage/updateStage', data);
     }
 
+    getStageSchema(stage): Observable<any>{
+      return this.http.get(GLOBAL.serviceUrl + '/stage/stageSchema/' + stage );
+    }
 }

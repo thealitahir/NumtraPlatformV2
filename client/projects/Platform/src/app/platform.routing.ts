@@ -4,6 +4,7 @@ import { CanvasComponent } from './canvas/canvas.component';
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 import { RolesComponent } from './roles/roles.component';
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
+import { MaxComponent } from './stages/transformation/max/max.component';
 import { AuthGuard } from '../../../../src/app/guards/index';
 
 const APP_ROUTES: Routes = [

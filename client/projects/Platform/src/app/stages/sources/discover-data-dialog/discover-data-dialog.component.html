@@ -5,11 +5,11 @@
     <div>
       <table>
         <thead >
-          <th *ngFor='let fh of data.sampleData.fileheader'>{{fh}}</th>
+          <th *ngFor='let fh of data.sampleData.fileheader'>{{fh.field}}</th>
         </thead>
         <tbody>
           <tr *ngFor="let ds of data.sampleData.filedata">
-            <td *ngFor='let fhs of data.sampleData.fileheader'>{{ds[fhs]}}</td>
+            <td *ngFor='let fhs of data.sampleData.fileheader'>{{ds[fhs.field]}}</td>
           </tr>
         </tbody>
       </table>

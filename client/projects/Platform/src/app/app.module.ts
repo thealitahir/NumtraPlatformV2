@@ -44,6 +44,7 @@ import { SubNavComponent } from './sub-nav/sub-nav.component';
 import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } from './filter.pipe';
 
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
+import { MaxComponent } from './stages/transformation/max/max.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 
 import { UsersService } from './services/user.service';
@@ -68,6 +69,7 @@ import { DbfsService } from './services/dbfs.service';
     RolesComponent,
 
     DbfsComponent,
+    MaxComponent,
     DiscoverDataComponent,
 
     ProjectFilterPipe,
