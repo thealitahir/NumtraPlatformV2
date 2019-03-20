@@ -1,0 +1,25 @@
+
+<div style="position:fixed; z-index: 999; right: 80px; top:200px; width:250;height:500px; overflow: auto;">
+  <h3>Top Transformation</h3>
+  <form #topForm="ngForm">
+
+
+    <!-- <mat-form-field>
+      <input matInput type="text" name="url" placeholder="URL" #url="ngModel" ngModel required>
+    </mat-form-field> -->
+    <br />
+    <mat-form-field>
+      <!-- <label>File Type</label> -->
+      <mat-select name="field" required="required" name="field" #filetype="ngModel" ngModel required>
+        <mat-option value="">Select Field </mat-option>
+        <mat-option *ngFor='let sSchema of stageSchema' value="sSchema.field">{{ sSchema.field }} </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <div>
+      <button mat-stroked-button color="accent" (click)="saveTop(topForm)" type="submit">Save</button>
+    </div>
+
+  </form>
+</div>
