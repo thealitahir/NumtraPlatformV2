@@ -54,10 +54,12 @@ export class CanvasComponent implements OnInit {
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
     this.paper.on('link:pointerup', (elementView, evt: JQuery.Event) => {
-      console.log(elementView.sourceView.model.attributes.attrs.label.text);
-      console.log(elementView.targetView.model.attributes.attrs.label.text);
-      if(elementView.model.attributes.target.id != null){
-        this.canvasService.onConnection(elementView.sourceView.model.attributes.attrs.label.text,
+      console.log(elementView);
+      if(elementView.model.attributes.target.id != null &&
+         elementView.model.attributes.target.id != elementView.model.attributes.source.id){
+          console.log(elementView.sourceView.model.attributes.attrs.label.text);
+          console.log(elementView.targetView.model.attributes.attrs.label.text);
+          this.canvasService.onConnection(elementView.sourceView.model.attributes.attrs.label.text,
           elementView.targetView.model.attributes.attrs.label.text).subscribe(data => {
             console.log(data);
           });

@@ -21,17 +21,19 @@ import { createLNodeObject } from '@angular/core/src/render3/instructions';
 export interface Source {
     name: string,
     label: string,
-    _id?:any
+    type?:any
 }
 
 export interface Sink {
     name: string,
-    label: string
+    label: string,
+    type?: string
 }
 
 export interface Operation {
     name: string,
-    label: string
+    label: string,
+    type?:any
 }
 
 export interface IOT {
@@ -66,7 +68,7 @@ export class StencilService {
 
 
     sources: Source[] = [
-        { name: 'hdfs-source', label: 'DBFS', _id:'123'},
+        { name: 'hdfs-source', label: 'DBFS', type:'source'},
         { name: 'amazonS3-source', label: 'S3' },
         { name: 'kafka-source', label: 'Kafka' },
         { name: 'staging-source', label: 'Data Lake' },
@@ -93,7 +95,7 @@ export class StencilService {
         { name: 'bottom', label: 'Bottom' },
         { name: 'aggregation', label: 'Aggregation' },
         { name: 'timezone', label: 'Date Time' },
-        { name: 'top', label: 'Top' },
+        { name: 'top', label: 'Top', type:'operation' },
         { name: 'filling', label: 'Filling' },
         { name: 'filter', label: 'Filter' },
         { name: 'formula', label: 'Formula' },
@@ -127,7 +129,7 @@ export class StencilService {
 
     sinks: Sink[] = [
         { name: 'staging-sink', label: 'Datalake' },
-        { name: 'hdfs-sink', label: 'HDFS' },
+        { name: 'hdfs-sink', label: 'DBFS', type:'sink'},
         { name: 'kafka-sink', label: 'Kafka' },
         { name: 'amazonS3-sink', label: 'S3' },
         { name: 'sql-server-sink', label: 'RDBMS' },
@@ -242,11 +244,11 @@ export class StencilService {
         let labelSize = 10;
         let sourceObj = [];
         let sourceLabel = '';
-        let sourceId = '';
+        let type = '';
         this.sources.forEach((source) => {
 
             sourceLabel = source.label;
-            sourceId = source._id;
+            type = source.type;
             if (source.label.length > labelSize) {
                 sourceLabel = source.label.slice(0, labelSize) + '...';
             }
@@ -270,7 +272,7 @@ export class StencilService {
                         strokeDasharray: '0'
                     },
                     label: {
-                        id:sourceId,
+                        type:type,
                         text: sourceLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',
@@ -286,6 +288,7 @@ export class StencilService {
         this.operations.forEach((operation) => {
 
             operationLabel = operation.label;
+            type = operation.type;
             if (operation.label.length > labelSize) {
                 operationLabel = operation.label.slice(0, labelSize) + '...';
             }
@@ -309,6 +312,7 @@ export class StencilService {
                         strokeDasharray: '0'
                     },
                     label: {
+                        type: type,
                         text: operationLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',
@@ -324,6 +328,7 @@ export class StencilService {
         this.sinks.forEach((sink) => {
 
             sinkLabel = sink.label;
+            type = sink.type
             if (sink.label.length > labelSize) {
                 sinkLabel = sink.label.slice(0, labelSize) + '...';
             }
@@ -347,6 +352,7 @@ export class StencilService {
                         strokeDasharray: '0'
                     },
                     label: {
+                        type: type,
                         text: sinkLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',

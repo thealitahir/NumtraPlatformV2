@@ -17,6 +17,7 @@ export class CanvasService {
       source:source,
       target:target
     }
+    console.log(data);
     return this.http.post(GLOBAL.serviceUrl + '/stage/linkStages' , data );
   }
 }

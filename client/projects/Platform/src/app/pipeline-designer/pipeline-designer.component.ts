@@ -7,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PipelineDesignerComponent implements OnInit {
 
-  showStage: boolean = false;
+  showSource: boolean = false;
+  showSink: boolean = false;
+  showTransformation: boolean = false;
   constructor() { }
 
   ngOnInit() {
@@ -15,11 +17,35 @@ export class PipelineDesignerComponent implements OnInit {
   }
 
   stageClicked(value){
-    console.log(value);
-    if(value && !this.showStage)
-      this.showStage = true;
-    else if(value && this.showStage)
-      this.showStage = false;
+    if(value && value.model.attributes.attrs.label.type == "source" && !this.showSource){
+      this.showSource = true;
+      this.showTransformation = false;
+      this.showSink = false;
+    }
+    else if(value && value.model.attributes.attrs.label.type == "source" && this.showSource){
+      this.showSource = false;
+    }
+
+    else if(value && value.model.attributes.attrs.label.type == "operation" && !this.showTransformation){
+      this.showTransformation = true;
+      this.showSource = false;
+      this.showSink = false;
+    }
+      
+    else if(value && value.model.attributes.attrs.label.type == "operation" && this.showTransformation){
+      this.showTransformation = false;
+    }
+      
+    else if(value && value.model.attributes.attrs.label.type == "sink" && !this.showSink){
+      this.showSink = true;
+      this.showTransformation = false;
+      this.showSource = false;
+    }
+      
+    else if(value && value.model.attributes.attrs.label.type == "sink" && this.showSink){
+      this.showSink = false;
+    }
+      
   }
 
 }

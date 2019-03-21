@@ -29,6 +29,11 @@ export class HaloService {
 
         halo.on('action:link:add', function(link) {
             if (!link.get('source').id || !link.get('target').id) {
+                console.log("removing link");
+                link.remove();
+            }
+            if(link.get('source').id == link.get('target').id){
+                console.log("removing link");
                 link.remove();
             }
         });
