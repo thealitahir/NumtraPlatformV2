@@ -7,7 +7,8 @@ var StageVersionModel = require("../models/stageVersionModel");
 router.post('/updateStage',function(req,res){
     var stagedata = req.body;
     console.log(req.body);
-    StageVersionModel.update({"name":"DBFS"}, { $set:{ "original_schema":stagedata.fileheader,"stage_attributes.url":stagedata.formdata.url, "stage_attributes.source_delimeter": stagedata.formdata.filedelimeter, "stage_attributes.file_type":  stagedata.formdata.filetype } }, function (err, sdata) {
+    //StageVersionModel.update({"name":"DBFS"}, { $set:{ "original_schema":stagedata.fileheader,"stage_attributes.url":stagedata.formdata.url, "stage_attributes.source_delimeter": stagedata.formdata.filedelimeter, "stage_attributes.file_type":  stagedata.formdata.filetype } }, function (err, sdata) {
+    StageVersionModel.update({"name":stagedata.stageName}, {$set: stagedata['updatedata'] }, function (err, sdata) {
       if(!err) {
           console.log('updated successfully');
             res.send({status: true, msg: 'stage updated successfully.', data: sdata});
@@ -48,8 +49,6 @@ router.post('/linkStages',function(req,res){
 router.get('/stageSchema/:stage',function(req,res){
   StageVersionModel.findOne({name: req.params.stage }, function (err, stageschema) {
     if (!err) {
-      console.log('schema successfully got');
-      //console.log(stageschema);
       res.send({status: true, msg: 'get stage schema successfully.', data: stageschema});
     } 
     else {
