@@ -10,9 +10,9 @@
     <br />
     <mat-form-field>
       <!-- <label>File Type</label> -->
-      <mat-select name="field" required="required" name="field" #filetype="ngModel" ngModel required>
+      <mat-select name="field" [(ngModel)]='stage.stage_attributes.attributes.field' required>
         <mat-option value="">Select Field </mat-option>
-        <mat-option *ngFor='let sSchema of stageSchema' (click)='selectFieldType(sSchema)' value={{sSchema}}>{{ sSchema.field }} </mat-option>
+        <mat-option *ngFor='let sSchema of stageSchema' (click)='selectFieldType(sSchema)' [value] ='sSchema.field' >{{ sSchema.field }} </mat-option>
 
       </mat-select>
     </mat-form-field>
@@ -44,7 +44,7 @@
     </div>
     <div class="form-group" *ngIf="!stage.stage_attributes.parameter">
         <mat-form-field>
-            <input matInput type="text" name="results" placeholder="Value" #results="ngModel" ngModel required>
+            <input matInput type="text" name="results" [(ngModel)]='stage.stage_attributes.attributes.topResults' placeholder="Value" #results="ngModel" required>
           </mat-form-field>
   </div>
   <br/>

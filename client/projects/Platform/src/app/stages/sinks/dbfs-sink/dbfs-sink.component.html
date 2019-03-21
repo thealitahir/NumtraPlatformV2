@@ -6,12 +6,12 @@
 
     <mat-form-field>
       <!-- <label>URL</label> -->
-      <input matInput type="text" name="url" placeholder="URL" #url="ngModel" ngModel required>
+      <input matInput type="text"name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url' required>
     </mat-form-field>
     <br />
     <mat-form-field>
       <!-- <label>File Type</label> -->
-      <mat-select name="fileType" required="required" name="filetype" #filetype="ngModel" ngModel required>
+      <mat-select name="fileType" [(ngModel)]='stage.stage_attributes.file_type'  required>
         <mat-option value="">Select File Type </mat-option>
         <mat-option value="xml">XML</mat-option>
         <mat-option value="json">JSON</mat-option>
@@ -24,7 +24,7 @@
     <br />
     <mat-form-field>
         <!-- <label>File Type</label> -->
-        <mat-select name="fileDelimeter" required="required" name="filedelimeter" #filetype="ngModel" ngModel required>
+        <mat-select name="fileDelimeter" [(ngModel)]='stage.stage_attributes.source_delimeter' required>
           <mat-option value="">Select Source Delimeter </mat-option>
           <mat-option value="comma ,">comma ,</mat-option>
         </mat-select>

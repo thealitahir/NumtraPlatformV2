@@ -14,15 +14,16 @@ export class MaxComponent {
   data: any ;
   stage: any = {
     stage_attributes: {
-      parameter: ''
+      parameter: '',
+      attributes: {topResults: '' , dataType: '' , field: '' }
     }
   };
   stagename: any = 'Top';
   stageSchema: any;
   attributes: any = {};
+  fileType: any;
 
   constructor(public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
-    this.stage.stage_attributes.parameters = '';
     this.stageService.getStageSchema(this.stagename).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
@@ -34,14 +35,14 @@ export class MaxComponent {
   }
 
   selectFieldType(fieldType) {
-    this.attributes = {topResults: '' , dataType: fieldType.type , field: fieldType.field };
+    this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , field: fieldType.field };
   }
 
   saveTop(form: NgForm) {
     // console.log(form.value);
     this.attributes.topResults = form.value.results;
     console.log(this.attributes);
-    this.data = {updatedata: {'stage_attributes.attributes': this.attributes}, stageName: 'Top'};
+    this.data = {updatedata: {'stage_attributes.attributes': this.stage.stage_attributes.attributes}, stageName: 'Top'};
     this.stageService.updateStage(this.data).subscribe(data => {
       console.log(data);
     });

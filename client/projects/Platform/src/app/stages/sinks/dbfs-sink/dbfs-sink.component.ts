@@ -8,18 +8,31 @@ import { StageService } from '../../../services/stage.service';
   styleUrls: ['./dbfs-sink.component.css']
 })
 export class DbfsSinkComponent implements OnInit {
-
-  constructor(public stageService: StageService) { }
   data: any ;
+  stage: any = {
+    stage_attributes: {
+      url: '',
+      source_delimeter: '',
+      file_type: ''
+    }
+  };
+  stageName: any = 'dbfs_sink';
+  constructor(public stageService: StageService) {
+    this.stageService.getStageSchema(this.stageName).subscribe(schemadata => {
+      console.log(schemadata);
+      this.stage = schemadata.data;
+
+    });
+   }
+
   ngOnInit() {
   }
 
   saveSinkDbfs(form: NgForm) {
     this.data = {formdata: form.value};
     console.log(this.data);
-    this.data = {updatedata: { 'stage_attributes.url': form.value.url, 'stage_attributes.source_delimeter': form.value.filedelimeter,
-    'stage_attributes.file_type':  form.value.filetype },
-     stageName: 'dbfs_sink'};
+    this.data = {updatedata: { 'stage_attributes.url': form.value.url, 'stage_attributes.source_delimeter': form.value.fileDelimeter,
+    'stage_attributes.file_type':  form.value.fileType }, stageName: 'dbfs_sink'};
 
     this.stageService.updateStage(this.data).subscribe(data => {
       console.log(data);
