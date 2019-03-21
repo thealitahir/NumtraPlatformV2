@@ -57,6 +57,7 @@ import { StageService } from './services/stage.service';
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 
 import { DbfsService } from './services/dbfs.service';
+import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
 
 
 @NgModule({
@@ -75,7 +76,8 @@ import { DbfsService } from './services/dbfs.service';
     ProjectFilterPipe,
     ApplicationFilterPipe,
     ModelCategoryFilterPipe,
-    PipelineDesignerComponent
+    PipelineDesignerComponent,
+    DbfsSinkComponent
 
   ],
   imports: [

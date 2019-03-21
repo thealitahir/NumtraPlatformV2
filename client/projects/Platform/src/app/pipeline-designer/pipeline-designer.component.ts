@@ -17,23 +17,22 @@ export class PipelineDesignerComponent implements OnInit {
   }
 
   stageClicked(value){
-    console.log();
-    if(value && value.model.attributes.attrs.label.text == "DBFS" && !this.showSource){
+    if(value && value.model.attributes.attrs.label.type == "source" && !this.showSource){
       this.showSource = true;
       this.showTransformation = false;
       this.showSink = false;
     }
-    else if(value && value.model.attributes.attrs.label.text == "DBFS" && this.showSource){
+    else if(value && value.model.attributes.attrs.label.type == "source" && this.showSource){
       this.showSource = false;
     }
 
-    else if(value && value.model.attributes.attrs.label.text == "Top" && !this.showTransformation){
+    else if(value && value.model.attributes.attrs.label.type == "operation" && !this.showTransformation){
       this.showTransformation = true;
       this.showSource = false;
       this.showSink = false;
     }
       
-    else if(value && value.model.attributes.attrs.label.text == "Top" && this.showTransformation){
+    else if(value && value.model.attributes.attrs.label.type == "operation" && this.showTransformation){
       this.showTransformation = false;
     }
       
@@ -43,7 +42,7 @@ export class PipelineDesignerComponent implements OnInit {
       this.showSource = false;
     }
       
-    else if(value && value.model.attributes.attrs.label.text == "sink" && this.showSink){
+    else if(value && value.model.attributes.attrs.label.type == "sink" && this.showSink){
       this.showSink = false;
     }
       
