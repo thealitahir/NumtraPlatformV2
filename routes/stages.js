@@ -47,8 +47,6 @@ router.post('/linkStages',function(req,res){
 router.get('/stageSchema/:stage',function(req,res){
   StageVersionModel.findOne({name: req.params.stage }, function (err, stageschema) {
     if (!err) {
-      console.log('schema successfully got');
-      //console.log(stageschema);
       res.send({status: true, msg: 'get stage schema successfully.', data: stageschema});
     } 
     else {

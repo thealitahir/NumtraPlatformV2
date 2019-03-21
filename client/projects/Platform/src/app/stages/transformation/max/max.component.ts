@@ -15,7 +15,9 @@ export class MaxComponent {
   stage: any;
   stagename: any = 'Top';
   stageSchema: any;
+
   constructor(public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
+    // this.stage.stage_attributes = '';
     this.stageService.getStageSchema(this.stagename).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;

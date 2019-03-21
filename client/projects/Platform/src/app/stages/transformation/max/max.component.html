@@ -20,19 +20,19 @@
     <div class="form-group">
       <div class="radio radio-inline-theme">
           <label>
-              <input type="radio" [(ngModel)]="stage.stage_attributes.parameter" value="false" ng-boolean-radio>
+              <input type="radio" name="parameter" [(ngModel)]="stage.stage_attributes.parameter" value="false" ng-boolean-radio>
               Custom
           </label>
       </div>
 
       <div class="radio radio-inline-theme">
           <label>
-              <input type="radio" [(ngModel)]="stage.stage_attributes.parameter" value="true" ng-boolean-radio>
+              <input type="radio" name="parameter" [(ngModel)]="stage.stage_attributes.parameter" value="true" ng-boolean-radio>
               Parameter
           </label>
       </div>
     </div>
-   <br/>
+   <br/>{{stage.stage_attributes.parameter}}
     <div class="form-group" *ngIf="stage.stage_attributes.parameter">
       <!-- <select ng-if="!angular.isUndefined(processParameters)" class="form-control" ngmodel="stage.stage_attributes.attributes.topResults" required>
           <option value="">Select parameter</option>
@@ -42,7 +42,7 @@
       <span class="alert-danger">Please register parameters for this pipeline</span>
 
     </div>
-    <div class="form-group" *ngIf="!stage.stage_attributes.parameter">
+    <div class="form-group" *ngIf="stage.stage_attributes.parameter == false">
         <mat-form-field>
             <input matInput type="text" name="results" placeholder="Value" #results="ngModel" ngModel required>
           </mat-form-field>
