@@ -18,12 +18,16 @@ export class DbfsComponent implements OnInit{
   }
 
   ngOnInit(){
-    
+
   }
 
   saveDbfs(form: NgForm) {
     this.data = {formdata: form.value, fileheader: this.fileheader};
     console.log(this.data);
+    this.data = {updatedata: { 'original_schema': this.fileheader, 'stage_attributes.url': form.value.url,
+     'stage_attributes.source_delimeter': form.value.filedelimeter, 'stage_attributes.file_type':  form.value.filetype },
+     stageName: 'DBFS'};
+
     this.stageService.updateStage(this.data).subscribe(data => {
       console.log(data);
     });
