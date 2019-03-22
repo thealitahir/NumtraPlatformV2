@@ -5,7 +5,7 @@
 
 
     <mat-form-field>
-      <!-- <label>URL</label> -->
+      <label style='color:red'>{{error}}</label>
       <input matInput type="text" name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url' required>
     </mat-form-field>
     <br />
@@ -59,11 +59,11 @@
       </mat-form-field>
       <br/>
     <div>
-      <button mat-stroked-button color="accent" (click)="discoverData()">Discover Data</button>
+      <button mat-stroked-button color="accent" (click)="discoverData(dbfsForm)">Discover Data</button>
     </div>
     <br />
     <div>
-      <button mat-stroked-button color="accent" (click)="saveDbfs(dbfsForm)" type="submit">Save</button>
+      <button mat-stroked-button color="accent" (click)="getSchemahenSave(dbfsForm)" type="submit">Save</button>
     </div>
 
   </form>

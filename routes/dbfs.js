@@ -9,11 +9,11 @@ var request = require("request");
 //     console.log(req.body);
 // })
 
-router.get('/getDataSource', function(req,res) {
+router.post('/getDataSource', function(req,res) {
     console.log('node routes');
-   // console.log(req.params);
+   // console.log(req.body);
     var url= CONFIGURATIONS.dbfsDomain +'/api/2.0/dbfs/read';
-    console.log(url);
+    // console.log(url);
     request({
         url: url,
         method: 'GET',
@@ -21,7 +21,8 @@ router.get('/getDataSource', function(req,res) {
         //  "token":  CONFIGURATIONS.dbfsToken
          Authorization: " Bearer " + CONFIGURATIONS.dbfsToken 
         },
-        json: {"path": "/FileStore/tables/Items.csv"}
+        // json: {"path": "/FileStore/tables/Items.csv"}
+        json: {"path": req.body.path}
         }, function(error, response, body) {
             //console.log('read file response');
             //console.log(body);

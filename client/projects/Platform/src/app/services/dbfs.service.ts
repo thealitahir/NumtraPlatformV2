@@ -9,8 +9,9 @@ export class DbfsService {
         console.log('Dbfs Service Initialized...');
     }
 
-    getDataSource(): Observable<any> {
-        return this.http.get(GLOBAL.serviceUrl + '/dbfs/getDataSource');
+    getDataSource(path): Observable<any> {
+      console.log(path);
+        return this.http.post(GLOBAL.serviceUrl + '/dbfs/getDataSource', path);
     }
 
 }

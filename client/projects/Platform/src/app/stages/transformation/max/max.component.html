@@ -44,7 +44,7 @@
     </div>
     <div class="form-group" *ngIf="!stage.stage_attributes.parameter">
         <mat-form-field>
-            <input matInput type="text" name="results" [(ngModel)]='stage.stage_attributes.attributes.topResults' placeholder="Value" #results="ngModel" required>
+            <input matInput type="number" name="results" [(ngModel)]='stage.stage_attributes.attributes.topResults' placeholder="Value" #results="ngModel" required>
           </mat-form-field>
   </div>
   <br/>

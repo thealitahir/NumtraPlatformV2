@@ -59,4 +59,11 @@ router.get('/stageSchema/:stage',function(req,res){
 
 })
 
+router.post('/getPipelineResult',function(req,res){   
+  console.log('onPipelineData');
+  console.log(req.body);
+  io.emit('onPipelineData', req.body);
+  res.send('OK');
+});
+
 module.exports = router;

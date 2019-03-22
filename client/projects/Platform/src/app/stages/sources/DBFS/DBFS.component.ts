@@ -4,6 +4,7 @@ import { DbfsService } from '../../../services/dbfs.service';
 import { StageService } from '../../../services/stage.service';
 import { DiscoverDataComponent } from '../discover-data-dialog/discover-data-dialog.component';
 import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
+import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'app-dbfs',
@@ -14,7 +15,7 @@ export class DbfsComponent implements OnInit{
   fileheader: any;
   data: any ;
   stage: any = {
-    original_schema:[],
+    original_schema: [],
     stage_attributes: {
       url: '',
       source_delimeter: '',
@@ -23,7 +24,8 @@ export class DbfsComponent implements OnInit{
   };
   stageSchema: any;
   stagename: any = 'DBFS';
-  constructor(public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
+  error: any;
+  constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
     this.stageService.getStageSchema(this.stagename).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
@@ -33,13 +35,28 @@ export class DbfsComponent implements OnInit{
   }
 
   ngOnInit(){
-    this.dbfsService.getDataSource().subscribe(data => {
-      console.log(data);
-      this.fileheader = data.fileheader;
-    });
   }
 
-  saveDbfs(form: NgForm) {
+  getSchemahenSave(form: NgForm) {
+    if (form.value.url !== '' ) {
+      this.error = '';
+      this.openSnackBar('Info:', 'Save stage in process, Please wait!');
+      this.data = {path: form.value.url};
+      this.dbfsService.getDataSource(this.data).subscribe(data => {
+        console.log(data);
+        this.fileheader = data.fileheader;
+        if (data.fileheader !== null) {
+           this.saveDbfs(form);
+        } else {
+          this.openSnackBar('Error:', 'Error in getting schema, Please check the, If path is correct and try again!');
+        }
+      });
+    }
+  }
+
+  saveDbfs(form) {
+
+
    // this.data = {formdata: form.value, fileheader: this.fileheader};
      console.log('form value');
      console.log(form.value);
@@ -48,16 +65,28 @@ export class DbfsComponent implements OnInit{
      stageName: 'DBFS'};
      console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
-      console.log(data);
+      // console.log(data);
+      if (data.data.nModified === 1) {
+        this.openSnackBar('Success:', 'Stage Saved Successfully!');
+      } else {
+        this.openSnackBar('Error:', 'Try Again!');
+      }
+
     });
   }
 
-  discoverData() {
-    this.dbfsService.getDataSource().subscribe(data => {
-      console.log(data);
-      this.openDialog(data);
-      this.fileheader = data.fileheader;
-    });
+  discoverData(form: NgForm) {
+    if(form.value.url !== '' ) {
+      this.error = '';
+      this.data = {path: form.value.url}
+      this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
+      this.dbfsService.getDataSource(this.data).subscribe(data => {
+        console.log(data);
+        this.openDialog(data);
+        this.fileheader = data.fileheader;
+      });
+    }
+
   }
 
   openDialog(sampledata): void {
@@ -69,4 +98,11 @@ export class DbfsComponent implements OnInit{
       }
     });
   }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
+    });
+  }
+
 }
