@@ -48,13 +48,18 @@ export class CanvasComponent implements OnInit {
     const keyboard = this.keyboardService.keyboard;
     this.selection = this.rappid.getSelection();
     this.graph = this.rappid.getGraph();
+    /* this.canvasService.getCanvasModel().subscribe(data =>{
+      console.log("model from db");
+      console.log(data);
+      //this.graph.attributes.cells.models = data.data.model;
+      console.log(this.graph);
+    }); */
     console.log("this is graph");
     console.log(this.graph.get);
     this.paper.on('blank:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
       }
-      //debugger;
       this.onSearch.emit(elementView);
       
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
@@ -65,9 +70,28 @@ export class CanvasComponent implements OnInit {
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
       }
-      //debugger;
       this.onSearch.emit(elementView);
+      this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
 
+      });
+      // Select an element if CTRL/Meta key is pressed while the element is clicked.
+    });
+    this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
+      if (keyboard.isActive('ctrl meta', evt)) {
+        this.selection.collection.add(elementView.model);
+      }
+      this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
+
+      });
+      // Select an element if CTRL/Meta key is pressed while the element is clicked.
+    });
+    this.paper.on('link:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
+      if (keyboard.isActive('ctrl meta', evt)) {
+        this.selection.collection.add(elementView.model);
+      }
+      this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
+
+      });
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
     this.paper.on('link:pointerup', (elementView, evt: JQuery.Event) => {
@@ -86,7 +110,7 @@ export class CanvasComponent implements OnInit {
           this.selection.collection.add(elementView.model);
       }
 
-  });
+    });
   }
 
   dataExplorer(){

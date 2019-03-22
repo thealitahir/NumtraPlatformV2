@@ -3,6 +3,8 @@ var router =  express.Router();
 var request = require("request");
 // var Roles = require('../models/rolesModel');
 var StageVersionModel = require("../models/stageVersionModel");
+var PipelineVersion = require("../models/pipelineVersionModel");
+var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage',function(req,res){
     var stagedata = req.body;
@@ -64,6 +66,33 @@ router.post('/getPipelineResult',function(req,res){
   console.log(req.body);
   io.emit('onPipelineData', req.body);
   res.send('OK');
+});
+
+router.post('/saveCanvasModel',function(req,res){
+  PipelineVersion.update({_id:"5c51641b607a223b3ef0ea61"}, { $set:{ "model": req.body} }, function (err, lsdata) {
+    if(!err) {
+        console.log('canvas model updated successfully');
+        console.log(lsdata);
+        res.send({status: true, msg: 'linkstage updated successfully.', data: lsdata});
+      }
+      else {
+        console.log('canvas model  not updated.');
+        res.send({status: false, msg: 'linkstage not saved.'});
+      }
+  });
+});
+
+router.get('/getCanvasModel',function(req,res){
+  PipelineVersion.findOne({_id:"5c51641b607a223b3ef0ea61"}).exec(function(err,data){
+    if(err){
+      console.log('Unable to get canvas model');
+      res.send({status: false, msg: 'linkstage not saved.'});
+    }
+    else{
+      console.log('canvas model found');
+      res.send({status: true, msg: 'Canvas model found.', data: data});
+    }
+  });
 });
 
 module.exports = router;

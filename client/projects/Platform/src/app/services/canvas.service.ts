@@ -20,4 +20,13 @@ export class CanvasService {
     console.log(data);
     return this.http.post(GLOBAL.serviceUrl + '/stage/linkStages' , data );
   }
+  saveCanvasModel(model): Observable<any> {
+    return this.http.post(GLOBAL.serviceUrl + '/stage/saveCanvasModel' , model );
+  }
+  removeCanvasModelChild(model): Observable<any> {
+    return this.http.post(GLOBAL.serviceUrl + '/stage/linkStages' , model );
+  }
+  getCanvasModel(): Observable<any>{
+    return this.http.get(GLOBAL.serviceUrl + '/stage/getCanvasModel');
+  }
 }
