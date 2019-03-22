@@ -55,7 +55,7 @@ export class CanvasComponent implements OnInit {
       console.log(this.graph);
     }); */
     console.log("this is graph");
-    console.log(this.graph.get);
+    console.log(this.graph);
     this.paper.on('blank:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
@@ -71,9 +71,9 @@ export class CanvasComponent implements OnInit {
         this.selection.collection.add(elementView.model);
       }
       this.onSearch.emit(elementView);
-      this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
+      /* this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
 
-      });
+      }); */
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
     this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
