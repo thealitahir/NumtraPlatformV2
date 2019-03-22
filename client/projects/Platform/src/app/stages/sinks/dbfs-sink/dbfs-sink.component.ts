@@ -33,7 +33,8 @@ export class DbfsSinkComponent implements OnInit {
     this.data = {formdata: form.value};
     console.log(this.data);
     this.data = {updatedata: { 'stage_attributes.url': form.value.url, 'stage_attributes.source_delimeter': form.value.fileDelimeter,
-    'stage_attributes.file_type':  form.value.fileType }, stageName: 'dbfs_sink'};
+    'stage_attributes.file_type':  form.value.fileType, 'stage_attributes.dbfs_token': form.value.dbfstoken,
+    'stage_attributes.dbfs_domain':  form.value.dbfsdomain }, stageName: 'dbfs_sink'};
 
     this.stageService.updateStage(this.data).subscribe(data => {
       console.log(data);

@@ -19,7 +19,9 @@ export class DbfsComponent implements OnInit{
     stage_attributes: {
       url: '',
       source_delimeter: '',
-      file_type: ''
+      file_type: '',
+      dbfs_token: '',
+      dbfs_domain: ''
     }
   };
   stageSchema: any;
@@ -38,17 +40,17 @@ export class DbfsComponent implements OnInit{
   }
 
   getSchemahenSave(form: NgForm) {
-    if (form.value.url !== '' ) {
+    if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
       this.openSnackBar('Info:', 'Save stage in process, Please wait!');
-      this.data = {path: form.value.url};
+      this.data = {path: form.value.url, token: form.value.dbfstoken , domain: form.value.dbfsdomain};
       this.dbfsService.getDataSource(this.data).subscribe(data => {
         console.log(data);
         this.fileheader = data.fileheader;
         if (data.fileheader !== null) {
            this.saveDbfs(form);
         } else {
-          this.openSnackBar('Error:', 'Error in getting schema, Please check the, If path is correct and try again!');
+          this.openSnackBar('Error:', 'Error in getting schema, Please check the, If source creds are correct and try again!');
         }
       });
     }
@@ -61,7 +63,8 @@ export class DbfsComponent implements OnInit{
      console.log('form value');
      console.log(form.value);
     this.data = {updatedata: { 'original_schema': this.fileheader, 'stage_attributes.url': form.value.url,
-     'stage_attributes.source_delimeter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType },
+     'stage_attributes.source_delimeter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
+     'stage_attributes.dbfs_token': form.value.dbfstoken, 'stage_attributes.dbfs_domain':  form.value.dbfsdomain },
      stageName: 'DBFS'};
      console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
@@ -76,9 +79,9 @@ export class DbfsComponent implements OnInit{
   }
 
   discoverData(form: NgForm) {
-    if(form.value.url !== '' ) {
+    if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
-      this.data = {path: form.value.url}
+      this.data = {path: form.value.url, token: form.value.dbfstoken , domain: form.value.dbfsdomain };
       this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
       this.dbfsService.getDataSource(this.data).subscribe(data => {
         console.log(data);
