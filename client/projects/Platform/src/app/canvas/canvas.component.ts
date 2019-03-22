@@ -18,6 +18,7 @@ import { CanvasService } from '../services/canvas.service';
 export class CanvasComponent implements OnInit {
   selectedRightNav: string;
   selectedMode = 'development';
+  dataExplorerView = 0;
 
   @Output() onSearch: EventEmitter<any> = new EventEmitter();
   private rappid: any;
@@ -26,6 +27,7 @@ export class CanvasComponent implements OnInit {
   keyboardService: any;
   graph: any;
   title = 'Rappid App';
+
   constructor(
     private element: ElementRef,
     public canvasService: CanvasService
@@ -65,7 +67,7 @@ export class CanvasComponent implements OnInit {
       }
       //debugger;
       this.onSearch.emit(elementView);
-      
+
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
     this.paper.on('link:pointerup', (elementView, evt: JQuery.Event) => {
@@ -87,7 +89,13 @@ export class CanvasComponent implements OnInit {
   });
   }
 
-  
+  dataExplorer(){
+    if (this.dataExplorerView === 1){
+      this.dataExplorerView = 0;
+    } else {
+      this.dataExplorerView = 1;
+    }
+  }
 
   openRightCol(selectedNav: string) {
     this.selectedRightNav = selectedNav;

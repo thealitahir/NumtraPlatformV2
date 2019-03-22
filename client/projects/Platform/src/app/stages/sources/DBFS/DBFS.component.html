@@ -5,23 +5,18 @@
 
 
     <mat-form-field>
-      <!-- <label>URL</label> -->
+      <label style='color:red'>{{error}}</label>
       <input matInput type="text" name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url' required>
     </mat-form-field>
     <br />
 
     <mat-form-field>
-      <input matInput type="text" name="request api" placeholder="Request Api" #request_api="ngModel" [(ngModel)]='stage.stage_attributes.request_api' required>
+      <input matInput type="password" name="dbfstoken" placeholder="DBFS Token" #dbfs_token="ngModel" [(ngModel)]='stage.stage_attributes.dbfs_token' required>
     </mat-form-field>
     <br />
 
     <mat-form-field>
-      <input matInput type="password" name="dbfs token" placeholder="DBFS Token" #dbfs_token="ngModel" [(ngModel)]='stage.stage_attributes.dbfs_token' required>
-    </mat-form-field>
-    <br />
-
-    <mat-form-field>
-      <input matInput type="text" name="dbfs domain" placeholder="DBFS Domain" #dbfs_domain="ngModel" [(ngModel)]='stage.stage_attributes.dbfs_domain' required>
+      <input matInput type="text" name="dbfsdomain" placeholder="DBFS Domain" #dbfs_domain="ngModel" [(ngModel)]='stage.stage_attributes.dbfs_domain' required>
     </mat-form-field>
     <br />
 
@@ -59,11 +54,11 @@
       </mat-form-field>
       <br/>
     <div>
-      <button mat-stroked-button color="accent" (click)="discoverData()">Discover Data</button>
+      <button mat-stroked-button color="accent" (click)="discoverData(dbfsForm)">Discover Data</button>
     </div>
     <br />
     <div>
-      <button mat-stroked-button color="accent" (click)="saveDbfs(dbfsForm)" type="submit">Save</button>
+      <button mat-stroked-button color="accent" (click)="getSchemahenSave(dbfsForm)" type="submit">Save</button>
     </div>
 
   </form>

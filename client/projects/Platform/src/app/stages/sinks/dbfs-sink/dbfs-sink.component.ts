@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { StageService } from '../../../services/stage.service';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-dbfs-sink',
@@ -17,7 +18,7 @@ export class DbfsSinkComponent implements OnInit {
     }
   };
   stageName: any = 'dbfs_sink';
-  constructor(public stageService: StageService) {
+  constructor(public stageService: StageService, public snackBar: MatSnackBar) {
     this.stageService.getStageSchema(this.stageName).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
@@ -32,10 +33,22 @@ export class DbfsSinkComponent implements OnInit {
     this.data = {formdata: form.value};
     console.log(this.data);
     this.data = {updatedata: { 'stage_attributes.url': form.value.url, 'stage_attributes.source_delimeter': form.value.fileDelimeter,
-    'stage_attributes.file_type':  form.value.fileType }, stageName: 'dbfs_sink'};
+    'stage_attributes.file_type':  form.value.fileType, 'stage_attributes.dbfs_token': form.value.dbfstoken,
+    'stage_attributes.dbfs_domain':  form.value.dbfsdomain }, stageName: 'dbfs_sink'};
 
     this.stageService.updateStage(this.data).subscribe(data => {
       console.log(data);
+      if (data.data.nModified === 1) {
+        this.openSnackBar('Success:', 'Stage Saved Successfully!');
+      } else {
+        this.openSnackBar('Error:', 'Try Again!');
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
     });
   }
 

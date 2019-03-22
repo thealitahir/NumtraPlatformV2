@@ -23,7 +23,7 @@ export class MaxComponent {
   attributes: any = {};
   fileType: any;
 
-  constructor(public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
+  constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
     this.stageService.getStageSchema(this.stagename).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
@@ -45,6 +45,17 @@ export class MaxComponent {
     this.data = {updatedata: {'stage_attributes.attributes': this.stage.stage_attributes.attributes}, stageName: 'Top'};
     this.stageService.updateStage(this.data).subscribe(data => {
       console.log(data);
+      if (data.data.nModified === 1) {
+        this.openSnackBar('Success:', 'Stage Saved Successfully!');
+      } else {
+        this.openSnackBar('Error:', 'Try Again!');
+      }
+    });
+  }
+
+  openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000
     });
   }
 
