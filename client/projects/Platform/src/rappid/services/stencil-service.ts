@@ -20,17 +20,23 @@ import { createLNodeObject } from '@angular/core/src/render3/instructions';
 
 export interface Source {
     name: string,
-    label: string
+    label: string,
+    type?: any,
+    sub_type?: string
 }
 
 export interface Sink {
     name: string,
-    label: string
+    label: string,
+    type?: string,
+    sub_type?: string
 }
 
 export interface Operation {
     name: string,
-    label: string
+    label: string,
+    type?:any,
+    sub_type?: string
 }
 
 export interface IOT {
@@ -55,7 +61,7 @@ export interface CT {
 
 export interface Template {
     name: string,
-    label: string
+    label: string,
 }
 
 
@@ -65,7 +71,7 @@ export class StencilService {
 
 
     sources: Source[] = [
-        { name: 'hdfs-source', label: 'HDFS' },
+        { name: 'hdfs-source', label: 'DBFS', type:'source', sub_type:'dbfs_source'},
         { name: 'amazonS3-source', label: 'S3' },
         { name: 'kafka-source', label: 'Kafka' },
         { name: 'staging-source', label: 'Data Lake' },
@@ -88,11 +94,11 @@ export class StencilService {
     ];
 
     operations: Operation[] = [
-        { name: 'encryption', label: 'Encryption' },
+        { name: 'encryption', label: 'Encryption'},
         { name: 'bottom', label: 'Bottom' },
         { name: 'aggregation', label: 'Aggregation' },
         { name: 'timezone', label: 'Date Time' },
-        { name: 'top', label: 'Top' },
+        { name: 'top', label: 'Top', type:'operation', sub_type:'max_transformation' },
         { name: 'filling', label: 'Filling' },
         { name: 'filter', label: 'Filter' },
         { name: 'formula', label: 'Formula' },
@@ -126,7 +132,7 @@ export class StencilService {
 
     sinks: Sink[] = [
         { name: 'staging-sink', label: 'Datalake' },
-        { name: 'hdfs-sink', label: 'HDFS' },
+        { name: 'hdfs-sink', label: 'DBFS', type:'sink', sub_type:'dbfs_sink' },
         { name: 'kafka-sink', label: 'Kafka' },
         { name: 'amazonS3-sink', label: 'S3' },
         { name: 'sql-server-sink', label: 'RDBMS' },
@@ -241,9 +247,13 @@ export class StencilService {
         let labelSize = 10;
         let sourceObj = [];
         let sourceLabel = '';
+        let type = '';
+        let sub_type = '';
         this.sources.forEach((source) => {
 
             sourceLabel = source.label;
+            type = source.type;
+            sub_type = source.sub_type;
             if (source.label.length > labelSize) {
                 sourceLabel = source.label.slice(0, labelSize) + '...';
             }
@@ -267,6 +277,8 @@ export class StencilService {
                         strokeDasharray: '0'
                     },
                     label: {
+                        type:type,
+                        sub_type:sub_type,
                         text: sourceLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',
@@ -282,6 +294,8 @@ export class StencilService {
         this.operations.forEach((operation) => {
 
             operationLabel = operation.label;
+            type = operation.type;
+            sub_type = operation.sub_type;
             if (operation.label.length > labelSize) {
                 operationLabel = operation.label.slice(0, labelSize) + '...';
             }
@@ -305,6 +319,8 @@ export class StencilService {
                         strokeDasharray: '0'
                     },
                     label: {
+                        type: type,
+                        sub_type:sub_type,
                         text: operationLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',
@@ -320,6 +336,8 @@ export class StencilService {
         this.sinks.forEach((sink) => {
 
             sinkLabel = sink.label;
+            type = sink.type
+            sub_type = sub_type;
             if (sink.label.length > labelSize) {
                 sinkLabel = sink.label.slice(0, labelSize) + '...';
             }
@@ -343,6 +361,8 @@ export class StencilService {
                         strokeDasharray: '0'
                     },
                     label: {
+                        type: type,
+                        sub_type: sub_type,
                         text: sinkLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',

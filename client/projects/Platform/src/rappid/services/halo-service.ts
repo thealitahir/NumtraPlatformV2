@@ -28,11 +28,11 @@ export class HaloService {
         }).render();
 
         halo.on('action:link:add', function(link) {
-          if (!link.get('source').id ||
-            !link.get('target').id ||
-            (link.get('source').id === link.get('target').id)) {
+
+          if (!link.get('source').id || !link.get('target').id || (link.get('source').id === link.get('target').id)) {
               link.remove();
           }
+
         });
     }
 

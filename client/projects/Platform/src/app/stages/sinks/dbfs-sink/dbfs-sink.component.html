@@ -1,12 +1,12 @@
 
 <div style="position:fixed; z-index: 999; right: 80px; top:200px; width:250;height:500px; overflow: auto;">
-  <h3>DBFS Source</h3>
-  <form #dbfsForm="ngForm">
+  <h3>DBFS Sink</h3>
+  <form #dbfsSinkForm="ngForm">
 
 
     <mat-form-field>
-      <label style='color:red'>{{error}}</label>
-      <input matInput type="text" name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url' required>
+      <!-- <label>URL</label> -->
+      <input matInput type="text"name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url' required>
     </mat-form-field>
     <br />
 
@@ -27,9 +27,8 @@
 
     <mat-form-field>
       <!-- <label>File Type</label> -->
-      <mat-select name="fileType" placeholder="File Type" [(ngModel)]='stage.stage_attributes.file_type' required>
+      <mat-select name="fileType" placeholder="File Type" [(ngModel)]='stage.stage_attributes.file_type'  required>
         <mat-option value="">Select File Type </mat-option>
-        <mat-option value="Delimeted">Delimeted</mat-option>
         <mat-option value="xml">XML</mat-option>
         <mat-option value="json">JSON</mat-option>
         <mat-option value="parquet">Parquet</mat-option>
@@ -43,7 +42,7 @@
         <!-- <label>File Type</label> -->
         <mat-select name="fileDelimeter" placeholder="Source Delimeter" [(ngModel)]='stage.stage_attributes.source_delimeter' required>
           <mat-option value="">Select Source Delimeter </mat-option>
-          <mat-option value='comma ,'>comma ,</mat-option>
+          <mat-option value="comma ,">comma ,</mat-option>
           <mat-option value='tab \t'>tab \t</mat-option>
           <mat-option value='forward slash /'>forward slash /</mat-option>
           <mat-option value='semi-colon ;'>semi-colon ;</mat-option>
@@ -58,12 +57,12 @@
         </mat-select>
       </mat-form-field>
       <br/>
-    <div>
-      <button mat-stroked-button color="accent" (click)="discoverData(dbfsForm)">Discover Data</button>
-    </div>
+    <!-- <div>
+      <button mat-stroked-button color="accent" (click)="discoverData()">Discover Data</button>
+    </div> -->
     <br />
     <div>
-      <button mat-stroked-button color="accent" (click)="getSchemahenSave(dbfsForm)" type="submit">Save</button>
+      <button mat-stroked-button color="accent" (click)="saveSinkDbfs(dbfsSinkForm)" type="submit">Save</button>
     </div>
 
   </form>

@@ -102,7 +102,7 @@
       <i class="material-icons">gamepad</i>
     </li>
     <li matTooltip="Configurations"><i class="material-icons">settings</i></li>
-    <!-- <li matTooltip="Data Explorer"><i class="material-icons">chrome_reader_mode</i></li> -->
+    <li matTooltip="Data Explorer" (click)="dataExplorer()"><i class="material-icons">chrome_reader_mode</i></li>
     <li matTooltip="Developers Interface"><i class="material-icons">dvr</i></li>
     <li matTooltip="Scheduling">
       <i class="material-icons">play_circle_outline</i>
@@ -111,51 +111,58 @@
     <!-- <li matTooltip="Parameters"><i class="material-icons">category</i></li> -->
   </ul>
 </div>
-
-<div class="sub-nav" fxLayout fxLayoutAlign="start center">
-  <ul class="sub-nav-left" fxFlex>
-    <li class="active" (click)="showStencilGroup($event, 'source')">
-      <a>Sources</a>
-    </li>
-    <li (click)="showStencilGroup($event, 'operation')">
-      <a>Transformations</a>
-    </li>
-    <li (click)="showStencilGroup($event, 'ml')"><a>Machine Learning </a></li>
-    <li (click)="showStencilGroup($event, 'sink')"><a>Sinks</a></li>
-    <li (click)="showStencilGroup($event, 'iot')"><a>Internet of things</a></li>
-    <!-- <li (click)="showStencilGroup('extension')"><a>Extensions</a></li> -->
-    <li (click)="showStencilGroup($event, 'extension')"><a>Library</a></li>
-    <li (click)="showStencilGroup($event, 'ct')">
-      <a>Custom Transformation</a>
-    </li>
-    <li (click)="showStencilGroup($event, 'template')"><a>Templates</a></li>
-    <li [routerLink]="['/platform/dbfs']" >DBFS Source</li>
-  </ul>
-</div>
-
-<div class="close-stencil-container" (click)="hideStencilGroup()">
-  <i class="material-icons">clear</i>
-</div>
-
-<div class="stencil-wrap">
-  <div class="stencil-container"></div>
-  <div class="toolbar-container"></div>
-</div>
-
-<div class="canvas-wrap">
-  <!-- <div class="toolbar-container"></div> -->
-
-
-
-  <div class="canvas-block">
-    <!-- <div class="stencil-container"></div> -->
-    <div class="paper-container">
-        <span class="icon-save"></span>
-    </div>
-    <div class="inspector-container"></div>
-    <div class="navigator-container"></div>
+<!-- <div *ngIf="dataExplorerView === 0"> -->
+  <div class="sub-nav" fxLayout fxLayoutAlign="start center">
+    <ul class="sub-nav-left" fxFlex>
+      <li class="active" (click)="showStencilGroup($event, 'source')">
+        <a>Sources</a>
+      </li>
+      <li (click)="showStencilGroup($event, 'operation')">
+        <a>Transformations</a>
+      </li>
+      <li (click)="showStencilGroup($event, 'ml')"><a>Machine Learning </a></li>
+      <li (click)="showStencilGroup($event, 'sink')"><a>Sinks</a></li>
+      <li (click)="showStencilGroup($event, 'iot')"><a>Internet of things</a></li>
+      <!-- <li (click)="showStencilGroup('extension')"><a>Extensions</a></li> -->
+      <li (click)="showStencilGroup($event, 'extension')"><a>Library</a></li>
+      <li (click)="showStencilGroup($event, 'ct')">
+        <a>Custom Transformation</a>
+      </li>
+      <li (click)="showStencilGroup($event, 'template')"><a>Templates</a></li>
+    </ul>
   </div>
+
+  <div class="close-stencil-container" (click)="hideStencilGroup()">
+    <i class="material-icons">clear</i>
+  </div>
+
+
+
+  <div class="stencil-wrap">
+    <div class="stencil-container"></div>
+    <div class="toolbar-container"></div>
+  </div>
+
+  <div class="canvas-wrap">
+    <!-- <div class="toolbar-container"></div> -->
+
+
+
+    <div class="canvas-block">
+      <!-- <div class="stencil-container"></div> -->
+      <div class="paper-container">
+          <span class="icon-save"></span>
+      </div>
+      <!-- <div class="inspector-container"></div> -->
+      <div class="navigator-container"></div>
+    </div>
+  </div>
+
+<!-- </div> -->
+<div *ngIf="dataExplorerView === 1">
+  <app-data-explorer></app-data-explorer>
 </div>
+
 
 <!-- <div class="right-nav-col">
 

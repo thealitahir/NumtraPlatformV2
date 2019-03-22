@@ -1,0 +1,56 @@
+
+<div style="position:fixed; z-index: 999; right: 80px; top:200px; width:250;height:500px; overflow: auto;">
+  <h3>Top Transformation</h3>
+  <form #topForm="ngForm" >
+
+
+    <!-- <mat-form-field>
+      <input matInput type="text" name="url" placeholder="URL" #url="ngModel" ngModel required>
+    </mat-form-field> -->
+    <br />
+    <mat-form-field>
+      <!-- <label>File Type</label> -->
+      <mat-select name="field" [(ngModel)]='stage.stage_attributes.attributes.field' required>
+        <mat-option value="">Select Field </mat-option>
+        <mat-option *ngFor='let sSchema of stageSchema' (click)='selectFieldType(sSchema)' [value] ='sSchema.field' >{{ sSchema.field }} </mat-option>
+
+      </mat-select>
+    </mat-form-field>
+    <br />
+    <div class="form-group">
+      <div class="radio radio-inline-theme">
+          <label>
+              <input type="radio" name="parameter" [(ngModel)]="stage.stage_attributes.parameter" [value]="false" >
+              Custom
+          </label>
+      </div>
+
+      <div class="radio radio-inline-theme">
+          <label>
+              <input type="radio" name="parameter" [(ngModel)]="stage.stage_attributes.parameter" [value]="true" >
+              Parameter
+          </label>
+      </div>
+    </div>
+    <br/>
+    <div style="width:180px" class="form-group" *ngIf="stage.stage_attributes.parameter ">
+      <!-- <select ng-if="!angular.isUndefined(processParameters)" class="form-control" ngmodel="stage.stage_attributes.attributes.topResults" required>
+          <option value="">Select parameter</option>
+          <option ng-selected="stage.stage_attributes.attributes.topResults == key" ng-repeat="(key,data) in processParameters.parameters" value="{{key}}">{{key}}</option>
+      </select> -->
+
+      <span style='color:red;' class="alert-danger">Please register parameters for this pipeline</span>
+
+    </div>
+    <div class="form-group" *ngIf="!stage.stage_attributes.parameter">
+        <mat-form-field>
+            <input matInput type="number" name="results" [(ngModel)]='stage.stage_attributes.attributes.topResults' placeholder="Value" #results="ngModel" required>
+          </mat-form-field>
+  </div>
+  <br/>
+    <div>
+      <button mat-stroked-button color="accent" (click)="saveTop(topForm)" type="submit">Save</button>
+    </div>
+
+  </form>
+</div>
