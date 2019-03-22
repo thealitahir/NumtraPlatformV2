@@ -66,4 +66,23 @@ router.post('/getPipelineResult',function(req,res){
   res.send('OK');
 });
 
+router.post('/executePipeline',function(req,res,next){
+  var data=req.body;
+  console.log(data); 
+  request({
+  url: CONFIGURATIONS.platformRequestApi +'/api/start/codegen',
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json'
+  },
+  json: data
+  }, function(error, response, body) {
+  console.log('add data response');
+  console.log(body);
+  res.send(body);
+
+  });
+
+});
+
 module.exports = router;

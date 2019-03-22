@@ -27,4 +27,8 @@ export class StageService {
       });
       return observable;
     }
+
+    executePipeline(processID): Observable<any> {
+      return this.http.post(GLOBAL.serviceUrl + '/stage/executePipeline', processID);
+  }
 }

@@ -51,7 +51,8 @@ global.CONFIGURATIONS ={
   ssl: false,
   bFAIrequestApi: 'http://24.16.119.69:7799',
   dbfsToken: 'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
-  dbfsDomain: 'https://westus.azuredatabricks.net'
+  dbfsDomain: 'https://westus.azuredatabricks.net',
+  requestApi: '"http://192.168.23.180:2020'
 }
 
 // Add headers

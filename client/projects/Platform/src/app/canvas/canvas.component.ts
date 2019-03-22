@@ -9,6 +9,7 @@ import { KeyboardService } from '../../rappid/services/keyboard-service';
 import RappidService from '../../rappid/services/kitchensink-service';
 //import KitchenSinkService from 'dist/numtraPlatformV2/rappid/services/kitchensink-service';
 import { CanvasService } from '../services/canvas.service';
+import { StageService } from '../services/stage.service';
 
 @Component({
   selector: 'app-canvas',
@@ -19,6 +20,7 @@ export class CanvasComponent implements OnInit {
   selectedRightNav: string;
   selectedMode = 'development';
   dataExplorerView = 0;
+  data: any;
 
   @Output() onSearch: EventEmitter<any> = new EventEmitter();
   private rappid: any;
@@ -29,7 +31,8 @@ export class CanvasComponent implements OnInit {
 
   constructor(
     private element: ElementRef,
-    public canvasService: CanvasService
+    public canvasService: CanvasService,
+    public stageService: StageService,
     ) {}
 
   ngOnInit() {
@@ -74,8 +77,15 @@ export class CanvasComponent implements OnInit {
   });
   }
 
-  dataExplorer(){
-    if (this.dataExplorerView === 1){
+  executePipeline() {
+    this.data = {process_id: '5c51641b607a223b3ef0ea61'};
+    this.stageService.executePipeline(this.data).subscribe(schemadata => {
+      console.log(schemadata);
+    });
+  }
+
+  dataExplorer() {
+    if (this.dataExplorerView === 1) {
       this.dataExplorerView = 0;
     } else {
       this.dataExplorerView = 1;
