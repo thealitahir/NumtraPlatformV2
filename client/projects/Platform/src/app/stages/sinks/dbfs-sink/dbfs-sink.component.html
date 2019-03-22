@@ -9,9 +9,25 @@
       <input matInput type="text"name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url' required>
     </mat-form-field>
     <br />
+
+    <mat-form-field>
+      <input matInput type="text" name="request api" placeholder="Request Api" #request_api="ngModel" [(ngModel)]='stage.stage_attributes.request_api' required>
+    </mat-form-field>
+    <br />
+
+    <mat-form-field>
+      <input matInput type="password" name="dbfs token" placeholder="DBFS Token" #dbfs_token="ngModel" [(ngModel)]='stage.stage_attributes.dbfs_token' required>
+    </mat-form-field>
+    <br />
+
+    <mat-form-field>
+      <input matInput type="text" name="dbfs domain" placeholder="DBFS Domain" #dbfs_domain="ngModel" [(ngModel)]='stage.stage_attributes.dbfs_domain' required>
+    </mat-form-field>
+    <br />
+
     <mat-form-field>
       <!-- <label>File Type</label> -->
-      <mat-select name="fileType" [(ngModel)]='stage.stage_attributes.file_type'  required>
+      <mat-select name="fileType" placeholder="File Type" [(ngModel)]='stage.stage_attributes.file_type'  required>
         <mat-option value="">Select File Type </mat-option>
         <mat-option value="xml">XML</mat-option>
         <mat-option value="json">JSON</mat-option>
@@ -24,9 +40,20 @@
     <br />
     <mat-form-field>
         <!-- <label>File Type</label> -->
-        <mat-select name="fileDelimeter" [(ngModel)]='stage.stage_attributes.source_delimeter' required>
+        <mat-select name="fileDelimeter" placeholder="Source Delimeter" [(ngModel)]='stage.stage_attributes.source_delimeter' required>
           <mat-option value="">Select Source Delimeter </mat-option>
           <mat-option value="comma ,">comma ,</mat-option>
+          <mat-option value='tab \t'>tab \t</mat-option>
+          <mat-option value='forward slash /'>forward slash /</mat-option>
+          <mat-option value='semi-colon ;'>semi-colon ;</mat-option>
+          <mat-option value='percentage %'>comma ,</mat-option>
+          <mat-option value='minus -'>minus -</mat-option>
+          <mat-option value='back slash \'>back slash \</mat-option>
+          <mat-option value='colon :'>colon :</mat-option>
+          <mat-option value='space '>space </mat-option>
+          <mat-option value='dollar $'>dollar $</mat-option>
+          <mat-option value='dot .'>dot .</mat-option>
+          <mat-option value='at the rate @'>at the rate @</mat-option>
         </mat-select>
       </mat-form-field>
       <br/>

@@ -263,7 +263,7 @@ export class StencilService {
                 size: { width: 50, height: 50 },
                 attrs: {
                     root: {
-                        dataTooltip: source.sub_type,
+                        dataTooltip: source.label,
                         dataTooltipPosition: 'bottom',
                         dataTooltipPositionSelector: '.joint-stencil'
                     },
