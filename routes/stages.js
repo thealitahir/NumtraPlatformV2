@@ -68,7 +68,6 @@ router.post('/getPipelineResult',function(req,res){
   res.send('OK');
 });
 
-<<<<<<< HEAD
 router.post('/executePipeline',function(req,res,next){
   var data=req.body;
   console.log(data); 
@@ -85,8 +84,8 @@ router.post('/executePipeline',function(req,res,next){
   res.send(body);
 
   });
+});
 
-=======
 router.post('/saveCanvasModel',function(req,res){
   PipelineVersion.update({_id:"5c51641b607a223b3ef0ea61"}, { $set:{ "model": req.body} }, function (err, lsdata) {
     if(!err) {
@@ -112,7 +111,6 @@ router.get('/getCanvasModel',function(req,res){
       res.send({status: true, msg: 'Canvas model found.', data: data});
     }
   });
->>>>>>> d51e9a7cfc988d727efa4a65c9c3e18124758346
 });
 
 module.exports = router;
