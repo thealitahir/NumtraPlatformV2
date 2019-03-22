@@ -24,6 +24,7 @@ export class CanvasComponent implements OnInit {
   paper: any;
   selection: any;
   keyboardService: any;
+  graph: any;
   title = 'Rappid App';
   constructor(
     private element: ElementRef,
@@ -44,7 +45,21 @@ export class CanvasComponent implements OnInit {
     this.keyboardService = this.rappid.getKeyboard();
     const keyboard = this.keyboardService.keyboard;
     this.selection = this.rappid.getSelection();
+    this.graph = this.rappid.getGraph();
+    console.log("this is graph");
+    console.log(this.graph.get);
+    this.paper.on('blank:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
+      if (keyboard.isActive('ctrl meta', evt)) {
+        this.selection.collection.add(elementView.model);
+      }
+      //debugger;
+      this.onSearch.emit(elementView);
+      
+      // Select an element if CTRL/Meta key is pressed while the element is clicked.
+    });
     this.paper.on('element:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
+      console.log("this is graph");
+      console.log(this.graph);
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
       }
