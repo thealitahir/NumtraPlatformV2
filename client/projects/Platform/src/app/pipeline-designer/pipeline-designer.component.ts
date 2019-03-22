@@ -17,8 +17,12 @@ export class PipelineDesignerComponent implements OnInit {
   }
 
   stageClicked(value){
-    console.log(value);
-    if(value && value.model.attributes.attrs.label.type == "source" && !this.showSource){
+    if(!value.model){
+      this.showTransformation = false;
+      this.showSource = false;
+      this.showSink = false;
+    }
+    else if(value && value.model.attributes.attrs.label.type == "source" && !this.showSource){
       this.showSource = true;
       this.showTransformation = false;
       this.showSink = false;

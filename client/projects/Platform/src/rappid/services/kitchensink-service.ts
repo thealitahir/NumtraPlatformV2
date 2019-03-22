@@ -70,6 +70,9 @@ export class KitchenSinkService {
     getKeyboard(){
         return this.keyboardService;
     }
+    getGraph(){
+        return this.graph;
+    }
     startRappid() {
 
         joint.setTheme('modern');
