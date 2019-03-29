@@ -5,6 +5,7 @@ import { MatSnackBar, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
 @Component({
   selector: 'app-discover-data-dialog',
   templateUrl: 'discover-data-dialog.component.html',
+  styleUrls: ['discover-data-dialog.component.css']
 })
 export class DiscoverDataComponent {
 

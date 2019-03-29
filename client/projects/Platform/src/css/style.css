@@ -2,7 +2,7 @@
 
 Copyright (c) 2015 client IO
 
- 2019-01-28 
+ 2019-01-28
 
 
 This Source Code Form is subject to the terms of the Rappid Trial License
@@ -111,60 +111,70 @@ body {
     padding: 0 0 0 30px;
 }
 
-/*  Paper  */
+
+/* CANVAS View CSS
+------------------------------------------------*/
+
+
+/* Paper
+--------------------*/
 .paper-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    overflow: hidden;
-    box-sizing: border-box;
-    left: 240px;
-    right: 240px;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
+  left: 240px;
+  right: 240px;
 }
 
-/*  Inspector  */
+/* Inspector
+--------------------*/
 .inspector-container {
-    position: absolute;
-    top: 0;
-    right: 0;
-    bottom: 120px; /* navigator height */
-    width: 240px;
-    box-sizing: border-box;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 120px; /* navigator height */
+  width: 240px;
+  box-sizing: border-box;
 }
+
 .object-property[data-property$="/fill"],
 .object-property[data-property$="/stroke"],
 .field[data-field$="/fill"],
 .field[data-field$="/stroke"] {
-    display: inline-block;
-    vertical-align: top;
-    width: 50%;
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
 }
 
 .joint-select-box.joint-color-palette .select-box-option:nth-child(2):not(.hover) {
-    border: inset;
-    border-width: 1px;
+  border: inset;
+  border-width: 1px;
 }
 
 .joint-inspector-select-box-options {
-    width: 190px;
+  width: 190px;
 }
 
-/*  Navigator  */
+/* Navigator
+--------------------*/
 .navigator-container {
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 240px;
-    height: 120px;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 240px;
+  height: 120px;
 }
 
-/*  Stencil  */
+/* Stencil
+--------------------*/
 .stencil-container {
-    position: absolute;
-    left: 0;
-    top: 0;
-    width: 240px;
-    height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 240px;
+  height: 100%;
 }
 
 .joint-stencil .joint-element[data-type="standard.Image"] text,
@@ -174,42 +184,47 @@ body {
 .joint-stencil .joint-element[data-type="devs.Atomic"] .outPorts text,
 .joint-stencil .joint-element[data-type="pn.Transition"] text,
 .joint-stencil .joint-element .joint-port text {
-    display: none;
+  display: none;
 }
 
 .joint-stencil .joint-element.joint-type-uml rect,
 .joint-stencil .joint-element.joint-type-uml path {
-    stroke: #4a4d6e;
+  stroke: #4a4d6e;
 }
 
-/*  Toolbar  */
+/* Toolbar
+--------------------*/
 .toolbar-container {
-    display: inline-block;
-    position: absolute;
-    height: 100%;
-    left: 240px;
-    right: 0;
-    box-sizing: border-box;
+  display: inline-block;
+  position: absolute;
+  height: 100%;
+  left: 240px;
+  right: 0;
+  box-sizing: border-box;
 }
 
 .toolbar-container .joint-toolbar {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .toolbar-container label {
-    white-space: nowrap;
+  white-space: nowrap;
 }
 
 .toolbar-container button:not(:empty) {
-    padding: 0 4px;
+  padding: 0 4px;
 }
 
 .toolbar-container button.joint-widget[data-type="zoomIn"],
 .toolbar-container button.joint-widget[data-type="zoomOut"] {
-    display: none;
+  display: none;
 }
 
 .joint-dialog.joint-lightbox .fg {
-    background-color: #F6F6F6;
+  background-color: #F6F6F6;
 }
+
+/*--------- END - CANVAS ---------*/
+
+
