@@ -48,8 +48,8 @@ router.post('/linkStages',function(req,res){
   
 })
 
-router.get('/stageSchema/:stage',function(req,res){
-  StageVersionModel.findOne({name: req.params.stage }, function (err, stageschema) {
+router.get('/stageSchema/:stageName/:stageType',function(req,res){
+  StageVersionModel.findOne({name: req.params.stageName, stage_type:req.params.stageType}, function (err, stageschema) {
     if (!err) {
       res.send({status: true, msg: 'get stage schema successfully.', data: stageschema});
     } 
@@ -74,7 +74,7 @@ router.post('/executePipeline',function(req,res,next){
   var url= CONFIGURATIONS.platformRequestApi +'/api/start/codegen';
   console.log(url);
   request({
-  url: CONFIGURATIONS.platformRequestApi +'/api/start/codegen',
+  url: 'http://192.168.23.44:2020/api/start/codegen',
   method: 'POST',
   headers: {
       'Content-Type': 'application/json'
@@ -89,28 +89,37 @@ router.post('/executePipeline',function(req,res,next){
 });
 
 router.post('/saveCanvasModel',function(req,res){
-  PipelineVersion.update({_id:"5c51641b607a223b3ef0ea61"}, { $set:{ "model": req.body} }, function (err, lsdata) {
+  console.log(req.body);
+  StageVersionModel.update({name:req.body.attributes.label.text,
+    stage_type:req.body.attributes.label.stage_type}, 
+    { $set:
+      {
+         "shape_attributes": req.body.attributes,
+         "position": req.body.position,
+         "shape_size": req.body.size,
+         "shape_type": req.body.type 
+    } }, function (err, lsdata) {
     if(!err) {
-        console.log('canvas model updated successfully');
+        console.log('stage attribute updated successfully');
         console.log(lsdata);
-        res.send({status: true, msg: 'linkstage updated successfully.', data: lsdata});
+        res.send({status: true, msg: 'stage attribute updated successfully', data: lsdata});
       }
       else {
-        console.log('canvas model  not updated.');
-        res.send({status: false, msg: 'linkstage not saved.'});
+        console.log('stage attribute not updated.');
+        res.send({status: false, msg: 'stage attribute not updated.'});
       }
   });
 });
 
 router.get('/getCanvasModel',function(req,res){
-  PipelineVersion.findOne({_id:"5c51641b607a223b3ef0ea61"}).exec(function(err,data){
+  StageVersionModel.find({pipeline_version_id:"5c51641b607a223b3ef0ea61"}).exec(function(err,data){
     if(err){
-      console.log('Unable to get canvas model');
-      res.send({status: false, msg: 'linkstage not saved.'});
+      console.log('Unable to get stages');
+      res.send({status: false, msg: 'Unable to get stages'});
     }
     else{
-      console.log('canvas model found');
-      res.send({status: true, msg: 'Canvas model found.', data: data});
+      console.log('stages found');
+      res.send({status: true, msg: 'stages found.', data: data});
     }
   });
 });

@@ -19,12 +19,13 @@ export class MaxComponent {
     }
   };
   stagename: any = 'Top';
+  stagetype: any = 'transformation';
   stageSchema: any;
   attributes: any = {};
   fileType: any;
 
   constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stagename).subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stagename,this.stagetype).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;

@@ -1,0 +1,54 @@
+<app-header></app-header>
+
+<main >
+  <div fxLayout="column">
+
+    <h2>Add new stage</h2>
+
+    <div>
+      <form fxLayout="column" fxFlex="50" (submit)="saveStage()" #loginForm="ngForm">
+
+        <mat-form-field>
+          <mat-select placeholder="Select me" name=selected_section [(ngModel)]="selected_section" required>
+            <mat-option *ngFor="let section of sections" [value]="section">{{section.title}}</mat-option>
+          </mat-select>
+          <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
+        </mat-form-field>
+
+        <!-- <mat-checkbox formControlName="hideRequired">Hide required marker</mat-checkbox> -->
+        <mat-checkbox name=stage.is_streaming [(ngModel)]="stage.is_streaming" ngModel required>Streaming</mat-checkbox>
+
+        <mat-form-field>
+          <input matInput name=stage.titile [(ngModel)]="stage.title" required placeholder="Enter stage name">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput name=stage.subType [(ngModel)]="stage.subType" required placeholder="Enter stage type">
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput name=stage.icon [(ngModel)]="stage.icon" required placeholder="Enter stage Icon">
+        </mat-form-field>
+
+        <div class="horizontal-container" fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="stretch" fxFlex="auto">
+          <div class="vertical-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="50%">
+            <h2>Stage Attributes</h2>
+
+            <div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto">
+              <ace name=stage_attributes [(ngModel)]="stage_attributes" required fxFlex="auto" [config]="config" [disabled]="disabled"
+               [(value)]="stage_attributes">
+              </ace>
+            </div>
+          </div>
+          
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center"> 
+            <button mat-raised-button color="accent" type="submit">Save</button>
+            <button mat-raised-button color="warn" (click)="cancel()">Cancel</button>
+        </div>
+
+      </form>
+    </div>
+  </div>
+</main>

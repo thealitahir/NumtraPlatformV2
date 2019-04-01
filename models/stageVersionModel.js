@@ -37,8 +37,10 @@ var stageVersionSchema = mongoose.Schema({
     valid: {type:Boolean, default:false},
     partition:Schema.Types.Mixed,
     is_predefined:{type: Boolean, default: false},
-    cache:{type: Boolean, default: false}
-
+    cache:{type: Boolean, default: false},
+    shape_attributes: Schema.Types.Mixed,
+    shape_size: Schema.Types.Mixed,
+    shape_type: String
 });
 
 stageVersionSchema.plugin(timestamps, { createdAt: 'created_at', updatedAt: 'updated_at' });
