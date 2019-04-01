@@ -14,8 +14,8 @@ export class StageService {
         return this.http.post(GLOBAL.serviceUrl + '/stage/updateStage', data);
     }
 
-    getStageSchema(stage): Observable<any>{
-      return this.http.get(GLOBAL.serviceUrl + '/stage/stageSchema/' + stage );
+    getStageSchema(stageName,stageType): Observable<any>{
+      return this.http.get(GLOBAL.serviceUrl + '/stage/stageSchema/' + stageName + '/' +stageType );
     }
 
     getpipelineData(): Observable<any> {
