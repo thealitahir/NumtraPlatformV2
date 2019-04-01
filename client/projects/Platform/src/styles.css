@@ -103,6 +103,8 @@
 ------------------------------------------- */
 .paper-container {
   left: 0;
+  right: 1px;
+  top: 1px;
 }
 
 .joint-paper-background {
@@ -117,16 +119,23 @@
 .canvas-right-col {
   position: absolute;
   z-index: 10;
-  right: 52px;
-  top: 92px;
-  width: 196px;
+  right: 54px;
+  top: 94px;
+  width: 250px;
   height: 500px;
   overflow: auto;
   background: #ffffff;
   padding: 20px;
+  box-shadow: 0 0 5px rgba(0,0,0, .25);
 }
 .canvas-right-col h3{
   margin-bottom: 10px;
+}
+.canvas-right-col-actions{
+  margin-top: 1rem;
+}
+.error-message{
+  color: #ff0000;
 }
 /* ---- END - Stage property ---- */
 
