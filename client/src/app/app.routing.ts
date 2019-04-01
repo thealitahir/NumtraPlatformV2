@@ -10,7 +10,7 @@ import { AuthGuard } from './guards/index';
 
 const APP_ROUTES: Routes = [
   { path: 'platform',  loadChildren: '../../projects/Platform/src/app/app.module#PlatformSharedModule', canActivate: [AuthGuard]},
-  { path: 'BFAI',  loadChildren: '../../projects/BFAI/src/app/app.module#BFAISharedModule', canActivate: [AuthGuard] },
+  { path: 'BFAI',  loadChildren: '../../projects/BFAI/src/app/app.module#BFAISharedModule'},
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'select-application', component: SelectApplicationComponent }

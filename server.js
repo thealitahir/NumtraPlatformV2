@@ -19,11 +19,13 @@ var roles=  require('./routes/roles');
 var resource=  require('./routes/resources');
 var section=  require('./routes/sectionRoute');
 var component  =  require('./routes/componentRoute');
+var dbfs=  require('./routes/dbfs');
+var stage=  require('./routes/stages');
+var project= require('./routes/project');
 
 var dataSourceRoute = require('./routes/datasource');
 var modelDataRoute = require('./routes/modelsroute');
-var dbfs=  require('./routes/dbfs');
-var stage=  require('./routes/stages');
+
 
 const port = 3100;
 
@@ -104,11 +106,14 @@ app.use('/role',roles);
 app.use("/resources",resource);
 app.use("/sections",section);
 app.use("/components",component);
+app.use('/dbfs',dbfs);
+app.use('/stage',stage);
+app.use('/project',project);
+
 
 app.use('/dataSourceApi', dataSourceRoute);
 app.use('/modelApi', modelDataRoute);
-app.use('/dbfs',dbfs);
-app.use('/stage',stage);
+
 
 app.get('/user', (req, res) => res.json({
   application: 'Reibo collection'
@@ -141,6 +146,10 @@ app.get('/dbfs', (req, res) => res.json({
 }));
 
 app.get('/stage', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/project', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 

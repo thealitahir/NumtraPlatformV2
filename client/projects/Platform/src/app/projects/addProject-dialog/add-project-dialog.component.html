@@ -1,0 +1,58 @@
+<ng-container *ngIf="data.type == 'add'">
+  <h3 mat-dialog-title class="text-center">Add New Project</h3>
+  <h2 style="color:red"></h2>
+  <div mat-dialog-content>
+    <div fxLayout fxLayoutAlign="start center">
+      <form #projectForm='ngForm'>
+        <mat-form-field>
+          <input matInput type="text" [(ngModel)]='projectName' name='projectName' placeholder="Project Name" required>
+        </mat-form-field>
+
+      </form>
+    </div>
+  </div>
+
+  <div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+      <button mat-raised-button (click)="createProject(projectForm)" color="primary">Save</button>
+    <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data.type == 'edit'">
+  <h3 mat-dialog-title class="text-center">Edit Project</h3>
+  <h2 style="color:red"></h2>
+  <div mat-dialog-content>
+    <div fxLayout fxLayoutAlign="start center">
+      <form  #projectForm='ngForm'>
+        <input type="hidden" name="pid" [(ngModel)]='pid'/>
+        <mat-form-field>
+          <input matInput type="text" [(ngModel)]='projectName' name='projectName' placeholder="Project Name" required>
+        </mat-form-field>
+
+      </form>
+    </div>
+  </div>
+
+  <div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+      <button mat-raised-button (click)="EditProject(projectForm)" color="primary" >Save</button>
+    <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data.type == 'delete'">
+  <h3 mat-dialog-title class="text-center">Delete Project</h3>
+  <h2 style="color:red"></h2>
+  <div mat-dialog-content>
+    <div fxLayout fxLayoutAlign="start center">
+        <form #projectForm='ngForm'>
+            <input type="hidden" name="pid" [(ngModel)]='pid'/>
+        </form>
+      <p>Do you really want to delete it?</p>
+    </div>
+  </div>
+
+  <div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+      <button mat-raised-button (click)="DeleteProject(projectForm)" color="primary" >Delete</button>
+    <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+  </div>
+</ng-container>

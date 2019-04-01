@@ -46,13 +46,14 @@ import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } fro
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
-
+import { AddProjectComponent } from './projects/addProject-dialog/add-project-dialog.component';
 import { UsersService } from './services/user.service';
 import { PlatRolesService } from './services/platroles.service';
 import { ResourcesService } from './services/resources.service';
 import { SectionsService } from './services/sections.service';
 import { ComponentsService } from './services/components.service';
 import { StageService } from './services/stage.service';
+import { ProjectService } from './services/project.service';
 
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 
@@ -73,6 +74,7 @@ import { DataExplorerComponent } from './data-explorer/data-explorer.component';
     DbfsComponent,
     MaxComponent,
     DiscoverDataComponent,
+    AddProjectComponent,
 
     ProjectFilterPipe,
     ApplicationFilterPipe,
@@ -117,7 +119,7 @@ import { DataExplorerComponent } from './data-explorer/data-explorer.component';
     HttpClientModule,
     HttpModule
   ],
-  entryComponents: [ DiscoverDataComponent],
+  entryComponents: [ DiscoverDataComponent ,AddProjectComponent],
   providers: [],
   bootstrap: [AppComponent]
 })
@@ -128,7 +130,7 @@ export class PlatformSharedModule{
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AppModule,
-      providers: [ PlatRolesService, StageService, UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService ]
+      providers: [ PlatRolesService, StageService, UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService, ProjectService ]
     }
   }
 }

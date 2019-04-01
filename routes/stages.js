@@ -71,6 +71,8 @@ router.post('/getPipelineResult',function(req,res){
 router.post('/executePipeline',function(req,res,next){
   var data=req.body;
   console.log(data); 
+  var url= CONFIGURATIONS.platformRequestApi +'/api/start/codegen';
+  console.log(url);
   request({
   url: CONFIGURATIONS.platformRequestApi +'/api/start/codegen',
   method: 'POST',
@@ -112,5 +114,6 @@ router.get('/getCanvasModel',function(req,res){
     }
   });
 });
+
 
 module.exports = router;

@@ -21,7 +21,7 @@
       <mat-grid-list class="projects" gutterSize="15px" [cols]="breakpoint" rowHeight="2:1.2" (window:resize)="onResize($event)">
 
         <mat-grid-tile class="add-new-project" matTooltip="Add new project" matTooltipPosition="above">
-          <div>
+          <div (click)='openDialog("add","")'>
             <mat-icon color="primary">add_circle</mat-icon>
           </div>
         </mat-grid-tile>
@@ -31,10 +31,10 @@
       >
 
           <div class="project-action">
-            <button mat-fab color="primary" matTooltip="edit" matTooltipPosition="right">
+            <button mat-fab (click)='openDialog("edit",project)' color="primary" matTooltip="edit" matTooltipPosition="right">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-fab color="warn" matTooltip="delete" matTooltipPosition="right">
+            <button mat-fab color="warn"  (click)='openDialog("delete",project)' matTooltip="delete" matTooltipPosition="right">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
