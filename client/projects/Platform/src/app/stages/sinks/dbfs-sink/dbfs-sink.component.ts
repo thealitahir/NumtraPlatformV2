@@ -17,9 +17,10 @@ export class DbfsSinkComponent implements OnInit {
       file_type: ''
     }
   };
-  stageName: any = 'dbfs_sink';
+  stageName: any = 'DBFS';
+  stageType: any = 'sink';
   constructor(public stageService: StageService, public snackBar: MatSnackBar) {
-    this.stageService.getStageSchema(this.stageName).subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stageName,this.stageType).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
 

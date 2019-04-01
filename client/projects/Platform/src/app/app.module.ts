@@ -10,6 +10,9 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
+import { AceModule, AceConfigInterface, ACE_CONFIG  } from 'ngx-ace-wrapper';
+import {A11yModule} from '@angular/cdk/a11y';
+
 
 import {
   MatToolbarModule,
@@ -59,7 +62,12 @@ import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer
 import { DbfsService } from './services/dbfs.service';
 import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
+import { AddStageComponent } from './stages/add-stage/add-stage.component';
+import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
 
+const DEFAULT_ACE_CONFIG: AceConfigInterface = {
+  tabSize: 2
+};
 
 @NgModule({
   declarations: [
@@ -79,7 +87,9 @@ import { DataExplorerComponent } from './data-explorer/data-explorer.component';
     ModelCategoryFilterPipe,
     PipelineDesignerComponent,
     DbfsSinkComponent,
-    DataExplorerComponent
+    DataExplorerComponent,
+    AddStageComponent,
+    EditStageComponent
 
   ],
   imports: [
@@ -115,10 +125,17 @@ import { DataExplorerComponent } from './data-explorer/data-explorer.component';
     MatStepperModule,
     MatDialogModule,
     HttpClientModule,
-    HttpModule
+    HttpModule,
+    AceModule,
+    A11yModule,
   ],
   entryComponents: [ DiscoverDataComponent],
-  providers: [],
+  providers: [
+    {
+      provide: ACE_CONFIG,
+      useValue: DEFAULT_ACE_CONFIG
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
