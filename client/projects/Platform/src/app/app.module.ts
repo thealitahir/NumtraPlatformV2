@@ -59,6 +59,7 @@ import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer
 import { DbfsService } from './services/dbfs.service';
 import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
+import { FileExplorerComponent } from './file-explorer/file-explorer.component';
 
 
 @NgModule({
@@ -79,7 +80,8 @@ import { DataExplorerComponent } from './data-explorer/data-explorer.component';
     ModelCategoryFilterPipe,
     PipelineDesignerComponent,
     DbfsSinkComponent,
-    DataExplorerComponent
+    DataExplorerComponent,
+    FileExplorerComponent
 
   ],
   imports: [

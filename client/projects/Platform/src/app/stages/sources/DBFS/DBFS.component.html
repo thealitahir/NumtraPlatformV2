@@ -19,7 +19,8 @@
       <input matInput type="text" name="dbfsdomain" placeholder="DBFS Domain" #dbfs_domain="ngModel" [(ngModel)]='stage.stage_attributes.dbfs_domain' required>
     </mat-form-field>
     <br />
-
+    <a href="javascript:void(0)" (click) = chooseFile(dbfsForm)>Choose Data File</a>
+    <br />
     <mat-form-field>
       <!-- <label>File Type</label> -->
       <mat-select name="fileType" placeholder="File Type" [(ngModel)]='stage.stage_attributes.file_type' required>
@@ -62,4 +63,8 @@
     </div>
 
   </form>
+</div>
+
+<div *ngIf="fileExplorerView === 1">
+  <app-file-explorer></app-file-explorer>
 </div>
