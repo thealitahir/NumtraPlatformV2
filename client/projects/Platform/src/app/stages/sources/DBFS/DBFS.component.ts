@@ -24,6 +24,8 @@ export class DbfsComponent implements OnInit{
       dbfs_domain: ''
     }
   };
+  fileExplorer:any;
+  fileExplorerView:any = 0;
   stageSchema: any;
   stagename: any = 'DBFS';
   stagetype: any = 'source';
@@ -39,7 +41,7 @@ export class DbfsComponent implements OnInit{
 
   ngOnInit(){
   }
-
+  
   getSchemahenSave(form: NgForm) {
     if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
@@ -54,6 +56,8 @@ export class DbfsComponent implements OnInit{
           this.openSnackBar('Error:', 'Error in getting schema, Please check the, If source creds are correct and try again!');
         }
       });
+
+      
     }
   }
 
@@ -89,10 +93,17 @@ export class DbfsComponent implements OnInit{
         this.openDialog(data);
         this.fileheader = data.fileheader;
       });
+      
     }
 
   }
-
+  chooseFile(form: NgForm){
+    if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
+      this.fileExplorer = {token: form.value.dbfstoken , domain: form.value.dbfsdomain};
+      console.log(this.fileExplorer);
+      this.fileExplorerView = 1;
+    }
+  }
   openDialog(sampledata): void {
     const dialogRef = this.dialog.open(DiscoverDataComponent, {
       width: '900px',

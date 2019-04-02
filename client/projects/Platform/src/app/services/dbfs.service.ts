@@ -13,5 +13,9 @@ export class DbfsService {
       console.log(path);
         return this.http.post(GLOBAL.serviceUrl + '/dbfs/getDataSource', path);
     }
-
+    getDataFiles(data): Observable<any> {
+        console.log(data);
+          return this.http.post(GLOBAL.serviceUrl + '/dbfs/getDataFiles', data);
+      }
+    
 }
