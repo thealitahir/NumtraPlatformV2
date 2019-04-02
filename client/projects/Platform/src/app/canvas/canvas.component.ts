@@ -1,6 +1,9 @@
 import { Component, ElementRef, OnInit, EventEmitter, Output } from '@angular/core';
 import * as jQuery from 'jquery';
 
+import * as joint from '../../rappid/library/js/rappid';
+import * as _ from 'lodash';
+
 import { StencilService } from '../../rappid/services/stencil-service';
 import { ToolbarService } from '../../rappid/services/toolbar-service';
 import { InspectorService } from '../../rappid/services/inspector-service';
@@ -51,14 +54,25 @@ export class CanvasComponent implements OnInit {
     const keyboard = this.keyboardService.keyboard;
     this.selection = this.rappid.getSelection();
     this.graph = this.rappid.getGraph();
+    var link = new joint.shapes.standard.Link();
     /* this.canvasService.getCanvasModel().subscribe(data =>{
       console.log("model from db");
       console.log(data);
+      for(var i = 0; i < data.data.length; i++){
+        var rect = new joint.shapes.standard.Rectangle();
+        rect.position(data.data[i].position.x, data.data[i].position.y);
+        rect.resize(data.data[i].shape_size.height, data.data[i].shape_size.width)
+        rect.attr(data.data[i].shape_attributes);
+        rect.addTo(this.graph);
+        var rect = new joint.shapes.standard.Rectangle();
+      }
       //this.graph.attributes.cells.models = data.data.model;
       console.log(this.graph);
     }); */
     console.log("this is graph");
     console.log(this.graph);
+
+    //called when clicked anywhere on screen
     this.paper.on('blank:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
@@ -67,36 +81,48 @@ export class CanvasComponent implements OnInit {
       
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
+
+    //called when an element is added
     this.paper.on('element:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
       console.log("this is graph");
       console.log(this.graph);
+      console.log("element clicked");
+      console.log(elementView);
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
       }
       this.onSearch.emit(elementView);
+      this.canvasService.saveCanvasModel(elementView.model.attributes.attrs,
+        elementView.model.attributes.position,elementView.model.attributes.size,
+        elementView.model.attributes.type).subscribe(data=>{
+
+      });
+      // Select an element if CTRL/Meta key is pressed while the element is clicked.
+    });
+
+    //called when an element is deleted
+    this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
+      if (keyboard.isActive('ctrl meta', evt)) {
+        this.selection.collection.add(elementView.model);
+      }
       /* this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
 
       }); */
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
-    this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
-      if (keyboard.isActive('ctrl meta', evt)) {
-        this.selection.collection.add(elementView.model);
-      }
-      this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
 
-      });
-      // Select an element if CTRL/Meta key is pressed while the element is clicked.
-    });
+    //called when a link is deleted
     this.paper.on('link:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
       }
-      this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
+      /* this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
 
-      });
+      }); */
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
+
+    //called when a link is made
     this.paper.on('link:pointerup', (elementView, evt: JQuery.Event) => {
       console.log(elementView);
       if(elementView.model.attributes.target.id != null &&

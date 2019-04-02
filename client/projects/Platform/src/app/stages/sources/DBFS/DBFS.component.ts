@@ -28,9 +28,10 @@ export class DbfsComponent implements OnInit{
   fileExplorerView:any = 0;
   stageSchema: any;
   stagename: any = 'DBFS';
+  stagetype: any = 'source';
   error: any;
   constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stagename).subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stagename,this.stagetype).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;

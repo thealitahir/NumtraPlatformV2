@@ -46,7 +46,7 @@
   left: 50px;
   width: calc(100% - 100px);
   background: #ffffff;
-  box-shadow: 0px 10px 20px -10px rgba(0,0,0, .25);
+  box-shadow: 0px 10px 20px -10px rgba(0, 0, 0, .25);
 }
 
 .stencil-wrap h3.group-label {
@@ -57,7 +57,7 @@
   display: none;
 }
 
-.stencil-wrap [data-name="source"]{
+.stencil-wrap [data-name="source"] {
   display: block;
 }
 
@@ -66,11 +66,12 @@
   width: 100% !important;
   height: 90px !important;
 }
+
 .stencil-wrap .joint-paper svg {
   top: -6px;
 }
 
-.joint-paper-scroller.joint-theme-modern{
+.joint-paper-scroller.joint-theme-modern {
   border: solid 3px #3272a0;
   overflow: hidden;
 }
@@ -91,22 +92,43 @@
 
 /* START - Toolbar Classes
 ------------------------------------------- */
-.toolbar-container .joint-toolbar{
+.toolbar-container .joint-toolbar {
   justify-content: center;
 }
+
 /* ---- END - Toolbar ---- */
 
 
 /* START - Paper Classes
 ------------------------------------------- */
-.paper-container{
+.paper-container {
   left: 0;
 }
-.joint-paper-background{
+
+.joint-paper-background {
   background: #ffffff;
 }
+
 /* ---- END - Paper ---- */
 
+
+/* START - Stage property (Right Column CSS)
+------------------------------------------- */
+.canvas-right-col {
+  position: absolute;
+  z-index: 10;
+  right: 52px;
+  top: 92px;
+  width: 196px;
+  height: 500px;
+  overflow: auto;
+  background: #ffffff;
+  padding: 20px;
+}
+.canvas-right-col h3{
+  margin-bottom: 10px;
+}
+/* ---- END - Stage property ---- */
 
 /* main{
   position: relative;
