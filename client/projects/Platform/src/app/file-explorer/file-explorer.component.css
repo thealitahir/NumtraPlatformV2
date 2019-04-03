@@ -1,0 +1,17 @@
+.main-folders {
+    width: 65%;
+    margin: 5px;
+    float: left;
+}
+
+.selected-folders-files {
+    width: 24%;
+    margin: 5px;
+    float: left;
+ }
+ ul {
+   margin: 10px;
+ }
+ ul li {
+    margin: 20px;
+  }

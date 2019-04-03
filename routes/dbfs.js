@@ -68,4 +68,24 @@ router.post('/getDataSource', function(req,res) {
     });
 });
 
+router.post('/getDataFiles', function(req,res) {
+    console.log('node routes');
+    console.log(req.body);
+    // var url= CONFIGURATIONS.dbfsDomain +'/api/2.0/dbfs/read';
+    var url= req.body.domain +'/api/2.0/dbfs/list';
+    console.log(url);
+    request({
+        url: url,
+        method: 'GET',
+        headers: {
+            Authorization: " Bearer " + req.body.token  
+        },
+        json: {"path": req.body.path}
+    }, function(error, response, body) {
+            console.log(body);
+            res.send(body)
+            
+    });
+});
+
 module.exports = router;

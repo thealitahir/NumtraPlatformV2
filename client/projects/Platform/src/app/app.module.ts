@@ -66,6 +66,7 @@ import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer
 import { DbfsService } from './services/dbfs.service';
 import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
+import { FileExplorerComponent } from './file-explorer/file-explorer.component';
 import { AddStageComponent } from './stages/add-stage/add-stage.component';
 import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
 
@@ -95,6 +96,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     PipelineDesignerComponent,
     DbfsSinkComponent,
     DataExplorerComponent,
+    FileExplorerComponent
     AddStageComponent,
     EditStageComponent
 
