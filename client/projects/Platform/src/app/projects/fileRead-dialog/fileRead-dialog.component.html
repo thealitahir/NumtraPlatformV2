@@ -1,0 +1,24 @@
+<!-- <ng-container>
+  <h2>{{fileName}}</h2>
+  <div>
+
+  </div>
+</ng-container> -->
+<h3 mat-dialog-title>{{fileName}}</h3>
+
+<div mat-dialog-content>
+<table>
+    <thead>
+      <th *ngFor="let datakey of fileData[0] | keyvalue"> {{ datakey.key }}</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of fileData ">
+        <td *ngFor ='let datakey of fileData[0] | keyvalue' >{{ data[datakey.key] }} </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="modal-actions">
+  <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+</div>

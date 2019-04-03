@@ -50,6 +50,8 @@ import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 import { AddProjectComponent } from './projects/addProject-dialog/add-project-dialog.component';
+import { ApplicationComponent } from './projects/application-dialog/application-dialog.component';
+import { FileReadComponent } from './projects/fileRead-dialog/fileRead-dialog.component';
 import { UsersService } from './services/user.service';
 import { PlatRolesService } from './services/platroles.service';
 import { ResourcesService } from './services/resources.service';
@@ -57,6 +59,7 @@ import { SectionsService } from './services/sections.service';
 import { ComponentsService } from './services/components.service';
 import { StageService } from './services/stage.service';
 import { ProjectService } from './services/project.service';
+import { ApplicationService } from './services/application.service';
 
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 
@@ -83,6 +86,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     MaxComponent,
     DiscoverDataComponent,
     AddProjectComponent,
+    ApplicationComponent,
+    FileReadComponent,
 
     ProjectFilterPipe,
     ApplicationFilterPipe,
@@ -131,7 +136,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     AceModule,
     A11yModule,
   ],
-  entryComponents: [ DiscoverDataComponent, AddProjectComponent],
+  entryComponents: [ DiscoverDataComponent, AddProjectComponent, ApplicationComponent, FileReadComponent],
   providers: [
     {
       provide: ACE_CONFIG,
@@ -147,7 +152,7 @@ export class PlatformSharedModule{
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AppModule,
-      providers: [ PlatRolesService, StageService, UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService, ProjectService ]
+      providers: [ PlatRolesService, StageService, UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService, ProjectService, ApplicationService ]
     }
   }
 }

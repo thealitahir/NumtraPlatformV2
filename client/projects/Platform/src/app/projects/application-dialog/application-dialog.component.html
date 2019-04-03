@@ -1,0 +1,62 @@
+<ng-container *ngIf="data.type == 'add'">
+  <h3 mat-dialog-title class="text-center">Add New Application</h3>
+  <h2 style="color:red"></h2>
+  <div mat-dialog-content>
+    <div fxLayout fxLayoutAlign="start center">
+      <div *ngIf='view === 0'>
+        <button (click)='addApp("folder")' mat-raised-button color="accent">Add Folder</button>
+        <button (click)='addApp("file")' mat-raised-button color="primary">Add File</button>
+        <button (click)='addApp("pipeline")' mat-raised-button color="warn">Add Pipeline</button>
+      </div>
+
+      <div *ngIf='view === 1'>
+          <button type="button" mat-raised-button color="accent" (click)='backview()' >Back</button>
+          <form (submit)='createApplication(addForm)' #addForm='ngForm' >
+              <input type='hidden' name='option' [(ngModel)]='option' >
+              <input type='hidden' name='parentId' [(ngModel)]='parentId' >
+
+              <mat-form-field *ngIf=' option !=="file" '>
+                <input matInput type="text"  [(ngModel)]='appName' name='appName' placeholder="Name" required>
+              </mat-form-field>
+
+              <div *ngIf=' option ==="file" '>
+                <input type="file" (change)="onFileSelect($event)" name='file' />
+                <br/>
+                <label *ngIf='filePath'><b>{{appFile}}</b> is uploaded</label>
+                <input type='hidden' name='appFile' [(ngModel)]='appFile'>
+                <input type='hidden' name='filePath' [(ngModel)]='filePath'>
+              </div>
+
+
+              <button mat-raised-button *ngIf='view === 1' type="submit"  color="primary">Save</button>
+          </form>
+      </div>
+    </div>
+  </div>
+
+  <div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+
+    <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+  </div>
+</ng-container>
+
+<ng-container *ngIf="data.type == 'edit'">
+  <h3 mat-dialog-title class="text-center">Edit Project</h3>
+  <h2 style="color:red"></h2>
+  <div mat-dialog-content>
+    <div fxLayout fxLayoutAlign="start center">
+      <form  #appForm='ngForm'>
+        <input type="hidden" name="appid" [(ngModel)]='appid'/>
+        <mat-form-field>
+          <input matInput type="text" [(ngModel)]='appName' name='appName' placeholder="Name" required>
+        </mat-form-field>
+
+      </form>
+    </div>
+  </div>
+
+  <div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+      <button mat-raised-button (click)="EditApplication(appForm)" color="primary" >Save</button>
+    <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+  </div>
+</ng-container>
