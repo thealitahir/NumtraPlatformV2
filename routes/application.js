@@ -90,7 +90,6 @@ router.get('/getPreviousApplications/:Id', function(req,res) {
 router.post('/editApplication', function(req,res) {
     ApplicationModel.update({"_id": req.body.appid}, {$set: {'name': req.body.appName} }, function (err, applications) {
         if(!err){
-            console.log(applications);
             res.send({status:true,msg:'applications Updated.',data:applications});
         }
         else{
@@ -100,25 +99,30 @@ router.post('/editApplication', function(req,res) {
     });
 });
 
-// router.post('/deleteProject', function(req,res) {
-//     ProjectModel.remove({"_id": req.body.pid}, function (err,projects) {
+router.post('/deleteApplication', function(req,res) {
+    ApplicationModel.remove({"_id": req.body._id}, function (err,applications) {
 
-//         if(!err && projects) {
-//             console.log(projects);
-//             res.send({status: true, msg: 'Role deleted successfully.', data: projects});
-//         }
-//         else{
-//             console.log('err');
-//             res.send({status:false,msg:'Error while deleting Project.'});
-//         }
-//     });
-// });
+        if(!err && applications) {
+            if(req.body.app_type == 'file'){
+                var path = req.body.file.path;
+                
+                fs.unlink(path, (err) => {
+                    if (err) throw err;
+                    console.log(path+' was deleted');
+                  });
+            }
+            res.send({status: true, msg: 'applications deleted successfully.', data: applications});
+        }
+        else{
+            console.log('err');
+            res.send({status:false,msg:'Error while deleting applications.'});
+        }
+    });
+});
 
 router.post('/upload',function(req,res){
     
     upload(req,res,function(err){
-        console.log('upload');
-        console.log(req.file);
        
          return res.json({originalname:req.file.originalname,uploadname:req.file.filename, path:req.file.destination})
     });
@@ -129,16 +133,10 @@ var results = [];
 fs.createReadStream(req.body.path)
         .pipe(csv())
         .on('data', (data) => {
-            //var fileData = data; 
-            
             results.push(data);
-            //console.log(results);
-           
         })
         .on('end', () => {
-            //   console.log(results);
-       // console.log(results);
-        return res.json({filedata: results});
+            return res.json({filedata: results});
         });
 });
 

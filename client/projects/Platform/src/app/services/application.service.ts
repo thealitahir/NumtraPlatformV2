@@ -10,7 +10,6 @@ export class ApplicationService {
     }
 
     createApp(appdata): Observable<any> {
-      console.log(appdata);
       return this.http.post(GLOBAL.serviceUrl + '/application/createApplication' , appdata);
     }
 
@@ -36,8 +35,8 @@ export class ApplicationService {
       return this.http.post(GLOBAL.serviceUrl + '/application/readAppFile' ,  filepath);
     }
 
-    // deleteProject(project): Observable<any> {
-    //   return this.http.post(GLOBAL.serviceUrl + '/project/deleteProject', project);
-    // }
+    deleteApp(application): Observable<any> {
+      return this.http.post(GLOBAL.serviceUrl + '/application/deleteApplication', application);
+    }
 
 }

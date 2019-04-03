@@ -96,7 +96,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     PipelineDesignerComponent,
     DbfsSinkComponent,
     DataExplorerComponent,
-    FileExplorerComponent
+    FileExplorerComponent,
     AddStageComponent,
     EditStageComponent
 

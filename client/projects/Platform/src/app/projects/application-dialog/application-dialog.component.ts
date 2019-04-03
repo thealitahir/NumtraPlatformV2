@@ -30,6 +30,7 @@ export class ApplicationComponent {
         this.parentId = this.data.application._id;
         this.appName = this.data.application.name;
         this.appid = this.data.application._id;
+        this.option = this.data.application.app_type;
       }
     }
 
@@ -43,7 +44,6 @@ export class ApplicationComponent {
   }
 
   createApplication(form: NgForm) {
-    console.log(form.value);
     this.applicationService.createApp(form.value).subscribe(data => {
       if(data.status == true){
       this.appdialogRef.close({'type': 'add', 'data': data});
@@ -58,10 +58,20 @@ export class ApplicationComponent {
     this.applicationService.editApp(form.value).subscribe(data => {
       if (data.data.nModified == 1 ) {
         this.openSnackBar('SUCCESS:', 'Project successfully updated.');
-        console.log(typeof(data.data.nModified));
         this.appdialogRef.close({'type': 'edit', 'data': form.value});
       } else {
         this.openSnackBar('Failed:', 'Failed to update Project. Try Again!');
+      }
+    });
+  }
+
+  DeleteApplication(form: NgForm) {
+    this.applicationService.deleteApp(this.data.application).subscribe(data => {
+      this.openSnackBar('SUCCESS:', 'Project successfully deleted.');
+      if (data.data.ok == 1) {
+        this.appdialogRef.close({'type': 'delete', 'data': form.value});
+      } else {
+        this.openSnackBar('Failed:', 'Failed to delete Project. Try Again!');
       }
     });
   }

@@ -4,8 +4,6 @@ var request = require("request");
 var ProjectModel = require('../models/projectModel');
 
 router.post('/createNewProject',function(req, res) {
-    console.log(req.body);
-    console.log(req.user._id);
    // var project = new ProjectModel({name: req.body.projectName, user_id:req.user._id});
     var project = new ProjectModel({name: req.body.projectName, user_id:"567a95c8ca676c1d07d5e3e7"});
     project.save(function (err, project) {
@@ -21,11 +19,9 @@ router.post('/createNewProject',function(req, res) {
 });
 
 router.get('/getProjects', function(req,res) {
-    console.log('getprojects');
    // ProjectModel.find({user_id:req.user._id}, function (err,projects) {
     ProjectModel.find({user_id:"567a95c8ca676c1d07d5e3e7"}, function (err,projects) {
         if(!err){
-            //console.log(projects);
             res.send({status:true,msg:'projects found.',data:projects});
         }
         else{

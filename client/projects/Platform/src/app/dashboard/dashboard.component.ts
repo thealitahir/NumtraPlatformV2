@@ -122,16 +122,13 @@ export class DashboardComponent implements OnInit {
   }
 
   readFile(appdata) {
-  // console.log(appdata.file.path);
   this.data = {path: appdata.file.path };
     this.applicationService.readAppFile(this.data).subscribe(adata => {
-     //console.log(adata);
      this.openReadDialog(adata, appdata.name);
     });
   }
 
   onResize(event) {
-    // const element = event.target.innerWidth;
     const element = document.getElementById('projects').offsetWidth;
     this.responsiveGrid(element);
   }
@@ -172,17 +169,14 @@ export class DashboardComponent implements OnInit {
         }
       }
 
-      // if (result !== '' && result !== null && result.type === 'delete') {
-      //   console.log('delete dialog box after closed');
-      //    console.log(result);
-      //   for (let i = 0; i < this.projects.length; i++) {
-      //     if (this.applications[i]['_id'] == result.data.pid ) {
-      //       console.log('delete view');
-      //       this.applications.splice(i, 1);
-      //     }
-      //   }
-      //   console.log(this.projects);
-      // }
+      if (result !== '' && result !== null && result.type === 'delete') {
+        for (let i = 0; i < this.applications.length; i++) {
+          if (this.applications[i]['_id'] == result.data.appid ) {
+            this.applications.splice(i, 1);
+          }
+        }
+       // console.log(this.applications);
+      }
     });
   }
 
@@ -212,14 +206,10 @@ export class DashboardComponent implements OnInit {
       }
       if (result !== '' && result !== null && result.type === 'add') {
         this.projects.push(result.data.data);
-        console.log(this.projects);
       }
       if (result !== '' && result !== null && result.type === 'edit') {
-        console.log('edit dialog box after closed');
-         console.log(result);
         for (let i = 0; i < this.projects.length; i++) {
           if (this.projects[i]['_id'] == result.data.pid ) {
-            console.log('edit view');
             this.projects[i]['name'] = result.data.projectName;
           }
         }
@@ -227,11 +217,8 @@ export class DashboardComponent implements OnInit {
       }
 
       if (result !== '' && result !== null && result.type === 'delete') {
-        console.log('delete dialog box after closed');
-         console.log(result);
         for (let i = 0; i < this.projects.length; i++) {
           if (this.projects[i]['_id'] == result.data.pid ) {
-            console.log('delete view');
             this.projects.splice(i, 1);
           }
         }

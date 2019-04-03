@@ -85,7 +85,7 @@
               <button mat-fab color="accent" (click)='openAppDialog("edit",application)' matTooltip="edit" matTooltipPosition="right">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-fab color="warn" matTooltip="delete" matTooltipPosition="right">
+              <button mat-fab color="warn" (click)='openAppDialog("delete",application)' matTooltip="delete" matTooltipPosition="right">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -122,7 +122,7 @@
               <button (click)='readFile(application)' mat-fab color="accent" matTooltip="view" matTooltipPosition="right">
                 <mat-icon>explore</mat-icon>
               </button>
-              <button mat-fab color="warn" matTooltip="delete" matTooltipPosition="right">
+              <button mat-fab color="warn" (click)='openAppDialog("delete",application)' matTooltip="delete" matTooltipPosition="right">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>

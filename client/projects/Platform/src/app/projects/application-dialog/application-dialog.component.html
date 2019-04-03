@@ -60,3 +60,22 @@
     <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
   </div>
 </ng-container>
+
+<ng-container *ngIf="data.type == 'delete'">
+    <h3 mat-dialog-title class="text-center">Delete From Applications</h3>
+    <h2 style="color:red"></h2>
+    <div mat-dialog-content>
+      <div fxLayout fxLayoutAlign="start center">
+          <form #appForm='ngForm'>
+              <input type='hidden' name='option' [(ngModel)]='option' >
+              <input type="hidden" name="appid" [(ngModel)]='appid'/>
+          </form>
+        <p>Do you really want to delete it?</p>
+      </div>
+    </div>
+
+    <div mat-dialog-actions fxLayout fxLayoutAlign="end center">
+        <button mat-raised-button (click)="DeleteApplication(appForm)" color="primary" >Delete</button>
+      <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>
+    </div>
+  </ng-container>
