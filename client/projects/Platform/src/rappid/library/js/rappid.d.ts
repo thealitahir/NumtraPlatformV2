@@ -6364,6 +6364,7 @@ export namespace shapes {
         namespace Flow {
             interface Attributes extends dia.Link.Attributes {
                 flowType?: string;
+                
             }
         }
 

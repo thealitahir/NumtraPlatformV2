@@ -13,6 +13,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { AceModule, AceConfigInterface, ACE_CONFIG  } from 'ngx-ace-wrapper';
 import {A11yModule} from '@angular/cdk/a11y';
 
+import { TreeModule } from 'angular-tree-component';
+
+
 
 import {
   MatToolbarModule,
@@ -140,6 +143,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     HttpModule,
     AceModule,
     A11yModule,
+    TreeModule.forRoot()
   ],
   entryComponents: [ DiscoverDataComponent, AddProjectComponent, ApplicationComponent, FileReadComponent],
   providers: [
