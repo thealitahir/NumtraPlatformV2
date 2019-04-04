@@ -1,0 +1,10 @@
+.selected-item{
+  margin-top: 1rem;
+  padding: 10px;
+}
+
+.selected-item img.active{
+  box-shadow: 0 0 10px rgba(0,0,0,.25);
+  padding: 15px;
+  border-radius: 10px;
+}
