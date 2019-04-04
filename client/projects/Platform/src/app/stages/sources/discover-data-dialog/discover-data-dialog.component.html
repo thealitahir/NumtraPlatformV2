@@ -1,6 +1,6 @@
 <h3 mat-dialog-title>Sample Data</h3>
-<div mat-dialog-content>
-  <table>
+ <div mat-dialog-content>
+<!--  <table>
     <thead >
       <th *ngFor='let fh of data.sampleData.fileheader'>{{fh.field}}</th>
     </thead>
@@ -9,8 +9,20 @@
         <td *ngFor='let fhs of data.sampleData.fileheader'>{{ds[fhs.field]}}</td>
       </tr>
     </tbody>
-  </table>
+  </table> -->
+  <table>
+      <thead>
+        <th *ngFor="let datakey of data.sampleData.filedata[0] | keyvalue"> {{ datakey.key }}</th>
+      </thead>
+      <tbody>
+        <tr *ngFor ='let datas of data.sampleData.filedata'>
+          <td *ngFor = 'let datakey of data.sampleData.filedata[0] | keyvalue'>{{ datas[datakey.key] }} </td>
+        </tr>
+      </tbody>
+    </table>
 </div>
+
+
 
 <div class="modal-actions">
   <button mat-raised-button color="accent" mat-dialog-close>Cancel</button>

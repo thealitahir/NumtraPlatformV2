@@ -20,8 +20,9 @@ export class CanvasService {
     console.log(data);
     return this.http.post(GLOBAL.serviceUrl + '/stage/linkStages' , data );
   }
-  saveCanvasModel(attributes,position,size,type): Observable<any> {
+  saveCanvasModel(id,attributes,position,size,type): Observable<any> {
     var data = {
+      id:id,
       attributes:attributes,
       position:position,
       size:size,

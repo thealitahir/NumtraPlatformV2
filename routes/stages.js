@@ -8,7 +8,7 @@ var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage',function(req,res){
     var stagedata = req.body;
-    console.log(req.body);
+    console.log(stagedata);
     //StageVersionModel.update({"name":"DBFS"}, { $set:{ "original_schema":stagedata.fileheader,"stage_attributes.url":stagedata.formdata.url, "stage_attributes.source_delimeter": stagedata.formdata.filedelimeter, "stage_attributes.file_type":  stagedata.formdata.filetype } }, function (err, sdata) {
     StageVersionModel.update({"name":stagedata.stageName}, {$set: stagedata['updatedata'] }, function (err, sdata) {
       if(!err) {
@@ -90,7 +90,7 @@ router.post('/executePipeline',function(req,res,next){
 
 router.post('/saveCanvasModel',function(req,res){
   console.log(req.body);
-  StageVersionModel.update({name:req.body.attributes.label.text,
+  StageVersionModel.findOneAndUpdate({name:req.body.attributes.label.text,
     stage_type:req.body.attributes.label.stage_type}, 
     { $set:
       {
@@ -98,7 +98,8 @@ router.post('/saveCanvasModel',function(req,res){
          "position": req.body.position,
          "shape_size": req.body.size,
          "shape_type": req.body.type 
-    } }, function (err, lsdata) {
+    } },
+    { new: true }, function (err, lsdata) {
     if(!err) {
         console.log('stage attribute updated successfully');
         console.log(lsdata);

@@ -60,7 +60,7 @@ export class KitchenSinkService {
         this.haloService = haloService;
         this.keyboardService = keyboardService;
     }
-
+    
     getPaper(){
         return this.paper;
     }
@@ -115,7 +115,7 @@ export class KitchenSinkService {
             }),
 
             /* ---------------------------------------
-                Remove Link Vertex Functionality
+                Remove Link Vertex Functionality192
             ----------------------------------------- */
             interactive: function(cellView): any {
                 if (cellView.model instanceof joint.dia.Link) {
@@ -160,7 +160,6 @@ export class KitchenSinkService {
         // Initiate selecting when the user grabs the blank area of the paper while the Shift key is pressed.
         // Otherwise, initiate paper pan.
         this.paper.on('blank:pointerdown', (evt: JQuery.Event, x: number, y: number) => {
-
             if (keyboard.isActive('shift', evt)) {
                 this.selection.startSelecting(evt);
             } else {
@@ -170,8 +169,7 @@ export class KitchenSinkService {
         });
 
         this.paper.on('element:pointerdown', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
-
-            // debugger;
+            //debugger;
             // Select an element if CTRL/Meta key is pressed while the element is clicked.
             if (keyboard.isActive('ctrl meta', evt)) {
                 this.selection.collection.add(elementView.model);
@@ -179,8 +177,9 @@ export class KitchenSinkService {
         });
 
         this.paper.on('link:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
-
-          // Select an element if CTRL/Meta key is pressed while the element is clicked.
+            if(elementView.model.attributes.target.id != null)    
+                //debugger;
+            // Select an element if CTRL/Meta key is pressed while the element is clicked.
             if (keyboard.isActive('ctrl meta', evt)) {
                 this.selection.collection.add(elementView.model);
             }
@@ -188,7 +187,7 @@ export class KitchenSinkService {
         });
 
         this.selection.on('selection-box:pointerdown', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
-
+            
             // Unselect an element if the CTRL/Meta key is pressed while a selected element is clicked.
             if (keyboard.isActive('ctrl meta', evt)) {
                 this.selection.collection.remove(elementView.model);
@@ -257,11 +256,10 @@ export class KitchenSinkService {
             'to-back:pointerclick': this.selection.collection.invoke.bind(this.selection.collection, 'toBack'),
             'layout:pointerclick': this.layoutDirectedGraph.bind(this),
             'snapline:change': this.changeSnapLines.bind(this),
-            'clear:pointerclick': this.graph.clear.bind(this.graph),
+            'clear:cd ..': this.graph.clear.bind(this.graph),
             'print:pointerclick': this.paper.print.bind(this.paper),
             'grid-size:change': this.paper.setGridSize.bind(this.paper)
         });
-
         this.renderPlugin('.toolbar-container', this.toolbarService.toolbar);
     }
 
