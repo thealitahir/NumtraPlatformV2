@@ -1,0 +1,41 @@
+<div class="canvas-right-col">
+  <h3>Cosmos DB Source</h3>
+
+  <form #cosmosdbForm="ngForm" fxLayout="column">
+    <mat-form-field>
+      <label class="error-message">{{error}}</label>
+      <input matInput type="text" name="cosmosdomain" placeholder="Cosmos DB Host" #url="ngModel" [(ngModel)]='stage.stage_attributes.cosmosdb_domain'
+        required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="password" name="cosmoskey" placeholder="Cosmos DB Key" #cosmos_key="ngModel"
+        [(ngModel)]='stage.stage_attributes.cosmosdb_key' required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="text" name="dbid" placeholder="Cosmos DB ID" [(ngModel)]='stage.stage_attributes.db_id'
+          required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" name="containerid" placeholder="Cosmos DB Container ID"
+          [(ngModel)]='stage.stage_attributes.container_id' required>
+      </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" name="cosmosquery" placeholder="Query" #dbfs_domain="ngModel"
+        [(ngModel)]='stage.stage_attributes.query' required>
+    </mat-form-field>
+    <br />
+
+    <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="space-between center">
+      <button mat-stroked-button color="primary" (click)="discoverData(cosmosdbForm)">Discover Data</button>
+      <button mat-stroked-button color="accent" (click)="getSchemahenSave(cosmosdbForm)" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="fileExplorerView === 1">
+  <app-file-explorer></app-file-explorer>
+</div>
