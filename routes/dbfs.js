@@ -54,7 +54,6 @@ router.post('/getDataSource', function(req,res) {
                 head.position = i+1;
                 fh.push(head);
             }
-            console.log(fh);
             for(var j=0 ; j < filedata.length; j++){
                 var fdobj={};
                 for(var i=0 ; i < fh.length; i++){

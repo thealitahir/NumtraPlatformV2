@@ -50,6 +50,7 @@ import { SubNavComponent } from './sub-nav/sub-nav.component';
 import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } from './filter.pipe';
 
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
+import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 import { AddProjectComponent } from './projects/addProject-dialog/add-project-dialog.component';
@@ -67,6 +68,7 @@ import { ApplicationService } from './services/application.service';
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 
 import { DbfsService } from './services/dbfs.service';
+import { CosmosdbService } from './services/cosmosdb.service';
 import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { FileExplorerComponent } from './file-explorer/file-explorer.component';
@@ -87,6 +89,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     RolesComponent,
 
     DbfsComponent,
+    CosmosDBComponent,
     MaxComponent,
     DiscoverDataComponent,
     AddProjectComponent,
@@ -158,7 +161,7 @@ export class PlatformSharedModule{
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AppModule,
-      providers: [ PlatRolesService, StageService, UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService, ProjectService, ApplicationService ]
+      providers: [CosmosdbService, PlatRolesService, StageService, UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService, ProjectService, ApplicationService ]
     }
   }
 }
