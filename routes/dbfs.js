@@ -82,8 +82,21 @@ router.post('/getDataFiles', function(req,res) {
         },
         json: {"path": req.body.path}
     }, function(error, response, body) {
-            console.log(body);
-            res.send(body)
+            var nodesData = [];
+            if(body.files){
+                var data = body.files;          
+                for(var i=0;i<data.length;i++){
+                    var path = data[i].path.split('/');
+                    nodesData.push({
+                        name: path[path.length-1],
+                        path:data[i].path,                    
+                        hasChildren: data[i].is_dir
+                      });
+                }
+            }
+            
+            console.log(nodesData);
+            res.send({files:nodesData})
             
     });
 });
