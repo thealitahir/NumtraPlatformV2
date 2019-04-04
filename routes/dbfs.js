@@ -54,7 +54,6 @@ router.post('/getDataSource', function(req,res) {
                 head.position = i+1;
                 fh.push(head);
             }
-            console.log(fh);
             for(var j=0 ; j < filedata.length; j++){
                 var fdobj={};
                 for(var i=0 ; i < fh.length; i++){
@@ -65,6 +64,26 @@ router.post('/getDataSource', function(req,res) {
             }
             var fdata={fileheader:fh, filedata:fd}    
                 res.send(fdata);
+    });
+});
+
+router.post('/getDataFiles', function(req,res) {
+    console.log('node routes');
+    console.log(req.body);
+    // var url= CONFIGURATIONS.dbfsDomain +'/api/2.0/dbfs/read';
+    var url= req.body.domain +'/api/2.0/dbfs/list';
+    console.log(url);
+    request({
+        url: url,
+        method: 'GET',
+        headers: {
+            Authorization: " Bearer " + req.body.token  
+        },
+        json: {"path": req.body.path}
+    }, function(error, response, body) {
+            console.log(body);
+            res.send(body)
+            
     });
 });
 

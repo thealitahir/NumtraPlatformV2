@@ -13,17 +13,17 @@ import { DataFeaturesComponent } from './includes/data-features/data-features.co
 import { AuthGuard } from '../../../../src/app/guards/index';
 
 const APP_ROUTES: Routes = [
-  { path: 'BFAI/dashboard', component: DashboardComponent, canActivate: [AuthGuard] },
-  { path: 'BFAI/add-model', component: AddModelComponent , canActivate: [AuthGuard] },
-  { path: 'BFAI/data-source', component: ModelDataSourceComponent, canActivate: [AuthGuard] },
-  { path: 'BFAI/upload-data-file/:fileSource', component: UploadDataFileComponent, canActivate: [AuthGuard]},
-  { path: 'BFAI/data-source-details/:id', component: FacetDataComponent, canActivate: [AuthGuard] },
-  { path: 'BFAI/model-comparison/:id/:index', component: ModelComparisonComponent, canActivate: [AuthGuard] },
-  { path: 'BFAI/model-Result', component: ModelResultComponent, canActivate: [AuthGuard] },
-  { path: 'BFAI/model-dashboard', component: ModelDashboardComponent, canActivate: [AuthGuard] },
-  { path: 'BFAI/model-dashboard-result/:id', component: ModelDashboardResultComponent, canActivate: [AuthGuard] },
-  { path: 'BFAI/data-relation/:id', component: DataRelationComponent, canActivate: [AuthGuard] },
-  { path: 'BFAI/data-features/:entity' , component: DataFeaturesComponent, canActivate: [AuthGuard] },
+  { path: 'BFAI/dashboard', component: DashboardComponent },
+  { path: 'BFAI/add-model', component: AddModelComponent  },
+  { path: 'BFAI/data-source', component: ModelDataSourceComponent },
+  { path: 'BFAI/upload-data-file/:fileSource', component: UploadDataFileComponent},
+  { path: 'BFAI/data-source-details/:id', component: FacetDataComponent },
+  { path: 'BFAI/model-comparison/:id/:index', component: ModelComparisonComponent },
+  { path: 'BFAI/model-Result', component: ModelResultComponent },
+  { path: 'BFAI/model-dashboard', component: ModelDashboardComponent },
+  { path: 'BFAI/model-dashboard-result/:id', component: ModelDashboardResultComponent },
+  { path: 'BFAI/data-relation/:id', component: DataRelationComponent },
+  { path: 'BFAI/data-features/:entity' , component: DataFeaturesComponent },
   { path: 'BFAI', redirectTo: 'BFAI/dashboard' }
 ];
 

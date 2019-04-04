@@ -7,7 +7,7 @@
     </thead>
     <tbody>
       <tr *ngFor ='let data of stage'>
-        <td *ngFor = 'let data of stage[0] | keyvalue'>{{ data.value }} </td>
+        <td *ngFor = 'let datakey of stage[0] | keyvalue'>{{ data[datakey.key] }} </td>
       </tr>
     </tbody>
   </table> -->

@@ -8,7 +8,7 @@ var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage',function(req,res){
     var stagedata = req.body;
-    console.log(req.body);
+    console.log(stagedata);
     //StageVersionModel.update({"name":"DBFS"}, { $set:{ "original_schema":stagedata.fileheader,"stage_attributes.url":stagedata.formdata.url, "stage_attributes.source_delimeter": stagedata.formdata.filedelimeter, "stage_attributes.file_type":  stagedata.formdata.filetype } }, function (err, sdata) {
     StageVersionModel.update({"name":stagedata.stageName}, {$set: stagedata['updatedata'] }, function (err, sdata) {
       if(!err) {
@@ -71,6 +71,8 @@ router.post('/getPipelineResult',function(req,res){
 router.post('/executePipeline',function(req,res,next){
   var data=req.body;
   console.log(data); 
+  var url= CONFIGURATIONS.platformRequestApi +'/api/start/codegen';
+  console.log(url);
   request({
   url: 'http://192.168.23.44:2020/api/start/codegen',
   method: 'POST',
@@ -122,5 +124,6 @@ router.get('/getCanvasModel',function(req,res){
     }
   });
 });
+
 
 module.exports = router;
