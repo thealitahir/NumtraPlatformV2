@@ -27,7 +27,7 @@
         </mat-grid-tile>
 
         <mat-grid-tile *ngFor="let project of projects | projectFilter:projectSearchQuery"
-      (click)="selectApplication($event, project.name)"
+      (click)="selectApplication($event, project , 'project')"
       >
 
           <div class="project-action">
@@ -58,8 +58,8 @@
     [ngClass]="{'show-application' : showApplication == true}"
     >
       <div fxLayout fxLayoutAlign="space-between center">
-        <h2>Applications ({{projectName}})</h2>
-
+        <h2>Applications ({{parentName}})</h2>
+        <button *ngIf='hideback == 0' type="button"  mat-fab color="warn" (click)='previous(parentId)'>Back</button>
         <div class="application-search-block">
           <mat-form-field>
             <input type="text" matInput [(ngModel)]="applicationSearchQuery" placeholder="Filter Application" />
@@ -72,30 +72,70 @@
       <mat-grid-list class="applications" gutterSize="15px" [cols]="breakpoint" rowHeight="2:1.2" (window:resize)="onResize($event)">
 
         <mat-grid-tile class="add-new-application" matTooltip="Add new application" matTooltipPosition="above">
-          <div>
+          <div (click)='openAppDialog("add", parentId)'>
             <mat-icon color="accent">add_circle</mat-icon>
           </div>
         </mat-grid-tile>
 
         <mat-grid-tile *ngFor="let application of applications
       | applicationFilter:applicationSearchQuery"
-          [routerLink]="['/platform/canvas']">
-
+         >
+        <div *ngIf='application.app_type==="pipeline"' >
           <div class="project-action">
-            <button mat-fab color="accent" matTooltip="edit" matTooltipPosition="right">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-fab color="warn" matTooltip="delete" matTooltipPosition="right">
-              <mat-icon>delete</mat-icon>
-            </button>
-          </div>
-
-          <div>
-            <img src="assets/img/{{application.img}}" alt="{{application.name}}" />
-            <div class="application-name">
-              {{application.name}}
+              <button mat-fab color="accent" (click)='openAppDialog("edit",application)' matTooltip="edit" matTooltipPosition="right">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-fab color="warn" (click)='openAppDialog("delete",application)' matTooltip="delete" matTooltipPosition="right">
+                <mat-icon>delete</mat-icon>
+              </button>
             </div>
-          </div>
+
+            <div [routerLink]="['/platform/canvas']">
+              <img src="assets/img/application.svg" alt="{{application.name}}" />
+              <div class="application-name">
+                {{application.name}}
+              </div>
+            </div>
+        </div>
+
+        <div *ngIf='application.app_type==="folder"' >
+          <div class="project-action">
+              <button mat-fab color="accent" (click)='openAppDialog("edit",application)' matTooltip="edit" matTooltipPosition="right">
+                <mat-icon>edit</mat-icon>
+              </button>
+              <button mat-fab color="warn" matTooltip="delete" matTooltipPosition="right">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+            <div (click)="selectApplication($event, application, 'application')">
+              <!-- <img src="assets/img/application.svg" alt="{{application.name}}" /> -->
+              <span >{{application.app_type}}</span>
+              <div class="application-name">
+                {{application.name}}
+              </div>
+            </div>
+        </div>
+
+        <div *ngIf='application.app_type ==="file"' >
+          <div class="project-action">
+              <button (click)='readFile(application)' mat-fab color="accent" matTooltip="view" matTooltipPosition="right">
+                <mat-icon>explore</mat-icon>
+              </button>
+              <button mat-fab color="warn" (click)='openAppDialog("delete",application)' matTooltip="delete" matTooltipPosition="right">
+                <mat-icon>delete</mat-icon>
+              </button>
+            </div>
+
+            <div>
+              <!-- <img src="assets/img/application.svg" alt="{{application.name}}" /> -->
+              <span >{{application.app_type}}</span>
+              <div class="application-name">
+                {{application.name}}
+              </div>
+            </div>
+        </div>
+
         </mat-grid-tile>
 
       </mat-grid-list>

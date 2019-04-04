@@ -22,6 +22,7 @@ var component  =  require('./routes/componentRoute');
 var dbfs=  require('./routes/dbfs');
 var stage=  require('./routes/stages');
 var project= require('./routes/project');
+var application= require('./routes/application');
 
 var dataSourceRoute = require('./routes/datasource');
 var modelDataRoute = require('./routes/modelsroute');
@@ -109,6 +110,7 @@ app.use("/components",component);
 app.use('/dbfs',dbfs);
 app.use('/stage',stage);
 app.use('/project',project);
+app.use('/application',application);
 
 
 app.use('/dataSourceApi', dataSourceRoute);
@@ -150,6 +152,10 @@ app.get('/stage', (req, res) => res.json({
 }));
 
 app.get('/project', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/application', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 
