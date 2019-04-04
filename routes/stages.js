@@ -88,7 +88,7 @@ router.post('/executePipeline',function(req,res,next){
 
 router.post('/saveCanvasModel',function(req,res){
   console.log(req.body);
-  StageVersionModel.update({name:req.body.attributes.label.text,
+  StageVersionModel.findOneAndUpdate({name:req.body.attributes.label.text,
     stage_type:req.body.attributes.label.stage_type}, 
     { $set:
       {
@@ -96,7 +96,8 @@ router.post('/saveCanvasModel',function(req,res){
          "position": req.body.position,
          "shape_size": req.body.size,
          "shape_type": req.body.type 
-    } }, function (err, lsdata) {
+    } },
+    { new: true }, function (err, lsdata) {
     if(!err) {
         console.log('stage attribute updated successfully');
         console.log(lsdata);

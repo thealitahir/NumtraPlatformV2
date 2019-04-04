@@ -3,7 +3,7 @@ import * as jQuery from 'jquery';
 
 import * as joint from '../../rappid/library/js/rappid';
 import * as _ from 'lodash';
-
+import Position = joint.ui.Halo.HandlePosition;
 import { StencilService } from '../../rappid/services/stencil-service';
 import { ToolbarService } from '../../rappid/services/toolbar-service';
 import { InspectorService } from '../../rappid/services/inspector-service';
@@ -55,22 +55,56 @@ export class CanvasComponent implements OnInit {
     this.selection = this.rappid.getSelection();
     this.graph = this.rappid.getGraph();
     var link = new joint.shapes.standard.Link();
-    /* this.canvasService.getCanvasModel().subscribe(data =>{
+    this.canvasService.getCanvasModel().subscribe(data =>{
       console.log("model from db");
       console.log(data);
-      for(var i = 0; i < data.data.length; i++){
-        var rect = new joint.shapes.standard.Rectangle();
-        rect.position(data.data[i].position.x, data.data[i].position.y);
-        rect.resize(data.data[i].shape_size.height, data.data[i].shape_size.width)
-        rect.attr(data.data[i].shape_attributes);
-        rect.addTo(this.graph);
-        var rect = new joint.shapes.standard.Rectangle();
+      var stages = data.data;
+      var stagesArray = [];
+      //drawing all stages
+      for(var i = 0; i < stages.length; i++){
+        var stage = new joint.shapes.standard.Image();
+        console.log(stage.id);
+        stage.attr(stages[i].shape_attributes);
+        stage.position(stages[i].position.x, stages[i].position.y);
+        stage.resize(stages[i].shape_size.height, stages[i].shape_size.width);
+        stage.id = stages[i]._id;
+        stage.attributes.id = stages[i]._id;
+        console.log(stage.id);
+        stage.addTo(this.graph);
+        stagesArray.push(stage);
+        stage = new joint.shapes.standard.Image();
       }
-      //this.graph.attributes.cells.models = data.data.model;
-      console.log(this.graph);
-    }); */
+  
+      //creating all links
+      for(var i = 0; i < stages.length; i++){
+        for(var j = 0; j < stages[i].out.length; j++){
+          var link = new joint.shapes.standard.Link();
+          var source = stagesArray[stagesArray.findIndex(stagesArray => stagesArray.id == stages[i]._id)];
+          var target = stagesArray[stagesArray.findIndex(stagesArray => stagesArray.id == stages[i].out[j])];
+          link.source(source);
+          link.target(target);
+          link.addTo(this.graph);
+          link = new joint.shapes.standard.Link();
+        }
+      }
+    });
     console.log("this is graph");
     console.log(this.graph);
+
+    //link interactions
+    this.paper.on('link:mouseenter', function(linkView) {
+      console.log("link interaction");
+      console.log(linkView.model);
+      var tool = [new joint.linkTools.Remove({})]; 
+      linkView.addTools(new joint.dia.ToolsView({
+        name: 'onhover',
+        tools: tool
+      }));
+    });
+    this.paper.on('link:mouseleave', function(linkView) {
+      if (!linkView.hasTools('onhover')) return;
+      linkView.removeTools();
+    });
 
     //called when clicked anywhere on screen
     this.paper.on('blank:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
@@ -78,27 +112,29 @@ export class CanvasComponent implements OnInit {
         this.selection.collection.add(elementView.model);
       }
       this.onSearch.emit(elementView);
-      
+      console.log("this is graph");
+      console.log(this.graph);
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
 
     //called when an element is added
     this.paper.on('element:pointerup', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
-      console.log("this is graph");
-      console.log(this.graph);
-      console.log("element clicked");
-      console.log(elementView);
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
       }
       this.onSearch.emit(elementView);
-      this.canvasService.saveCanvasModel(elementView.model.attributes.attrs,
+      console.log("graph value before service");
+      console.log(this.graph);
+      this.canvasService.saveCanvasModel(elementView.model.id,
+        elementView.model.attributes.attrs,
         elementView.model.attributes.position,elementView.model.attributes.size,
         elementView.model.attributes.type).subscribe(data=>{
-
+          elementView.model.id = data.data._id;
+          console.log("graph value after service");
+          console.log(this.graph);
       });
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
-    });
+    }); 
 
     //called when an element is deleted
     this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
