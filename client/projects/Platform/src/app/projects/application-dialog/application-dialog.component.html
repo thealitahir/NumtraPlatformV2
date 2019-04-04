@@ -12,17 +12,27 @@
         </div>
       </div>
 
-      <input type='hidden' name='option' [(ngModel)]='option'>
-      <input type='hidden' name='parentId' [(ngModel)]='parentId'>
-
       <div class="selected-item-option">
+        <input type='hidden' name='option' [(ngModel)]='option'>
+        <input type='hidden' name='parentId' [(ngModel)]='parentId'>
+
         <mat-form-field *ngIf=' option ==="pipeline" || option ==="folder" '>
-          <input matInput type="text" [(ngModel)]='appName' name='appName' placeholder="{{option}} Name" required>
+          <input matInput type="text" [(ngModel)]='appName' name='appName' placeholder="{{option | titlecase}} Name" required>
         </mat-form-field>
 
         <div *ngIf=' option ==="file" '>
-          <input type="file" (change)="onFileSelect($event)" name='file' />
-          <label *ngIf='filePath'><b>{{appFile}}</b> is uploaded</label>
+          <!-- <input type="file" (change)="onFileSelect($event)" name='file' />
+          <label *ngIf='filePath'><b>{{appFile}}</b> is uploaded</label> -->
+
+
+          <button class="upload-File" mat-raised-button>
+            <label class="custom-upload-button" for="uploadFile">
+              <input type="file" id="uploadFile" (change)="onFileSelect($event)" accept="*">
+              Upload File
+            </label>
+          </button>
+
+
 
           <input type='hidden' name='appFile' [(ngModel)]='appFile'>
           <input type='hidden' name='filePath' [(ngModel)]='filePath'>
