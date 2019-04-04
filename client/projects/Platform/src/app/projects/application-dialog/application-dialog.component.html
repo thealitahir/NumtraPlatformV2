@@ -4,9 +4,9 @@
   <div mat-dialog-content>
     <div fxLayout fxLayoutAlign="start center">
       <div *ngIf='view === 0'>
-        <button (click)='addApp("folder")' mat-raised-button color="accent">Add Folder</button>
-        <button (click)='addApp("file")' mat-raised-button color="primary">Add File</button>
-        <button (click)='addApp("pipeline")' mat-raised-button color="warn">Add Pipeline</button>
+        <img (click)='addApp("pipeline")' src="assets/img/application.svg">
+        <img (click)='addApp("folder")' src="assets/img/folder.svg">
+        <img (click)='addApp("file")' src="assets/img/file.svg">
       </div>
 
       <div *ngIf='view === 1'>
