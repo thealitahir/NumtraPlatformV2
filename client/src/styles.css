@@ -67,3 +67,11 @@ h3 {
   top: -1000px;
 }
 /* ---- END - Custom Custom Classes ---- */
+
+
+/* Modal Box Classes
+------------------------------------------------------------*/
+.mat-dialog-container{
+  border-bottom: solid 5px #3272a0;
+}
+/* ---- END - Modal Box Classes ---- */

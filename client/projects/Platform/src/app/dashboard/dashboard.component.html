@@ -18,7 +18,12 @@
         </div>
       </div>
 
-      <mat-grid-list class="projects" gutterSize="15px" [cols]="breakpoint" rowHeight="2:1.2" (window:resize)="onResize($event)">
+      <div class="directory-path-block">
+
+      </div>
+
+      <mat-grid-list class="projects" gutterSize="15px" [cols]="breakpoint" rowHeight="2:1.2"
+        (window:resize)="onResize($event)">
 
         <mat-grid-tile class="add-new-project" matTooltip="Add new project" matTooltipPosition="above">
           <div (click)='openDialog("add","")'>
@@ -27,14 +32,15 @@
         </mat-grid-tile>
 
         <mat-grid-tile *ngFor="let project of projects | projectFilter:projectSearchQuery"
-      (click)="selectApplication($event, project , 'project')"
-      >
+          (click)="selectApplication($event, project , 'project')">
 
           <div class="project-action">
-            <button mat-fab (click)='openDialog("edit",project)' color="primary" matTooltip="edit" matTooltipPosition="right">
+            <button mat-fab (click)='openDialog("edit",project)' color="primary" matTooltip="edit"
+              matTooltipPosition="right">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-fab color="warn"  (click)='openDialog("delete",project)' matTooltip="delete" matTooltipPosition="right">
+            <button mat-fab color="warn" (click)='openDialog("delete",project)' matTooltip="delete"
+              matTooltipPosition="right">
               <mat-icon>delete</mat-icon>
             </button>
           </div>
@@ -42,8 +48,8 @@
           <div>
             <!-- <img src="assets/img/{{project.img}}" alt="{{project.name}}" /> -->
             <i class="project-icon material-icons">
-                ac_unit
-                </i>
+              ac_unit
+            </i>
             <div class="project-name">
               {{project.name}}
             </div>
@@ -53,13 +59,11 @@
     </div>
 
 
-    <div id="applications" fxFlex
-    *ngIf="showApplication == true"
-    [ngClass]="{'show-application' : showApplication == true}"
-    >
+    <div id="applications" fxFlex *ngIf="showApplication == true"
+      [ngClass]="{'show-application' : showApplication == true}">
       <div fxLayout fxLayoutAlign="space-between center">
         <h2>Applications ({{parentName}})</h2>
-        <button *ngIf='hideback == 0' type="button"  mat-fab color="warn" (click)='previous(parentId)'>Back</button>
+
         <div class="application-search-block">
           <mat-form-field>
             <input type="text" matInput [(ngModel)]="applicationSearchQuery" placeholder="Filter Application" />
@@ -69,7 +73,22 @@
         </div>
       </div>
 
-      <mat-grid-list class="applications" gutterSize="15px" [cols]="breakpoint" rowHeight="2:1.2" (window:resize)="onResize($event)">
+      <div class="directory-path-block">
+        <div fxLayout fxLayoutGap="10px" *ngIf='hideback == 0'>
+          <div class="directory-path-back-icon" fxFlex="nogrow" (click)='previous(parentId)' matTooltip="back">
+            <i class="material-icons">
+              chevron_left
+            </i>
+          </div>
+
+          <div class="directory-path" fxFlex>
+            /{{parentName}}
+          </div>
+        </div>
+      </div>
+
+      <mat-grid-list class="applications" gutterSize="15px" [cols]="breakpoint" rowHeight="2:1.2"
+        (window:resize)="onResize($event)">
 
         <mat-grid-tile class="add-new-application" matTooltip="Add new application" matTooltipPosition="above">
           <div (click)='openAppDialog("add", parentId)'>
@@ -78,14 +97,15 @@
         </mat-grid-tile>
 
         <mat-grid-tile *ngFor="let application of applications
-      | applicationFilter:applicationSearchQuery"
-         >
-        <div *ngIf='application.app_type==="pipeline"' >
-          <div class="project-action">
-              <button mat-fab color="accent" (click)='openAppDialog("edit",application)' matTooltip="edit" matTooltipPosition="right">
+      | applicationFilter:applicationSearchQuery">
+          <div *ngIf='application.app_type==="pipeline"'>
+            <div class="project-action">
+              <button mat-fab color="accent" (click)='openAppDialog("edit",application)' matTooltip="edit"
+                matTooltipPosition="right">
                 <mat-icon>edit</mat-icon>
               </button>
-              <button mat-fab color="warn" (click)='openAppDialog("delete",application)' matTooltip="delete" matTooltipPosition="right">
+              <button mat-fab color="warn" (click)='openAppDialog("delete",application)' matTooltip="delete"
+                matTooltipPosition="right">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -96,11 +116,12 @@
                 {{application.name}}
               </div>
             </div>
-        </div>
+          </div>
 
-        <div *ngIf='application.app_type==="folder"' >
-          <div class="project-action">
-              <button mat-fab color="accent" (click)='openAppDialog("edit",application)' matTooltip="edit" matTooltipPosition="right">
+          <div *ngIf='application.app_type==="folder"'>
+            <div class="project-action">
+              <button mat-fab color="accent" (click)='openAppDialog("edit",application)' matTooltip="edit"
+                matTooltipPosition="right">
                 <mat-icon>edit</mat-icon>
               </button>
               <button mat-fab color="warn" matTooltip="delete" matTooltipPosition="right">
@@ -115,14 +136,16 @@
                 {{application.name}}
               </div>
             </div>
-        </div>
+          </div>
 
-        <div *ngIf='application.app_type ==="file"' >
-          <div class="project-action">
-              <button (click)='readFile(application)' mat-fab color="accent" matTooltip="view" matTooltipPosition="right">
+          <div *ngIf='application.app_type ==="file"'>
+            <div class="project-action">
+              <button (click)='readFile(application)' mat-fab color="accent" matTooltip="view"
+                matTooltipPosition="right">
                 <mat-icon>explore</mat-icon>
               </button>
-              <button mat-fab color="warn" (click)='openAppDialog("delete",application)' matTooltip="delete" matTooltipPosition="right">
+              <button mat-fab color="warn" (click)='openAppDialog("delete",application)' matTooltip="delete"
+                matTooltipPosition="right">
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
@@ -134,7 +157,7 @@
                 {{application.name}}
               </div>
             </div>
-        </div>
+          </div>
 
         </mat-grid-tile>
 
