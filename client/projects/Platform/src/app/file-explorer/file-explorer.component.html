@@ -3,31 +3,8 @@
   <h3></h3>  
   <div class="row">
     <div class="main-folders">
-        <ul *ngFor="let directory of directories">
-          <li>
-            <a href="javascript:void(0)" (click)="selectFolderOrFile(directory)" (dblclick)="doubleClickFolder(directory)">{{directory.path}}</a>
-            <ul *ngFor="let sub of directory.children">
-              <li>
-                <a href="javascript:void(0)" (click)="selectFolderOrFile(sub)" (dblclick)="doubleClickFolder(sub)">{{sub.path}}</a>
-                <ul *ngFor="let sub1 of sub.children">
-                  <li>
-                    <a href="javascript:void(0)" (click)="selectFolderOrFile(sub1)" (dblclick)="doubleClickFolder(sub1)">{{sub1.path}}</a>
-                    <ul *ngFor="let sub2 of sub1.children">
-                      <li><a href="javascript:void(0)" (click)="selectFolderOrFile(sub2)" (dblclick)="doubleClickFolder(sub2)">{{sub2.path}}</a></li>
-                    </ul>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
-        </ul>
-    </div>
-    
-    <div class="selected-folders-files">
-      <div *ngFor="let selected of selectedData">
-        <div>{{selected.path}}</div>
-      </div>
-    </div>
+        <tree-root #tree class="reverse" [options]="options" [nodes]="nodes"></tree-root>
+    </div>    
   </div>
   
 </div>
