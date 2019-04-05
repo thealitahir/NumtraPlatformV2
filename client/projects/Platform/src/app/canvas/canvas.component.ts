@@ -140,10 +140,11 @@ export class CanvasComponent implements OnInit {
 
     //called when a link is deleted
     this.graph.on('remove', function(cell, collection, opt) {
+      this.canvasService.removeLink(cell.attributes.source.id,cell.attributes.target.id);
       if (cell.isLink()) {
         console.log("delete link");
         console.log(cell);
-        this.canvasService.removeLink(cell.attributes.source.id,cell.attributes.target.id);
+        
         // a link was removed  (cell.id contains the ID of the removed link)
       }
       else if(!cell.isLink()){

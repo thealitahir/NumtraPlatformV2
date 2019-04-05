@@ -72,7 +72,7 @@ export class StencilService {
 
     sources: Source[] = [
         { name: 'hdfs-source', label: 'DBFS', type:'source', stage_type:'source', },
-        { name: 'amazonS3-source', label: 'S3' },
+        { name: 'amazonS3-source', label: 'Cosmos DB', type:'source', stage_type:'source' },
         { name: 'kafka-source', label: 'Kafka' },
         { name: 'staging-source', label: 'Data Lake' },
         { name: 'sql-server-source', label: 'RDBMS' },
