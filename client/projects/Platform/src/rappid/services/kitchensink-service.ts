@@ -98,7 +98,7 @@ export class KitchenSinkService {
         });
 
         this.commandManager = new joint.dia.CommandManager({ graph: graph });
-
+        var link = new joint.shapes.standard.Link();
         const paper = this.paper = new joint.dia.Paper({
             width: 1200,
             height: 600,
@@ -106,13 +106,7 @@ export class KitchenSinkService {
             drawGrid: true,
             model: graph,
             cellViewNamespace: appShapes,
-            defaultLink: <joint.dia.Link>new appShapes.app.Link({
-                attrs: {
-                    '.marker-target': {
-                        d: 'M 10 0 L 0 5 L 10 10 z'
-                    }
-                }
-            }),
+            defaultLink: link,
 
             /* ---------------------------------------
                 Remove Link Vertex Functionality192
