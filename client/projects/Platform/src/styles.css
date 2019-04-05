@@ -120,9 +120,9 @@
   position: absolute;
   z-index: 10;
   right: 54px;
-  top: 94px;
+  top: 96px;
+  bottom: 5px;
   width: 250px;
-  height: 500px;
   overflow: auto;
   background: #ffffff;
   padding: 20px;
@@ -169,12 +169,13 @@
 
 
 
+/* You can add global styles to this file, and also import other style files */
 .tree-children.tree-children-no-padding { padding-left: 0 }
 .tree-children { padding-left: 20px; overflow: hidden }
 .node-drop-slot { display: block; height: 2px }
 .node-drop-slot.is-dragging-over { background: #ddffee; height: 20px; border: 2px dotted #888; }
-.toggle-children-wrapper-expanded .toggle-children { transform: rotate(90deg) }
-.toggle-children-wrapper-collapsed .toggle-children { transform: rotate(0); }
+.toggle-children-wrapper-expanded .toggle-children { -webkit-transform: rotate(90deg); transform: rotate(90deg) }
+.toggle-children-wrapper-collapsed .toggle-children { -webkit-transform: rotate(0); transform: rotate(0); }
 .toggle-children-wrapper {
   padding: 2px 3px 5px 1px;
 }
@@ -217,7 +218,6 @@
 }
 .node-content-wrapper.is-dragging-over { background: #ddffee; box-shadow: inset 0 0 1px #999; }
 .node-content-wrapper.is-dragging-over-disabled { opacity: 0.5 }
-
 tree-viewport {
   -webkit-tap-highlight-color: transparent;
   height: 100%;
@@ -232,25 +232,31 @@ tree-viewport {
   display: inline-block;
   cursor: pointer;
   -webkit-touch-callout: none; /* iOS Safari */
-  -webkit-user-select: none;   /* Chrome/Safari/Opera */
-  -khtml-user-select: none;    /* Konqueror */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */    /* Konqueror */
   -moz-user-select: none;      /* Firefox */
   -ms-user-select: none;       /* IE/Edge */
   user-select: none;           /* non-prefixed version, currently not supported by any browser */
 }
-
 tree-root .angular-tree-component-rtl {
   direction: rtl;
 }
 tree-root .angular-tree-component-rtl .toggle-children-wrapper-collapsed .toggle-children {
-  transform: rotate(180deg) !important;
+  -webkit-transform: rotate(180deg) !important;
+          transform: rotate(180deg) !important;
 }
 tree-root .angular-tree-component-rtl .tree-children {
   padding-right: 20px;
   padding-left: 0;
 }
-
 tree-node-checkbox {
-  padding: 1px;
+  padding: 3px 3px 0px 7px;
 }
-
+.reverse tree-node-expander {
+  order: 0;
+}
+.reverse tree-node-checkbox {
+  order: 1;
+}
+.reverse .node-content-wrapper {
+  order: 2;
+}
