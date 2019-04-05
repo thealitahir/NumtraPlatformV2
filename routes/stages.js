@@ -24,11 +24,14 @@ router.post('/updateStage',function(req,res){
 
 router.post('/linkStages',function(req,res){
   console.log("in link Stages");
-  var target=req.body.target;
-  var source=req.body.source;
-  StageVersionModel.findOne({name: source }, function (err, source) {
+  var target_id=req.body.target;
+  var source_id=req.body.source;
+  console.log(source_id);
+  console.log(target_id);
+  StageVersionModel.findOneAndUpdate({_id: source_id },{$push:{out:target_id}},{new:true}, function (err, source) {
     if (!err) {
-      StageVersionModel.update({"name": target}, { $set:{ "original_schema": source.original_schema} }, function (err, lsdata) {
+      StageVersionModel.update({_id: target_id}, { $set:{ "original_schema": source.original_schema},
+      $push:{in:source_id}}, function (err, lsdata) {
         if(!err) {
             console.log('linkstage updated successfully');
             res.send({status: true, msg: 'linkstage updated successfully.', data: lsdata});
@@ -46,7 +49,35 @@ router.post('/linkStages',function(req,res){
     }
   });
   
-})
+});
+
+router.post('/removeLink',function(req,res){
+  console.log("in link remove");
+  var target_id=req.body.target;
+  var source_id=req.body.source;
+  console.log(source_id);
+  console.log(target_id);
+  StageVersionModel.findOneAndUpdate({_id: source_id },{$pull:{out:target_id}},{new:true}, function (err, source) {
+    if (!err) {
+      StageVersionModel.update({_id: target_id}, { $set:{ "original_schema": []},
+      $pull:{in:source_id}}, function (err, lsdata) {
+        if(!err) {
+            console.log('linkstage updated successfully');
+            res.send({status: true, msg: 'linkstage updated successfully.', data: lsdata});
+          }
+          else {
+            console.log('linkstage not saved.');
+            res.send({status: false, msg: 'linkstage not saved.'});
+          }
+      });
+
+    } 
+    else {
+        console.log('error in getting stagedata');
+        res.send({status: false, msg: 'error in getting stagedata .'});
+    }
+  });
+});
 
 router.get('/stageSchema/:stageName/:stageType',function(req,res){
   StageVersionModel.findOne({name: req.params.stageName, stage_type:req.params.stageType}, function (err, stageschema) {
