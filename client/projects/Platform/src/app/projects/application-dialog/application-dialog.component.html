@@ -25,13 +25,13 @@
           <label *ngIf='filePath'><b>{{appFile}}</b> is uploaded</label> -->
 
 
-          <button class="upload-File" mat-raised-button>
+          <button type="button" class="upload-File" mat-raised-button>
             <label class="custom-upload-button" for="uploadFile">
               <input type="file" id="uploadFile" (change)="onFileSelect($event)" accept="*">
               Upload File
             </label>
-          </button>
-
+          </button><br/>
+          <label *ngIf='filePath'><b>{{appFile}}</b> is uploaded</label>
           <input type='hidden' name='appFile' [(ngModel)]='appFile'>
           <input type='hidden' name='filePath' [(ngModel)]='filePath'>
         </div>

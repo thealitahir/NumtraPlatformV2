@@ -80,6 +80,7 @@ export class ApplicationComponent {
   onFileSelect(event) {
     console.log('upload file event ');
     this.selectedFile = event.target.files[0];
+    console.log(this.selectedFile);
     this.applicationService.uploadDataFile(this.selectedFile).subscribe(uploadresponse => {
     this.uploadres = uploadresponse;
     this.filePath = this.uploadres.path + '/' + this.uploadres.uploadname;
