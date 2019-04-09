@@ -5,6 +5,7 @@
     <div class="main-folders">
         <tree-root #tree class="reverse" [options]="options" [nodes]="nodes"></tree-root>
     </div>    
+    <button (click)="getSelectedTreeNodes(tree,tree.treeModel.selectedLeafNodeIds)">Get Selected Nodes</button>
   </div>
   
 </div>

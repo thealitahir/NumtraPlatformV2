@@ -5,7 +5,9 @@ import { MatSnackBar } from '@angular/material';
 
 import { DbfsService } from '../services/dbfs.service';
 
-import { ITreeOptions, TreeNode} from 'angular-tree-component';
+import { TreeComponent,TreeModel,ITreeOptions, TreeNode} from 'angular-tree-component';
+import { toJS } from "mobx";
+
 
 
 
@@ -25,26 +27,14 @@ export class FileExplorerComponent implements OnInit {
   selectedData:any = [];
   isSingleClick: Boolean = true;
   timer : any;  
-
-
+  selectedTreeList:any;
+  nodes: any[] = [];
   options: ITreeOptions = {
     getChildren: this.getChildren.bind(this),
     useCheckbox: true,
     useTriState: true
   };
 
-  
-
-  nodes: any[] = [];
-
-  asyncChildren = [
-    {
-      name: 'child1',
-      hasChildren: true
-    }, {
-      name: 'child2'
-    }
-  ];
   
   
   constructor(
@@ -58,41 +48,28 @@ export class FileExplorerComponent implements OnInit {
         this.directories = data.files;
         this.nodes = data.files;
       });
-
-      
    }
    getChildren(node: TreeNode) {
-     console.log(node);
-     console.log(node.data);
     return new Promise((resolve, reject) => {
       this.dbfsService.getDataFiles({token: this.data.token , domain: this.data.domain,path:node.data.path}).subscribe(data => {
         resolve(data.files)
       });
     });
   }
+  getSelectedTreeNodes(tree,selectedNodes){    
+    console.log(selectedNodes);
+    console.log(TreeNode);
+    console.log(tree);
+    var selected = [];
 
-   doubleClickFolder(object){
-    this.isSingleClick = false;    
-    this.getSubFoldersAndFiles(object);
-    clearTimeout(this.timer);
-   }
-   getSubFoldersAndFiles(object){ 
-     if(object.is_dir){
-      this.dbfsService.getDataFiles({token: this.data.token , domain: this.data.domain,path:object.path}).subscribe(data => {
-        object.children = data.files;
-      });  
-     }          
-   }
-   selectFolderOrFile(object){
-      this.isSingleClick = true;
-      this.timer = setTimeout(() => {
-        if(this.isSingleClick){
-          var selected = this.selectedData;
-            selected.push(object);
-            this.selectedData = selected;
-        }
-      }, 250); 
-   }
+    tree.treeModel.doForAll(function (node: TreeNode) {
+      if (node.isSelected) {        
+        console.log(node.id + " is selected");
+        console.log(node);
+      }
+    });
+  }
+
    
   ngOnInit() {
   }
