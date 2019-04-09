@@ -1,0 +1,31 @@
+.selected-item{
+  margin-top: 1rem;
+  padding: 10px;
+}
+
+.selected-item img{
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.selected-item img.active{
+  box-shadow: 0 0 10px rgba(0,0,0,.25);
+}
+
+.selected-item-option{
+  height: 60px;
+  padding-top: 20px;
+  text-align: center;
+}
+
+.upload-File{
+  width: 180px;
+  background: #bbd976;
+}
+
+.upload-File label{
+  color: #000;
+  opacity: 0.75;
+}
+

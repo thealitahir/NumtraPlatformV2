@@ -60,6 +60,7 @@ export class CanvasComponent implements OnInit {
       console.log(data);
       var stages = data.data;
       var stagesArray = [];
+      var linksArray = []
       //drawing all stages
       for(var i = 0; i < stages.length; i++){
         var stage = new joint.shapes.standard.Image();
@@ -84,17 +85,18 @@ export class CanvasComponent implements OnInit {
           link.source(source);
           link.target(target);
           link.addTo(this.graph);
+          linksArray.push(link);
           link = new joint.shapes.standard.Link();
         }
       }
+      console.log("total links");
+      console.log(linksArray);
     });
     console.log("this is graph");
     console.log(this.graph);
 
     //link interactions
     this.paper.on('link:mouseenter', function(linkView) {
-      console.log("link interaction");
-      console.log(linkView.model);
       var tool = [new joint.linkTools.Remove({})]; 
       linkView.addTools(new joint.dia.ToolsView({
         name: 'onhover',
@@ -136,37 +138,42 @@ export class CanvasComponent implements OnInit {
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     }); 
 
-    //called when an element is deleted
-    this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
-      if (keyboard.isActive('ctrl meta', evt)) {
-        this.selection.collection.add(elementView.model);
-      }
-      /* this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
-
-      }); */
-      // Select an element if CTRL/Meta key is pressed while the element is clicked.
-    });
-
     //called when a link is deleted
-    this.paper.on('link:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
-      if (keyboard.isActive('ctrl meta', evt)) {
-        this.selection.collection.add(elementView.model);
+    this.graph.on('remove', function(cell, collection, opt) {
+      this.canvasService.removeLink(cell.attributes.source.id,cell.attributes.target.id);
+      if (cell.isLink()) {
+        console.log("delete link");
+        console.log(cell);
+        
+        // a link was removed  (cell.id contains the ID of the removed link)
       }
-      /* this.canvasService.saveCanvasModel(this.graph.attributes.cells.models).subscribe(data=>{
+      else if(!cell.isLink()){
+        console.log("element deleted");
+        console.log(cell);
+      }
+   });
+   this.graph.on('add', function(cell, collection, opt) {
+    /* if (cell.isLink()) {
+      console.log("link added");
+      console.log(cell);
+      // a link was removed  (cell.id contains the ID of the removed link)
+    }
+    else if(!cell.isLink()){
+      console.log("element added");
+      console.log(cell);
+    } */
+  });
 
-      }); */
-      // Select an element if CTRL/Meta key is pressed while the element is clicked.
-    });
 
     //called when a link is made
     this.paper.on('link:pointerup', (elementView, evt: JQuery.Event) => {
       console.log(elementView);
       if(elementView.model.attributes.target.id != null &&
          elementView.model.attributes.target.id != elementView.model.attributes.source.id){
-          console.log(elementView.sourceView.model.attributes.attrs.label.text);
-          console.log(elementView.targetView.model.attributes.attrs.label.text);
-          this.canvasService.onConnection(elementView.sourceView.model.attributes.attrs.label.text,
-          elementView.targetView.model.attributes.attrs.label.text).subscribe(data => {
+          console.log(elementView.sourceView.model.id);
+          console.log(elementView.targetView.model.id);
+          this.canvasService.addLink(elementView.sourceView.model.id,
+          elementView.targetView.model.id).subscribe(data => {
             console.log(data);
           });
       }

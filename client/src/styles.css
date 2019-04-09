@@ -58,3 +58,20 @@ h3 {
 }
 
 /* ---- END - General Classes ---- */
+
+
+/* custom styling for custom button
+------------------------------------------------------------*/
+.custom-upload-button input[type="file"] {
+  position: fixed;
+  top: -1000px;
+}
+/* ---- END - Custom Custom Classes ---- */
+
+
+/* Modal Box Classes
+------------------------------------------------------------*/
+.mat-dialog-container{
+  border-bottom: solid 5px #3272a0;
+}
+/* ---- END - Modal Box Classes ---- */

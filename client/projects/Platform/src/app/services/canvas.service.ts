@@ -12,13 +12,20 @@ export class CanvasService {
     console.log('Sections Service Initialized...');
   }
 
-  onConnection(source,target): Observable<any> {
+  addLink(source,target): Observable<any> {
     var data  = {
       source:source,
       target:target
     }
     console.log(data);
     return this.http.post(GLOBAL.serviceUrl + '/stage/linkStages' , data );
+  }
+  removeLink(source,target): Observable<any> {
+    var data  = {
+      source:source,
+      target:target
+    }
+    return this.http.post(GLOBAL.serviceUrl + '/stage/removeLink' , data );
   }
   saveCanvasModel(id,attributes,position,size,type): Observable<any> {
     var data = {
