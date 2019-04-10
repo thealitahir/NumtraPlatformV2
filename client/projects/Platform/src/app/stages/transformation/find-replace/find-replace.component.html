@@ -1,0 +1,45 @@
+<div class="canvas-right-col">
+  <h3>Find/Replace Transformation</h3>
+
+  <form #findForm="ngForm" fxLayout="column">
+
+    <mat-form-field  *ngIf="stage.stage_attributes.input_fields.length > 0">
+        <mat-label>Select Column</mat-label>
+      <mat-select name="field" [(ngModel)]='stage.stage_attributes.input_fields[0].field' required>
+        <mat-option *ngFor='let sSchema of stageSchema' (click)='selectFieldType(sSchema)' [value]='sSchema.field'>
+          {{ sSchema.field }} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <label>Find</label>
+    <mat-radio-group class="option" fxLayout="column" name="find_option"
+      [(ngModel)]="stage.stage_attributes.find_option">
+      <mat-radio-button [value]="'custom'">Custom</mat-radio-button>
+      <mat-radio-button [value]="'null'">Null</mat-radio-button>
+    </mat-radio-group>
+
+
+    <mat-form-field *ngIf="stage.stage_attributes.find_option === 'custom'">
+      <input matInput type="text" name="results" [(ngModel)]='stage.stage_attributes.find_string'
+        placeholder="Value" #results="ngModel" required>
+    </mat-form-field>
+
+    <label>Replace</label>
+    <mat-radio-group class="option" fxLayout="column" name="replace_option"
+      [(ngModel)]="stage.stage_attributes.replace_option">
+      <mat-radio-button [value]="'custom'">Custom</mat-radio-button>
+      <mat-radio-button [value]="'null'">Null</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-form-field *ngIf="stage.stage_attributes.replace_option === 'custom'">
+      <input matInput type="text" name="results" [(ngModel)]='stage.stage_attributes.replace_string'
+        placeholder="Value" #results="ngModel" required>
+    </mat-form-field>
+
+    <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
+      <button mat-stroked-button color="accent" (click)="saveFindReplace(findForm)" type="submit">Save</button>
+    </div>
+
+  </form>
+</div>
+
