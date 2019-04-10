@@ -1,21 +1,27 @@
 .selected-item{
+  width: 75px;
   margin-top: 1rem;
   padding: 10px;
-}
-
-.selected-item img{
+  text-align: center;
   padding: 15px;
   border-radius: 10px;
   cursor: pointer;
 }
 
-.selected-item img.active{
+.selected-item.active{
   box-shadow: 0 0 10px rgba(0,0,0,.25);
+}
+
+.selected-item label{
+  display: block;
+  font-size: 12px;
+  font-weight: bold;
+  margin-top: 8px;
 }
 
 .selected-item-option{
   height: 60px;
-  padding-top: 20px;
+  padding-top: 2.5rem;
   text-align: center;
 }
 

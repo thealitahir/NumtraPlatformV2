@@ -1,5 +1,19 @@
 
-
+.file-explorer{
+  position: fixed;
+    z-index: 10;
+    right: 345px;
+    top: 96px;
+    bottom: 5px;
+    left: 600px;
+    overflow: auto;
+    background: #fff;
+    box-shadow: 0 0 5px rgba(0,0,0, .25);
+    padding: 20px 15px;
+}
+.file-explorer h3{
+  margin-bottom: 10px;
+}
 .main-folders {
     width: 95%;
     margin: 5px;

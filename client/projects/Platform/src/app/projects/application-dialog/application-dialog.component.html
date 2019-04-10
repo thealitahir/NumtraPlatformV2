@@ -4,11 +4,18 @@
   <form (submit)='createApplication(addForm)' #addForm='ngForm'>
     <div mat-dialog-content>
       <!-- <div *ngIf='view === 0'> -->
-      <div class="selected-item">
-        <div fxLayout fxLayoutAlign="space-around center">
-          <img [ngClass]="{'active' : option ==='pipeline'}" (click)='addApp("pipeline")' src="assets/img/application.svg">
-          <img [ngClass]="{'active' : option ==='folder'}" (click)='addApp("folder")' src="assets/img/folder.svg">
-          <img [ngClass]="{'active' : option ==='file'}" (click)='addApp("file")' src="assets/img/file.svg">
+      <div fxLayout fxLayoutAlign="space-around center">
+        <div class="selected-item" color="primary" [ngClass]="{'active' : option ==='pipeline'}" (click)='addApp("pipeline")'>
+            <img src="assets/img/application.svg">
+            <label>Application</label>
+        </div>
+        <div class="selected-item" [ngClass]="{'active' : option ==='folder'}" (click)='addApp("folder")'>
+            <img src="assets/img/folder.svg">
+            <label>Folder</label>
+        </div>
+        <div class="selected-item" [ngClass]="{'active' : option ==='file'}" (click)='addApp("file")'>
+            <img src="assets/img/file.svg">
+            <label>File</label>
         </div>
       </div>
 
