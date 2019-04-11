@@ -1,230 +1,159 @@
 <div class="canvas-right-col-broad">
   <h3>Filter Transformation</h3>
 
-<!-- <form class="fullHeight sidebar-form-width-md" role="form" novalidate name="filterForm" ng-submit="update()"> -->
-  <form #filterForm="ngForm" fxLayout="column">
+  <form #filterForm="ngForm" (submit)="saveFilter(filterForm)" fxLayout="column">
 
-  <div class="sidebar-form">
+    <div>
+      <div>
+        <div>
+            <button type='button' *ngIf="stage.stage_attributes.use_expression" (click)="addFilter('exp')">+ Add Exp</button>
+            <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.use_expression" name='stage.stage_attributes.use_expression' (change)="addRemoveExp(stage.stage_attributes.use_expression)">Expression</mat-checkbox>
+        </div>
 
-      <div class="form-group">
+        <div *ngIf="stage.stage_attributes.use_expression">
+          <div *ngFor="let item of stage.stage_attributes.expression; let idx = index">
+            <mat-form-field *ngIf="idx > 0">
+              <mat-label>Select Logical Operator</mat-label>
+              <mat-select name="operator1{{idx}}" [(ngModel)]='item.logical_operator' required>
+                <mat-option *ngFor='let lop of logicalOpArray' [value]='lop'>{{ lop }} </mat-option>
+              </mat-select>
+            </mat-form-field>
 
-          <div class="add-button-row">
-              <button type='button' *ngIf="stage.stage_attributes.use_expression" (click)="addFilter('exp')">+ Add Exp</button>
-              <!-- <label>
-                  <input type="checkbox" ng-model="stage.stage_attributes.use_expression" ng-click="addRemoveExp(stage.stage_attributes.use_expression)">
-                  Expression
-              </label> -->
+            <div >
+              <mat-form-field>
+                <mat-label>Select Filed</mat-label>
+                <mat-select name="field1{{idx}}" [(ngModel)]='item.to_compare_field_name' required>
+                  <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "exp")' [value]='sSchema.field'>
+                    {{ sSchema.field }} </mat-option>
+                </mat-select>
+              </mat-form-field>
 
-              <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.use_expression" name='stage.stage_attributes.use_expression' (change)="addRemoveExp(stage.stage_attributes.use_expression)">Expression</mat-checkbox>
-          </div>
+              <mat-form-field>
+                <mat-label>Select Operator</mat-label>
+                <mat-select name="operator2{{idx}}" [(ngModel)]='item.operator' (selectionChange)="showOptions(item.operator, idx, $event)" required>
+                  <mat-option value="" >Select Operator</mat-option>
+                  <mat-option value="=" >= </mat-option>
+                  <mat-option value="!=" >!=</mat-option>
+                  <mat-option value=">=" >>=</mat-option>
+                  <mat-option value='<=' ><=</mat-option>
+                  <mat-option value=">" >></mat-option>
+                  <mat-option value="<" ><</mat-option>
+                  <mat-option value="IS NULL" >NULL</mat-option>
+                  <mat-option value="IS NOT NULL" >NOT NULL</mat-option>
+                </mat-select>
+              </mat-form-field>
 
-          <div *ngIf="stage.stage_attributes.use_expression">
-              <div *ngFor="let item of stage.stage_attributes.expression; let idx = index">
-
-                <mat-form-field *ngIf="idx > 0">
-                  <mat-label>Select Logical Operator</mat-label>
-                <mat-select name="operator1" [(ngModel)]='item.logical_operator' required>
-                  <mat-option *ngFor='let lop of logicalOpArray' [value]='lop'>
-                    {{ lop }} </mat-option>
+              <div *ngIf="item.showOptions" >
+                <mat-form-field >
+                  <mat-label>Select Type</mat-label>
+                  <mat-select name="type{{idx}}" [(ngModel)]="item.with_compare_type" (selectionChange)='setTypeOf(item, idx)' required>
+                    <mat-option *ngFor="let type of Types" [value]="type">{{ type }} </mat-option>
                   </mat-select>
                 </mat-form-field>
-
-                  <!-- <div ng-if="$index>0" class="col-sm-6 col-sm-offset-3" ng-class="{'has-error':filterForm.operator1.$error.required && filterForm.operator1.$dirty}">
-                      <select  name="operator1" class="form-control" ng-model="item.logical_operator" ng-options="logicalOp for logicalOp in logicalOpArray" required>
-                          <option value="" selected style='display:none;'>Select Logical Operator</option>
-                      </select>
-                  </div> -->
-
-                  <div >
-
-                      <!-- <div class="column-1" ng-class="{'has-error':filterForm.field1.$error.required && filterForm.field1.$dirty}">
-                          <select name="field1" class="form-control" ng-model="item.to_compare_field_name"  ng-options="item.field as item.field for item in fields" ng-change="setDataType($index,'exp')" required>
-                              <option value="">Select Field </option>
-                          </select>
-                      </div> -->
-                      <mat-form-field>
-                        <mat-label>Select Filed</mat-label>
-                      <mat-select name="field" [(ngModel)]='item.to_compare_field_name' required>
-                        <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "exp")' [value]='sSchema.field'>
-                          {{ sSchema.field }} </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-
-                    <mat-form-field>
-                      <mat-label>Select Operator</mat-label>
-                    <mat-select name="operator2" [(ngModel)]='item.operator' (selectionChange)="showOptions(item.operator, idx, $event)" required>
-                        <mat-option value="" >Select Operator</mat-option>
-                        <mat-option value="=" >= </mat-option>
-                        <mat-option value="!=" >!=</mat-option>
-                        <mat-option value=">=" >>=</mat-option>
-                        <mat-option value='<=' ><=</mat-option>
-                        <mat-option value=">" >></mat-option>
-                        <mat-option value="<" ><</mat-option>
-                        <mat-option value="IS NULL" >NULL</mat-option>
-                        <mat-option value="IS NOT NULL" >NOT NULL</mat-option>
-                    </mat-select>
-                  </mat-form-field>
-
-                      <!-- <select name="operator2" class="form-control" ng-model="item.operator" ng-change="showOptions(item.operator,$index)" required>
-                              <option value="" >Select Operator</option>
-                              <option value="=" >=</option>
-                              <option value="!=" >!=</option>
-                              <option value=">=" >>=</option>
-                              <option value="<=" ><=</option>
-                              <option value=">" >></option>
-                              <option value="<" ><</option>
-                              <option value="IS NULL" >NULL</option>
-                              <option value="IS NOT NULL" >NOT NULL</option>
-                          </select> -->
-
-                      <div *ngIf="item.showOptions" >
-
-                          <mat-form-field >
-                              <mat-label>Select Type</mat-label>
-                            <mat-select name="type" [(ngModel)]='item.with_compare_type' (selectionChange)='setTypeOf(item, idx)' required>
-                              <mat-option *ngFor='let type of Types' [value]='type'>
-                                {{ type }} </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-<!--
-                          <select name="type" class="form-control" ng-model="item.with_compare_type" ng-options="Type for Type in Types" ng-change="setTypeOf(item, $index)" required>
-                              <option value="">Select Type</option>
-                          </select> -->
-                      </div>
-
-                      <div *ngIf="item.showOptions && item.activeCustom=='stream'" >
-                          <mat-form-field>
-                              <mat-label>Select Field</mat-label>
-                            <mat-select name="field2" [(ngModel)]='item.to_compare_field_name' required>
-                              <mat-option *ngFor='let sSchema of stageSchema' (click)='setStreamDataType(sSchema, idx)' [value]='sSchema.field'>
-                                {{ sSchema.field }} </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                          <!-- <select name="field2" class="form-control" ng-model="item.with_compare_field_name" ng-options="item.field as item.field for item in fields" ng-change="setStreamDataType($index)" required>
-                              <option value="">Select Field </option>
-                          </select> -->
-                      </div>
-
-                      <div *ngIf="item.showOptions && item.activeCustom=='custom'" >
-                          <mat-form-field >
-                              <input matInput type="text" name="value" [(ngModel)]='item.with_compare_field_name'
-                                placeholder="Value.." #Value="ngModel" required>
-                            </mat-form-field>
-
-                          <!-- <input name="value" class="form-control" type="text" ng-model="item.with_compare_field_name" placeholder="Value.." required/> -->
-                      </div>
-
-                      <div *ngIf="item.showOptions && item.activeCustom=='parameter'" >
-                          <!-- <select name="parameter" class="form-control" ng-model="item.with_compare_field_name" required>
-                              <option value="">Select parameter</option>
-                              <option ng-selected="item.with_compare_field_name == key" ng-repeat="(key,data) in processParameters.parameters" value="{{key}}">{{key}}</option>
-                          </select> -->
-
-                          <mat-form-field>
-                              <mat-label>Select Parameter</mat-label>
-                            <mat-select name="parameter" [(ngModel)]='item.to_compare_field_name' required>
-                              <!-- <mat-option *ngFor='let sSchema of stageSchema' (click)='setStreamDataType(sSchema, idx)' [value]='sSchema.field'>
-                                {{ sSchema.field }} </mat-option> -->
-                            </mat-select>
-                          </mat-form-field>
-                      </div>
-
-                      <div class="column-2" *ngIf="idx > 0">
-                          <button type='button'  (click)="removeFilter(idx,'exp')" style="font-size: 20px; color: #3cbfe8; cursor:pointer;">- Remove</button>
-                      </div>
-
-                      <span *ngIf="item.showOptions && item.activeCustom=='parameter' " class="alert-danger">Please register parameters for this pipeline</span>
-
-                  </div>
               </div>
 
+              <div *ngIf="item.showOptions && item.activeCustom=='stream'" >
+                <mat-form-field>
+                  <mat-label>Select Field</mat-label>
+                  <mat-select name="field2{{idx}}" [(ngModel)]='item.with_compare_field_name' required>
+                    <mat-option *ngFor='let sSchema of stageSchema' (click)='setStreamDataType(sSchema, idx)' [value]='sSchema.field'>
+                      {{ sSchema.field }} </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+
+              <div *ngIf="item.showOptions && item.activeCustom=='custom'" >
+                <mat-form-field >
+                  <input matInput type="text" name="value{{idx}}" [(ngModel)]='item.with_compare_field_name'
+                    placeholder="Value.." #Value="ngModel" required>
+                </mat-form-field>
+              </div>
+
+              <div *ngIf="item.showOptions && item.activeCustom=='parameter'" >
+                  <!-- <select name="parameter" class="form-control" ng-model="item.with_compare_field_name" required>
+                      <option value="">Select parameter</option>
+                      <option ng-selected="item.with_compare_field_name == key" ng-repeat="(key,data) in processParameters.parameters" value="{{key}}">{{key}}</option>
+                  </select> -->
+
+                  <mat-form-field>
+                      <mat-label>Select Parameter</mat-label>
+                    <mat-select name="parameter{{idx}}" [(ngModel)]='item.with_compare_field_name' required>
+                      <!-- <mat-option *ngFor='let sSchema of stageSchema' (click)='setStreamDataType(sSchema, idx)' [value]='sSchema.field'>
+                        {{ sSchema.field }} </mat-option> -->
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+
+              <div class="column-2" *ngIf="idx > 0">
+                <button type='button'  (click)="removeFilter(idx,'exp')" style="font-size: 20px; color: #3cbfe8; cursor:pointer;">- Remove</button>
+              </div>
+
+              <span *ngIf="item.showOptions && item.activeCustom=='parameter' " >Please register parameters for this pipeline</span>
+
+            </div>
           </div>
+        </div>
       </div>
 
       <div class="clearfix"></div>
 
       <div class="form-group">
+        <div class="add-button-row">
+          <button type='button' *ngIf="stage.stage_attributes.use_regex" (click)="addFilter('regex')">+ Add Regex</button>
+          <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.use_regex" name='stage.stage_attributes.use_regex' (change)="addRemoveRegex(stage.stage_attributes.use_regex)">Regex</mat-checkbox>
+        </div>
 
-          <div class="add-button-row">
-              <!-- <label>
-                  <input type="checkbox" ng-model="stage.stage_attributes.use_regex" ng-click="addRemoveRegex(stage.stage_attributes.use_regex)">
-                  Regex
-              </label> -->
-              <button type='button' *ngIf="stage.stage_attributes.use_regex" (click)="addFilter('regex')">+ Add Regex</button>
+        <div *ngIf="stage.stage_attributes.use_regex">
+          <div *ngFor='let item of stage.stage_attributes.regex; let idx = index'>
+            <div *ngIf="idx > 0">
+                <mat-form-field>
+                <mat-label>Select Logical Operator</mat-label>
+              <mat-select name="operator1{{idx}}" [(ngModel)]='item.logical_operator' required>
+                <mat-option *ngFor='let lop of logicalOpArray' [value]='lop'>
+                  {{ lop }} </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
 
-
-              <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.use_regex" name='stage.stage_attributes.use_regex' (change)="addRemoveRegex(stage.stage_attributes.use_regex)">Regex</mat-checkbox>
-          </div>
-
-          <div *ngIf="stage.stage_attributes.use_regex">
-              <div *ngFor='let item of stage.stage_attributes.regex; let idx = index'>
-
-                  <div *ngIf="idx > 0">
-                      <!-- <select name="logical_operator" class="form-control" ng-model="item.logical_operator" ng-options="logicalOp for logicalOp in logicalOpArray" required>
-                          <option value="" selected style='display:none;'>Select Logical Operator</option>
-                      </select> -->
-                    <mat-form-field>
-                      <mat-label>Select Logical Operator</mat-label>
-                    <mat-select name="operator1" [(ngModel)]='item.logical_operator' required>
-                      <mat-option *ngFor='let lop of logicalOpArray' [value]='lop'>
-                        {{ lop }} </mat-option>
-                      </mat-select>
-                    </mat-form-field>
-                  </div>
-
-                  <div class="filter-regex-columns field-box">
-
-                      <div class="column-1" >
-                          <!-- <select name="regex_field" class="form-control" ng-model="item.to_compare_field_name"  ng-options="item.field as item.field for item in fields" ng-change="setDataType($index,'regex')" required>
-                              <option value="">Select Field </option>
-                          </select> -->
-
-                          <mat-form-field>
-                              <mat-label>Select Filed</mat-label>
-                            <mat-select name="field" [(ngModel)]='item.to_compare_field_name' required>
-                              <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "regex")' [value]='sSchema.field'>
-                                {{ sSchema.field }} </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                      </div>
-
-                      <div class="column-1" ng-class="{'has-error':filterForm.regex_operator.$error.required && filterForm.regex_operator.$dirty}">
-                          <!-- <select name="regex_operator" class="form-control" ng-model="item.operator"  ng-options="operator for operator in regex_operators" required>
-                              <option value="">Select Operator</option>
-                          </select> -->
-
-                          <mat-form-field>
-                              <mat-label>Select Operator</mat-label>
-                            <mat-select name="regex_operator" [(ngModel)]='item.operator' required>
-                              <mat-option *ngFor='let ropr of regex_operators' [value]='ropr'>
-                                {{ ropr }} </mat-option>
-                            </mat-select>
-                          </mat-form-field>
-                      </div>
-
-                      <div >
-                          <!-- <input name="regex" class="form-control" type="text" ng-model="item.regex" placeholder="Regex" required/> -->
-
-                          <mat-form-field >
-                              <input matInput type="text" name="regex" [(ngModel)]='item.regex'
-                                placeholder="Regex" required>
-                            </mat-form-field>
-                      </div>
-
-                      <div class="column-2" *ngIf="idx >0" >
-                          <button type='button' (click)="removeFilter(idx,'regex')" style="font-size: 20px; color: #3cbfe8; cursor:pointer;">Remove regex</button>
-                      </div>
-
-                  </div>
+            <div class="filter-regex-columns field-box">
+              <div class="column-1" >
+                  <mat-form-field>
+                    <mat-label>Select Filed</mat-label>
+                    <mat-select name="field{{idx}}" [(ngModel)]='item.to_compare_field_name' required>
+                      <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "regex")' [value]='sSchema.field'>
+                        {{ sSchema.field }} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
               </div>
+
+              <div class="column-1" ng-class="{'has-error':filterForm.regex_operator.$error.required && filterForm.regex_operator.$dirty}">
+                  <mat-form-field>
+                    <mat-label>Select Operator</mat-label>
+                    <mat-select name="regex_operator{{idx}}" [(ngModel)]='item.operator' required>
+                      <mat-option *ngFor='let ropr of regex_operators' [value]='ropr'>
+                        {{ ropr }} </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+              </div>
+
+              <div >
+                <mat-form-field >
+                  <input matInput type="text" name="regex{{idx}}" [(ngModel)]='item.regex' placeholder="Regex" required>
+                </mat-form-field>
+              </div>
+
+              <div class="column-2" *ngIf="idx >0" >
+                  <button type='button' (click)="removeFilter(idx,'regex')" style="font-size: 20px; color: #3cbfe8; cursor:pointer;">Remove regex</button>
+              </div>
+
+            </div>
           </div>
+        </div>
       </div>
 
       <span *ngIf="!stage.stage_attributes.use_time_window && !stage.stage_attributes.use_expression && !stage.stage_attributes.use_regex" style="color:red">Please check at least one option</span>
-
-
       <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
-        <button mat-stroked-button color="accent" (click)="saveTop(filterForm)" type="submit">Save</button>
+        <button mat-stroked-button color="accent" type="submit">Save</button>
         <!-- <button mat-stroked-button color="accent" (click)="cancel()" type="submit">Cancel</button> -->
       </div>
 

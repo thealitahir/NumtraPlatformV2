@@ -40,12 +40,13 @@ export class MaxComponent {
   }
 
   saveTop(form: NgForm) {
-    // console.log(form.value);
+    if (form.invalid) {
+      this.openSnackBar('Error:', 'Fill all Fields!');
+      return;
+    }
     this.attributes.topResults = form.value.results;
-    console.log(this.attributes);
     this.data = {updatedata: {'stage_attributes.attributes': this.stage.stage_attributes.attributes}, stageName: 'Top'};
     this.stageService.updateStage(this.data).subscribe(data => {
-      console.log(data);
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');
       } else {

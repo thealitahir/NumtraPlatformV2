@@ -28,8 +28,8 @@ export class MinComponent {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;
-      console.log(this.stage.stage_attributes.parameter);
-      console.log(typeof(this.stage.stage_attributes.parameter));
+      // console.log(this.stage.stage_attributes.parameter);
+      // console.log(typeof(this.stage.stage_attributes.parameter));
 
     });
   }
@@ -38,13 +38,14 @@ export class MinComponent {
     this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , field: fieldType.field };
   }
 
-  saveTop(form: NgForm) {
-    // console.log(form.value);
+  saveBottom(form: NgForm) {
+    if (form.invalid) {
+      this.openSnackBar('Error:', 'Fill all Fields!');
+      return;
+    }
     this.attributes.topResults = form.value.results;
-    console.log(this.attributes);
     this.data = {updatedata: {'stage_attributes.attributes': this.stage.stage_attributes.attributes}, stageName: this.stagename};
     this.stageService.updateStage(this.data).subscribe(data => {
-      console.log(data);
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');
       } else {

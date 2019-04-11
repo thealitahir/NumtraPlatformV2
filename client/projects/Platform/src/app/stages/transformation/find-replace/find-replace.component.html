@@ -20,7 +20,7 @@
 
 
     <mat-form-field *ngIf="stage.stage_attributes.find_option === 'custom'">
-      <input matInput type="text" name="results" [(ngModel)]='stage.stage_attributes.find_string'
+      <input matInput type="text" name="find_string" [(ngModel)]='stage.stage_attributes.find_string'
         placeholder="Value" #results="ngModel" required>
     </mat-form-field>
 
@@ -32,7 +32,7 @@
     </mat-radio-group>
 
     <mat-form-field *ngIf="stage.stage_attributes.replace_option === 'custom'">
-      <input matInput type="text" name="results" [(ngModel)]='stage.stage_attributes.replace_string'
+      <input matInput type="text" name="replace_string" [(ngModel)]='stage.stage_attributes.replace_string'
         placeholder="Value" #results="ngModel" required>
     </mat-form-field>
 

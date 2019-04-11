@@ -34,7 +34,6 @@ export class FilterComponent {
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService) {
     this.stageService.getStageSchema(this.stagename, this.stagetype).subscribe(schemadata => {
-      console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;
       // console.log(this.stage.stage_attributes.parameter);
@@ -44,7 +43,7 @@ export class FilterComponent {
   }
 
   addFilter(type) {
-    if (type === 'exp'){
+    if (type === 'exp') {
       this.stage.stage_attributes.expression.push(
         {
           to_compare_field_name: '',
@@ -59,7 +58,6 @@ export class FilterComponent {
         }
       );
     }
-    console.log( this.stage.stage_attributes.expression);
     if (type === 'regex') {
       this.stage.stage_attributes.regex.push({
           to_compare_field_name: '',
@@ -84,13 +82,11 @@ export class FilterComponent {
   }
 
   showOptions(operator, index) {
-    console.log(operator, index);
     if(operator === 'IS NULL' || operator === 'IS NOT NULL'){
         this.stage.stage_attributes.expression[index].showOptions = false;
     } else{
         this.stage.stage_attributes.expression[index].showOptions = true;
     }
-    console.log( this.stage.stage_attributes.expression[index].showOptions);
   }
 
   setTypeOf(item, index) {
@@ -148,12 +144,13 @@ export class FilterComponent {
     }
   }
 
-  saveTop(form: NgForm) {
-    // console.log(form.value);
-
+  saveFilter(form: NgForm) {
+    if (form.invalid) {
+      this.openSnackBar('Error:', 'Fill all Fields!');
+      return;
+    }
     this.data = {updatedata: {'stage_attributes': this.stage.stage_attributes}, stageName: this.stagename};
     this.stageService.updateStage(this.data).subscribe(data => {
-      console.log(data);
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');
       } else {

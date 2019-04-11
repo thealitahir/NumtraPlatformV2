@@ -52,13 +52,15 @@ export class FindReplaceComponent {
   }
 
   saveFindReplace(form: NgForm) {
-    // console.log(form.value);
+    if (form.invalid) {
+      this.openSnackBar('Error:', 'Fill all Fields!');
+      return;
+    }
+
     this.stage.stage_attributes.output_fields = [];
     this.stage.stage_attributes.output_fields.push(this.stage.stage_attributes.input_fields[0]);
-    console.log(this.stage.stage_attributes);
     this.data = {updatedata: {'stage_attributes': this.stage.stage_attributes}, stageName: this.stagename};
     this.stageService.updateStage(this.data).subscribe(data => {
-      console.log(data);
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');
       } else {
