@@ -1,15 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm, CheckboxControlValueAccessor } from '@angular/forms';
-import { DbfsService } from '../../../services/dbfs.service';
 import { StageService } from '../../../services/stage.service';
-import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
+import { MatSnackBar , MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'app-max',
-  templateUrl: './max.component.html',
-  styleUrls: ['./max.component.css']
+  selector: 'app-min',
+  templateUrl: './min.component.html',
+  styleUrls: ['./min.component.css']
 })
-export class MaxComponent {
+export class MinComponent {
   fileheader: any;
   data: any ;
   stage: any = {
@@ -18,19 +17,19 @@ export class MaxComponent {
       attributes: {topResults: '' , dataType: '' , field: '' }
     }
   };
-  stagename: any = 'Top';
+  stagename: any = 'bottom';
   stagetype: any = 'transformation';
   stageSchema: any;
   attributes: any = {};
   fileType: any;
 
-  constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
+  constructor(public snackBar: MatSnackBar, public stageService: StageService, public dialog: MatDialog) {
     this.stageService.getStageSchema(this.stagename,this.stagetype).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;
-      console.log(this.stage.stage_attributes.parameter);
-      console.log(typeof(this.stage.stage_attributes.parameter));
+      // console.log(this.stage.stage_attributes.parameter);
+      // console.log(typeof(this.stage.stage_attributes.parameter));
 
     });
   }
@@ -39,13 +38,13 @@ export class MaxComponent {
     this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , field: fieldType.field };
   }
 
-  saveTop(form: NgForm) {
+  saveBottom(form: NgForm) {
     if (form.invalid) {
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
     this.attributes.topResults = form.value.results;
-    this.data = {updatedata: {'stage_attributes.attributes': this.stage.stage_attributes.attributes}, stageName: 'Top'};
+    this.data = {updatedata: {'stage_attributes.attributes': this.stage.stage_attributes.attributes}, stageName: this.stagename};
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

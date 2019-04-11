@@ -5,6 +5,8 @@ import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer
 import { RolesComponent } from './roles/roles.component';
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
+import { MinComponent } from './stages/transformation/min/min.component';
+import { FilterComponent } from './stages/transformation/filter/filter.component';
 import { AuthGuard } from '../../../../src/app/guards/index';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
@@ -16,6 +18,8 @@ import { from } from 'rxjs';
 const APP_ROUTES: Routes = [
   { path: 'platform/dbfs', component: DbfsComponent, canActivate: [AuthGuard] },
   { path: 'platform/max', component: MaxComponent },
+  { path: 'platform/min', component: MinComponent },
+  { path: 'platform/filter', component: FilterComponent },
   { path: 'platform/cosmosDB', component: CosmosDBComponent },
   { path: 'platform/dataExplorer', component: DataExplorerComponent },
   { path: 'platform/dashboard', component: DashboardComponent },

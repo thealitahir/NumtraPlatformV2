@@ -8,9 +8,8 @@ var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage',function(req,res){
     var stagedata = req.body;
-    console.log(stagedata);
-    //StageVersionModel.update({"name":"DBFS"}, { $set:{ "original_schema":stagedata.fileheader,"stage_attributes.url":stagedata.formdata.url, "stage_attributes.source_delimeter": stagedata.formdata.filedelimeter, "stage_attributes.file_type":  stagedata.formdata.filetype } }, function (err, sdata) {
-    StageVersionModel.update({"name":stagedata.stageName}, {$set: stagedata['updatedata'] }, function (err, sdata) {
+    //StageVersionModel.update({"name":stagedata.stageName, "user_id":req.user._id}, {$set: stagedata['updatedata'] }, function (err, sdata) {
+    StageVersionModel.update({"name":stagedata.stageName, "user_id":"567a95c8ca676c1d07d5e3e7"}, {$set: stagedata['updatedata'] }, function (err, sdata) {
       if(!err) {
           console.log('updated successfully');
             res.send({status: true, msg: 'stage updated successfully.', data: sdata});

@@ -44,9 +44,9 @@ export class DashboardComponent implements OnInit {
   hideback: any = 1;
   parent: any;
   data: any;
-
+  parentStack: any = [];
   projects: Project[] = [];
-
+  stackobj: any;
   applications: Application[] = [];
 
 
@@ -70,12 +70,17 @@ export class DashboardComponent implements OnInit {
     this.showApplication = true;
     this.parentId = '';
     if (type === 'project') {
+      this.parentStack = [];
       this.projectId = data._id;
       this.projectName = data.name;
       this.hideback = 1;
+      this.stackobj = {parentId : data._id, parentName : data.name, type: 'project'};
+      this.parentStack.push(this.stackobj);
     }
     if (type === 'application') {
       this.hideback = 0;
+      this.stackobj = {parentId : data._id, parentName : data.name, type: 'application'};
+      this.parentStack.push(this.stackobj);
     }
 
     if (event.currentTarget.classList.contains('active')){
@@ -96,6 +101,8 @@ export class DashboardComponent implements OnInit {
     this.applicationService.getApplications(this.parentId).subscribe(adata => {
 
       this.applications = adata.data;
+
+
     });
 
     setTimeout(() => {
@@ -105,17 +112,18 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  previous(Id) {
-    this.applicationService.getPreviousApplications(Id).subscribe(adata => {
+  previous() {
+    this.parentStack.pop();
+    const index = this.parentStack.length - 1;
+    const parID = this.parentStack[index];
+    this.applicationService.getPreviousApplications(parID.parentId).subscribe(adata => {
 
       this.applications = adata.data;
-      this.parent = adata.parent;
-      if (this.parent) {
-         this.parentId = this.parent._id;
-         this.parentName =  this.parent.name;
-      } else {
-        this.parentId = this.projectId;
-        this.parentName =  this.projectName;
+      this.parent = parID;
+
+      this.parentId = this.parent.parentId;
+      this.parentName =  this.parent.parentName;
+      if (this.parent.type !== 'application') {
         this.hideback = 1;
       }
     });

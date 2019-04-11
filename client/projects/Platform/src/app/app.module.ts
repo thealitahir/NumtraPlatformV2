@@ -55,6 +55,8 @@ import { ShowStageComponent } from './stages/show-stage/show-stage.component';
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
+import { MinComponent } from './stages/transformation/min/min.component';
+import { FilterComponent } from './stages/transformation/filter/filter.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 import { AddProjectComponent } from './projects/addProject-dialog/add-project-dialog.component';
 import { ApplicationComponent } from './projects/application-dialog/application-dialog.component';
@@ -95,6 +97,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     DbfsComponent,
     CosmosDBComponent,
     MaxComponent,
+    MinComponent,
+    FilterComponent,
     DiscoverDataComponent,
     AddProjectComponent,
     ApplicationComponent,

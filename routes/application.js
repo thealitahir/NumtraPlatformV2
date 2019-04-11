@@ -55,30 +55,9 @@ router.get('/getApplications/:parentId', function(req,res) {
 });
 
 router.get('/getPreviousApplications/:Id', function(req,res) {
-    ApplicationModel.findOne({_id: req.params.Id},function(err,applications) {
+    ApplicationModel.find({parent_id: req.params.Id},function(err,applications) {
         if(!err){
-            ApplicationModel.findOne({_id:applications.parent_id}, function (err,parentapp) {
-                
-                if(!err){
-                    
-                    var parent = parentapp;
-                    ApplicationModel.find({parent_id:applications.parent_id }, function (err,applications) {
-                        if(!err){
-                            res.send({status:true,msg:'applications found.',data:applications,parent: parent});
-                        }
-                        else{
-                            console.log('err');
-                            res.send({status:false,msg:'Error while finding applications.'});
-                        }
-                    });
-
-                }
-                else{
-                    console.log('err');
-                    res.send({status:false,msg:'Error while finding applications.'});
-                }
-            });
-            
+            res.send({status:true,msg:'applications found.',data:applications});
         }
         else{
             console.log('err');
