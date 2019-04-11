@@ -75,14 +75,17 @@
 
       <div class="directory-path-block">
         <div fxLayout fxLayoutGap="10px" *ngIf='hideback == 0'>
-          <div class="directory-path-back-icon" fxFlex="nogrow" (click)='previous(parentId)' matTooltip="back">
+          <div class="directory-path-back-icon" fxFlex="nogrow" (click)='previous()' matTooltip="back">
             <i class="material-icons">
               chevron_left
             </i>
           </div>
 
           <div class="directory-path" fxFlex>
-            /{{parentName}}
+            <span *ngFor='let parent of parentStack'>
+              /{{parent.parentName}}
+            </span>
+            <!-- /{{parentName}} -->
           </div>
         </div>
       </div>
