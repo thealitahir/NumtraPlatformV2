@@ -49,6 +49,9 @@ import { RolesComponent } from './roles/roles.component';
 import { SubNavComponent } from './sub-nav/sub-nav.component';
 import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } from './filter.pipe';
 
+import { AddStageComponent } from './stages/add-stage/add-stage.component';
+import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
+import { ShowStageComponent } from './stages/show-stage/show-stage.component';
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
@@ -72,8 +75,6 @@ import { CosmosdbService } from './services/cosmosdb.service';
 import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { FileExplorerComponent } from './file-explorer/file-explorer.component';
-import { AddStageComponent } from './stages/add-stage/add-stage.component';
-import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {
   tabSize: 2
@@ -88,6 +89,9 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     SubNavComponent,
     RolesComponent,
 
+    AddStageComponent,
+    EditStageComponent,
+    ShowStageComponent,
     DbfsComponent,
     CosmosDBComponent,
     MaxComponent,
@@ -102,9 +106,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     PipelineDesignerComponent,
     DbfsSinkComponent,
     DataExplorerComponent,
-    FileExplorerComponent,
-    AddStageComponent,
-    EditStageComponent
+    FileExplorerComponent
 
   ],
   imports: [
@@ -112,7 +114,6 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     FormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    routing,
     MatMenuModule,
     MatToolbarModule,
     MatButtonModule,
@@ -143,7 +144,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     HttpModule,
     AceModule,
     A11yModule,
-    TreeModule.forRoot()
+    TreeModule.forRoot(),
+    routing
   ],
   entryComponents: [ DiscoverDataComponent, AddProjectComponent, ApplicationComponent, FileReadComponent],
   providers: [
