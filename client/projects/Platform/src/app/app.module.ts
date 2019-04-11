@@ -54,7 +54,6 @@ import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component'
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { MinComponent } from './stages/transformation/min/min.component';
 import { FilterComponent } from './stages/transformation/filter/filter.component';
-import { FindReplaceComponent } from './stages/transformation/find-replace/find-replace.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 import { AddProjectComponent } from './projects/addProject-dialog/add-project-dialog.component';
 import { ApplicationComponent } from './projects/application-dialog/application-dialog.component';
@@ -96,7 +95,6 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     MaxComponent,
     MinComponent,
     FilterComponent,
-    FindReplaceComponent,
     DiscoverDataComponent,
     AddProjectComponent,
     ApplicationComponent,
