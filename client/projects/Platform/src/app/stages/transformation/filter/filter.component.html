@@ -1,11 +1,11 @@
 <div class="canvas-right-col width-md">
   <h3>Filter Transformation</h3>
 
-  <span
+  <div class="error-message"
     *ngIf="!stage.stage_attributes.use_time_window && !stage.stage_attributes.use_expression && !stage.stage_attributes.use_regex"
-    style="color:red">
+    >
     Please check at least one option
-  </span>
+</div>
 
   <form #filterForm="ngForm" (submit)="saveFilter(filterForm)" fxLayout="column">
 
@@ -15,66 +15,73 @@
         Expression</mat-checkbox>
 
       <mat-icon color="primary" *ngIf="stage.stage_attributes.use_expression" (click)="addFilter('exp')"
-        matTooltip="Add Exp">
+        matTooltip="Add exp">
         add_circle_outline
       </mat-icon>
     </div>
 
     <div *ngIf="stage.stage_attributes.use_expression">
       <div *ngFor="let item of stage.stage_attributes.expression; let idx = index">
-        <mat-form-field *ngIf="idx > 0">
-          <mat-label>Select Logical Operator</mat-label>
-          <mat-select name="combinator{{idx}}" [(ngModel)]='item.combinator' required>
-            <mat-option *ngFor='let lop of logicalOpArray' [value]='lop'>{{ lop }} </mat-option>
-          </mat-select>
-        </mat-form-field>
 
-        <div>
+        <div class="logical-operator" *ngIf="idx > 0">
           <mat-form-field>
-            <mat-label>Select Filed</mat-label>
-            <mat-select name="field1{{idx}}" [(ngModel)]='item.column1_name' required>
-              <!-- <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "exp")' [value]='sSchema.field'> -->
-              <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
-                {{ sSchema.field }} </mat-option>
+            <mat-label>Select Logical Operator</mat-label>
+            <mat-select name="combinator{{idx}}" [(ngModel)]='item.combinator' required>
+              <mat-option *ngFor='let lop of logicalOpArray' [value]='lop'>{{ lop }} </mat-option>
             </mat-select>
           </mat-form-field>
+        </div>
 
-          <mat-form-field>
-            <mat-label>Select Operator</mat-label>
-            <mat-select name="operator2{{idx}}" [(ngModel)]='item.operator'
-              (selectionChange)="showOptions(item.operator, idx, $event)" required>
-              <mat-option value="=">= </mat-option>
-              <mat-option value="!=">!=</mat-option>
-              <mat-option value=">=">>=</mat-option>
-              <mat-option value='<='>
-                <=</mat-option> <mat-option value=">">>
-              </mat-option>
-              <mat-option value="<">
-                <</mat-option> <mat-option value="IS NULL">NULL
-              </mat-option>
-              <mat-option value="IS NOT NULL">NOT NULL</mat-option>
-            </mat-select>
-          </mat-form-field>
+        <div class="fields-block" fxLayout="column">
 
-          <div *ngIf="item.showOptions">
-            <!-- <mat-form-field >
+          <div fxLayoutAlign="space-between center">
+            <mat-form-field fxFlex="42">
+              <mat-label>Select Filed</mat-label>
+              <mat-select name="field1{{idx}}" [(ngModel)]='item.column1_name' required>
+                <!-- <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "exp")' [value]='sSchema.field'> -->
+                <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
+                  {{ sSchema.field }} </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="42">
+              <mat-label>Select Operator</mat-label>
+              <mat-select name="operator2{{idx}}" [(ngModel)]='item.operator'
+                (selectionChange)="showOptions(item.operator, idx, $event)" required>
+                <mat-option value="=">= </mat-option>
+                <mat-option value="!=">!=</mat-option>
+                <mat-option value=">=">>=</mat-option>
+                <mat-option value='<='>
+                  <=</mat-option> <mat-option value=">">>
+                </mat-option>
+                <mat-option value="<">
+                  <</mat-option> <mat-option value="IS NULL">NULL
+                </mat-option>
+                <mat-option value="IS NOT NULL">NOT NULL</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <div fxFlex="6" *ngIf="idx == 0"></div>
+            <mat-icon class="remove-icon" fxFlex="6" color="warn" *ngIf="idx > 0" (click)="removeFilter(idx,'exp')"
+              matTooltip="Remove exp" matTooltip="Add Regex">
+              highlight_off
+            </mat-icon>
+          </div>
+
+          <!-- <mat-form-field >
                   <mat-label>Select Type</mat-label>
                   <mat-select name="type{{idx}}" [(ngModel)]="item.with_compare_type" (selectionChange)='setTypeOf(item, idx)' required>
                     <mat-option *ngFor="let type of Types" [value]="type">{{ type }} </mat-option>
                   </mat-select>
                 </mat-form-field> -->
 
-            <mat-radio-group fxLayout="column" name="custom{{idx}}" [(ngModel)]="item.custom">
+            <mat-radio-group fxLayoutAlign="space-evenly center" name="custom{{idx}}" *ngIf="item.showOptions" [(ngModel)]="item.custom">
               <mat-radio-button [value]="true">Custom</mat-radio-button>
               <mat-radio-button [value]="false">Stream</mat-radio-button>
             </mat-radio-group>
 
-          </div>
-
-
-
-          <div *ngIf="item.showOptions && !item.custom">
-            <mat-form-field>
+          <div fxLayoutAlign="space-between center">
+            <mat-form-field fxFlex="89.25" *ngIf="item.showOptions && !item.custom">
               <mat-label>Select Field</mat-label>
               <mat-select name="column2{{idx}}" [(ngModel)]='item.column2_name' required>
                 <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
@@ -83,24 +90,22 @@
             </mat-form-field>
           </div>
 
-          <div *ngIf="item.showOptions && item.custom">
-            <mat-form-field>
+          <div fxLayoutAlign="space-between center" *ngIf="item.showOptions && item.custom">
+            <mat-form-field fxFlex="42">
               <input matInput type="text" name="custom_value{{idx}}" [(ngModel)]='item.custom_value'
                 placeholder="Value.." #Value="ngModel" required>
             </mat-form-field>
-            <mat-form-field>
+
+            <mat-form-field fxFlex="42" >
               <mat-label>Select Value Type</mat-label>
               <mat-select name="value_type{{idx}}" [(ngModel)]='item.value_type' required>
                 <mat-option value="string">String </mat-option>
                 <mat-option value="numeric">Numeric</mat-option>
               </mat-select>
             </mat-form-field>
-          </div>
 
-
-          <div class="column-2" *ngIf="idx > 0">
-            <button type='button' (click)="removeFilter(idx,'exp')"
-              style="font-size: 20px; color: #3cbfe8; cursor:pointer;">- Remove</button>
+            <div fxFlex="6"></div>
+            
           </div>
 
         </div>
@@ -122,6 +127,7 @@
 
     <div *ngIf="stage.stage_attributes.use_regex">
       <div *ngFor='let item of stage.stage_attributes.regex; let idx = index'>
+
         <div class="logical-operator" *ngIf="idx > 0">
           <mat-form-field>
             <mat-label>Select Logical Operator</mat-label>
@@ -156,8 +162,8 @@
           </mat-form-field>
 
           <div fxFlex="6" *ngIf="idx == 0"></div>
-          <mat-icon class="remove-icon" fxFlex="6" color="warn" *ngIf="idx >0" (click)="removeFilter(idx,'regex')" matTooltip="Remove regex"
-            matTooltip="Add Regex">
+          <mat-icon class="remove-icon" fxFlex="6" color="warn" *ngIf="idx > 0" (click)="removeFilter(idx,'regex')"
+            matTooltip="Remove regex" matTooltip="Add Regex">
             highlight_off
           </mat-icon>
 
