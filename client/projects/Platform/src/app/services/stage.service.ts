@@ -4,7 +4,9 @@ import { Observable, of } from 'rxjs';
 import * as GLOBAL from '../../../../../src/app/global';
 import { Socket } from 'ng-socket-io';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class StageService {
     constructor(private socket: Socket, public http: HttpClient ) {
         console.log('Sections Service Initialized...');
