@@ -10,6 +10,65 @@ var Role = require('../models/rolesModel');
 var ObjectId = require("mongoose").Types.ObjectId;
 
 router.get('/', function (req, res) {
+    console.log('in get sections');
+    Section.aggregate([
+        {
+            $lookup:
+            {
+                from: "resources",
+                localField: "resource_id",
+                foreignField: "_id",
+                as: "resource"
+            }
+        }
+    ]).exec(function(err, results){
+        res.send({status:true,msg:'Sections found',data:results});
+    });
+    /* Role.findOne({_id:req.user.role},function(err,role) {
+        if (role.title == "Super Admin"){
+            Section.aggregate([
+                {
+                    $lookup:
+                    {
+                        from: "resources",
+                        localField: "resource_id",
+                        foreignField: "_id",
+                        as: "resource"
+                    }
+                }
+            ]).exec(function(err, results){
+                res.send({status:true,msg:'Sections found',data:results});
+            });
+        }
+        else{
+            sections1 = role["pipelinePermissions"].map(function(a){return new ObjectId(a.id)});
+            sections2 = role["dashboardPermissions"].map(function(a){return new ObjectId(a.id)});
+            sections = sections1.concat(sections2);
+            console.log(sections);
+            Section.aggregate([
+                {
+                    "$match": { "_id": {$in: sections}}
+                },
+                {
+                    $lookup:
+                    {
+                        from: "resources",
+                        localField: "resource_id",
+                        foreignField: "_id",
+                        as: "resource"
+                    }
+                }
+
+            ]).exec(function(err, results){
+                res.send({status:true,msg:'Sections found',data:results});
+            });
+        }
+
+    }); */
+
+});
+
+/* router.get('/', function (req, res) {
     Role.findOne({_id:req.user.role},function(err,role) {
         if (role.title == "Super Admin"){
             Section.aggregate([
@@ -132,6 +191,6 @@ router.post('/', function (req, res) {
 
 
 
-});
+}); */
 
 module.exports = router;

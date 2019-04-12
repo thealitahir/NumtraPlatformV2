@@ -10,7 +10,11 @@ import { FilterComponent } from './stages/transformation/filter/filter.component
 import { AuthGuard } from '../../../../src/app/guards/index';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
+import { AddStageComponent } from './stages/add-stage/add-stage.component';
+import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
+import { ShowStageComponent } from './stages/show-stage/show-stage.component';
 
+import { from } from 'rxjs';
 const APP_ROUTES: Routes = [
   { path: 'platform/dbfs', component: DbfsComponent, canActivate: [AuthGuard] },
   { path: 'platform/max', component: MaxComponent },
@@ -21,7 +25,10 @@ const APP_ROUTES: Routes = [
   { path: 'platform/dashboard', component: DashboardComponent },
   { path: 'platform/canvas', component: PipelineDesignerComponent },
   { path: 'platform/roles', component: RolesComponent, canActivate: [AuthGuard] },
-  { path: 'platform', redirectTo: 'platform/dashboard', canActivate: [AuthGuard] },
+  { path: 'platform/stages/new', component: AddStageComponent },
+  { path: 'platform/stages/:id', component: EditStageComponent },
+  { path: 'platform/stages', component: ShowStageComponent },
+  { path: 'platform', redirectTo: 'platform/dashboard', canActivate: [AuthGuard] }
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

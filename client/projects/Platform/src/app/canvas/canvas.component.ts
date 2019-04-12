@@ -139,12 +139,13 @@ export class CanvasComponent implements OnInit {
     }); 
 
     //called when a link is deleted
-    this.graph.on('remove', function(cell, collection, opt) {
-      this.canvasService.removeLink(cell.attributes.source.id,cell.attributes.target.id);
+    this.graph.on('remove', (cell, collection, opt) => {
       if (cell.isLink()) {
         console.log("delete link");
         console.log(cell);
-        
+        this.canvasService.removeLink(cell.attributes.source.id,cell.attributes.target.id).subscribe(data =>{
+          
+        });
         // a link was removed  (cell.id contains the ID of the removed link)
       }
       else if(!cell.isLink()){
@@ -152,7 +153,7 @@ export class CanvasComponent implements OnInit {
         console.log(cell);
       }
    });
-   this.graph.on('add', function(cell, collection, opt) {
+   this.graph.on('add', (cell, collection, opt) =>{
     /* if (cell.isLink()) {
       console.log("link added");
       console.log(cell);
