@@ -3,11 +3,7 @@
   <div mat-dialog-content>
     <div class="content-container" fxLayout="column" fxLayoutAlign="stretch" fxFlex="auto">
       <ace matInput name="querytext" [(value)]="querytext" [(ngModel)]="querytext" required fxFlex="auto"
-      ngDefaultControl  [config]="config" ></ace>
-
-      <!-- <ace matInput name=querytext [(ngModel)]="querytext" required fxFlex="auto" [config]="config" [disabled]="disabled"
-               [(value)]="querytext">
-              </ace> -->
+      [config]="config" ></ace>
     </div>
   </div>
   <div class="modal-actions">

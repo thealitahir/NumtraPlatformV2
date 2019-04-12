@@ -19,7 +19,8 @@ import { AceComponent, AceDirective, AceConfigInterface } from 'ngx-ace-wrapper'
     }
   ]
 })
-export class EditorComponent  implements ControlValueAccessor {
+//export class EditorComponent  implements ControlValueAccessor {
+export class EditorComponent {
   public config: AceConfigInterface = {
     mode: 'sql',
     theme: 'github',
@@ -33,17 +34,17 @@ export class EditorComponent  implements ControlValueAccessor {
       this.querytext = data.querytext;
     }
 
-    writeValue(value: any) {
-      if (value !== undefined) {
-        this.querytext = value;
-      }
-    }
-    propagateChange = (_: any) => {};
-    registerOnChange(fn) {
-      this.propagateChange = fn;
-    }
+    // writeValue(value: any) {
+    //   if (value !== undefined) {
+    //     this.querytext = value;
+    //   }
+    // }
+    // propagateChange = (_: any) => {};
+    // registerOnChange(fn) {
+    //   this.propagateChange = fn;
+    // }
 
-    registerOnTouched() {}
+    // registerOnTouched() {}
 
 addQuery(form: NgForm) {
   const data = this.querytext;

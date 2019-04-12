@@ -1,0 +1,17 @@
+<div class="canvas-right-col">
+  <h3>Query Transformation</h3>
+
+  <form #queryForm="ngForm" fxLayout="column">
+    <mat-form-field>
+      <textarea matInput type="text" name="query" placeholder="Query" #dbfs_domain="ngModel"
+        [(ngModel)]='stage.stage_attributes.query' required style="min-height: 100px"></textarea>
+    </mat-form-field>
+    <button mat-stroked-button color="accent" type="button" (click)="expandEditor()">Expand Editor</button>
+    <br />
+
+    <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="space-between center">
+      <button mat-stroked-button color="accent" (click)="saveQuery(queryForm)" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+

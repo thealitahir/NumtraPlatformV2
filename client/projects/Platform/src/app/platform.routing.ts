@@ -6,6 +6,7 @@ import { RolesComponent } from './roles/roles.component';
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { MinComponent } from './stages/transformation/min/min.component';
+import { QueryComponent } from './stages/transformation/query/query.component';
 import { FilterComponent } from './stages/transformation/filter/filter.component';
 import { AuthGuard } from '../../../../src/app/guards/index';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
@@ -20,6 +21,7 @@ const APP_ROUTES: Routes = [
   { path: 'platform/max', component: MaxComponent },
   { path: 'platform/min', component: MinComponent },
   { path: 'platform/filter', component: FilterComponent },
+  { path: 'platform/query', component: QueryComponent },
   { path: 'platform/cosmosDB', component: CosmosDBComponent },
   { path: 'platform/dataExplorer', component: DataExplorerComponent },
   { path: 'platform/dashboard', component: DashboardComponent },

@@ -55,6 +55,7 @@ import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { MinComponent } from './stages/transformation/min/min.component';
+import { QueryComponent } from './stages/transformation/query/query.component';
 import { FilterComponent } from './stages/transformation/filter/filter.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 import { EditorComponent } from './stages/sources/editor-dialog/editor-dialog.component';
@@ -86,6 +87,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     CosmosDBComponent,
     MaxComponent,
     MinComponent,
+    QueryComponent,
     FilterComponent,
     DiscoverDataComponent,
     EditorComponent,
