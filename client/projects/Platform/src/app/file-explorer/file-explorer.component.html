@@ -1,25 +1,14 @@
 
-<div style="
-    position: fixed;
-    z-index: 10;
-    right: 345px;
-    top: 96px;
-    bottom: 5px;
-    left: 600px;
-    overflow: auto;
-    background: #fff;
-    box-shadow: 0 0 5px rgba(0,0,0, .25);
-    padding: 10px 15px;
-">
-  <h3></h3>
+<div class="file-explorer">
+  <h3>Select a File</h3>
   <div class="row">
     <div class="main-folders">
         <tree-root #tree class="reverse" [options]="options" [nodes]="nodes"></tree-root>
     </div>
   </div>
 
-  <div style="text-align: right;">
-    <button mat-stroked-button color="accent" type="button" (click)="getSelectedTreeNodes(tree)">Done</button>
+  <div class="file-explorer-action">
+    <button mat-stroked-button color="accent" type="button" (click)="getSelectedTreeNodes(tree)">Ok</button>
   </div>
 
 </div>
