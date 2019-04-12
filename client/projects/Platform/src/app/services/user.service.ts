@@ -4,7 +4,9 @@ import { Observable, of } from 'rxjs';
 import { Socket } from 'ng-socket-io';
 import * as GLOBAL from '../../../../../src/app/global';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UsersService {
   constructor(public http: HttpClient, private socket: Socket ) {
     console.log('User Service Initialized...');

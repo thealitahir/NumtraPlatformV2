@@ -3,7 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import * as GLOBAL from '../../../../../src/app/global';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CosmosdbService {
     constructor(public http: HttpClient ) {
         console.log('Dbfs Service Initialized...');
