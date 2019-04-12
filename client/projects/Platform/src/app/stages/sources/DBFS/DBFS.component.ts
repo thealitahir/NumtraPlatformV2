@@ -29,6 +29,7 @@ export class DbfsComponent implements OnInit{
   stageSchema: any;
   stagename: any = 'DBFS';
   stagetype: any = 'source';
+  fileExplorerSource:any;
   error: any;
   constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
     this.stageService.getStageSchema(this.stagename,this.stagetype).subscribe(schemadata => {
@@ -99,10 +100,13 @@ export class DbfsComponent implements OnInit{
   }
   chooseFile(form: NgForm){
     if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
-      this.fileExplorer = {token: form.value.dbfstoken , domain: form.value.dbfsdomain};
-      console.log(this.fileExplorer);
-      this.fileExplorerView = 1;
+      this.fileExplorer = [{token: form.value.dbfstoken , domain: form.value.dbfsdomain}];
+      this.fileExplorerView = 1;      
     }
+  }
+  getSelectedFiles(event){
+    this.fileExplorerSource = event;
+    this.fileExplorerView = 0;
   }
   openDialog(sampledata): void {
     const dialogRef = this.dialog.open(DiscoverDataComponent, {

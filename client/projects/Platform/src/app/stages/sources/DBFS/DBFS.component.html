@@ -60,5 +60,6 @@
 </div>
 
 <div *ngIf="fileExplorerView === 1">
-  <app-file-explorer></app-file-explorer>
+  {{fileExplorer}}
+  <app-file-explorer [fileExplorer]='fileExplorer' (selectedNodesEvent)='getSelectedFiles($event)'></app-file-explorer>
 </div>

@@ -49,31 +49,34 @@ import { RolesComponent } from './roles/roles.component';
 import { SubNavComponent } from './sub-nav/sub-nav.component';
 import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } from './filter.pipe';
 
+import { AddStageComponent } from './stages/add-stage/add-stage.component';
+import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
+import { ShowStageComponent } from './stages/show-stage/show-stage.component';
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
+import { MinComponent } from './stages/transformation/min/min.component';
+import { FilterComponent } from './stages/transformation/filter/filter.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 import { AddProjectComponent } from './projects/addProject-dialog/add-project-dialog.component';
 import { ApplicationComponent } from './projects/application-dialog/application-dialog.component';
 import { FileReadComponent } from './projects/fileRead-dialog/fileRead-dialog.component';
-import { UsersService } from './services/user.service';
-import { PlatRolesService } from './services/platroles.service';
-import { ResourcesService } from './services/resources.service';
-import { SectionsService } from './services/sections.service';
-import { ComponentsService } from './services/components.service';
-import { StageService } from './services/stage.service';
-import { ProjectService } from './services/project.service';
-import { ApplicationService } from './services/application.service';
+// import { UsersService } from './services/user.service';
+// import { PlatRolesService } from './services/platroles.service';
+// import { ResourcesService } from './services/resources.service';
+// import { SectionsService } from './services/sections.service';
+// import { ComponentsService } from './services/components.service';
+// import { StageService } from './services/stage.service';
+// import { ProjectService } from './services/project.service';
+// import { ApplicationService } from './services/application.service';
 
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 
-import { DbfsService } from './services/dbfs.service';
-import { CosmosdbService } from './services/cosmosdb.service';
+// import { DbfsService } from './services/dbfs.service';
+// import { CosmosdbService } from './services/cosmosdb.service';
 import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { FileExplorerComponent } from './file-explorer/file-explorer.component';
-import { AddStageComponent } from './stages/add-stage/add-stage.component';
-import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {
   tabSize: 2
@@ -88,9 +91,14 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     SubNavComponent,
     RolesComponent,
 
+    AddStageComponent,
+    EditStageComponent,
+    ShowStageComponent,
     DbfsComponent,
     CosmosDBComponent,
     MaxComponent,
+    MinComponent,
+    FilterComponent,
     DiscoverDataComponent,
     AddProjectComponent,
     ApplicationComponent,
@@ -102,9 +110,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     PipelineDesignerComponent,
     DbfsSinkComponent,
     DataExplorerComponent,
-    FileExplorerComponent,
-    AddStageComponent,
-    EditStageComponent
+    FileExplorerComponent
 
   ],
   imports: [
@@ -112,7 +118,6 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     FormsModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    routing,
     MatMenuModule,
     MatToolbarModule,
     MatButtonModule,
@@ -143,7 +148,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     HttpModule,
     AceModule,
     A11yModule,
-    TreeModule.forRoot()
+    TreeModule.forRoot(),
+    routing
   ],
   entryComponents: [ DiscoverDataComponent, AddProjectComponent, ApplicationComponent, FileReadComponent],
   providers: [
@@ -161,7 +167,7 @@ export class PlatformSharedModule{
   static forRoot(): ModuleWithProviders {
     return {
       ngModule: AppModule,
-      providers: [CosmosdbService, PlatRolesService, StageService, UsersService, ResourcesService, SectionsService, ComponentsService, DbfsService, ProjectService, ApplicationService ]
+      providers: []
     }
   }
 }
