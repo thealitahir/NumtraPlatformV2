@@ -129,17 +129,8 @@
   box-shadow: 0 0 5px rgba(0,0,0, .25);
 }
 
-.canvas-right-col-broad {
-  position: absolute;
-  z-index: 10;
-  right: 54px;
-  top: 96px;
-  bottom: 5px;
-  width: 350px;
-  overflow: auto;
-  background: #ffffff;
-  padding: 20px;
-  box-shadow: 0 0 5px rgba(0,0,0, .25);
+.canvas-right-col.width-md {
+  width: 400px;
 }
 
 .canvas-right-col h3{
