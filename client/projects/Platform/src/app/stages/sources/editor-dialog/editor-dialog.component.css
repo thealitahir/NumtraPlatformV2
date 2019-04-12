@@ -1,0 +1,24 @@
+h3{
+  font-size: 14px;
+  margin-bottom: 5px;
+  text-align: center;
+}
+.modal-actions {
+  text-align: right;
+  margin-top: 10px;
+}
+.content-container {
+  overflow: visible;
+}
+
+.action-container,
+.content-container {
+  position: relative;
+
+  height: 300px;
+  min-height: 0;
+  margin: 8px 16px;
+  border-radius: 4px;
+
+  background-color: #fff;
+}

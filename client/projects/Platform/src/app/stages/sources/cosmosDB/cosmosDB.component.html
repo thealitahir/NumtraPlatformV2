@@ -24,9 +24,10 @@
       </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="text" name="cosmosquery" placeholder="Query" #dbfs_domain="ngModel"
-        [(ngModel)]='stage.stage_attributes.query' required>
+      <textarea matInput type="text" name="cosmosquery" placeholder="Query" #dbfs_domain="ngModel"
+        [(ngModel)]='stage.stage_attributes.query' required style="min-height: 100px"></textarea>
     </mat-form-field>
+    <button mat-stroked-button color="accent" type="button" (click)="expandEditor()">Expand Editor</button>
     <br />
 
     <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="space-between center">

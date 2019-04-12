@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { CosmosdbService } from '../../../services/cosmosdb.service';
 import { StageService } from '../../../services/stage.service';
 import { DiscoverDataComponent } from '../discover-data-dialog/discover-data-dialog.component';
+import { EditorComponent } from '../editor-dialog/editor-dialog.component';
 import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
 import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
@@ -118,6 +119,24 @@ export class CosmosDBComponent implements OnInit{
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
       duration: 2000
+    });
+  }
+
+  expandEditor() {
+    const dialogRef = this.dialog.open(EditorComponent, {
+      width: '900px',
+      disableClose: true,
+      data: {
+        querytext: this.stage.stage_attributes.query,
+      }
+    });
+    dialogRef.afterClosed().subscribe(qresult => {
+      if (!qresult) {
+        console.log('no result');
+      }
+      if (qresult !== '' && qresult !== null ) {
+        this.stage.stage_attributes.query = qresult.data;
+      }
     });
   }
 

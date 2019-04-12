@@ -48,7 +48,6 @@ import { CanvasComponent } from './canvas/canvas.component';
 import { RolesComponent } from './roles/roles.component';
 import { SubNavComponent } from './sub-nav/sub-nav.component';
 import { ProjectFilterPipe, ApplicationFilterPipe, ModelCategoryFilterPipe } from './filter.pipe';
-
 import { AddStageComponent } from './stages/add-stage/add-stage.component';
 import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
 import { ShowStageComponent } from './stages/show-stage/show-stage.component';
@@ -58,22 +57,11 @@ import { MaxComponent } from './stages/transformation/max/max.component';
 import { MinComponent } from './stages/transformation/min/min.component';
 import { FilterComponent } from './stages/transformation/filter/filter.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
+import { EditorComponent } from './stages/sources/editor-dialog/editor-dialog.component';
 import { AddProjectComponent } from './projects/addProject-dialog/add-project-dialog.component';
 import { ApplicationComponent } from './projects/application-dialog/application-dialog.component';
 import { FileReadComponent } from './projects/fileRead-dialog/fileRead-dialog.component';
-// import { UsersService } from './services/user.service';
-// import { PlatRolesService } from './services/platroles.service';
-// import { ResourcesService } from './services/resources.service';
-// import { SectionsService } from './services/sections.service';
-// import { ComponentsService } from './services/components.service';
-// import { StageService } from './services/stage.service';
-// import { ProjectService } from './services/project.service';
-// import { ApplicationService } from './services/application.service';
-
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
-
-// import { DbfsService } from './services/dbfs.service';
-// import { CosmosdbService } from './services/cosmosdb.service';
 import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { FileExplorerComponent } from './file-explorer/file-explorer.component';
@@ -100,6 +88,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     MinComponent,
     FilterComponent,
     DiscoverDataComponent,
+    EditorComponent,
     AddProjectComponent,
     ApplicationComponent,
     FileReadComponent,
@@ -151,7 +140,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     TreeModule.forRoot(),
     routing
   ],
-  entryComponents: [ DiscoverDataComponent, AddProjectComponent, ApplicationComponent, FileReadComponent],
+  entryComponents: [ DiscoverDataComponent, EditorComponent, AddProjectComponent, ApplicationComponent, FileReadComponent],
   providers: [
     {
       provide: ACE_CONFIG,
