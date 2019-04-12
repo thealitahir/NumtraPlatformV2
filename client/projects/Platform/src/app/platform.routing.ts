@@ -23,7 +23,7 @@ const APP_ROUTES: Routes = [
   { path: 'platform/cosmosDB', component: CosmosDBComponent },
   { path: 'platform/dataExplorer', component: DataExplorerComponent },
   { path: 'platform/dashboard', component: DashboardComponent },
-  { path: 'platform/canvas', component: PipelineDesignerComponent },
+  { path: 'platform/canvas/:id', component: PipelineDesignerComponent },
   { path: 'platform/roles', component: RolesComponent, canActivate: [AuthGuard] },
   { path: 'platform/stages/new', component: AddStageComponent },
   { path: 'platform/stages/:id', component: EditStageComponent },

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute,Router } from '@angular/router';
 
 @Component({
   selector: 'app-pipeline-designer',
@@ -11,10 +12,13 @@ export class PipelineDesignerComponent implements OnInit {
   showSink: boolean = false;
   showTransformation: boolean = false;
   showCosmos: boolean = false;
-  constructor() { }
+  pipline_id: string =''
+  constructor(public router: Router, public route:ActivatedRoute) { }
 
   ngOnInit() {
     console.log("PipelineDesignerComponent");
+    this.pipline_id = this.route.snapshot.paramMap.get('id');
+    console.log(this.pipline_id);
   }
 
   stageClicked(value){

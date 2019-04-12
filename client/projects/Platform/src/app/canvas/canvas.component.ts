@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, ElementRef, OnInit, EventEmitter, Output, Input } from '@angular/core';
+
 import * as jQuery from 'jquery';
 
 import * as joint from '../../rappid/library/js/rappid';
@@ -26,6 +27,7 @@ export class CanvasComponent implements OnInit {
   data: any;
 
   @Output() onSearch: EventEmitter<any> = new EventEmitter();
+  @Input() columnsList:any;
   private rappid: any;
   paper: any;
   selection: any;
@@ -36,13 +38,14 @@ export class CanvasComponent implements OnInit {
   constructor(
     private element: ElementRef,
     public canvasService: CanvasService,
-    public stageService: StageService,
+    public stageService: StageService
     ) {}
 
   ngOnInit() {
+    console.log("in canvas component");
     this.rappid = new RappidService(
       this.element.nativeElement,
-      new StencilService(),
+      new StencilService(this.stageService),
       new ToolbarService(),
       new InspectorService(),
       new HaloService(),
@@ -56,21 +59,17 @@ export class CanvasComponent implements OnInit {
     this.graph = this.rappid.getGraph();
     var link = new joint.shapes.standard.Link();
     this.canvasService.getCanvasModel().subscribe(data =>{
-      console.log("model from db");
-      console.log(data);
       var stages = data.data;
       var stagesArray = [];
       var linksArray = []
       //drawing all stages
       for(var i = 0; i < stages.length; i++){
         var stage = new joint.shapes.standard.Image();
-        console.log(stage.id);
         stage.attr(stages[i].shape_attributes);
         stage.position(stages[i].position.x, stages[i].position.y);
         stage.resize(stages[i].shape_size.height, stages[i].shape_size.width);
         stage.id = stages[i]._id;
         stage.attributes.id = stages[i]._id;
-        console.log(stage.id);
         stage.addTo(this.graph);
         stagesArray.push(stage);
         stage = new joint.shapes.standard.Image();
@@ -89,12 +88,7 @@ export class CanvasComponent implements OnInit {
           link = new joint.shapes.standard.Link();
         }
       }
-      console.log("total links");
-      console.log(linksArray);
     });
-    console.log("this is graph");
-    console.log(this.graph);
-
     //link interactions
     this.paper.on('link:mouseenter', function(linkView) {
       var tool = [new joint.linkTools.Remove({})]; 
