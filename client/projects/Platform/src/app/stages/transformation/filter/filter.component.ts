@@ -46,14 +46,13 @@ export class FilterComponent {
     if (type === 'exp') {
       this.stage.stage_attributes.expression.push(
         {
-          to_compare_field_name: '',
-          to_compare_field_dataType: '',
+          column1_name: '',
           operator: '',
-          with_compare_type: '',
-          with_compare_field_name: '',
-          with_compare_field_type: '',
-          activeCustom: 'custom',
-          logical_operator: '',
+          column2_name: '',
+          custom: true,
+          custom_value: '',
+          value_type: '',
+          combinator: '',
           showOptions: true
         }
       );
@@ -68,18 +67,18 @@ export class FilterComponent {
     }
   }
 
-  setDataType(selected_field, index, type) {
-    if (type === 'exp') {
-      if (selected_field) {
-          this.stage.stage_attributes.expression[index].to_compare_field_dataType = selected_field.type;
-      }
-    }
-    if (type === 'regex') {
-      if (selected_field) {
-          this.stage.stage_attributes.regex[index].to_compare_field_dataType = selected_field.type;
-      }
-    }
-  }
+  // setDataType(selected_field, index, type) {
+  //   if (type === 'exp') {
+  //     if (selected_field) {
+  //         this.stage.stage_attributes.expression[index].to_compare_field_dataType = selected_field.type;
+  //     }
+  //   }
+  //   if (type === 'regex') {
+  //     if (selected_field) {
+  //         this.stage.stage_attributes.regex[index].to_compare_field_dataType = selected_field.type;
+  //     }
+  //   }
+  // }
 
   showOptions(operator, index) {
     if(operator === 'IS NULL' || operator === 'IS NOT NULL'){
@@ -89,12 +88,12 @@ export class FilterComponent {
     }
   }
 
-  setTypeOf(item, index) {
-    if (item.with_compare_type === 'stream') { this.stage.stage_attributes.expression[index].activeCustom = 'stream'; }
-    if (item.with_compare_type === 'custom') {this.stage.stage_attributes.expression[index].activeCustom = 'custom'; }
-    if (item.with_compare_type === 'parameter') {this.stage.stage_attributes.expression[index].activeCustom = 'parameter'; }
-    item.with_compare_field_name = '';
-  }
+  // setTypeOf(item, index) {
+  //   if (item.with_compare_type === 'stream') { this.stage.stage_attributes.expression[index].activeCustom = 'stream'; }
+  //   if (item.with_compare_type === 'custom') {this.stage.stage_attributes.expression[index].activeCustom = 'custom'; }
+  //   if (item.with_compare_type === 'parameter') {this.stage.stage_attributes.expression[index].activeCustom = 'parameter'; }
+  //   item.with_compare_field_name = '';
+  // }
 
   setStreamDataType(stream_selected_field, index) {
     if(stream_selected_field) {
@@ -115,15 +114,14 @@ export class FilterComponent {
   addRemoveExp(value) {
     if (value) {
         this.stage.stage_attributes.expression.push({
-            to_compare_field_name: '',
-            to_compare_field_dataType: '',
-            operator: '',
-            with_compare_type: '',
-            with_compare_field_name: '',
-            with_compare_field_type: '',
-            activeCustom: 'custom',
-            logical_operator: '',
-            showOptions: true
+          column1_name: '',
+          operator: '',
+          column2_name: '',
+          custom: true,
+          custom_value: '',
+          value_type: '',
+          combinator: '',
+          showOptions: true
         });
     } else {
         this.stage.stage_attributes.expression = [];
