@@ -1,14 +1,14 @@
 
 <div class="file-explorer">
-  <h3>Select a file</h3>
+  <h3>Select a File</h3>
   <div class="row">
     <div class="main-folders">
         <tree-root #tree class="reverse" [options]="options" [nodes]="nodes"></tree-root>
     </div>
   </div>
 
-  <div style="text-align: right;">
-    <button mat-stroked-button color="accent" type="button" (click)="getSelectedTreeNodes(tree,tree.treeModel.selectedLeafNodeIds)">Done</button>
+  <div class="file-explorer-action">
+    <button mat-stroked-button color="accent" type="button" (click)="getSelectedTreeNodes(tree,tree.treeModel.selectedLeafNodeIds)">Ok</button>
   </div>
 
 </div>

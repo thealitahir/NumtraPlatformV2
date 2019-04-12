@@ -1,5 +1,4 @@
-
-.file-explorer{
+.file-explorer {
   position: fixed;
     z-index: 10;
     right: 345px;
@@ -11,23 +10,17 @@
     box-shadow: 0 0 5px rgba(0,0,0, .25);
     padding: 20px 15px;
 }
-.file-explorer h3{
+
+.file-explorer h3 {
   margin-bottom: 10px;
 }
+
 .main-folders {
     width: 95%;
     margin: 5px;
     float: left;
 }
 
-.selected-folders-files {
-    width: 24%;
-    margin: 5px;
-    float: left;
- }
- ul {
-   margin: 10px;
- }
- ul li {
-    margin: 20px;
-  }
+.file-explorer-action {
+  text-align: right;
+}
