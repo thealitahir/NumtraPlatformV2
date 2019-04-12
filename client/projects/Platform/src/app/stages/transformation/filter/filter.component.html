@@ -14,7 +14,7 @@
           <div *ngFor="let item of stage.stage_attributes.expression; let idx = index">
             <mat-form-field *ngIf="idx > 0">
               <mat-label>Select Logical Operator</mat-label>
-              <mat-select name="operator1{{idx}}" [(ngModel)]='item.logical_operator' required>
+              <mat-select name="combinator{{idx}}" [(ngModel)]='item.combinator' required>
                 <mat-option *ngFor='let lop of logicalOpArray' [value]='lop'>{{ lop }} </mat-option>
               </mat-select>
             </mat-form-field>
@@ -22,8 +22,9 @@
             <div >
               <mat-form-field>
                 <mat-label>Select Filed</mat-label>
-                <mat-select name="field1{{idx}}" [(ngModel)]='item.to_compare_field_name' required>
-                  <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "exp")' [value]='sSchema.field'>
+                <mat-select name="field1{{idx}}" [(ngModel)]='item.column1_name' required>
+                  <!-- <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "exp")' [value]='sSchema.field'> -->
+                  <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
                     {{ sSchema.field }} </mat-option>
                 </mat-select>
               </mat-form-field>
@@ -31,7 +32,6 @@
               <mat-form-field>
                 <mat-label>Select Operator</mat-label>
                 <mat-select name="operator2{{idx}}" [(ngModel)]='item.operator' (selectionChange)="showOptions(item.operator, idx, $event)" required>
-                  <mat-option value="" >Select Operator</mat-option>
                   <mat-option value="=" >= </mat-option>
                   <mat-option value="!=" >!=</mat-option>
                   <mat-option value=">=" >>=</mat-option>
@@ -44,51 +44,51 @@
               </mat-form-field>
 
               <div *ngIf="item.showOptions" >
-                <mat-form-field >
+                <!-- <mat-form-field >
                   <mat-label>Select Type</mat-label>
                   <mat-select name="type{{idx}}" [(ngModel)]="item.with_compare_type" (selectionChange)='setTypeOf(item, idx)' required>
                     <mat-option *ngFor="let type of Types" [value]="type">{{ type }} </mat-option>
                   </mat-select>
-                </mat-form-field>
+                </mat-form-field> -->
+
+                <mat-radio-group fxLayout="column" name="custom{{idx}}"
+                [(ngModel)]="item.custom">
+                <mat-radio-button [value]="true">Custom</mat-radio-button>
+                <mat-radio-button [value]="false">Stream</mat-radio-button>
+              </mat-radio-group>
+
               </div>
 
-              <div *ngIf="item.showOptions && item.activeCustom=='stream'" >
+
+
+              <div *ngIf="item.showOptions && !item.custom" >
                 <mat-form-field>
                   <mat-label>Select Field</mat-label>
-                  <mat-select name="field2{{idx}}" [(ngModel)]='item.with_compare_field_name' required>
-                    <mat-option *ngFor='let sSchema of stageSchema' (click)='setStreamDataType(sSchema, idx)' [value]='sSchema.field'>
+                  <mat-select name="column2{{idx}}" [(ngModel)]='item.column2_name' required>
+                    <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
                       {{ sSchema.field }} </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
 
-              <div *ngIf="item.showOptions && item.activeCustom=='custom'" >
+              <div *ngIf="item.showOptions && item.custom" >
                 <mat-form-field >
-                  <input matInput type="text" name="value{{idx}}" [(ngModel)]='item.with_compare_field_name'
+                  <input matInput type="text" name="custom_value{{idx}}" [(ngModel)]='item.custom_value'
                     placeholder="Value.." #Value="ngModel" required>
+                </mat-form-field>
+                <mat-form-field >
+                    <mat-label>Select Value Type</mat-label>
+                    <mat-select name="value_type{{idx}}" [(ngModel)]='item.value_type'  required>
+                      <mat-option value="string" >String </mat-option>
+                      <mat-option value="numeric" >Numeric</mat-option>
+                    </mat-select>
                 </mat-form-field>
               </div>
 
-              <div *ngIf="item.showOptions && item.activeCustom=='parameter'" >
-                  <!-- <select name="parameter" class="form-control" ng-model="item.with_compare_field_name" required>
-                      <option value="">Select parameter</option>
-                      <option ng-selected="item.with_compare_field_name == key" ng-repeat="(key,data) in processParameters.parameters" value="{{key}}">{{key}}</option>
-                  </select> -->
-
-                  <mat-form-field>
-                      <mat-label>Select Parameter</mat-label>
-                    <mat-select name="parameter{{idx}}" [(ngModel)]='item.with_compare_field_name' required>
-                      <!-- <mat-option *ngFor='let sSchema of stageSchema' (click)='setStreamDataType(sSchema, idx)' [value]='sSchema.field'>
-                        {{ sSchema.field }} </mat-option> -->
-                    </mat-select>
-                  </mat-form-field>
-              </div>
 
               <div class="column-2" *ngIf="idx > 0">
                 <button type='button'  (click)="removeFilter(idx,'exp')" style="font-size: 20px; color: #3cbfe8; cursor:pointer;">- Remove</button>
               </div>
-
-              <span *ngIf="item.showOptions && item.activeCustom=='parameter' " >Please register parameters for this pipeline</span>
 
             </div>
           </div>
@@ -120,7 +120,7 @@
                   <mat-form-field>
                     <mat-label>Select Filed</mat-label>
                     <mat-select name="field{{idx}}" [(ngModel)]='item.to_compare_field_name' required>
-                      <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "regex")' [value]='sSchema.field'>
+                      <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
                         {{ sSchema.field }} </mat-option>
                     </mat-select>
                   </mat-form-field>
