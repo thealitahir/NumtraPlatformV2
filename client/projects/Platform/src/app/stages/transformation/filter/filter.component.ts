@@ -28,7 +28,7 @@ export class FilterComponent {
         use_expression : false
     },
   };
-  stagename: any = 'filter';
+  stagename: any = 'Filter';
   stagetype: any = 'transformation';
   stageSchema: any;
 

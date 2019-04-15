@@ -67,7 +67,7 @@ router.post('/removeLink',function(req,res){
 });
 
 router.get('/stageSchema/:stageName/:stageType',function(req,res){
-  StageVersionModel.findOne({name: req.params.stageName, stage_type:req.params.stageType}, function (err, stageschema) {
+  StageVersionModel.findOne({sub_type: req.params.stageName, stage_type:req.params.stageType}, function (err, stageschema) {
     if (!err) {
       res.send({status: true, msg: 'get stage schema successfully.', data: stageschema});
     } 
@@ -103,7 +103,7 @@ router.post('/executePipeline',function(req,res,next){
 
 router.post('/saveCanvasModel',function(req,res){
   console.log(req.body);
-  StageVersionModel.findOneAndUpdate({name:req.body.attributes.label.text,
+  StageVersionModel.findOneAndUpdate({sub_type:req.body.attributes.label.text,
     stage_type:req.body.attributes.label.stage_type}, 
     { $set:
       {

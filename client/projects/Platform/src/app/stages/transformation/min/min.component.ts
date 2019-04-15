@@ -17,7 +17,7 @@ export class MinComponent {
       attributes: {topResults: '' , dataType: '' , field: '' }
     }
   };
-  stagename: any = 'bottom';
+  stagename: any = 'Bottom';
   stagetype: any = 'transformation';
   stageSchema: any;
   attributes: any = {};

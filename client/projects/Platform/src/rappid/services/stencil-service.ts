@@ -166,7 +166,11 @@ export class StencilService {
             }
           }
         },
-        { name: 'filling', label: 'Filling' },
+        { name: 'filling', label: 'Query', type:'operation',stage_type:'transformation',
+          stage_attributes:{
+              "query":""
+          }
+        },
         { name: 'filter', label: 'Filter', type:'operation', stage_type:'transformation',
           stage_attributes:{
             "user_comment" : "", 

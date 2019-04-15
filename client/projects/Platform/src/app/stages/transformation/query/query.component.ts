@@ -17,7 +17,7 @@ export class QueryComponent implements OnInit{
     }
   };
   stageSchema: any;
-  stagename: any = 'query';
+  stagename: any = 'Query';
   stagetype: any = 'transformation';
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService, public dialog: MatDialog) {
