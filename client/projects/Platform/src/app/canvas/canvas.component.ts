@@ -132,6 +132,15 @@ export class CanvasComponent implements OnInit {
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     }); 
 
+    this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
+      if (keyboard.isActive('ctrl meta', evt)) {
+        this.selection.collection.add(elementView.model);
+      }
+      console.log("this element deleted");
+      console.log(elementView);
+      // Select an element if CTRL/Meta key is pressed while the element is clicked.
+    }); 
+
     //called when a link is deleted
     this.graph.on('remove', (cell, collection, opt) => {
       if (cell.isLink()) {
@@ -144,7 +153,9 @@ export class CanvasComponent implements OnInit {
       }
       else if(!cell.isLink()){
         console.log("element deleted");
-        console.log(cell);
+        cell.remove();
+        console.log("graph after deletion");
+        console.log(this.paper);
       }
    });
    this.graph.on('add', (cell, collection, opt) =>{
