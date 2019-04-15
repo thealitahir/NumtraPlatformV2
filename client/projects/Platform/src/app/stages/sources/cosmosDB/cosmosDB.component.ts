@@ -16,6 +16,7 @@ export class CosmosDBComponent implements OnInit{
   fileheader: any;
   data: any ;
   stage: any = {
+    name: '',
     original_schema: [],
     stage_attributes: {
       container_id: '',
@@ -28,14 +29,14 @@ export class CosmosDBComponent implements OnInit{
   fileExplorer:any;
   fileExplorerView:any = 0;
   stageSchema: any;
-  stagename: any = 'Cosmos DB';
+  stage_subtype: any = 'Cosmos DB';
   stagetype: any = 'source';
   error: any;
   dbdata: any;
   head: any;
   fhead: any;
   constructor(public snackBar: MatSnackBar, public cosmosdbService: CosmosdbService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stagename,this.stagetype).subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;
 
@@ -45,6 +46,10 @@ export class CosmosDBComponent implements OnInit{
   ngOnInit(){}
 
   getSchemahenSave(form: NgForm) {
+    if (form.invalid) {
+      this.openSnackBar('Error:', 'Fill all Fields!');
+      return;
+    }
     if (form.value.cosmosdomain !== '' && form.value.cosmoskey !== '' && form.value.query !== '' ) {
       this.error = '';
       this.openSnackBar('Info:', 'Save stage in process, Please wait!');
@@ -77,11 +82,15 @@ export class CosmosDBComponent implements OnInit{
   }
 
   saveDbfs(form) {
+    if (form.invalid) {
+      this.openSnackBar('Error:', 'Fill all Fields!');
+      return;
+    }
      this.data = {formdata: form.value, fileheader: this.fileheader};
-     this.data = {updatedata: { 'original_schema': this.fhead, 'stage_attributes.cosmosdb_domain': form.value.cosmosdomain,
+     this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fhead, 'stage_attributes.cosmosdb_domain': form.value.cosmosdomain,
      'stage_attributes.container_id': form.value.containerid, 'stage_attributes.db_id':  form.value.dbid,
      'stage_attributes.cosmosdb_key': form.value.cosmoskey, 'stage_attributes.query':  form.value.cosmosquery },
-     stageName: this.stagename};
+     sub_type: this.stage_subtype, stage_type: this.stagetype};
      this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

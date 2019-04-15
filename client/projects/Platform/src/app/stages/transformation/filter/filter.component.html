@@ -8,6 +8,10 @@
 </div>
 
   <form #filterForm="ngForm" (submit)="saveFilter(filterForm)" fxLayout="column">
+    <mat-form-field>
+        <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
+          required>
+    </mat-form-field>
 
     <div class="select-block" fxLayout fxLayoutAlign="space-between center">
       <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.use_expression"
@@ -105,7 +109,7 @@
             </mat-form-field>
 
             <div fxFlex="6"></div>
-            
+
           </div>
 
         </div>

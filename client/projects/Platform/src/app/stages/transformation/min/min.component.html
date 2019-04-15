@@ -2,6 +2,10 @@
   <h3>Bottom Transformation</h3>
 
   <form #bottomForm="ngForm" fxLayout="column">
+    <mat-form-field>
+        <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
+          required>
+    </mat-form-field>
 
     <mat-form-field>
         <mat-label>Select Column</mat-label>
