@@ -7,7 +7,6 @@ var PipelineVersion = require("../models/pipelineVersionModel");
 var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage',function(req,res){
-  console.log(stagedata);
     var stagedata = req.body;
     //StageVersionModel.update({"name":stagedata.stageName, "user_id":req.user._id}, {$set: stagedata['updatedata'] }, function (err, sdata) {
     StageVersionModel.update({"sub_type":stagedata.sub_type,"stage_type":stagedata.stage_type ,"user_id":"567a95c8ca676c1d07d5e3e7"}, {$set: stagedata['updatedata'] }, function (err, sdata) {
