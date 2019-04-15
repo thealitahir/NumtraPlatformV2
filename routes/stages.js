@@ -66,6 +66,7 @@ router.post('/removeLink',function(req,res){
   });
 });
 
+
 router.get('/stageSchema/:stage_subtype/:stageType',function(req,res){
   StageVersionModel.findOne({sub_type: req.params.stage_subtype, stage_type:req.params.stageType}, function (err, stageschema) {
     if (!err) {
@@ -103,7 +104,7 @@ router.post('/executePipeline',function(req,res,next){
 
 router.post('/saveCanvasModel',function(req,res){
   console.log(req.body);
-  StageVersionModel.findOneAndUpdate({name:req.body.attributes.label.text,
+  StageVersionModel.findOneAndUpdate({sub_type:req.body.attributes.label.text,
     stage_type:req.body.attributes.label.stage_type}, 
     { $set:
       {

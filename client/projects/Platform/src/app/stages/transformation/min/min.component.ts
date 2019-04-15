@@ -18,6 +18,7 @@ export class MinComponent {
       attributes: {topResults: '' , dataType: '' , field: '' }
     }
   };
+
   stage_subtype: any = 'Bottom';
   stagetype: any = 'transformation';
   stageSchema: any;

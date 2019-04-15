@@ -17,6 +17,7 @@ export class QueryComponent implements OnInit{
     }
   };
   stageSchema: any;
+
   stage_subtype: any = 'Query';
   stagetype: any = 'transformation';
 
