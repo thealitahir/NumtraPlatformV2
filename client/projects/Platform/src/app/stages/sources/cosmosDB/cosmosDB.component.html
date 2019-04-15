@@ -3,7 +3,12 @@
 
   <form #cosmosdbForm="ngForm" fxLayout="column">
     <mat-form-field>
-      <label class="error-message">{{error}}</label>
+        <label class="error-message">{{error}}</label>
+        <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
+          required>
+    </mat-form-field>
+
+    <mat-form-field>
       <input matInput type="text" name="cosmosdomain" placeholder="Cosmos DB Host" #url="ngModel" [(ngModel)]='stage.stage_attributes.cosmosdb_domain'
         required>
     </mat-form-field>

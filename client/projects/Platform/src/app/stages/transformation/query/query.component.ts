@@ -17,11 +17,12 @@ export class QueryComponent implements OnInit{
     }
   };
   stageSchema: any;
-  stagename: any = 'Query';
+
+  stage_subtype: any = 'Query';
   stagetype: any = 'transformation';
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stagename, this.stagetype).subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;
@@ -60,7 +61,7 @@ export class QueryComponent implements OnInit{
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
-    this.data = {updatedata: {'stage_attributes': this.stage.stage_attributes}, stageName: this.stagename};
+    this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, sub_type: this.stage_subtype, stage_type: this.stagetype};
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

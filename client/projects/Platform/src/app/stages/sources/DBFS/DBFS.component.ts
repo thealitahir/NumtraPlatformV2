@@ -15,6 +15,7 @@ export class DbfsComponent implements OnInit{
   fileheader: any;
   data: any ;
   stage: any = {
+    name: '',
     original_schema: [],
     stage_attributes: {
       url: '',
@@ -27,12 +28,12 @@ export class DbfsComponent implements OnInit{
   fileExplorer:any;
   fileExplorerView:any = 0;
   stageSchema: any;
-  stagename: any = 'DBFS';
+  stage_subtype: any = 'DBFS';
   stagetype: any = 'source';
   fileExplorerSource:any;
   error: any;
   constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stagename,this.stagetype).subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;
@@ -42,7 +43,7 @@ export class DbfsComponent implements OnInit{
 
   ngOnInit(){
   }
-  
+
   getSchemahenSave(form: NgForm) {
     if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
@@ -58,20 +59,22 @@ export class DbfsComponent implements OnInit{
         }
       });
 
-      
+
     }
   }
 
   saveDbfs(form) {
-
-
+    if (form.invalid) {
+      this.openSnackBar('Error:', 'Fill all Fields!');
+      return;
+    }
    // this.data = {formdata: form.value, fileheader: this.fileheader};
      console.log('form value');
      console.log(form.value);
-    this.data = {updatedata: { 'original_schema': this.fileheader, 'stage_attributes.url': form.value.url,
+    this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fileheader, 'stage_attributes.url': form.value.url,
      'stage_attributes.source_delimeter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
      'stage_attributes.dbfs_token': form.value.dbfstoken, 'stage_attributes.dbfs_domain':  form.value.dbfsdomain },
-     stageName: 'DBFS'};
+     sub_type: this.stage_subtype, stage_type: this.stagetype};
      console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
       // console.log(data);
@@ -94,18 +97,25 @@ export class DbfsComponent implements OnInit{
         this.openDialog(data);
         this.fileheader = data.fileheader;
       });
-      
+
     }
 
   }
   chooseFile(form: NgForm){
     if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.fileExplorer = [{token: form.value.dbfstoken , domain: form.value.dbfsdomain}];
-      this.fileExplorerView = 1;      
+      this.fileExplorerView = 1;
     }
   }
   getSelectedFiles(event){
     this.fileExplorerSource = event;
+    console.log(this.fileExplorerSource);
+    if( this.fileExplorerSource[0].path) {
+      this.stage.stage_attributes.url = this.fileExplorerSource[0].path;
+    } else {
+      this.openSnackBar('Error:', 'File not selected.');
+    }
+
     this.fileExplorerView = 0;
   }
   openDialog(sampledata): void {

@@ -7,9 +7,10 @@ var PipelineVersion = require("../models/pipelineVersionModel");
 var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage',function(req,res){
+  console.log(stagedata);
     var stagedata = req.body;
     //StageVersionModel.update({"name":stagedata.stageName, "user_id":req.user._id}, {$set: stagedata['updatedata'] }, function (err, sdata) {
-    StageVersionModel.update({"name":stagedata.stageName, "user_id":"567a95c8ca676c1d07d5e3e7"}, {$set: stagedata['updatedata'] }, function (err, sdata) {
+    StageVersionModel.update({"sub_type":stagedata.sub_type,"stage_type":stagedata.stage_type ,"user_id":"567a95c8ca676c1d07d5e3e7"}, {$set: stagedata['updatedata'] }, function (err, sdata) {
       if(!err) {
             res.send({status: true, msg: 'stage updated successfully.', data: sdata});
         }
@@ -66,8 +67,9 @@ router.post('/removeLink',function(req,res){
   });
 });
 
-router.get('/stageSchema/:stageName/:stageType',function(req,res){
-  StageVersionModel.findOne({sub_type: req.params.stageName, stage_type:req.params.stageType}, function (err, stageschema) {
+
+router.get('/stageSchema/:stage_subtype/:stageType',function(req,res){
+  StageVersionModel.findOne({sub_type: req.params.stage_subtype, stage_type:req.params.stageType}, function (err, stageschema) {
     if (!err) {
       res.send({status: true, msg: 'get stage schema successfully.', data: stageschema});
     } 

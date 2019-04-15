@@ -3,6 +3,10 @@
 
   <form #dbfsSinkForm="ngForm" fxLayout="column">
     <mat-form-field>
+        <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
+          required>
+    </mat-form-field>
+    <mat-form-field>
       <input matInput type="text" name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url'
         required>
     </mat-form-field>

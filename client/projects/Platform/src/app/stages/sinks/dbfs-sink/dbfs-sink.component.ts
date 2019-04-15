@@ -11,16 +11,17 @@ import { MatSnackBar } from '@angular/material';
 export class DbfsSinkComponent implements OnInit {
   data: any ;
   stage: any = {
+    name: '',
     stage_attributes: {
       url: '',
       source_delimeter: '',
       file_type: ''
     }
   };
-  stageName: any = 'DBFS';
+  stage_subtype: any = 'DBFS';
   stageType: any = 'sink';
   constructor(public stageService: StageService, public snackBar: MatSnackBar) {
-    this.stageService.getStageSchema(this.stageName,this.stageType).subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stage_subtype, this.stageType).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
 
@@ -33,9 +34,9 @@ export class DbfsSinkComponent implements OnInit {
   saveSinkDbfs(form: NgForm) {
     this.data = {formdata: form.value};
     console.log(this.data);
-    this.data = {updatedata: { 'stage_attributes.url': form.value.url, 'stage_attributes.source_delimeter': form.value.fileDelimeter,
+    this.data = {updatedata: { 'name': this.stage.name, 'stage_attributes.url': form.value.url, 'stage_attributes.source_delimeter': form.value.fileDelimeter,
     'stage_attributes.file_type':  form.value.fileType, 'stage_attributes.dbfs_token': form.value.dbfstoken,
-    'stage_attributes.dbfs_domain':  form.value.dbfsdomain }, stageName: 'dbfs_sink'};
+    'stage_attributes.dbfs_domain':  form.value.dbfsdomain }, sub_type: this.stage_subtype, stage_type: this.stageType};
 
     this.stageService.updateStage(this.data).subscribe(data => {
       console.log(data);
