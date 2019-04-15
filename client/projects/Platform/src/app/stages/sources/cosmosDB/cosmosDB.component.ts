@@ -19,11 +19,11 @@ export class CosmosDBComponent implements OnInit{
     name: '',
     original_schema: [],
     stage_attributes: {
-      container_id: '',
-      db_id: '',
+      Collection: '',
+      Database: '',
       query: '',
-      cosmosdb_key: '',
-      cosmosdb_domain: ''
+      Masterkey: '',
+      Endpoint: ''
     }
   };
   fileExplorer:any;
@@ -87,9 +87,9 @@ export class CosmosDBComponent implements OnInit{
       return;
     }
      this.data = {formdata: form.value, fileheader: this.fileheader};
-     this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fhead, 'stage_attributes.cosmosdb_domain': form.value.cosmosdomain,
-     'stage_attributes.container_id': form.value.containerid, 'stage_attributes.db_id':  form.value.dbid,
-     'stage_attributes.cosmosdb_key': form.value.cosmoskey, 'stage_attributes.query':  form.value.cosmosquery },
+     this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fhead, 'stage_attributes.Endpoint': form.value.cosmosdomain,
+     'stage_attributes.Collection': form.value.containerid, 'stage_attributes.Database':  form.value.dbid,
+     'stage_attributes.Masterkey': form.value.cosmoskey, 'stage_attributes.query':  form.value.cosmosquery, 'stage_attributes.upsert': true },
      sub_type: this.stage_subtype, stage_type: this.stagetype};
      this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
