@@ -29,7 +29,7 @@ export class CosmosDBComponent implements OnInit{
   fileExplorer:any;
   fileExplorerView:any = 0;
   stageSchema: any;
-  stage_subtype: any = 'Cosmos DB';
+  stage_subtype: any = 'CosmosDB';
   stagetype: any = 'source';
   error: any;
   dbdata: any;
