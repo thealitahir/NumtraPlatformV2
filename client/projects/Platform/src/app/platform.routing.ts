@@ -11,6 +11,9 @@ import { FilterComponent } from './stages/transformation/filter/filter.component
 import { AuthGuard } from '../../../../src/app/guards/index';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
+import { BlobStorageComponent } from './stages/sources/blob-storage/blob-storage.component';
+import { BlobStorageSinkComponent } from './stages/sinks/blob-storage-sink/blob-storage-sink.component';
+import { CosmosDBSinkComponent } from './stages/sinks/cosmosDB-sink/cosmosDB-sink.component';
 import { AddStageComponent } from './stages/add-stage/add-stage.component';
 import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
 import { ShowStageComponent } from './stages/show-stage/show-stage.component';
@@ -23,6 +26,9 @@ const APP_ROUTES: Routes = [
   { path: 'platform/filter', component: FilterComponent },
   { path: 'platform/query', component: QueryComponent },
   { path: 'platform/cosmosDB', component: CosmosDBComponent },
+  { path: 'platform/cosmosDBSink', component: CosmosDBSinkComponent },
+  { path: 'platform/blobstorage', component: BlobStorageComponent },
+  { path: 'platform/blobstoragesink', component: BlobStorageSinkComponent },
   { path: 'platform/dataExplorer', component: DataExplorerComponent },
   { path: 'platform/dashboard', component: DashboardComponent },
   { path: 'platform/canvas/:id', component: PipelineDesignerComponent },

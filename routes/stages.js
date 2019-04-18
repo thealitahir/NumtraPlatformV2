@@ -9,11 +9,15 @@ var ObjectId = require("mongoose").Types.ObjectId;
 router.post('/updateStage',function(req,res){
     var stagedata = req.body;
     //StageVersionModel.update({"name":stagedata.stageName, "user_id":req.user._id}, {$set: stagedata['updatedata'] }, function (err, sdata) {
-    StageVersionModel.update({"sub_type":stagedata.sub_type,"stage_type":stagedata.stage_type ,"user_id":"567a95c8ca676c1d07d5e3e7"}, {$set: stagedata['updatedata'] }, function (err, sdata) {
+    StageVersionModel.updateOne({"sub_type":stagedata.sub_type,"stage_type":stagedata.stage_type ,"user_id":"567a95c8ca676c1d07d5e3e7"}, {$set: stagedata['updatedata'] }, function (err, sdata) {
       if(!err) {
+            console.log('update');
+            console.log(sdata);
             res.send({status: true, msg: 'stage updated successfully.', data: sdata});
         }
         else {
+          console.log('error');
+          console.log(err);
           res.send({status: false, msg: 'stage not saved.'});
         }
     });
@@ -126,7 +130,7 @@ router.post('/saveCanvasModel',function(req,res){
 });
 
 router.get('/getCanvasModel',function(req,res){
-  StageVersionModel.find({pipeline_version_id:"5c51641b607a223b3ef0ea61"}).exec(function(err,data){
+  StageVersionModel.find({pipeline_version_id:"5c51641b607a223b3ef0ea62"}).exec(function(err,data){
     if(err){
       console.log('Unable to get stages');
       res.send({status: false, msg: 'Unable to get stages'});

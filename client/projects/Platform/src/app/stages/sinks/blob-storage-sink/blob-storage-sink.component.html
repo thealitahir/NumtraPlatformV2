@@ -1,7 +1,7 @@
 <div class="canvas-right-col">
-  <h3>DBFS Source</h3>
+  <h3>Blob Storage Sink</h3>
 
-  <form #dbfsForm="ngForm" fxLayout="column">
+  <form #blobForm="ngForm" fxLayout="column">
     <mat-form-field>
         <label class="error-message">{{error}}</label>
         <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
@@ -9,22 +9,34 @@
     </mat-form-field>
 
     <mat-form-field>
+      <input matInput type="text" name="accountname" placeholder="Account Name" #dbfs_domain="ngModel"
+        [(ngModel)]='stage.stage_attributes.accountname' required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="password" name="accountkey" placeholder="Account Key" #dbfs_token="ngModel"
+        [(ngModel)]='stage.stage_attributes.accountkey' required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select name="containername" placeholder="Container" (click)='getContainers()'  [(ngModel)]='stage.stage_attributes.containername' required>
+        <mat-option value="">Select Container </mat-option>
+        <mat-option *ngFor='let cl of containerslist' (click)='getBlobs()' value="{{cl.Name}}"> {{cl.Name}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-select name="blobname" placeholder="Blob"  [(ngModel)]='stage.stage_attributes.blobname'  required>
+        <mat-option value="">Select Blob </mat-option>
+        <mat-option *ngFor='let bl of blobslist' (click)='selectBlob(blobForm)' value="{{bl.Name}}"> {{bl.Name}} </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <mat-form-field>
       <input matInput type="text" name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url'
         required>
     </mat-form-field>
 
-    <mat-form-field>
-      <input matInput type="password" name="dbfstoken" placeholder="DBFS Token" #dbfs_token="ngModel"
-        [(ngModel)]='stage.stage_attributes.dbfs_token' required>
-    </mat-form-field>
-
-    <mat-form-field>
-      <input matInput type="text" name="dbfsdomain" placeholder="DBFS Domain" #dbfs_domain="ngModel"
-        [(ngModel)]='stage.stage_attributes.dbfs_domain' required>
-    </mat-form-field>
-    <br />
-    <a href="javascript:void(0)" (click) = chooseFile(dbfsForm)>Choose Data File</a>
-    <br />
     <mat-form-field>
       <mat-select name="fileType" placeholder="File Type" [(ngModel)]='stage.stage_attributes.file_type' required>
         <mat-option value="">Select File Type </mat-option>
@@ -46,7 +58,7 @@
         <mat-option value='\t'>tab \t</mat-option>
         <mat-option value='/'>forward slash /</mat-option>
         <mat-option value=';'>semi-colon ;</mat-option>
-        <mat-option value='%'>percent ,</mat-option>
+        <mat-option value='%'>percent %</mat-option>
         <mat-option value='-'>minus -</mat-option>
         <mat-option value='\'>back slash \</mat-option>
         <mat-option value=':'>colon :</mat-option>
@@ -58,13 +70,8 @@
     </mat-form-field>
 
     <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="space-between center">
-      <button mat-stroked-button color="primary" (click)="discoverData(dbfsForm)">Discover Data</button>
-      <button mat-stroked-button color="accent" (click)="getSchemahenSave(dbfsForm)" type="submit">Save</button>
+      <button mat-stroked-button color="primary" (click)="discoverData(blobForm)">Discover Data</button>
+      <button mat-stroked-button color="accent" (click)=" getSchemaandSave(blobForm)" type="submit">Save</button>
     </div>
   </form>
-</div>
-
-<div *ngIf="fileExplorerView === 1">
-  {{fileExplorer}}
-  <app-file-explorer [fileExplorer]='fileExplorer' (selectedNodesEvent)='getSelectedFiles($event)'></app-file-explorer>
 </div>

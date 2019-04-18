@@ -1,5 +1,5 @@
 <div class="canvas-right-col">
-  <h3>Cosmos DB Source</h3>
+  <h3>Cosmos DB Sink</h3>
 
   <form #cosmosdbForm="ngForm" fxLayout="column">
     <mat-form-field>
@@ -36,8 +36,7 @@
     <br />
 
     <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="space-between center">
-      <button mat-stroked-button color="primary" (click)="discoverData(cosmosdbForm)">Discover Data</button>
-      <button mat-stroked-button color="accent" (click)="getSchemahenSave(cosmosdbForm)" type="submit">Save</button>
+         <button mat-stroked-button color="accent" (click)="getSchemahenSave(cosmosdbForm)" type="submit">Save</button>
     </div>
   </form>
 </div>

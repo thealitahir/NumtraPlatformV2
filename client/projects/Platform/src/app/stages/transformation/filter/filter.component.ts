@@ -21,15 +21,11 @@ export class FilterComponent {
     stage_attributes: {
         regex : [],
         use_regex : false ,
-        end_time : '',
-        start_time : '',
-        date_time_field : '',
-        use_time_window : false,
         expression : [],
         use_expression : false
     },
   };
-  
+
   stage_subtype: any = 'Filter';
   stagetype: any = 'transformation';
   stageSchema: any;

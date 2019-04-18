@@ -16,7 +16,7 @@ export class MaxComponent {
     name: '',
     stage_attributes: {
       parameter: '',
-      attributes: {topResults: '' , dataType: '' , field: '' }
+      attributes: {topResults: '' , dataType: '' , columnName: '' }
     }
   };
   stage_subtype: any = 'Top';
@@ -37,7 +37,7 @@ export class MaxComponent {
   }
 
   selectFieldType(fieldType) {
-    this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , field: fieldType.field };
+    this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , columnName: fieldType.field };
   }
 
   saveTop(form: NgForm) {

@@ -74,7 +74,7 @@ export class CanvasComponent implements OnInit {
         stagesArray.push(stage);
         stage = new joint.shapes.standard.Image();
       }
-  
+
       //creating all links
       for(var i = 0; i < stages.length; i++){
         for(var j = 0; j < stages[i].out.length; j++){
@@ -91,7 +91,7 @@ export class CanvasComponent implements OnInit {
     });
     //link interactions
     this.paper.on('link:mouseenter', function(linkView) {
-      var tool = [new joint.linkTools.Remove({})]; 
+      var tool = [new joint.linkTools.Remove({})];
       linkView.addTools(new joint.dia.ToolsView({
         name: 'onhover',
         tools: tool
@@ -130,7 +130,7 @@ export class CanvasComponent implements OnInit {
           console.log(this.graph);
       });
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
-    }); 
+    });
 
     this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
       if (keyboard.isActive('ctrl meta', evt)) {
@@ -139,7 +139,7 @@ export class CanvasComponent implements OnInit {
       console.log("this element deleted");
       console.log(elementView);
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
-    }); 
+    });
 
     //called when a link is deleted
     this.graph.on('remove', (cell, collection, opt) => {
@@ -147,7 +147,7 @@ export class CanvasComponent implements OnInit {
         console.log("delete link");
         console.log(cell);
         this.canvasService.removeLink(cell.attributes.source.id,cell.attributes.target.id).subscribe(data =>{
-          
+
         });
         // a link was removed  (cell.id contains the ID of the removed link)
       }
@@ -192,7 +192,7 @@ export class CanvasComponent implements OnInit {
   }
 
   executePipeline() {
-    this.data = {process_id: '5c51641b607a223b3ef0ea61'};
+    this.data = {process_id: '5c51641b607a223b3ef0ea62'};
     this.stageService.executePipeline(this.data).subscribe(schemadata => {
       console.log(schemadata);
     });

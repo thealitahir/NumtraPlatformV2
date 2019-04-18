@@ -15,7 +15,7 @@ export class MinComponent {
     name: '',
     stage_attributes: {
       parameter: '',
-      attributes: {topResults: '' , dataType: '' , field: '' }
+      attributes: {topResults: '' , dataType: '' , columnName: '' }
     }
   };
 
@@ -37,7 +37,7 @@ export class MinComponent {
   }
 
   selectFieldType(fieldType) {
-    this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , field: fieldType.field };
+    this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , columnName: fieldType.field };
   }
 
   saveBottom(form: NgForm) {
