@@ -80,7 +80,7 @@ export class StencilService {
     }
     
     sources: Source[] = [
-        { name: 'hdfs-source', label: 'DBFS', type:'source',
+        { name: 'dbfs-source', label: 'DBFS', type:'source',
           stage_attributes:{
             "url" : "", 
             "file_type" : "", 
@@ -90,7 +90,7 @@ export class StencilService {
             "is_header" : "Use Header Line"
           }
         },
-        { name: 'amazonS3-source', label: 'Cosmos DB', type:'source',
+        { name: 'cosmos-source', label: 'CosmosDB', type:'source',
           stage_attributes:{
             "query" : "",
             "Endpoint" : "", 
@@ -100,7 +100,7 @@ export class StencilService {
             "upsert" : true
           }
         },
-        { name: 'kafka-source', label: 'BlobStorage', type:'source',
+        { name: 'blob-source', label: 'BlobStorage', type:'source',
           stage_attributes:{
             "url" : "", 
             "file_type" : "", 
@@ -156,7 +156,7 @@ export class StencilService {
             }
           }
         },
-        { name: 'filling', label: 'Query', type:'operation',
+        { name: 'query', label: 'Query', type:'operation',
           stage_attributes:{
               "query":""
           }
@@ -211,7 +211,7 @@ export class StencilService {
     ];
 
     sinks: Sink[] = [
-        { name: 'staging-sink', label: 'CosmosDB', type:'sink',
+        { name: 'cosmos-sink', label: 'CosmosDB', type:'sink',
           stage_attributes:{
             "query" : "", 
             "Endpoint" : "", 
@@ -221,7 +221,7 @@ export class StencilService {
             "upsert" : true
           }
         },
-        { name: 'hdfs-sink', label: 'DBFS', type:'sink',
+        { name: 'dbfs-sink', label: 'DBFS', type:'sink',
           stage_attributes:{
             "url" : "", 
             "delimiter" : "", 
@@ -231,7 +231,7 @@ export class StencilService {
             "is_header" : "Use Header Line"
           }
         },
-        { name: 'kafka-sink', label: 'BlobStorage', type:'sink', 
+        { name: 'blob-sink', label: 'BlobStorage', type:'sink', 
           stage_attributes:{
             "url" : "", 
             "file_type" : "", 

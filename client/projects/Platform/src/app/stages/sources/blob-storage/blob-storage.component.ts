@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { BlobService } from '../../../services/blob.service';
 import { StageService } from '../../../services/stage.service';
@@ -10,7 +10,8 @@ import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
   templateUrl: './blob-storage.component.html',
   styleUrls: ['./blob-storage.component.css']
 })
-export class BlobStorageComponent implements OnInit{
+export class BlobStorageComponent implements OnInit, OnChanges{
+  @Input() stage_id: any;
   fileheader: any;
   data: any ;
   stage: any = {
@@ -34,21 +35,32 @@ export class BlobStorageComponent implements OnInit{
   stagetype: any = 'source';
   error: any;
   constructor(public snackBar: MatSnackBar, public blobService: BlobService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
-      this.stage = schemadata.data;
-
-      if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' ){
-        this.getContainers();
-      }
-
-      if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' && this.stage.stage_attributes.containername !== '' ){
-        this.getBlobs();
-      }
-
-    });
   }
 
   ngOnInit() {}
+
+  ngOnChanges(changes: any) { 
+    for (let propName in changes) {
+      // only run when property "task" changed 
+      if (propName === 'stage_id') {
+        console.log("stage Id : " + this.stage_id);
+        if (this.stage_id) {
+          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+            this.stage = schemadata.data;
+      
+            if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' ){
+              this.getContainers();
+            }
+      
+            if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' && this.stage.stage_attributes.containername !== '' ){
+              this.getBlobs();
+            }
+      
+          });
+        }
+      }
+    } 
+  } 
 
   getSchemaandSave(form: NgForm) {
     if (form.invalid) {

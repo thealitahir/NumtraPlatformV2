@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CosmosdbService } from '../../../services/cosmosdb.service';
 import { StageService } from '../../../services/stage.service';
@@ -10,7 +10,8 @@ import { MatSnackBar, MatDialog } from '@angular/material';
   templateUrl: './cosmosDB-sink.component.html',
   styleUrls: ['./cosmosDB-sink.component.css']
 })
-export class CosmosDBSinkComponent implements OnInit{
+export class CosmosDBSinkComponent implements OnInit, OnChanges{
+  @Input() stage_id: any;
   fileheader: any;
   data: any ;
   stage: any = {
@@ -34,14 +35,24 @@ export class CosmosDBSinkComponent implements OnInit{
   head: any;
   fhead: any;
   constructor(public snackBar: MatSnackBar, public cosmosdbService: CosmosdbService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
-      this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
-
-    });
   }
 
   ngOnInit(){}
+
+  ngOnChanges(changes: any) { 
+    for (let propName in changes) {
+      // only run when property "task" changed 
+      if (propName === 'stage_id') {
+        console.log("stage Id : " + this.stage_id);
+        if (this.stage_id) {
+          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+            this.stage = schemadata.data;
+            this.stageSchema = schemadata.data.original_schema;
+          });
+        }
+      }
+    } 
+  } 
 
   getSchemahenSave(form: NgForm) {
     if (form.invalid) {
