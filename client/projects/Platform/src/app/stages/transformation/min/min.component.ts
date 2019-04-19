@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { NgForm, CheckboxControlValueAccessor } from '@angular/forms';
 import { StageService } from '../../../services/stage.service';
 import { MatSnackBar , MatDialog } from '@angular/material';
@@ -8,7 +8,7 @@ import { MatSnackBar , MatDialog } from '@angular/material';
   templateUrl: './min.component.html',
   styleUrls: ['./min.component.css']
 })
-export class MinComponent {
+export class MinComponent implements OnInit, OnChanges {
   @Input() stage_id: any;
   fileheader: any;
   data: any ;
@@ -37,6 +37,27 @@ export class MinComponent {
         // console.log(typeof(this.stage.stage_attributes.parameter));
         
       });
+    }
+  }
+
+  ngOnInit(){
+  }
+  ngOnChanges(changes: any) {
+    for (let propName in changes) {
+      // only run when property "task" changed 
+      if (propName === 'stage_id') {
+        console.log("stage Id : " + this.stage_id);
+        if (this.stage_id) {
+          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+            console.log(schemadata);
+            this.stage = schemadata.data;
+            this.stageSchema = schemadata.data.original_schema;
+            // console.log(this.stage.stage_attributes.parameter);
+            // console.log(typeof(this.stage.stage_attributes.parameter));
+
+          });
+        }
+      }
     }
   }
 

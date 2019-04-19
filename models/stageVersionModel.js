@@ -7,7 +7,7 @@ var stageVersionSchema = mongoose.Schema({
     name: String,
     project_id:  {type:mongoose.Schema.Types.ObjectId , ref: 'Projects'},
     pipeline_id:  {type:mongoose.Schema.Types.ObjectId , ref: 'Applications'},
-    mode: {type: String, default: "development"},
+    mode: {type: String, default: "staged"},
     stage_type : String,
     sub_type : String,
     pipeline_name: String,

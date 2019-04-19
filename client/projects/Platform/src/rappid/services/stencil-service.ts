@@ -364,7 +364,7 @@ export class StencilService {
             type = source.type;
             stage_attributes = source.stage_attributes;
             if (source.label.length > labelSize) {
-                sourceLabel = source.label.slice(0, labelSize) + '...';
+                //sourceLabel = source.label.slice(0, labelSize) + '...';
             }
 
             sourceObj.push({
@@ -407,7 +407,7 @@ export class StencilService {
             type = operation.type;
             stage_attributes = operation.stage_attributes;
             if (operation.label.length > labelSize) {
-                operationLabel = operation.label.slice(0, labelSize) + '...';
+                //operationLabel = operation.label.slice(0, labelSize) + '...';
             }
 
             operationObj.push({
@@ -450,7 +450,7 @@ export class StencilService {
             type = sink.type;
             stage_attributes = sink.stage_attributes;
             if (sink.label.length > labelSize) {
-                sinkLabel = sink.label.slice(0, labelSize) + '...';
+                //sinkLabel = sink.label.slice(0, labelSize) + '...';
             }
 
             sinkObj.push({

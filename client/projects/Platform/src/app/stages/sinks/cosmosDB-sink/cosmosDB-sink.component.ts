@@ -99,7 +99,7 @@ export class CosmosDBSinkComponent implements OnInit, OnChanges{
      this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fhead, 'stage_attributes.Endpoint': form.value.cosmosdomain,
      'stage_attributes.Collection': form.value.containerid, 'stage_attributes.Database':  form.value.dbid,
      'stage_attributes.Masterkey': form.value.cosmoskey, 'stage_attributes.query':  form.value.cosmosquery, 'stage_attributes.upsert': true },
-     sub_type: this.stage_subtype, stage_type: this.stagetype};
+     stage_id:this.stage_id};
      this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

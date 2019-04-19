@@ -97,7 +97,7 @@ export class BlobStorageSinkComponent implements OnInit, OnChanges{
      'stage_attributes.accountname': form.value.accountname, 'stage_attributes.accountkey':  form.value.accountkey,
      'stage_attributes.is_header': 'Use Header Line', 'stage_attributes.containername': form.value.containername,
      'stage_attributes.blobname': form.value.blobname },
-     sub_type: this.stage_subtype, stage_type: this.stagetype};
+     stage_id: this.stage_id};
      console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {

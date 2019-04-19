@@ -6,3 +6,6 @@
 <app-query [stage_id]="showQueryId" *ngIf="showQuery"></app-query>
 <app-min [stage_id]="showBottomId" *ngIf="showBottom"></app-min>
 <app-filter [stage_id]="showFilterId" *ngIf="showFilter"></app-filter>
+<app-blob-storage [stage_id]="showBlobSourceId" *ngIf="showBlobSource"></app-blob-storage>
+<app-blob-storage-sink [stage_id]="showBlobSinkId" *ngIf="showBlobSink"></app-blob-storage-sink>
+<app-cosmosdb-sink [stage_id]="showCosmosSinkId" *ngIf="showCosmosSink"></app-cosmosdb-sink>

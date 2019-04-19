@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { NgForm, CheckboxControlValueAccessor } from '@angular/forms';
 import { DbfsService } from '../../../services/dbfs.service';
 import { StageService } from '../../../services/stage.service';
@@ -9,7 +9,7 @@ import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
   templateUrl: './max.component.html',
   styleUrls: ['./max.component.css']
 })
-export class MaxComponent {
+export class MaxComponent implements OnInit, OnChanges {
   @Input() stage_id: any;
   fileheader: any;
   data: any ;
@@ -27,15 +27,24 @@ export class MaxComponent {
   fileType: any;
 
   constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
-    console.log("stage Id : " + this.stage_id);
-    if(this.stage_id){
-      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-        console.log(schemadata);
-        this.stage = schemadata.data;
-        this.stageSchema = schemadata.data.original_schema;
-        //console.log(this.stage.stage_attributes.parameter);
-        //console.log(typeof(this.stage.stage_attributes.parameter));
-      });
+    
+  }
+
+  ngOnInit(){
+  }
+  ngOnChanges(changes: any) {
+    for (let propName in changes) {
+      // only run when property "task" changed 
+      if (propName === 'stage_id') {
+        console.log("stage Id : " + this.stage_id);
+        if (this.stage_id) {
+          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+            console.log(schemadata);
+            this.stage = schemadata.data;
+            this.stageSchema = schemadata.data.original_schema;
+          });
+        }
+      }
     }
   }
 

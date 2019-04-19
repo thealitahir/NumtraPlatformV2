@@ -81,8 +81,8 @@ export class CanvasComponent implements OnInit {
       for(var i = 0; i < stages.length; i++){
         for(var j = 0; j < stages[i].out.length; j++){
           var link = new joint.shapes.standard.Link();
-          var source = stagesArray[stagesArray.findIndex(stagesArray => stagesArray._id == stages[i]._id)];
-          var target = stagesArray[stagesArray.findIndex(stagesArray => stagesArray._id == stages[i].out[j])];
+          var source = stagesArray[stagesArray.findIndex(stagesArray => stagesArray.attributes.attrs._id == stages[i]._id)];
+          var target = stagesArray[stagesArray.findIndex(stagesArray => stagesArray.attributes.attrs._id == stages[i].out[j])];
           link.source(source);
           link.target(target);
           link.addTo(this.graph);

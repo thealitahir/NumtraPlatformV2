@@ -33,6 +33,8 @@ export class PipelineDesignerComponent implements OnInit {
     if(value.model){
       mongoId = value.model.attributes.attrs._id;
       console.log("stage mongoId : " + mongoId);
+      console.log("stage type : " + value.model.attributes.attrs.label.type);
+      console.log("stage name : " + value.model.attributes.attrs.label.text);
     }
     if(!value.model){
       this.showTop = false;
@@ -63,7 +65,40 @@ export class PipelineDesignerComponent implements OnInit {
     value.model.attributes.attrs.label.text == "DBFS" && this.showSource){
       this.showSource = false;
     }
-
+    else if(value && value.model.attributes.attrs.label.type == "source" &&
+    value.model.attributes.attrs.label.text == "CosmosDB" && !this.showSource){
+      this.showCosmos = true; this.showCosmosId = mongoId;
+      this.showTop = false;
+      this.showSink = false;
+      this.showSource = false;
+      this.showFilter = false;
+      this.showBottom = false;
+      this.showQuery = false;
+      this.showBlobSource = false;
+      this.showBlobSink = false;
+      this.showCosmosSink = false;
+    }
+    else if(value && value.model.attributes.attrs.label.type == "source" &&
+    value.model.attributes.attrs.label.text == "CosmosDB" && this.showSource){
+      this.showCosmos = false;
+    }
+    else if(value && value.model.attributes.attrs.label.type == "source" &&
+    value.model.attributes.attrs.label.text == "BlobStorage" && !this.showSource){
+      this.showCosmos = false;
+      this.showTop = false;
+      this.showSink = false;
+      this.showSource = false;
+      this.showFilter = false;
+      this.showBottom = false;
+      this.showQuery = false;
+      this.showBlobSource = true; this.showBlobSourceId = mongoId;
+      this.showBlobSink = false;
+      this.showCosmosSink = false; 
+    }
+    else if(value && value.model.attributes.attrs.label.type == "source" &&
+    value.model.attributes.attrs.label.text == "BlobStorage" && this.showSource){
+      this.showBlobSource = false;
+    }
     else if(value && value.model.attributes.attrs.label.type == "operation" &&
     value.model.attributes.attrs.label.text == "Top" && !this.showTop){
       this.showTop = true; this.showTopId = mongoId;
@@ -140,7 +175,8 @@ export class PipelineDesignerComponent implements OnInit {
       this.showQuery = false;
     }
       
-    else if(value && value.model.attributes.attrs.label.type == "sink" && !this.showSink){
+    else if(value && value.model.attributes.attrs.label.type == "sink" &&
+    value.model.attributes.attrs.label.text == "DBFS" && !this.showSink){
       this.showSink = true; this.showSinkId = mongoId;
       this.showTop = false;
       this.showSource = false;
@@ -153,26 +189,11 @@ export class PipelineDesignerComponent implements OnInit {
       this.showCosmosSink = false;
     }
       
-    else if(value && value.model.attributes.attrs.label.type == "sink" && this.showSink){
+    else if(value && value.model.attributes.attrs.label.type == "sink" &&
+    value.model.attributes.attrs.label.text == "DBFS" && this.showSink){
       this.showSink = false;
     }
-    else if(value && value.model.attributes.attrs.label.type == "source" &&
-    value.model.attributes.attrs.label.text == "Cosmos DB" && !this.showSource){
-      this.showCosmos = true; this.showCosmosId = mongoId;
-      this.showTop = false;
-      this.showSink = false;
-      this.showSource = false;
-      this.showFilter = false;
-      this.showBottom = false;
-      this.showQuery = false;
-      this.showBlobSource = false;
-      this.showBlobSink = false;
-      this.showCosmosSink = false;
-    }
-    else if(value && value.model.attributes.attrs.label.type == "source" &&
-    value.model.attributes.attrs.label.text == "CosmosDB" && this.showSource){
-      this.showCosmos = false;
-    }
+    
     else if(value && value.model.attributes.attrs.label.type == "sink" &&
     value.model.attributes.attrs.label.text == "CosmosDB" && !this.showSource){
       this.showCosmos = false;
@@ -189,6 +210,23 @@ export class PipelineDesignerComponent implements OnInit {
     else if(value && value.model.attributes.attrs.label.type == "sink" &&
     value.model.attributes.attrs.label.text == "CosmosDB" && this.showSource){
       this.showCosmosSink = false;
+    }
+    else if(value && value.model.attributes.attrs.label.type == "sink" &&
+    value.model.attributes.attrs.label.text == "BlobStorage" && !this.showSource){
+      this.showCosmos = false;
+      this.showTop = false;
+      this.showSink = false;
+      this.showSource = false;
+      this.showFilter = false;
+      this.showBottom = false;
+      this.showQuery = false;
+      this.showBlobSource = false;
+      this.showBlobSink = true; this.showBlobSinkId = mongoId;
+      this.showCosmosSink = false; 
+    }
+    else if(value && value.model.attributes.attrs.label.type == "sink" &&
+    value.model.attributes.attrs.label.text == "BlobStorage" && this.showSource){
+      this.showBlobSink = false;
     }
       
   }

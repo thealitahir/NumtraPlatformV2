@@ -7,6 +7,7 @@ var PipelineVersion = require("../models/pipelineVersionModel");
 var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage', function (req, res) {
+  console.log("update stage", req.body.stage_id);
   var stagedata = req.body;
   //StageVersionModel.update({"name":stagedata.stageName, "user_id":req.user._id}, {$set: stagedata['updatedata'] }, function (err, sdata) {
   StageVersionModel.update({ "_id": stagedata.stage_id, "user_id": "567a95c8ca676c1d07d5e3e7" }, { $set: stagedata['updatedata'] }, function (err, sdata) {
@@ -14,6 +15,7 @@ router.post('/updateStage', function (req, res) {
       res.send({ status: true, msg: 'stage updated successfully.', data: sdata });
     }
     else {
+      console.log(err);
       res.send({ status: false, msg: 'stage not saved.' });
     }
   });
@@ -92,6 +94,7 @@ router.post('/getPipelineResult', function (req, res) {
 
 router.post('/executePipeline', function (req, res, next) {
   var data = req.body;
+  console.log("execute pipeline : ", data);
   var url = CONFIGURATIONS.platformRequestApi + '/api/start/codegen';
   request({
     url: 'http://192.168.23.44:2020/api/start/codegen',
@@ -122,6 +125,7 @@ router.post('/saveCanvasModel', function (req, res) {
     stage_version.shape_attributes = stage.attributes;
     stage_version.shape_size = stage.size;
     stage_version.shape_type = stage.type;
+    stage_version.user_id = ObjectId('567a95c8ca676c1d07d5e3e7');
 
     StageVersionModel.create(stage_version, function (err, result) {
       if (!err) {
