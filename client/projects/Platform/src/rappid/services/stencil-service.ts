@@ -83,7 +83,7 @@ export class StencilService {
     }
     
     sources: Source[] = [
-        { name: 'hdfs-source', label: 'DBFS', type:'source', stage_type:'source',
+        { name: 'dbfs-source', label: 'DBFS', type:'source', stage_type:'source',
           stage_attributes:{
             "url" : "", 
             "delimiter" : ",", 
@@ -110,7 +110,7 @@ export class StencilService {
             "splitter" : 44
           }
         },
-        { name: 'amazonS3-source', label: 'Cosmos DB', type:'source', stage_type:'source',
+        { name: 'cosmos-source', label: 'Cosmos DB', type:'source', stage_type:'source',
           stage_attributes:{
             "db_id" : "", 
             "container_id" : "", 
@@ -166,7 +166,7 @@ export class StencilService {
             }
           }
         },
-        { name: 'filling', label: 'Query', type:'operation',stage_type:'transformation',
+        { name: 'query', label: 'Query', type:'operation',stage_type:'transformation',
           stage_attributes:{
               "query":""
           }
@@ -238,7 +238,7 @@ export class StencilService {
 
     sinks: Sink[] = [
         { name: 'staging-sink', label: 'Datalake' },
-        { name: 'hdfs-sink', label: 'DBFS', type:'sink', stage_type:'sink',
+        { name: 'dbfs-sink', label: 'DBFS', type:'sink', stage_type:'sink',
           stage_attributes:{
             "url" : "", 
             "delimiter" : ",", 
