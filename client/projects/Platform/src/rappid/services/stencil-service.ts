@@ -100,7 +100,18 @@ export class StencilService {
             "upsert" : true
           }
         },
-        { name: 'kafka-source', label: 'Kafka' },
+        { name: 'kafka-source', label: 'BlobStorage', type:'source',
+          stage_attributes:{
+            "url" : "", 
+            "file_type" : "", 
+            "accountname" : "", 
+            "accountkey" : "",
+            "containername" : "", 
+            "blobname" : "", 
+            "delimiter" : "", 
+            "is_header" : ""
+          }
+        },
         { name: 'staging-source', label: 'Data Lake' },
         { name: 'sql-server-source', label: 'RDBMS' },
         { name: 'kraken-source', label: 'Kraken' },
@@ -200,7 +211,16 @@ export class StencilService {
     ];
 
     sinks: Sink[] = [
-        { name: 'staging-sink', label: 'Datalake' },
+        { name: 'staging-sink', label: 'CosmosDB', type:'sink',
+          stage_attributes:{
+            "query" : "", 
+            "Endpoint" : "", 
+            "Database" : "", 
+            "Collection" : "", 
+            "Masterkey" : "", 
+            "upsert" : true
+          }
+        },
         { name: 'hdfs-sink', label: 'DBFS', type:'sink',
           stage_attributes:{
             "url" : "", 
@@ -211,7 +231,18 @@ export class StencilService {
             "is_header" : "Use Header Line"
           }
         },
-        { name: 'kafka-sink', label: 'Kafka' },
+        { name: 'kafka-sink', label: 'BlobStorage', type:'sink', 
+          stage_attributes:{
+            "url" : "", 
+            "file_type" : "", 
+            "accountname" : "", 
+            "accountkey" : "", 
+            "containername" : "", 
+            "blobname" : "", 
+            "delimiter" : "", 
+            "is_header" : "Use Header Line"
+          }
+        },
         { name: 'amazonS3-sink', label: 'S3' },
         { name: 'sql-server-sink', label: 'RDBMS' },
         { name: 'smart-sink', label: 'Smart' },
