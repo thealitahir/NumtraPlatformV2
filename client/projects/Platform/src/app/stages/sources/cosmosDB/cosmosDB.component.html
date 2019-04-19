@@ -3,30 +3,36 @@
 
   <form #cosmosdbForm="ngForm" fxLayout="column">
     <mat-form-field>
-      <label class="error-message">{{error}}</label>
-      <input matInput type="text" name="cosmosdomain" placeholder="Cosmos DB Host" #url="ngModel" [(ngModel)]='stage.stage_attributes.cosmosdb_domain'
+        <label class="error-message">{{error}}</label>
+        <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
+          required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" name="cosmosdomain" placeholder="Cosmos DB Host" #url="ngModel" [(ngModel)]='stage.stage_attributes.Endpoint'
         required>
     </mat-form-field>
 
     <mat-form-field>
       <input matInput type="password" name="cosmoskey" placeholder="Cosmos DB Key" #cosmos_key="ngModel"
-        [(ngModel)]='stage.stage_attributes.cosmosdb_key' required>
+        [(ngModel)]='stage.stage_attributes.Masterkey' required>
     </mat-form-field>
 
     <mat-form-field>
-        <input matInput type="text" name="dbid" placeholder="Cosmos DB ID" [(ngModel)]='stage.stage_attributes.db_id'
+        <input matInput type="text" name="dbid" placeholder="Cosmos DB ID" [(ngModel)]='stage.stage_attributes.Database'
           required>
       </mat-form-field>
 
       <mat-form-field>
         <input matInput type="text" name="containerid" placeholder="Cosmos DB Container ID"
-          [(ngModel)]='stage.stage_attributes.container_id' required>
+          [(ngModel)]='stage.stage_attributes.Collection' required>
       </mat-form-field>
 
     <mat-form-field>
-      <input matInput type="text" name="cosmosquery" placeholder="Query" #dbfs_domain="ngModel"
-        [(ngModel)]='stage.stage_attributes.query' required>
+      <textarea matInput type="text" name="cosmosquery" placeholder="Query" #dbfs_domain="ngModel"
+        [(ngModel)]='stage.stage_attributes.query' required style="min-height: 100px"></textarea>
     </mat-form-field>
+    <button mat-stroked-button color="accent" type="button" (click)="expandEditor()">Expand Editor</button>
     <br />
 
     <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="space-between center">

@@ -10,11 +10,8 @@ var request = require("request");
 // })
 
 router.post('/getDataSource', function(req,res) {
-    console.log('node routes');
-    console.log(req.body);
     // var url= CONFIGURATIONS.dbfsDomain +'/api/2.0/dbfs/read';
     var url= req.body.domain +'/api/2.0/dbfs/read';
-    console.log(url);
     request({
         url: url,
         method: 'GET',
@@ -33,7 +30,6 @@ router.post('/getDataSource', function(req,res) {
             let text = buff.toString('ascii');
             var filedata =[];
             filedata = text.split("\n");
-            console.log();
             var fileheader=[];
             fileheader = filedata[0].split(",");
             filedata.shift();
@@ -68,11 +64,8 @@ router.post('/getDataSource', function(req,res) {
 });
 
 router.post('/getDataFiles', function(req,res) {
-    console.log('node routes');
-    console.log(req.body);
     // var url= CONFIGURATIONS.dbfsDomain +'/api/2.0/dbfs/read';
     var url= req.body.domain +'/api/2.0/dbfs/list';
-    console.log(url);
     request({
         url: url,
         method: 'GET',
@@ -94,7 +87,6 @@ router.post('/getDataFiles', function(req,res) {
                 }
             }
             
-            console.log(nodesData);
             res.send({files:nodesData})
             
     });

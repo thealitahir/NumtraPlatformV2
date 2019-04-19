@@ -28,8 +28,8 @@ export class StageService {
       return this.http.get(GLOBAL.serviceUrl+'/components/'+id);
     }
 
-    getStageSchema(stageName,stageType): Observable<any>{
-      return this.http.get(GLOBAL.serviceUrl + '/stage/stageSchema/' + stageName + '/' +stageType );
+    getStageSchema(stage_subtype,stageType): Observable<any>{
+      return this.http.get(GLOBAL.serviceUrl + '/stage/stageSchema/' + stage_subtype + '/' +stageType );
     }
 
     saveComponent(stage:any): Observable<any>{
