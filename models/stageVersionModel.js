@@ -5,10 +5,8 @@ var timestamps = require('mongoose-timestamp');
 var stageVersionSchema = mongoose.Schema({
 
     name: String,
-    pipeline_id:  {type:mongoose.Schema.Types.ObjectId , ref: 'RPipeline'},
-    application_id:  {type:mongoose.Schema.Types.ObjectId , ref: 'Applications'},
-    pipeline_version_id:  {type:mongoose.Schema.Types.ObjectId , ref: 'PipelineVersion'},
-    stage_id : {type : Schema.Types.ObjectId, ref:'RStage'},
+    project_id:  {type:mongoose.Schema.Types.ObjectId , ref: 'Projects'},
+    pipeline_id:  {type:mongoose.Schema.Types.ObjectId , ref: 'Applications'},
     mode: {type: String, default: "development"},
     stage_type : String,
     sub_type : String,
@@ -40,7 +38,8 @@ var stageVersionSchema = mongoose.Schema({
     cache:{type: Boolean, default: false},
     shape_attributes: Schema.Types.Mixed,
     shape_size: Schema.Types.Mixed,
-    shape_type: String
+    shape_type: String,
+    shape_id: String
 });
 
 stageVersionSchema.plugin(timestamps, { createdAt: 'created_at', updatedAt: 'updated_at' });

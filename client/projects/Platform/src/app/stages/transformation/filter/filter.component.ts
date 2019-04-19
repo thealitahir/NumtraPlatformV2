@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm, CheckboxControlValueAccessor } from '@angular/forms';
 import { StageService } from '../../../services/stage.service';
 import { MatSnackBar } from '@angular/material';
@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: ['./filter.component.css']
 })
 export class FilterComponent {
+  @Input() stage_id: any;
   data: any ;
   date_time_fields = [];
   Types = ['stream', 'custom' , 'parameter'];
@@ -31,13 +32,16 @@ export class FilterComponent {
   stageSchema: any;
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService) {
-    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
-      this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
-      // console.log(this.stage.stage_attributes.parameter);
-      // console.log(typeof(this.stage.stage_attributes.parameter));
-
-    });
+    console.log("stage Id : " + this.stage_id);
+    if(this.stage_id){
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+        // console.log(this.stage.stage_attributes.parameter);
+        // console.log(typeof(this.stage.stage_attributes.parameter));
+        
+      });
+    }
   }
 
   addFilter(type) {
@@ -145,7 +149,7 @@ export class FilterComponent {
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
-    this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, sub_type: this.stage_subtype, stage_type: this.stagetype};
+    this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

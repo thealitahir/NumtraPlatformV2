@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { DbfsService } from '../../../services/dbfs.service';
 import { StageService } from '../../../services/stage.service';
@@ -12,7 +12,8 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
   templateUrl: './DBFS.component.html',
   styleUrls: ['./DBFS.component.css'],
 })
-export class DbfsComponent implements OnInit{
+export class DbfsComponent implements OnInit, OnChanges{
+  @Input() stage_id: any;
   fileheader: any;
   data: any ;
   stage: any = {
@@ -35,17 +36,25 @@ export class DbfsComponent implements OnInit{
   fileExplorerSource:any;
   error: any;
   constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
-      console.log(schemadata);
-      this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
-
-    });
+ 
   }
 
   ngOnInit(){
   }
-
+  ngOnChanges(changes: any) { 
+    for (let propName in changes) {
+      // only run when property "task" changed 
+      if (propName === 'stage_id') {
+        console.log("stage Id : " + this.stage_id);
+        if (this.stage_id) {
+          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+            console.log(schemadata);
+            this.stage = schemadata.data;
+          });
+        }
+      }
+    } 
+  } 
   getSchemahenSave(form: NgForm) {
     if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
@@ -74,10 +83,12 @@ export class DbfsComponent implements OnInit{
      console.log('form value');
      console.log(form.value);
     this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fileheader, 'stage_attributes.url': form.value.url,
-     'stage_attributes.delimiter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
+
+     'stage_attributes.source_delimeter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
      'stage_attributes.dbfs_token': form.value.dbfstoken, 'stage_attributes.dbfs_domain':  form.value.dbfsdomain,
      'stage_attributes.is_header': 'Use Header Line' },
-     sub_type: this.stage_subtype, stage_type: this.stagetype};
+     stage_id: this.stage_id};
+
      console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
       // console.log(data);
