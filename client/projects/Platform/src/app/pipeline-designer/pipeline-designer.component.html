@@ -1,8 +1,8 @@
-<app-canvas (onSearch)="stageClicked($event)"></app-canvas>
-<app-dbfs *ngIf="showSource"></app-dbfs>
-<app-max *ngIf="showTransformation"></app-max>
-<app-dbfs-sink *ngIf="showSink"></app-dbfs-sink>
-<app-cosmosdb *ngIf="showCosmos"></app-cosmosdb>
-<app-query *ngIf="showQuery"></app-query>
-<app-min *ngIf="showBottom"></app-min>
-<app-filter *ngIf="showFilter"></app-filter>
+<app-canvas [pipeline_id]="pipeline_id" (onSearch)="stageClicked($event)"></app-canvas>
+<app-dbfs [stage_id]="showSourceId" *ngIf="showSource"></app-dbfs>
+<app-max [stage_id]="showTopId" *ngIf="showTop"></app-max>
+<app-dbfs-sink [stage_id]="showSinkId" *ngIf="showSink"></app-dbfs-sink>
+<app-cosmosdb [stage_id]="showCosmosId" *ngIf="showCosmos"></app-cosmosdb>
+<app-query [stage_id]="showQueryId" *ngIf="showQuery"></app-query>
+<app-min [stage_id]="showBottomId" *ngIf="showBottom"></app-min>
+<app-filter [stage_id]="showFilterId" *ngIf="showFilter"></app-filter>

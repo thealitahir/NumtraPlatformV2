@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm, CheckboxControlValueAccessor } from '@angular/forms';
 import { DbfsService } from '../../../services/dbfs.service';
 import { StageService } from '../../../services/stage.service';
@@ -10,6 +10,7 @@ import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
   styleUrls: ['./max.component.css']
 })
 export class MaxComponent {
+  @Input() stage_id: any;
   fileheader: any;
   data: any ;
   stage: any = {
@@ -26,14 +27,16 @@ export class MaxComponent {
   fileType: any;
 
   constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
-      console.log(schemadata);
-      this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
-      console.log(this.stage.stage_attributes.parameter);
-      console.log(typeof(this.stage.stage_attributes.parameter));
-
-    });
+    console.log("stage Id : " + this.stage_id);
+    if(this.stage_id){
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        console.log(schemadata);
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+        //console.log(this.stage.stage_attributes.parameter);
+        //console.log(typeof(this.stage.stage_attributes.parameter));
+      });
+    }
   }
 
   selectFieldType(fieldType) {
@@ -46,7 +49,7 @@ export class MaxComponent {
       return;
     }
     this.attributes.topResults = form.value.results;
-    this.data = {updatedata: {'name':this.stage.name, 'stage_attributes.attributes': this.stage.stage_attributes.attributes}, sub_type: this.stage_subtype, stage_type: this.stagetype};
+    this.data = {updatedata: {'name':this.stage.name, 'stage_attributes.attributes': this.stage.stage_attributes.attributes}, stage_id: this.stage_id};
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

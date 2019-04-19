@@ -95,6 +95,8 @@ export class KitchenSinkService {
 
         graph.on('add', (cell: joint.dia.Cell, collection: any, opt: any) => {
             if (opt.stencil) this.inspectorService.create(cell);
+            console.log("graph in kitchen stencil service");
+            console.log(graph)
         });
 
         this.commandManager = new joint.dia.CommandManager({ graph: graph });

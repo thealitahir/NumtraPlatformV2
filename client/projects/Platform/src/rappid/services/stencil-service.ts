@@ -23,24 +23,21 @@ import { Stage } from '../../app/stages/stage.model';
 export interface Source {
     name: string,
     label: string,
-    type?: any,
-    stage_type?: string
+    type?: any
     stage_attributes?: any
 }
 
 export interface Sink {
     name: string,
     label: string,
-    type?: string,
-    stage_type?: string,
+    type?: string
     stage_attributes?: any
 }
 
 export interface Operation {
     name: string,
     label: string,
-    type?:any,
-    stage_type?: string
+    type?:any
     stage_attributes?: any
 }
 
@@ -83,40 +80,24 @@ export class StencilService {
     }
     
     sources: Source[] = [
-        { name: 'hdfs-source', label: 'DBFS', type:'source', stage_type:'source',
+        { name: 'hdfs-source', label: 'DBFS', type:'source',
           stage_attributes:{
             "url" : "", 
-            "delimiter" : ",", 
             "file_type" : "", 
-            "is_header" : "Use Header Line", 
-            "data_percentage" : 0, 
-            "request_api" : "", 
             "dbfs_token" : "", 
             "dbfs_domain" : "", 
-            "is_streaming" : false, 
-            "profile" : "", 
-            "files" : [
-            ], 
-            "schema_values" : "", 
-            "input_type" : "custom_write", 
-            "schemaFile" : {
-                "splitter" : "", 
-                "extension" : "", 
-                "path" : "", 
-                "name" : ""
-            }, 
-            "selected_skipHeader_option" : "useHeaderLine", 
-            "skipHeader" : true, 
-            "splitter" : 44
+            " delimiter" : "",
+            "is_header" : "Use Header Line"
           }
         },
-        { name: 'amazonS3-source', label: 'Cosmos DB', type:'source', stage_type:'source',
+        { name: 'amazonS3-source', label: 'Cosmos DB', type:'source',
           stage_attributes:{
-            "db_id" : "", 
-            "container_id" : "", 
-            "cosmosdb_key" : "", 
-            "cosmosdb_domain" : "", 
-            "query" : ""
+            "query" : "",
+            "Endpoint" : "", 
+            "Database" : "", 
+            "Collection" : "", 
+            "Masterkey" : "",
+            "upsert" : true
           }
         },
         { name: 'kafka-source', label: 'Kafka' },
@@ -141,23 +122,21 @@ export class StencilService {
 
     operations: Operation[] = [
         { name: 'encryption', label: 'Encryption'},
-        { name: 'bottom', label: 'Bottom', type:'operation', stage_type:'transformation',
+        { name: 'bottom', label: 'Bottom', type:'operation',
          stage_attributes:{
             "attributes" : {
                 "topResults" : 0, 
                 "dataType" : "", 
-                "field" : ""
+                "columnName" : ""
             }, 
             "parameter" : false, 
-            "stage_id" : "", 
-            "user_comment" : ""
+            "stage_id" : ""
          }
         },
         { name: 'aggregation', label: 'Aggregation' },
         { name: 'timezone', label: 'Date Time' },
-        { name: 'top', label: 'Top', type:'operation', stage_type:'transformation', 
+        { name: 'top', label: 'Top', type:'operation',
           stage_attributes:{
-            "user_comment" : "", 
             "stage_id" : "", 
             "parameter" : false, 
             "attributes" : {
@@ -166,38 +145,22 @@ export class StencilService {
             }
           }
         },
-        { name: 'filling', label: 'Query', type:'operation',stage_type:'transformation',
+        { name: 'filling', label: 'Query', type:'operation',
           stage_attributes:{
               "query":""
           }
         },
-        { name: 'filter', label: 'Filter', type:'operation', stage_type:'transformation',
-          stage_attributes:{
-            "user_comment" : "", 
+        { name: 'filter', label: 'Filter', type:'operation',
+          stage_attributes:{ 
             "regex" : [
-    
             ], 
             "use_regex" : false, 
-            "end_time" : 0, 
-            "start_time" : 0, 
-            "date_time_field" : "", 
-            "use_time_window" : false, 
             "expression" : [
                 {
                     "column1_name" : "", 
                     "operator" : "", 
                     "column2_name" : "", 
                     "custom" : false, 
-                    "custom_value" : "", 
-                    "value_type" : "", 
-                    "combinator" : "", 
-                    "showOptions" : true
-                }, 
-                {
-                    "column1_name" : "", 
-                    "operator" : "", 
-                    "column2_name" : "", 
-                    "custom" : true, 
                     "custom_value" : "", 
                     "value_type" : "", 
                     "combinator" : "", 
@@ -238,25 +201,14 @@ export class StencilService {
 
     sinks: Sink[] = [
         { name: 'staging-sink', label: 'Datalake' },
-        { name: 'hdfs-sink', label: 'DBFS', type:'sink', stage_type:'sink',
+        { name: 'hdfs-sink', label: 'DBFS', type:'sink',
           stage_attributes:{
             "url" : "", 
-            "delimiter" : ",", 
+            "delimiter" : "", 
             "file_type" : "", 
-            "is_header" : "Use Header Line", 
-            "data_percentage" : 0, 
-            "request_api" : "", 
             "dbfs_token" : "", 
             "dbfs_domain" : "", 
-            "profile" : "", 
-            "path" : "", 
-            "port" : "", 
-            "host" : "", 
-            "output_format" : "", 
-            "output_file_name" : "", 
-            "merge_output_file" : false, 
-            "splitter" : 44, 
-            "append_schema" : true
+            "is_header" : "Use Header Line"
           }
         },
         { name: 'kafka-sink', label: 'Kafka' },
@@ -374,13 +326,11 @@ export class StencilService {
         let sourceObj = [];
         let sourceLabel = '';
         let type = '';
-        let stage_type = '';
         let stage_attributes = {};
         this.sources.forEach((source) => {
 
             sourceLabel = source.label;
             type = source.type;
-            stage_type = source.stage_type;
             stage_attributes = source.stage_attributes;
             if (source.label.length > labelSize) {
                 sourceLabel = source.label.slice(0, labelSize) + '...';
@@ -406,14 +356,14 @@ export class StencilService {
                     },
                     label: {
                         type:type,
-                        stage_type:stage_type,
                         text: sourceLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',
                         fontSize: 10,
                         fill: '#333333',
                     },
-                    dbValues: stage_attributes
+                    dbValues: stage_attributes,
+                    _id:null
                 }
             })
         })
@@ -424,7 +374,6 @@ export class StencilService {
 
             operationLabel = operation.label;
             type = operation.type;
-            stage_type = operation.stage_type;
             stage_attributes = operation.stage_attributes;
             if (operation.label.length > labelSize) {
                 operationLabel = operation.label.slice(0, labelSize) + '...';
@@ -450,14 +399,14 @@ export class StencilService {
                     },
                     label: {
                         type: type,
-                        stage_type:stage_type,
                         text: operationLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',
                         fontSize: 10,
                         fill: '#333333'
                     },
-                    dbValues: stage_attributes
+                    dbValues: stage_attributes,
+                    _id:null
                 }
             })
         })
@@ -467,8 +416,7 @@ export class StencilService {
         this.sinks.forEach((sink) => {
 
             sinkLabel = sink.label;
-            type = sink.type
-            stage_type = sink.stage_type;
+            type = sink.type;
             stage_attributes = sink.stage_attributes;
             if (sink.label.length > labelSize) {
                 sinkLabel = sink.label.slice(0, labelSize) + '...';
@@ -494,14 +442,14 @@ export class StencilService {
                     },
                     label: {
                         type: type,
-                        stage_type: stage_type,
                         text: sinkLabel,
                         fontFamily: 'Roboto Condensed',
                         fontWeight: 'Normal',
                         fontSize: 10,
                         fill: '#333333'
                     },
-                    dbValues: stage_attributes
+                    dbValues: stage_attributes,
+                    _id:null
                 }
             })
         })

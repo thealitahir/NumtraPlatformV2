@@ -27,7 +27,8 @@ export class CanvasComponent implements OnInit {
   data: any;
 
   @Output() onSearch: EventEmitter<any> = new EventEmitter();
-  @Input() columnsList:any;
+  @Input() pipeline_id: any;
+  
   private rappid: any;
   paper: any;
   selection: any;
@@ -39,9 +40,10 @@ export class CanvasComponent implements OnInit {
     private element: ElementRef,
     public canvasService: CanvasService,
     public stageService: StageService
-    ) {}
+  ) { }
 
   ngOnInit() {
+    console.log("pipeline id : " + this.pipeline_id);
     console.log("in canvas component");
     this.rappid = new RappidService(
       this.element.nativeElement,
@@ -57,8 +59,8 @@ export class CanvasComponent implements OnInit {
     const keyboard = this.keyboardService.keyboard;
     this.selection = this.rappid.getSelection();
     this.graph = this.rappid.getGraph();
-    var link = new joint.shapes.standard.Link();
-    this.canvasService.getCanvasModel().subscribe(data =>{
+
+    this.canvasService.getCanvasModel(this.pipeline_id).subscribe(data =>{
       var stages = data.data;
       var stagesArray = [];
       var linksArray = []
@@ -68,8 +70,8 @@ export class CanvasComponent implements OnInit {
         stage.attr(stages[i].shape_attributes);
         stage.position(stages[i].position.x, stages[i].position.y);
         stage.resize(stages[i].shape_size.height, stages[i].shape_size.width);
-        stage.id = stages[i]._id;
-        stage.attributes.id = stages[i]._id;
+        stage.attributes.attrs._id = stages[i]._id;
+        stage.attributes.attrs.dbValues = stages.stage_attributes;
         stage.addTo(this.graph);
         stagesArray.push(stage);
         stage = new joint.shapes.standard.Image();
@@ -79,8 +81,8 @@ export class CanvasComponent implements OnInit {
       for(var i = 0; i < stages.length; i++){
         for(var j = 0; j < stages[i].out.length; j++){
           var link = new joint.shapes.standard.Link();
-          var source = stagesArray[stagesArray.findIndex(stagesArray => stagesArray.id == stages[i]._id)];
-          var target = stagesArray[stagesArray.findIndex(stagesArray => stagesArray.id == stages[i].out[j])];
+          var source = stagesArray[stagesArray.findIndex(stagesArray => stagesArray._id == stages[i]._id)];
+          var target = stagesArray[stagesArray.findIndex(stagesArray => stagesArray._id == stages[i].out[j])];
           link.source(source);
           link.target(target);
           link.addTo(this.graph);
@@ -90,14 +92,14 @@ export class CanvasComponent implements OnInit {
       }
     });
     //link interactions
-    this.paper.on('link:mouseenter', function(linkView) {
-      var tool = [new joint.linkTools.Remove({})]; 
+    this.paper.on('link:mouseenter', function (linkView) {
+      var tool = [new joint.linkTools.Remove({})];
       linkView.addTools(new joint.dia.ToolsView({
         name: 'onhover',
         tools: tool
       }));
     });
-    this.paper.on('link:mouseleave', function(linkView) {
+    this.paper.on('link:mouseleave', function (linkView) {
       if (!linkView.hasTools('onhover')) return;
       linkView.removeTools();
     });
@@ -119,18 +121,17 @@ export class CanvasComponent implements OnInit {
         this.selection.collection.add(elementView.model);
       }
       this.onSearch.emit(elementView);
-      console.log("graph value before service");
-      console.log(this.graph);
-      this.canvasService.saveCanvasModel(elementView.model.id,
+      this.canvasService.saveCanvasModel(
+        this.pipeline_id,
+        elementView.model.attributes.attrs._id,elementView.model.id,
         elementView.model.attributes.attrs,
-        elementView.model.attributes.position,elementView.model.attributes.size,
-        elementView.model.attributes.type).subscribe(data=>{
-          elementView.model.id = data.data._id;
-          console.log("graph value after service");
-          console.log(this.graph);
-      });
+        elementView.model.attributes.attrs.dbValues,
+        elementView.model.attributes.position, elementView.model.attributes.size,
+        elementView.model.attributes.type).subscribe(data => {
+          elementView.model.attributes.attrs._id = data.data._id;
+        });
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
-    }); 
+    });
 
     this.paper.on('element:delete', (elementView: joint.dia.ElementView, evt: JQuery.Event) => {
       if (keyboard.isActive('ctrl meta', evt)) {
@@ -139,60 +140,82 @@ export class CanvasComponent implements OnInit {
       console.log("this element deleted");
       console.log(elementView);
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
-    }); 
+    });
 
     //called when a link is deleted
     this.graph.on('remove', (cell, collection, opt) => {
-      if (cell.isLink()) {
+      var source_id,target_id;
+      var array = this.graph.attributes.cells.models;
+      if (cell.isLink() && cell.attributes.target.id != null && cell.attributes.target.id != cell.attributes.source.id) {
         console.log("delete link");
         console.log(cell);
-        this.canvasService.removeLink(cell.attributes.source.id,cell.attributes.target.id).subscribe(data =>{
-          
+        source_id = array[array.findIndex(array => array.id == cell.attributes.source.id)].attributes.attrs._id;
+        target_id = array[array.findIndex(array => array.id == cell.attributes.target.id)].attributes.attrs._id;
+        this.canvasService.removeLink(source_id, target_id).subscribe(data => {
+
         });
         // a link was removed  (cell.id contains the ID of the removed link)
       }
-      else if(!cell.isLink()){
+      else if (!cell.isLink()) {
         console.log("element deleted");
+        console.log(cell);
+        this.canvasService.removeStage(cell.attributes.attrs._id).subscribe(data => {
+
+        });
         cell.remove();
         console.log("graph after deletion");
         console.log(this.paper);
       }
-   });
-   this.graph.on('add', (cell, collection, opt) =>{
-    /* if (cell.isLink()) {
-      console.log("link added");
-      console.log(cell);
-      // a link was removed  (cell.id contains the ID of the removed link)
-    }
-    else if(!cell.isLink()){
-      console.log("element added");
-      console.log(cell);
-    } */
-  });
+    });
+    this.graph.on('add', (cell, collection, opt) => {
+      if (cell.isLink()) {
+        console.log("link added");
+        console.log(cell);
+        // a link was removed  (cell.id contains the ID of the removed link)
+      }
+      else if (!cell.isLink()) {
+        console.log("element added");
+        console.log(cell);
+        this.canvasService.saveCanvasModel(
+          this.pipeline_id,
+          cell.attributes.attrs._id,cell.id,
+          cell.attributes.attrs,
+          cell.attributes.attrs.dbValues,
+          cell.attributes.position, cell.attributes.size,
+          cell.attributes.type).subscribe(data => {
+            cell.attributes.attrs._id = data.data._id;
+            console.log("graph value after service");
+            console.log(this.graph);
+          });
+      }
+    });
 
 
     //called when a link is made
     this.paper.on('link:pointerup', (elementView, evt: JQuery.Event) => {
       console.log(elementView);
-      if(elementView.model.attributes.target.id != null &&
-         elementView.model.attributes.target.id != elementView.model.attributes.source.id){
-          console.log(elementView.sourceView.model.id);
-          console.log(elementView.targetView.model.id);
-          this.canvasService.addLink(elementView.sourceView.model.id,
-          elementView.targetView.model.id).subscribe(data => {
+      var source_id,target_id;
+      var array = this.graph.attributes.cells.models;
+      if (elementView.model.attributes.target.id != null &&
+        elementView.model.attributes.target.id != elementView.model.attributes.source.id) {
+        source_id = array[array.findIndex(array => array.id == elementView.sourceView.model.id)].attributes.attrs._id;
+        target_id = array[array.findIndex(array => array.id == elementView.targetView.model.id)].attributes.attrs._id;
+        console.log(source_id);
+        console.log(target_id);
+        this.canvasService.addLink(source_id,target_id).subscribe(data => {
             console.log(data);
           });
       }
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
       if (keyboard.isActive('ctrl meta', evt)) {
-          this.selection.collection.add(elementView.model);
+        this.selection.collection.add(elementView.model);
       }
 
     });
   }
 
   executePipeline() {
-    this.data = {process_id: '5c51641b607a223b3ef0ea61'};
+    this.data = { process_id: this.pipeline_id };
     this.stageService.executePipeline(this.data).subscribe(schemadata => {
       console.log(schemadata);
     });
@@ -209,7 +232,7 @@ export class CanvasComponent implements OnInit {
   openRightCol(selectedNav: string) {
     this.selectedRightNav = selectedNav;
   }
-  selectMode(mode: string){
+  selectMode(mode: string) {
     this.selectedMode = mode;
   }
 
@@ -243,7 +266,7 @@ export class CanvasComponent implements OnInit {
   }
 
   showCanvasSetting(event) {
-    let  el = jQuery(event.currentTarget);
+    let el = jQuery(event.currentTarget);
     let li = jQuery('.sub-nav li');
     let gp = jQuery('.stencil-wrap .group');
     let cl = jQuery('.close-stencil-container');

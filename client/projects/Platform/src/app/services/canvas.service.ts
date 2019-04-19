@@ -27,20 +27,28 @@ export class CanvasService {
     }
     return this.http.post(GLOBAL.serviceUrl + '/stage/removeLink' , data );
   }
-  saveCanvasModel(id,attributes,position,size,type): Observable<any> {
+  saveCanvasModel(pipeline_id,mongoId,elementId,attributes,stage_attributes,position,size,type): Observable<any> {
     var data = {
-      id:id,
+      pipeline_id:pipeline_id,
+      mongoId:mongoId,
+      elementId:elementId,
       attributes:attributes,
+      stage_attributes:stage_attributes,
       position:position,
       size:size,
       type:type
     }
     return this.http.post(GLOBAL.serviceUrl + '/stage/saveCanvasModel' , data );
   }
-  removeCanvasModelChild(model): Observable<any> {
-    return this.http.post(GLOBAL.serviceUrl + '/stage/linkStages' , model );
+
+  removeStage(stage_id): Observable<any>{
+    return this.http.delete(GLOBAL.serviceUrl + '/stage/removeStage/' + stage_id);
   }
-  getCanvasModel(): Observable<any>{
-    return this.http.get(GLOBAL.serviceUrl + '/stage/getCanvasModel');
+  /* removeCanvasModelChild(model): Observable<any> {
+    return this.http.post(GLOBAL.serviceUrl + '/stage/linkStages' , model );
+  } */
+
+  getCanvasModel(pipeline_id): Observable<any>{
+    return this.http.get(GLOBAL.serviceUrl + '/stage/getCanvasModel/'+pipeline_id);
   }
 }

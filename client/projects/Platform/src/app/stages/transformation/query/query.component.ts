@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm, CheckboxControlValueAccessor } from '@angular/forms';
 import { StageService } from '../../../services/stage.service';
 import { MatSnackBar , MatDialog } from '@angular/material';
@@ -10,6 +10,7 @@ import { EditorComponent } from '../../sources/editor-dialog/editor-dialog.compo
   styleUrls: ['./query.component.css']
 })
 export class QueryComponent implements OnInit{
+  @Input() stage_id: any;
   data: any ;
   stage: any = {
     stage_attributes: {
@@ -22,12 +23,14 @@ export class QueryComponent implements OnInit{
   stagetype: any = 'transformation';
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
-      console.log(schemadata);
-      this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
-
-    });
+    console.log("stage Id : " + this.stage_id);
+    if(this.stage_id){
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        console.log(schemadata);
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+      });
+    }
   }
 
   ngOnInit() {}
@@ -61,7 +64,7 @@ export class QueryComponent implements OnInit{
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
-    this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, sub_type: this.stage_subtype, stage_type: this.stagetype};
+    this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

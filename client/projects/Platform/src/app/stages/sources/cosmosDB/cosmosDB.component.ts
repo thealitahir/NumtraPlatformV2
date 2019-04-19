@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CosmosdbService } from '../../../services/cosmosdb.service';
 import { StageService } from '../../../services/stage.service';
@@ -13,6 +13,7 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
   styleUrls: ['./cosmosDB.component.css']
 })
 export class CosmosDBComponent implements OnInit{
+  @Input() stage_id: any;
   fileheader: any;
   data: any ;
   stage: any = {
@@ -36,11 +37,13 @@ export class CosmosDBComponent implements OnInit{
   head: any;
   fhead: any;
   constructor(public snackBar: MatSnackBar, public cosmosdbService: CosmosdbService, public stageService: StageService, public dialog: MatDialog) {
-    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
-      this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
-
-    });
+    console.log("stage Id : " + this.stage_id);
+    if(this.stage_id){
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+      });
+    }
   }
 
   ngOnInit(){}
@@ -90,7 +93,7 @@ export class CosmosDBComponent implements OnInit{
      this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fhead, 'stage_attributes.Endpoint': form.value.cosmosdomain,
      'stage_attributes.Collection': form.value.containerid, 'stage_attributes.Database':  form.value.dbid,
      'stage_attributes.Masterkey': form.value.cosmoskey, 'stage_attributes.query':  form.value.cosmosquery, 'stage_attributes.upsert': true },
-     sub_type: this.stage_subtype, stage_type: this.stagetype};
+     stage_id: this.stage_id};
      this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');
