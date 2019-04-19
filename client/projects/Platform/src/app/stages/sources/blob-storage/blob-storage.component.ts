@@ -33,6 +33,9 @@ export class BlobStorageComponent implements OnInit{
   stage_subtype: any = 'BlobStorage';
   stagetype: any = 'source';
   error: any;
+  fileExplorer: any;
+  fileExplorerView: any;
+
   constructor(public snackBar: MatSnackBar, public blobService: BlobService, public stageService: StageService, public dialog: MatDialog) {
     this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
       this.stage = schemadata.data;
@@ -90,6 +93,13 @@ export class BlobStorageComponent implements OnInit{
         this.openSnackBar('Error:', 'Try Again!');
       }
     });
+  }
+
+  chooseFile(form: NgForm){
+    if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
+      this.fileExplorer = {token: form.value.dbfstoken , domain: form.value.dbfsdomain};
+      this.fileExplorerView = 1;
+    }
   }
 
   getContainers() {

@@ -3,13 +3,14 @@ import { NgForm } from '@angular/forms';
 import { DbfsService } from '../../../services/dbfs.service';
 import { StageService } from '../../../services/stage.service';
 import { DiscoverDataComponent } from '../discover-data-dialog/discover-data-dialog.component';
+import { FileExplorerComponent } from '../../../file-explorer/file-explorer.component';
 import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
 import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
   selector: 'app-dbfs',
   templateUrl: './DBFS.component.html',
-  styleUrls: ['./DBFS.component.css']
+  styleUrls: ['./DBFS.component.css'],
 })
 export class DbfsComponent implements OnInit{
   fileheader: any;
@@ -105,7 +106,7 @@ export class DbfsComponent implements OnInit{
   }
   chooseFile(form: NgForm){
     if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
-      this.fileExplorer = [{token: form.value.dbfstoken , domain: form.value.dbfsdomain}];
+      this.fileExplorer = {token: form.value.dbfstoken , domain: form.value.dbfsdomain};
       this.fileExplorerView = 1;
     }
   }
