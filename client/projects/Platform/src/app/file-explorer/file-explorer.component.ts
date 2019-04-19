@@ -2,7 +2,7 @@ import { Component,Input, OnInit ,Output,EventEmitter} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { StageService } from '../services/stage.service';
 import { MatSnackBar } from '@angular/material';
-
+import { BlobService } from '../services/blob.service';
 import { DbfsService } from '../services/dbfs.service';
 
 import { TreeComponent,TreeModel,ITreeOptions, TreeNode} from 'angular-tree-component';
@@ -32,6 +32,7 @@ export class FileExplorerComponent implements OnInit {
   //   token:'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
   //   domain:'https://westus.azuredatabricks.net'
    };
+   childata: any;
   credentials: any;
   directories: any;
   subDirectories: any;
@@ -44,32 +45,84 @@ export class FileExplorerComponent implements OnInit {
     useCheckbox: true,
     useTriState: true
   };
+  blobslist: any;
+  blobs: any;
 
   constructor(
       public stageService: StageService,
       public snackBar: MatSnackBar,
-      public dbfsService : DbfsService
+      public dbfsService : DbfsService,
+      public blobService: BlobService,
     ) {
 
    }
 
    ngOnInit() {
     console.log(this.fileExplorer);
-    this.data = this.fileExplorer;
-    this.selectedData = [];
+    if (this.fileExplorer.type === 'blobStorage') {
+      this.data = this.fileExplorer.cred;
+        // this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
+        this.blobService.getContainers(this.data).subscribe(data => {
+          const containerslist = data[0].Container;
+          for (let i = 0 ; i < containerslist.length; i++) {
+            const obj = {name: containerslist[i].Name , path: '/' + containerslist[i].Name, hasChildren: true };
+            this.nodes.push(obj);
+          }
+        });
+      }
+
+    if (this.fileExplorer.type === 'Dbfs') {
+      this.data = this.fileExplorer.cred;
+      this.selectedData = [];
       this.timer = 0;
       this.dbfsService.getDataFiles({token: this.data.token , domain: this.data.domain,path:'/'}).subscribe(data => {
         this.directories = data.files;
         this.nodes = data.files;
       });
+    }
   }
-   getChildren(node: TreeNode) {
+
+  getChildren(node: TreeNode) {
     return new Promise((resolve, reject) => {
-      this.dbfsService.getDataFiles({token: this.data.token , domain: this.data.domain,path:node.data.path}).subscribe(data => {
-        resolve(data.files)
-      });
+      if (this.fileExplorer.type === 'blobStorage') {
+
+          this.childata = {accountName: this.data.accountName, accountKey: this.data.accountKey, container: node.data.name };
+          //this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
+          this.blobService.getBlobsList(this.childata).subscribe(data => {
+            this.blobslist = data[0].Blob;
+            for (let i = 0 ; i < this.blobslist.length; i++) {
+              const bname = this.blobslist[i].Name;
+              if ( !bname.includes('/')) {
+                this.blobs.push({name: bname, hasChildren: false});
+              }
+              // const obj = {name: this.blobslist[i].Name , path: '/' + this.blobslist[i].Name, hasChildren: true };
+              //this.nodes.push(obj);
+            }
+            for (let i = 0 ; i < this.blobs.length; i++) {
+              const bname = this.blobs[i].name;
+              for (let j = 0 ; j < this.blobslist.length; j++) {
+                if ( bname.includes(bname + '/')) {
+                  this.blobs.hasChildren = true;
+                  const obj = {name: this.blobslist[j].Name , path: this.blobslist[j].Name, hasChildren: false };
+                  this.blobs.children.push(obj);
+                }
+              }
+            }
+            resolve(this.blobs);
+            //this.stage.stage_attributes.url = this.stage.stage_attributes.accountname + '/' + this.stage.stage_attributes.containername;
+          });
+
+
+
+      }
+      if (this.fileExplorer.type === 'Dbfs') {
+        this.dbfsService.getDataFiles({token: this.data.token , domain: this.data.domain,path:node.data.path}).subscribe(data => {
+          resolve(data.files)
+        });
+      }
     });
   }
+
   getSelectedTreeNodes(tree){
     var selected = new Array();
     var parsedSelected = [];

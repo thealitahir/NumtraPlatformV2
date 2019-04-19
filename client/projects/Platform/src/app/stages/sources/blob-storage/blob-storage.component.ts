@@ -42,28 +42,28 @@ export class BlobStorageComponent implements OnInit, OnChanges{
 
   ngOnInit() {}
 
-  ngOnChanges(changes: any) { 
+  ngOnChanges(changes: any) {
     for (let propName in changes) {
-      // only run when property "task" changed 
+      // only run when property "task" changed
       if (propName === 'stage_id') {
         console.log("stage Id : " + this.stage_id);
         if (this.stage_id) {
           this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
             this.stage = schemadata.data;
-      
+
             if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' ){
               this.getContainers();
             }
-      
+
             if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' && this.stage.stage_attributes.containername !== '' ){
               this.getBlobs();
             }
-      
+
           });
         }
       }
-    } 
-  } 
+    }
+  }
 
   getSchemaandSave(form: NgForm) {
     if (form.invalid) {
@@ -107,9 +107,9 @@ export class BlobStorageComponent implements OnInit, OnChanges{
     });
   }
 
-  chooseFile(form: NgForm){
+  chooseFile(form: NgForm) {
     if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
-      this.fileExplorer = {token: form.value.dbfstoken , domain: form.value.dbfsdomain};
+      this.fileExplorer = {type: 'blobStorage', cred: {accountKey: form.value.accountkey , accountName: form.value.accountname}};
       this.fileExplorerView = 1;
     }
   }

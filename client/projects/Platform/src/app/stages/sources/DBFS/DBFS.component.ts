@@ -36,14 +36,14 @@ export class DbfsComponent implements OnInit, OnChanges{
   fileExplorerSource:any;
   error: any;
   constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
- 
+
   }
 
   ngOnInit(){
   }
-  ngOnChanges(changes: any) { 
+  ngOnChanges(changes: any) {
     for (let propName in changes) {
-      // only run when property "task" changed 
+      // only run when property "task" changed
       if (propName === 'stage_id') {
         console.log("stage Id : " + this.stage_id);
         if (this.stage_id) {
@@ -53,8 +53,8 @@ export class DbfsComponent implements OnInit, OnChanges{
           });
         }
       }
-    } 
-  } 
+    }
+  }
   getSchemahenSave(form: NgForm) {
     if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
@@ -117,7 +117,7 @@ export class DbfsComponent implements OnInit, OnChanges{
   }
   chooseFile(form: NgForm){
     if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
-      this.fileExplorer = {token: form.value.dbfstoken , domain: form.value.dbfsdomain};
+      this.fileExplorer = {type: 'Dbfs', cred: {token: form.value.dbfstoken , domain: form.value.dbfsdomain}};
       this.fileExplorerView = 1;
     }
   }

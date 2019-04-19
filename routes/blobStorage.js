@@ -57,6 +57,7 @@ router.post('/getBlobsList', function(req,res) {
             'Authorization': auth  ,
         },
     }, function(error, response, body) {
+            console.log(body);
             parseString(body, function (err, result) {
             res.send(result.EnumerationResults.Blobs);
         });  
