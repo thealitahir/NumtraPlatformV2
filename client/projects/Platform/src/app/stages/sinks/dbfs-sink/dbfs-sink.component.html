@@ -36,20 +36,20 @@
 
     <mat-form-field>
       <mat-select name="fileDelimeter" placeholder="Source Delimeter"
-        [(ngModel)]='stage.stage_attributes.source_delimeter' required>
+        [(ngModel)]='stage.stage_attributes.delimiter' required>
         <mat-option value="">Select Source Delimeter </mat-option>
-        <mat-option value="comma ,">comma ,</mat-option>
-        <mat-option value='tab \t'>tab \t</mat-option>
-        <mat-option value='forward slash /'>forward slash /</mat-option>
-        <mat-option value='semi-colon ;'>semi-colon ;</mat-option>
-        <mat-option value='percentage %'>comma ,</mat-option>
-        <mat-option value='minus -'>minus -</mat-option>
-        <mat-option value='back slash \'>back slash \</mat-option>
-        <mat-option value='colon :'>colon :</mat-option>
-        <mat-option value='space '>space </mat-option>
-        <mat-option value='dollar $'>dollar $</mat-option>
-        <mat-option value='dot .'>dot .</mat-option>
-        <mat-option value='at the rate @'>at the rate @</mat-option>
+        <mat-option value=",">comma ,</mat-option>
+        <mat-option value='\t'>tab \t</mat-option>
+        <mat-option value='/'>forward slash /</mat-option>
+        <mat-option value=';'>semi-colon ;</mat-option>
+        <mat-option value='%'>percent %</mat-option>
+        <mat-option value='-'>minus -</mat-option>
+        <mat-option value='\'>back slash \</mat-option>
+        <mat-option value=':'>colon :</mat-option>
+        <mat-option value=' '>space </mat-option>
+        <mat-option value='$'>dollar $</mat-option>
+        <mat-option value='.'>dot .</mat-option>
+        <mat-option value='@'>at the rate @</mat-option>
       </mat-select>
     </mat-form-field>
 

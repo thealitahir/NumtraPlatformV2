@@ -20,6 +20,7 @@ var resource=  require('./routes/resources');
 var section=  require('./routes/sectionRoute');
 var component  =  require('./routes/componentRoute');
 var dbfs=  require('./routes/dbfs');
+var blob=  require('./routes/blobStorage');
 var cosmos=  require('./routes/cosmos');
 var stage=  require('./routes/stages');
 var project= require('./routes/project');
@@ -108,6 +109,7 @@ app.use("/resources",resource);
 app.use("/sections",section);
 app.use("/components",component);
 app.use('/dbfs',dbfs);
+app.use('/blob',blob);
 app.use('/cosmos',cosmos);
 app.use('/stage',stage);
 app.use('/project',project);
@@ -141,10 +143,16 @@ app.get('/components', (req, res) => res.json({
 app.get('/dataSourceApi', (req, res) => res.json({
   application: 'Reibo collection'
 }));
+
 app.get('/modelApi', (req, res) => res.json({
   application: 'Reibo collection'
 }));
+
 app.get('/dbfs', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/blob', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 

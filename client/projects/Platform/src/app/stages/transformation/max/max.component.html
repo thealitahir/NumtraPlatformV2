@@ -8,7 +8,7 @@
     </mat-form-field>
     <mat-form-field>
         <mat-label>Select Column</mat-label>
-      <mat-select name="field" [(ngModel)]='stage.stage_attributes.attributes.field' required>
+      <mat-select name="field" [(ngModel)]='stage.stage_attributes.attributes.columnName' required>
         <mat-option *ngFor='let sSchema of stageSchema' (click)='selectFieldType(sSchema)' [value]='sSchema.field'>
           {{ sSchema.field }} </mat-option>
       </mat-select>

@@ -1,19 +1,16 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { CosmosdbService } from '../../../services/cosmosdb.service';
 import { StageService } from '../../../services/stage.service';
-import { DiscoverDataComponent } from '../discover-data-dialog/discover-data-dialog.component';
-import { EditorComponent } from '../editor-dialog/editor-dialog.component';
-import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
-import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
+import { EditorComponent } from '../../sources/editor-dialog/editor-dialog.component';
+import { MatSnackBar, MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'app-cosmosdb',
-  templateUrl: './cosmosDB.component.html',
-  styleUrls: ['./cosmosDB.component.css']
+  selector: 'app-cosmosdb-sink',
+  templateUrl: './cosmosDB-sink.component.html',
+  styleUrls: ['./cosmosDB-sink.component.css']
 })
-export class CosmosDBComponent implements OnInit{
-  @Input() stage_id: any;
+export class CosmosDBSinkComponent implements OnInit{
   fileheader: any;
   data: any ;
   stage: any = {
@@ -31,19 +28,17 @@ export class CosmosDBComponent implements OnInit{
   fileExplorerView:any = 0;
   stageSchema: any;
   stage_subtype: any = 'CosmosDB';
-  stagetype: any = 'source';
+  stagetype: any = 'sink';
   error: any;
   dbdata: any;
   head: any;
   fhead: any;
   constructor(public snackBar: MatSnackBar, public cosmosdbService: CosmosdbService, public stageService: StageService, public dialog: MatDialog) {
-    console.log("stage Id : " + this.stage_id);
-    if(this.stage_id){
-      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-        this.stage = schemadata.data;
-        this.stageSchema = schemadata.data.original_schema;
-      });
-    }
+    this.stageService.getStageSchema(this.stage_subtype, this.stagetype).subscribe(schemadata => {
+      this.stage = schemadata.data;
+      this.stageSchema = schemadata.data.original_schema;
+
+    });
   }
 
   ngOnInit(){}
@@ -93,7 +88,7 @@ export class CosmosDBComponent implements OnInit{
      this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fhead, 'stage_attributes.Endpoint': form.value.cosmosdomain,
      'stage_attributes.Collection': form.value.containerid, 'stage_attributes.Database':  form.value.dbid,
      'stage_attributes.Masterkey': form.value.cosmoskey, 'stage_attributes.query':  form.value.cosmosquery, 'stage_attributes.upsert': true },
-     stage_id: this.stage_id};
+     sub_type: this.stage_subtype, stage_type: this.stagetype};
      this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');
@@ -104,29 +99,29 @@ export class CosmosDBComponent implements OnInit{
     });
   }
 
-  discoverData(form: NgForm) {
-    if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
-      this.error = '';
-      this.data = {query: form.value.cosmosquery, key: form.value.cosmoskey , domain: form.value.cosmosdomain, db: form.value.dbid, container: form.value.containerid };
-      this.openSnackBar('SUCCESS:', 'Requested sample data.');
-      this.cosmosdbService.getDataSource(this.data).subscribe(data => {
-        this.dbdata = {filedata: data};
-        this.openDialog(this.dbdata);
-        this.fileheader = data.fileheader;
-      });
-    }
+  // discoverData(form: NgForm) {
+  //   if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
+  //     this.error = '';
+  //     this.data = {query: form.value.cosmosquery, key: form.value.cosmoskey , domain: form.value.cosmosdomain, db: form.value.dbid, container: form.value.containerid };
+  //     this.openSnackBar('SUCCESS:', 'Requested sample data.');
+  //     this.cosmosdbService.getDataSource(this.data).subscribe(data => {
+  //       this.dbdata = {filedata: data};
+  //       this.openDialog(this.dbdata);
+  //       this.fileheader = data.fileheader;
+  //     });
+  //   }
 
-  }
+  // }
 
-  openDialog(sampledata): void {
-    const dialogRef = this.dialog.open(DiscoverDataComponent, {
-      width: '900px',
-      disableClose: true,
-      data: {
-        sampleData: sampledata,
-      }
-    });
-  }
+  // openDialog(sampledata): void {
+  //   const dialogRef = this.dialog.open(DiscoverDataComponent, {
+  //     width: '900px',
+  //     disableClose: true,
+  //     data: {
+  //       sampleData: sampledata,
+  //     }
+  //   });
+  // }
 
   openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {

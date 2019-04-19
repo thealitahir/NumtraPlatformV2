@@ -20,10 +20,11 @@ export class DbfsComponent implements OnInit, OnChanges{
     original_schema: [],
     stage_attributes: {
       url: '',
-      source_delimeter: '',
+      delimiter: '',
       file_type: '',
       dbfs_token: '',
-      dbfs_domain: ''
+      dbfs_domain: '',
+      is_header: 'Use Header Line'
     }
   };
   fileExplorer:any;
@@ -81,9 +82,12 @@ export class DbfsComponent implements OnInit, OnChanges{
      console.log('form value');
      console.log(form.value);
     this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fileheader, 'stage_attributes.url': form.value.url,
+
      'stage_attributes.source_delimeter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
-     'stage_attributes.dbfs_token': form.value.dbfstoken, 'stage_attributes.dbfs_domain':  form.value.dbfsdomain },
+     'stage_attributes.dbfs_token': form.value.dbfstoken, 'stage_attributes.dbfs_domain':  form.value.dbfsdomain,
+     'stage_attributes.is_header': 'Use Header Line' },
      stage_id: this.stage_id};
+
      console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
       // console.log(data);

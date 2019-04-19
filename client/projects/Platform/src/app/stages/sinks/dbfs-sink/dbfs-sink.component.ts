@@ -15,7 +15,7 @@ export class DbfsSinkComponent implements OnInit, OnChanges {
     name: '',
     stage_attributes: {
       url: '',
-      source_delimeter: '',
+      delimiter: '',
       file_type: ''
     }
   };
@@ -46,7 +46,7 @@ export class DbfsSinkComponent implements OnInit, OnChanges {
   saveSinkDbfs(form: NgForm) {
     this.data = {formdata: form.value};
     console.log(this.data);
-    this.data = {updatedata: { 'name': this.stage.name, 'stage_attributes.url': form.value.url, 'stage_attributes.source_delimeter': form.value.fileDelimeter,
+    this.data = {updatedata: { 'name': this.stage.name, 'stage_attributes.url': form.value.url, 'stage_attributes.delimiter': form.value.fileDelimeter,
     'stage_attributes.file_type':  form.value.fileType, 'stage_attributes.dbfs_token': form.value.dbfstoken,
     'stage_attributes.dbfs_domain':  form.value.dbfsdomain }, stage_id: this.stage_id};
 

@@ -76,7 +76,7 @@ export class CanvasComponent implements OnInit {
         stagesArray.push(stage);
         stage = new joint.shapes.standard.Image();
       }
-  
+
       //creating all links
       for(var i = 0; i < stages.length; i++){
         for(var j = 0; j < stages[i].out.length; j++){
@@ -93,6 +93,7 @@ export class CanvasComponent implements OnInit {
     });
     //link interactions
     this.paper.on('link:mouseenter', function (linkView) {
+
       var tool = [new joint.linkTools.Remove({})];
       linkView.addTools(new joint.dia.ToolsView({
         name: 'onhover',
@@ -152,6 +153,7 @@ export class CanvasComponent implements OnInit {
         source_id = array[array.findIndex(array => array.id == cell.attributes.source.id)].attributes.attrs._id;
         target_id = array[array.findIndex(array => array.id == cell.attributes.target.id)].attributes.attrs._id;
         this.canvasService.removeLink(source_id, target_id).subscribe(data => {
+
 
         });
         // a link was removed  (cell.id contains the ID of the removed link)
@@ -216,6 +218,7 @@ export class CanvasComponent implements OnInit {
 
   executePipeline() {
     this.data = { process_id: this.pipeline_id };
+
     this.stageService.executePipeline(this.data).subscribe(schemadata => {
       console.log(schemadata);
     });

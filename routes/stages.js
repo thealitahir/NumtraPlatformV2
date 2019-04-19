@@ -17,6 +17,7 @@ router.post('/updateStage', function (req, res) {
       res.send({ status: false, msg: 'stage not saved.' });
     }
   });
+
 })
 
 router.post('/linkStages', function (req, res) {

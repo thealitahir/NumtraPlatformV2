@@ -52,6 +52,8 @@ import { AddStageComponent } from './stages/add-stage/add-stage.component';
 import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
 import { ShowStageComponent } from './stages/show-stage/show-stage.component';
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
+import { BlobStorageComponent } from './stages/sources/blob-storage/blob-storage.component';
+import { BlobStorageSinkComponent } from './stages/sinks/blob-storage-sink/blob-storage-sink.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { MinComponent } from './stages/transformation/min/min.component';
@@ -64,6 +66,7 @@ import { ApplicationComponent } from './projects/application-dialog/application-
 import { FileReadComponent } from './projects/fileRead-dialog/fileRead-dialog.component';
 import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer.component';
 import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component';
+import { CosmosDBSinkComponent } from './stages/sinks/cosmosDB-sink/cosmosDB-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { FileExplorerComponent } from './file-explorer/file-explorer.component';
 
@@ -85,6 +88,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     ShowStageComponent,
     DbfsComponent,
     CosmosDBComponent,
+    BlobStorageComponent,
+    BlobStorageSinkComponent,
     MaxComponent,
     MinComponent,
     QueryComponent,
@@ -100,6 +105,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     ModelCategoryFilterPipe,
     PipelineDesignerComponent,
     DbfsSinkComponent,
+    CosmosDBSinkComponent,
     DataExplorerComponent,
     FileExplorerComponent
 
