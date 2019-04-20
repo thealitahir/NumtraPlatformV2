@@ -26,16 +26,18 @@ export class FileExplorerComponent implements OnInit {
   @Output() selectedNodesEvent = new EventEmitter();
 
   selectedTreeNodes: SelectedTreeNodes[] = [];
-  data: any ={
-    token:'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
-    domain:'https://westus.azuredatabricks.net'
-  };
-  credentials:any;
-  directories:any;
-  subDirectories:any;
-  selectedData:any = [];
+   data: any ={
+     token: '',
+     domain: '',
+  //   token:'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
+  //   domain:'https://westus.azuredatabricks.net'
+   };
+  credentials: any;
+  directories: any;
+  subDirectories: any;
+  selectedData: any = [];
   isSingleClick: Boolean = true;
-  timer : any;  
+  timer : any;
   nodes: any[] = [];
   options: ITreeOptions = {
     getChildren: this.getChildren.bind(this),
@@ -43,19 +45,24 @@ export class FileExplorerComponent implements OnInit {
     useTriState: true
   };
 
-  c
   constructor(
       public stageService: StageService,
       public snackBar: MatSnackBar,
       public dbfsService : DbfsService
     ) {
-      this.selectedData = [];
+
+   }
+
+   ngOnInit() {
+    console.log(this.fileExplorer);
+    this.data = this.fileExplorer;
+    this.selectedData = [];
       this.timer = 0;
       this.dbfsService.getDataFiles({token: this.data.token , domain: this.data.domain,path:'/'}).subscribe(data => {
         this.directories = data.files;
         this.nodes = data.files;
       });
-   }
+  }
    getChildren(node: TreeNode) {
     return new Promise((resolve, reject) => {
       this.dbfsService.getDataFiles({token: this.data.token , domain: this.data.domain,path:node.data.path}).subscribe(data => {
@@ -63,7 +70,7 @@ export class FileExplorerComponent implements OnInit {
       });
     });
   }
-  getSelectedTreeNodes(tree){    
+  getSelectedTreeNodes(tree){
     var selected = new Array();
     var parsedSelected = [];
     tree.treeModel.doForAll(function (node: TreeNode) {
@@ -99,14 +106,13 @@ export class FileExplorerComponent implements OnInit {
       if(id !== data[n].id){
         if(data[n].path.indexOf(path) != -1){
           return true;
-          
+
         }
       }
     }
     return false;
   }
-   
-  ngOnInit() {
-  }
+
+
 
 }

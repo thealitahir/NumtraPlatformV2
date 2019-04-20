@@ -25,6 +25,10 @@
       </mat-select>
     </mat-form-field>
 
+    <br />
+    <a href="javascript:void(0)" (click)='chooseFile(blobForm)' >Choose Data File</a>
+    <br />
+
     <mat-form-field>
       <mat-select name="blobname" placeholder="Blob"  [(ngModel)]='stage.stage_attributes.blobname'  required>
         <mat-option value="">Select Blob </mat-option>
