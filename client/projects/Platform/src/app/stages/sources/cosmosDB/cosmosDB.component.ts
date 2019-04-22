@@ -92,7 +92,7 @@ export class CosmosDBComponent implements OnInit{
      this.data = {formdata: form.value, fileheader: this.fileheader};
      this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fhead, 'stage_attributes.Endpoint': form.value.cosmosdomain,
      'stage_attributes.Collection': form.value.containerid, 'stage_attributes.Database':  form.value.dbid,
-     'stage_attributes.Masterkey': form.value.cosmoskey, 'stage_attributes.query':  form.value.cosmosquery, 'stage_attributes.upsert': true },
+     'stage_attributes.Masterkey': form.value.cosmoskey, 'stage_attributes.query':  form.value.cosmosquery },
      stage_id: this.stage_id};
      this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {

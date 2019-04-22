@@ -60,14 +60,21 @@ export class FileExplorerComponent implements OnInit {
    ngOnInit() {
     console.log(this.fileExplorer);
     if (this.fileExplorer.type === 'blobStorage') {
+      console.log('blobstorage');
       this.data = this.fileExplorer.cred;
         // this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
         this.blobService.getContainers(this.data).subscribe(data => {
+          console.log(data);
           const containerslist = data[0].Container;
+          console.log(containerslist);
+          var array=[];
           for (let i = 0 ; i < containerslist.length; i++) {
-            const obj = {name: containerslist[i].Name , path: '/' + containerslist[i].Name, hasChildren: true };
-            this.nodes.push(obj);
+            const obj = {name: containerslist[i].Name[0] , path: '/' + containerslist[i].Name, hasChildren: true };
+            array.push(obj);
+
           }
+          this.nodes = array;
+          console.log(this.nodes);
         });
       }
 
@@ -78,6 +85,7 @@ export class FileExplorerComponent implements OnInit {
       this.dbfsService.getDataFiles({token: this.data.token , domain: this.data.domain,path:'/'}).subscribe(data => {
         this.directories = data.files;
         this.nodes = data.files;
+        console.log(this.nodes);
       });
     }
   }
@@ -85,30 +93,34 @@ export class FileExplorerComponent implements OnInit {
   getChildren(node: TreeNode) {
     return new Promise((resolve, reject) => {
       if (this.fileExplorer.type === 'blobStorage') {
-
+          console.log(node.data);
           this.childata = {accountName: this.data.accountName, accountKey: this.data.accountKey, container: node.data.name };
           //this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
           this.blobService.getBlobsList(this.childata).subscribe(data => {
             this.blobslist = data[0].Blob;
+            var blobs = [];
             for (let i = 0 ; i < this.blobslist.length; i++) {
-              const bname = this.blobslist[i].Name;
+              const bname = this.blobslist[i].Name[0];
               if ( !bname.includes('/')) {
-                this.blobs.push({name: bname, hasChildren: false});
+                blobs.push({name: bname, path: node.data.name + '/' + this.blobslist[i].Name, hasChildren: false});
               }
               // const obj = {name: this.blobslist[i].Name , path: '/' + this.blobslist[i].Name, hasChildren: true };
               //this.nodes.push(obj);
             }
-            for (let i = 0 ; i < this.blobs.length; i++) {
-              const bname = this.blobs[i].name;
+            for (let i = 0 ; i < blobs.length; i++) {
+              const blobname = blobs[i].name;
               for (let j = 0 ; j < this.blobslist.length; j++) {
-                if ( bname.includes(bname + '/')) {
-                  this.blobs.hasChildren = true;
-                  const obj = {name: this.blobslist[j].Name , path: this.blobslist[j].Name, hasChildren: false };
-                  this.blobs.children.push(obj);
+                const bname = this.blobslist[j].Name[0];
+                if ( bname.includes(blobname + '/')) {
+                  blobs[i].hasChildren = true;
+                  const obj = {name: this.blobslist[j].Name[0] , path:'/' + node.data.name + '/' + this.blobslist[j].Name[0], hasChildren: false };
+                  blobs[i].children = [];
+                  blobs[i].children.push(obj);
                 }
               }
             }
-            resolve(this.blobs);
+            console.log(blobs);
+            resolve(blobs);
             //this.stage.stage_attributes.url = this.stage.stage_attributes.accountname + '/' + this.stage.stage_attributes.containername;
           });
 
@@ -140,6 +152,7 @@ export class FileExplorerComponent implements OnInit {
 
     setTimeout(() => {
       this.selectedData = selected;
+      console.log(this.selectedData);
       for(var i=0;i<this.selectedData.length;i++){
         var pathExists = this.checkPathExists(this.selectedData,this.selectedData[i].path,this.selectedData[i].id);
         if(!pathExists){
@@ -149,6 +162,7 @@ export class FileExplorerComponent implements OnInit {
           });
         }
       }
+      console.log(parsedSelected);
       this.selectedNodesEvent.emit(parsedSelected);
 
 

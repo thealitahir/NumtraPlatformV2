@@ -18,23 +18,22 @@
         [(ngModel)]='stage.stage_attributes.accountkey' required>
     </mat-form-field>
 
-    <mat-form-field>
-      <mat-select name="containername" placeholder="Container" (click)='getContainers()'  [(ngModel)]='stage.stage_attributes.containername' required>
+      <!-- <mat-select name="containername" placeholder="Container" (click)='getContainers()'  [(ngModel)]='stage.stage_attributes.containername' required>
         <mat-option value="">Select Container </mat-option>
         <mat-option *ngFor='let cl of containerslist' (click)='getBlobs()' value="{{cl.Name}}"> {{cl.Name}} </mat-option>
-      </mat-select>
-    </mat-form-field>
+      </mat-select> -->
+
 
     <br />
     <a href="javascript:void(0)" (click)='chooseFile(blobForm)' >Choose Data File</a>
     <br />
 
-    <mat-form-field>
-      <mat-select name="blobname" placeholder="Blob"  [(ngModel)]='stage.stage_attributes.blobname'  required>
+
+      <!-- <mat-select name="blobname" placeholder="Blob"  [(ngModel)]='stage.stage_attributes.blobname'  required>
         <mat-option value="">Select Blob </mat-option>
         <mat-option *ngFor='let bl of blobslist' (click)='selectBlob(blobForm)' value="{{bl.Name}}"> {{bl.Name}} </mat-option>
-      </mat-select>
-    </mat-form-field>
+      </mat-select> -->
+
 
     <mat-form-field>
       <input matInput type="text" name="url" placeholder="URL" #url="ngModel" [(ngModel)]='stage.stage_attributes.url'
@@ -78,4 +77,10 @@
       <button mat-stroked-button color="accent" (click)=" getSchemaandSave(blobForm)" type="submit">Save</button>
     </div>
   </form>
+</div>
+
+
+<div *ngIf="fileExplorerView === 1">
+  {{fileExplorer}}
+  <app-file-explorer [fileExplorer]='fileExplorer' (selectedNodesEvent)='getSelectedFiles($event)'></app-file-explorer>
 </div>
