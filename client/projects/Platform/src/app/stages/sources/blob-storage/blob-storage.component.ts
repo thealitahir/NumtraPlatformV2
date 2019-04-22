@@ -4,6 +4,7 @@ import { BlobService } from '../../../services/blob.service';
 import { StageService } from '../../../services/stage.service';
 import { DiscoverDataComponent } from '../discover-data-dialog/discover-data-dialog.component';
 import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
+import { splitAtColon } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-blob-storage',
@@ -34,43 +35,47 @@ export class BlobStorageComponent implements OnInit, OnChanges{
   stage_subtype: any = 'BlobStorage';
   stagetype: any = 'source';
   error: any;
+  fileExplorer: any;
+  fileExplorerView: any;
+  fileExplorerSource: any;
+
   constructor(public snackBar: MatSnackBar, public blobService: BlobService, public stageService: StageService, public dialog: MatDialog) {
   }
 
   ngOnInit() {}
 
-  ngOnChanges(changes: any) { 
+  ngOnChanges(changes: any) {
     for (let propName in changes) {
-      // only run when property "task" changed 
+      // only run when property "task" changed
       if (propName === 'stage_id') {
         console.log("stage Id : " + this.stage_id);
         if (this.stage_id) {
           this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
             this.stage = schemadata.data;
-      
+
             if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' ){
               this.getContainers();
             }
-      
+
             if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' && this.stage.stage_attributes.containername !== '' ){
               this.getBlobs();
             }
-      
+
           });
         }
       }
-    } 
-  } 
+    }
+  }
 
   getSchemaandSave(form: NgForm) {
     if (form.invalid) {
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
-    if (form.value.accountname !== '' && form.value.accountkey !== '' && form.value.containername !== '' && form.value.blobname !== '' ) {
+    if (form.value.accountname !== '' && form.value.accountkey !== '' && this.stage.stage_attributes.containername !== '' && this.stage.stage_attributes.blobname !== '' ) {
       this.error = '';
       this.openSnackBar('Info:', 'Save stage in process, Please wait!');
-      this.data = {accountName: form.value.accountname, accountKey: form.value.accountkey, container: form.value.containername, blob: form.value.blobname  };
+      this.data = {accountName: form.value.accountname, accountKey: form.value.accountkey, container: this.stage.stage_attributes.containername, blob: this.stage.stage_attributes.blobname  };
       this.blobService.getBlob(this.data).subscribe(data => {
         this.fileheader = data.fileheader;
 
@@ -96,6 +101,7 @@ export class BlobStorageComponent implements OnInit, OnChanges{
      'stage_attributes.blobname': form.value.blobname },
      stage_id: this.stage_id};
      console.log("stage data");
+
      console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
@@ -104,6 +110,30 @@ export class BlobStorageComponent implements OnInit, OnChanges{
         this.openSnackBar('Error:', 'Try Again!');
       }
     });
+  }
+
+  chooseFile(form: NgForm) {
+    console.log(form.value);
+    if (form.value.accountkey !== '' && form.value.accountname !== '' ) {
+      this.fileExplorer = {type: 'blobStorage', cred: {accountKey: form.value.accountkey , accountName: form.value.accountname}};
+      this.fileExplorerView = 1;
+    }
+  }
+
+  getSelectedFiles(event){
+    this.fileExplorerSource = event;
+    console.log(this.fileExplorerSource);
+    if( this.fileExplorerSource[0].path) {
+      this.stage.stage_attributes.url = this.fileExplorerSource[0].path;
+      this.stage.stage_attributes.blobname = this.fileExplorerSource[0].name;
+      var selectedpath = [];
+      selectedpath = this.stage.stage_attributes.url.split('/');
+      this.stage.stage_attributes.containername = selectedpath[1];
+    } else {
+      this.openSnackBar('Error:', 'File not selected.');
+    }
+
+    this.fileExplorerView = 0;
   }
 
   getContainers() {
@@ -129,16 +159,16 @@ export class BlobStorageComponent implements OnInit, OnChanges{
     }
   }
 
-  selectBlob(form: NgForm) {
-    if (form.value.accountname !== '' && form.value.accountkey !== '' && form.value.containername !== '' && form.value.blobname !== '' ) {
-      this.stage.stage_attributes.url = form.value.accountname + '/' + form.value.containername + '/' + form.value.blobname;
-    }
-  }
+  // selectBlob(form: NgForm) {
+  //   if (form.value.accountname !== '' && form.value.accountkey !== '' && form.value.containername !== '' && form.value.blobname !== '' ) {
+  //     this.stage.stage_attributes.url = form.value.accountname + '/' + form.value.containername + '/' + form.value.blobname;
+  //   }
+  // }
 
   discoverData(form: NgForm) {
-    if (form.value.accountname !== '' && form.value.accountkey !== '' && form.value.containername !== '' && form.value.blobname !== '' ) {
+    if (form.value.accountname !== '' && form.value.accountkey !== '' && this.stage.stage_attributes.containername !== '' && this.stage.stage_attributes.blobname !== '' ) {
       this.error = '';
-      this.data = {accountName: form.value.accountname, accountKey: form.value.accountkey, container: form.value.containername, blob: form.value.blobname  };
+      this.data = {accountName: form.value.accountname, accountKey: form.value.accountkey, container:this.stage.stage_attributes.containername, blob: this.stage.stage_attributes.blobname  };
       this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
       this.blobService.getBlob(this.data).subscribe(data => {
         this.openDialog(data);
