@@ -46,12 +46,12 @@ const allowedExt = [
 
 // Configurations
 global.CONFIGURATIONS ={ 
-  dbHost: '192.168.23.108',
+  dbHost: '216.168.41.41',
   dbPort: 9876,
-  db: 'test',
-  username: '',
-  password: '',
-  authdb: '',
+  db: 'numtraplatform',
+  username: 'dev',
+  password: 'NumtraMongo123!',
+  authdb: 'numtraplatform',
   ssl: false,
   bFAIrequestApi: 'http://24.16.119.69:7799',
   dbfsToken: 'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
