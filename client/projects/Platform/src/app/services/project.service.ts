@@ -12,11 +12,14 @@ export class ProjectService {
     }
 
     createProject(pName): Observable<any> {
+      console.log(GLOBAL.serviceUrl);
       console.log(pName);
       return this.http.post(GLOBAL.serviceUrl + '/project/createNewProject' , pName);
     }
 
     getProject(): Observable<any> {
+      console.log("in get projects");
+      console.log(GLOBAL.serviceUrl);
       return this.http.get(GLOBAL.serviceUrl + '/project/getProjects');
     }
 
