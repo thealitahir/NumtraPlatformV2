@@ -90,11 +90,11 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
-app.use(session({ secret: 'keyboard cat', store : new MongoStore(
+/* app.use(session({ secret: 'keyboard cat', store : new MongoStore(
   {
       url: 'mongodb://'+CONFIGURATIONS.dbHost + ':'+CONFIGURATIONS.dbPort
   }),
-  resave: true, saveUninitialized: true }));
+  resave: true, saveUninitialized: true })); */
 
 app.use(flash());
 app.use(passport.initialize());
@@ -186,17 +186,13 @@ var uri = 'mongodb://'+CONFIGURATIONS.dbHost +':'+CONFIGURATIONS.dbPort+'/' + CO
 console.log("Connecting to mongodb at '" + uri + "'" );
 
 var opt = {
-    db:{numberOfRetries:10},
     user: CONFIGURATIONS.username,
     pass: CONFIGURATIONS.password,
-    server: {
-        ssl: CONFIGURATIONS.ssl
-    },
     auth: {
         authdb: CONFIGURATIONS.authdb
     }
 };
-mongoose.connect(uri,{ useNewUrlParser: true }, function(err, database) {
+mongoose.connect(uri,{ useNewUrlParser: true },opt, function(err, database) {
   if(err){ 
     console.log('Could not connect to mongodb.');
     throw err;
