@@ -50,7 +50,7 @@ global.CONFIGURATIONS ={
   dbPort: 9876,
   db: 'numtraplatform',
   username: 'dev',
-  password: 'NumtraMongo123!',
+  password: 'Balderdash@2019',
   authdb: 'numtraplatform',
   ssl: false,
   bFAIrequestApi: 'http://24.16.119.69:7799',
