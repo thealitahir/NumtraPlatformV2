@@ -192,7 +192,7 @@ var opt = {
         authdb: CONFIGURATIONS.authdb
     }
 };
-mongoose.connect(uri,{ useNewUrlParser: true },opt, function(err, database) {
+mongoose.connect(uri,opt, function(err, database) {
   if(err){ 
     console.log('Could not connect to mongodb.');
     throw err;
