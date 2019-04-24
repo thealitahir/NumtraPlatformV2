@@ -192,7 +192,17 @@ var opt = {
         authdb: CONFIGURATIONS.authdb
     }
 };
-mongoose.connect(uri,opt, function(err, database) {
+mongoose.connect(uri, opt);
+var db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function () {
+  console.log("DB CONNECTED");
+  var server = app.listen(port, '0.0.0.0', function () {
+    console.log('Server started on port :' + port);
+  });
+  io = require('socket.io').listen(server);
+});
+/* mongoose.connect(uri,opt, function(err, database) {
   if(err){ 
     console.log('Could not connect to mongodb.');
     throw err;
@@ -206,7 +216,7 @@ mongoose.connect(uri,opt, function(err, database) {
     });  
     io = require('socket.io').listen(server);
   }
-});
+}); */
 
 
 
