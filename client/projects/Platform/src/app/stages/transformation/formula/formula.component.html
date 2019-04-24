@@ -24,7 +24,7 @@
                       <div *ngIf="idx > 0" >
                           <mat-form-field>
                               <mat-label>Select Operator</mat-label>
-                              <mat-select name="operator1{{idx}}" [(ngModel)]='item.join_operator' required>
+                              <mat-select name="operator1{{idx}}" [(ngModel)]='item.combinator' required>
                                 <mat-option *ngFor='let opr of operators' [value]='opr'>{{ opr }} </mat-option>
                               </mat-select>
                             </mat-form-field>
@@ -34,7 +34,7 @@
                           <div >
                               <mat-form-field >
                                 <mat-label>Select Type</mat-label>
-                                <mat-select name="type1{{idx}}" [(ngModel)]='item.to_compare_field_type' (selectionChange)='setType(item, idx, "toCompare")' required>
+                                <mat-select name="type1{{idx}}" [(ngModel)]='item.value1_type' required>
                                   <mat-option *ngFor='let typ of Types'  [value]='typ'>
                                     {{ typ }} </mat-option>
                                 </mat-select>
@@ -42,15 +42,15 @@
 
 
 
-                              <mat-form-field *ngIf="item.activeCustom1=='stream'">
+                              <mat-form-field *ngIf="item.value1_type=='stream'">
                                 <mat-label>Select Filed</mat-label>
-                                <mat-select name="field1{{idx}}"  [(ngModel)]='item.to_compare_field_name' required>
-                                 <mat-option *ngFor='let sSchema of stageSchema' (click)='setDataType(sSchema, idx, "toCompare")' [value]='sSchema.field'>
+                                <mat-select name="field1{{idx}}"  [(ngModel)]='item.value1' required>
+                                 <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
                                     {{ sSchema.field }} </mat-option>
                                 </mat-select>
                               </mat-form-field>
 
-                              <mat-form-field  *ngIf="item.activeCustom1=='custom'">
+                              <mat-form-field  *ngIf="item.value1_type=='custom'">
                                   <input matInput type="text" name="value1{{idx}}" [(ngModel)]='item.value1'
                                     placeholder="Value.." #Value="ngModel" required>
                                 </mat-form-field>
@@ -64,7 +64,7 @@
 
                           <mat-form-field >
                               <mat-label>Select Type</mat-label>
-                              <mat-select name="type2{{idx}}" [(ngModel)]='item.with_compare_field_type' (selectionChange)='setType(item, idx, "withCompare")' required>
+                              <mat-select name="type2{{idx}}" [(ngModel)]='item.value2_type' required>
                                 <mat-option *ngFor='let typ of Types' [value]='typ' >
                                   {{ typ }} </mat-option>
                               </mat-select>
@@ -72,15 +72,15 @@
 
 
 
-                          <mat-form-field *ngIf="item.activeCustom2=='stream'">
+                          <mat-form-field *ngIf="item.value2_type =='stream'">
                               <mat-label>Select Filed</mat-label>
-                              <mat-select name="field2{{idx}}"  [(ngModel)]='item.with_compare_field_name' required>
-                                 <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field' (click)="setDataType(sSchema, idx, 'withCompare')">
+                              <mat-select name="field2{{idx}}"  [(ngModel)]='item.value2' required>
+                                 <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field' >
                                   {{ sSchema.field }} </mat-option>
                               </mat-select>
                             </mat-form-field>
 
-                            <mat-form-field  *ngIf="item.activeCustom2=='custom'">
+                            <mat-form-field  *ngIf="item.value2_type =='custom'">
                                 <input matInput type="text" name="value2{{idx}}" [(ngModel)]='item.value2'
                                   placeholder="Value.." #Value="ngModel" required>
                               </mat-form-field>
@@ -129,24 +129,24 @@
 
 
               <mat-form-field  >
-                  <input matInput type="text" name='newField' [(ngModel)]='stage.stage_attributes.output_fields[0].field'
+                  <input matInput type="text" name='newField' [(ngModel)]='stage.stage_attributes.output_fields.field'
                   placeholder="Column Name" style='text-transform:uppercase'  required>
               </mat-form-field>
 
             </div>
 
-          <mat-form-field  >
+          <!-- <mat-form-field  >
               <mat-label>Select Type</mat-label>
-              <mat-select name="type"  [(ngModel)]='stage.stage_attributes.output_fields[0].type' required>
+              <mat-select name="type"  [(ngModel)]='stage.stage_attributes.output_fields.type' required>
                 <mat-option *ngFor='let dt of datatypes' [value]='dt.value'>
                   {{ dt.type }} </mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field> -->
 
           <div >
 
-              <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.output_fields[0].absolute"
-        name='stage.stage_attributes.output_fields[0].absolute'>
+              <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.output_fields.absolute"
+        name='stage.stage_attributes.output_fields.absolute'>
         Take mode of resultant values</mat-checkbox>
           </div>
 

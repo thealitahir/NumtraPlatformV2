@@ -75,7 +75,7 @@ export class AggregationComponent implements OnInit {
     this.stage.stage_attributes.aggregate_on.push({
         input_field: '',
         method: '',
-        output_field: '',
+        aggregate_field: '',
         value_to_count : '',
         method_type: '',
         count_custom_value : ''

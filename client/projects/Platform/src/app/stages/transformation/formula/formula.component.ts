@@ -16,10 +16,10 @@ export class FormulaComponent implements OnInit {
   stage: any = {
     name: '',
     stage_attributes: {
-        output_fields : [{
+        output_fields : {
           field: '',
           type: ''
-        }],
+        },
         formula : '',
         expression : [],
         use_expression : false
@@ -71,16 +71,12 @@ export class FormulaComponent implements OnInit {
         if (this.stage.stage_attributes.expression.length === 0) {
             this.stage.stage_attributes.expression.push(
                 {
-                    to_compare_field_type: '',
-                    to_compare_field_name: '',
-                    to_compare_field_dataType: '',
-                    operator: '',
-                    with_compare_field_type: '',
-                    with_compare_field_name: '',
-                    with_compare_field_dataType: '',
-                    activeCustom1: 'custom',
-                    activeCustom2: 'custom',
-                    join_operator: ''
+                  value1_type: '',
+                  value1: '',
+                  operator: '',
+                  value2_type: '',
+                  value2: '',
+                  combinator: ''
                 });
         }
       }
@@ -89,63 +85,59 @@ export class FormulaComponent implements OnInit {
   addExp() {
     this.stage.stage_attributes.expression.push(
         {
-            to_compare_field_type: '',
-            to_compare_field_name: '',
-            to_compare_field_dataType: '',
+            value1_type: '',
+            value1: '',
             operator: '',
-            with_compare_field_type: '',
-            with_compare_field_name: '',
-            with_compare_field_dataType: '',
-            activeCustom1: 'custom',
-            activeCustom2: 'custom',
-            join_operator: ''
+            value2_type: '',
+            value2: '',
+            combinator: ''
         }
     )
   }
 
-  removeExp(index){
+  removeExp(index) {
     this.stage.stage_attributes.expression.splice(index, 1);
   }
 
-  setType(item, index , type) {
-    console.log(typeof(type));
-    if (type === 'toCompare') {
-      console.log('to comparer');
-      if (item.to_compare_field_type === 'stream') {
-        console.log(item.to_compare_field_type);
-        this.stage.stage_attributes.expression[index].activeCustom1 = 'stream';
-        console.log(this.stage.stage_attributes.expression[index].activeCustom1);
-      }
-      if (item.to_compare_field_type === 'custom') {
-        console.log(item.to_compare_field_type);
-        this.stage.stage_attributes.expression[index].activeCustom1 = 'custom';
-        console.log(this.stage.stage_attributes.expression[index].activeCustom1);
-       }
+  // setType(item, index , type) {
+  //   console.log(typeof(type));
+  //   if (type === 'toCompare') {
+  //     console.log('to comparer');
+  //     if (item.to_compare_field_type === 'stream') {
+  //       console.log(item.to_compare_field_type);
+  //       this.stage.stage_attributes.expression[index].activeCustom1 = 'stream';
+  //       console.log(this.stage.stage_attributes.expression[index].activeCustom1);
+  //     }
+  //     if (item.to_compare_field_type === 'custom') {
+  //       console.log(item.to_compare_field_type);
+  //       this.stage.stage_attributes.expression[index].activeCustom1 = 'custom';
+  //       console.log(this.stage.stage_attributes.expression[index].activeCustom1);
+  //      }
 
-      item.to_compare_field_name = '';
-    }
-    if (type == 'withCompare') {
-      if (item.with_compare_field_type === 'stream') { this.stage.stage_attributes.expression[index].activeCustom2 = 'stream';}
-      if (item.with_compare_field_type === 'custom') { this.stage.stage_attributes.expression[index].activeCustom2 = 'custom';}
+  //     item.to_compare_field_name = '';
+  //   }
+  //   if (type == 'withCompare') {
+  //     if (item.with_compare_field_type === 'stream') { this.stage.stage_attributes.expression[index].activeCustom2 = 'stream';}
+  //     if (item.with_compare_field_type === 'custom') { this.stage.stage_attributes.expression[index].activeCustom2 = 'custom';}
 
-      item.with_compare_field_name = '';
-    }
+  //     item.with_compare_field_name = '';
+  //   }
 
 
-  }
+  // }
 
-   setDataType(selected_field, index, type) {
-    if (type === 'toComapre') {
-      if (selected_field) {
-          this.stage.stage_attributes.expression[index].to_compare_field_dataType = selected_field.type;
-      }
-    }
-    if (type === 'withCompare') {
-      if (selected_field) {
-          this.stage.stage_attributes.expression[index].with_compare_field_dataType = selected_field.type;
-      }
-    }
-  }
+  //  setDataType(selected_field, index, type) {
+  //   if (type === 'toComapre') {
+  //     if (selected_field) {
+  //         this.stage.stage_attributes.expression[index].to_compare_field_dataType = selected_field.type;
+  //     }
+  //   }
+  //   if (type === 'withCompare') {
+  //     if (selected_field) {
+  //         this.stage.stage_attributes.expression[index].with_compare_field_dataType = selected_field.type;
+  //     }
+  //   }
+  // }
 
   saveFormula(form: NgForm) {
     if (form.invalid) {
