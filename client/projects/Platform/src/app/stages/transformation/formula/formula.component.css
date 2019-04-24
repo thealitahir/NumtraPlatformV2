@@ -1,0 +1,18 @@
+mat-icon{
+  cursor: pointer;
+}
+.select-block{
+  margin: 0.5rem 0;
+}
+.fields-block{
+  background: #fafafa;
+  padding: 0px 10px;
+  border-radius: 4px;
+}
+
+.logical-operator{
+  text-align: center;
+}
+.remove-icon{
+  text-align: right;
+}

@@ -50,6 +50,10 @@ export class StageService {
       return observable;
     }
 
+    getDataTypes() {
+      return this.http.get(GLOBAL.serviceUrl + '/stage/getDataTypes');
+    }
+
     executePipeline(processID): Observable<any> {
       return this.http.post(GLOBAL.serviceUrl + '/stage/executePipeline', processID);
   }

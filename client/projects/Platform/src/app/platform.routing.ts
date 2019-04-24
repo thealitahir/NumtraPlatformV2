@@ -8,6 +8,7 @@ import { MaxComponent } from './stages/transformation/max/max.component';
 import { MinComponent } from './stages/transformation/min/min.component';
 import { QueryComponent } from './stages/transformation/query/query.component';
 import { FilterComponent } from './stages/transformation/filter/filter.component';
+import { FormulaComponent } from './stages/transformation/formula/formula.component';
 import { AuthGuard } from '../../../../src/app/guards/index';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
@@ -23,7 +24,7 @@ const APP_ROUTES: Routes = [
   { path: 'platform/dbfs', component: DbfsComponent, canActivate: [AuthGuard] },
   { path: 'platform/max', component: MaxComponent },
   { path: 'platform/min', component: MinComponent },
-  { path: 'platform/filter', component: FilterComponent },
+  { path: 'platform/formula', component: FormulaComponent },
   { path: 'platform/query', component: QueryComponent },
   { path: 'platform/cosmosDB', component: CosmosDBComponent },
   { path: 'platform/cosmosDBSink', component: CosmosDBSinkComponent },

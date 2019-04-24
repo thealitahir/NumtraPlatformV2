@@ -31,15 +31,13 @@ export class FilterComponent implements OnInit, OnChanges {
   stagetype: any = 'transformation';
   stageSchema: any;
 
-  constructor(public snackBar: MatSnackBar, public stageService: StageService) {
-    
-  }
+  constructor(public snackBar: MatSnackBar, public stageService: StageService) {  }
 
   ngOnInit(){
   }
   ngOnChanges(changes: any) {
     for (let propName in changes) {
-      // only run when property "task" changed 
+      // only run when property "task" changed
       if (propName === 'stage_id') {
         console.log("stage Id : " + this.stage_id);
         if (this.stage_id) {
@@ -53,7 +51,7 @@ export class FilterComponent implements OnInit, OnChanges {
         }
       }
     }
-  } 
+  }
 
   addFilter(type) {
     if (type === 'exp') {

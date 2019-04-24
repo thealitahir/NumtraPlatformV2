@@ -36,6 +36,7 @@ router.post('/getContainers', function(req,res) {
 });
 
 router.post('/getBlobsList', function(req,res) {
+    console.log(req.body);
     var storageAccount = req.body.accountName;
     var accountKey = req.body.accountKey;
     var container = req.body.container;
@@ -57,9 +58,14 @@ router.post('/getBlobsList', function(req,res) {
             'Authorization': auth  ,
         },
     }, function(error, response, body) {
+        console.log(body);
+        if(!error){
             parseString(body, function (err, result) {
             res.send(result.EnumerationResults.Blobs);
-        });  
+            });
+        } else {
+            console.log(error);
+        }
     });
 });
 
@@ -88,7 +94,7 @@ router.post('/getBlob', function(req,res) {
             'Authorization': auth  ,
         },
     }, function(error, response, body) {
-
+        if(!error){
         var filedata =[];
             filedata = body.split("\n");
             var fileheader=[];
@@ -121,6 +127,9 @@ router.post('/getBlob', function(req,res) {
             }
             var fdata={fileheader:fh, filedata:fd}    
                 res.send(fdata);  
+        } else {
+            console.log(error);
+        }
     });
 });
     

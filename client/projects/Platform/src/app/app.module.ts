@@ -59,6 +59,7 @@ import { MaxComponent } from './stages/transformation/max/max.component';
 import { MinComponent } from './stages/transformation/min/min.component';
 import { QueryComponent } from './stages/transformation/query/query.component';
 import { FilterComponent } from './stages/transformation/filter/filter.component';
+import { FormulaComponent } from './stages/transformation/formula/formula.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 import { EditorComponent } from './stages/sources/editor-dialog/editor-dialog.component';
 import { AddProjectComponent } from './projects/addProject-dialog/add-project-dialog.component';
@@ -94,6 +95,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     MinComponent,
     QueryComponent,
     FilterComponent,
+    FormulaComponent,
     DiscoverDataComponent,
     EditorComponent,
     AddProjectComponent,
