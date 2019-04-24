@@ -30,11 +30,13 @@ export class FormulaComponent implements OnInit {
   stagetype: any = 'operation';
   stageSchema: any;
   datatypes: any;
+  datatyp: any;
   data: any;
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService) {
     this.stageService.getDataTypes().subscribe(datatype => {
-      this.datatypes = datatype.data;
+      this.datatyp = datatype;
+      this.datatypes = this.datatyp.data;
     });
 
     this.stageService.getStageSchema('5808ce3ad220bf0f0386f180').subscribe(schemadata => {

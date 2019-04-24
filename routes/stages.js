@@ -197,11 +197,9 @@ router.get('/getCanvasModel/:pipeline_id', function (req, res) {
 });
 
 router.get('/getDataTypes', function (req, res) {
-  console.log('hello data types ..................');
   DataTypeModel.find().exec(function (err, data) {
     if (err) {
-      console.log('Unable to get datatypes');
-      res.send({ status: false, msg: 'Unable to get stages' });
+      res.send({ status: false, msg: 'Unable to get datatypes' });
     }
     else {
       console.log('datatypes found');

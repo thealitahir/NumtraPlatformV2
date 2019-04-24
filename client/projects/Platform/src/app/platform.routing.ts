@@ -5,7 +5,7 @@ import { PipelineDesignerComponent } from './pipeline-designer/pipeline-designer
 import { RolesComponent } from './roles/roles.component';
 import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
-import { MinComponent } from './stages/transformation/min/min.component';
+import { AggregationComponent } from './stages/transformation/aggregation/aggregation.component';
 import { QueryComponent } from './stages/transformation/query/query.component';
 import { FilterComponent } from './stages/transformation/filter/filter.component';
 import { FormulaComponent } from './stages/transformation/formula/formula.component';
@@ -23,7 +23,7 @@ import { from } from 'rxjs';
 const APP_ROUTES: Routes = [
   { path: 'platform/dbfs', component: DbfsComponent, canActivate: [AuthGuard] },
   { path: 'platform/max', component: MaxComponent },
-  { path: 'platform/min', component: MinComponent },
+  { path: 'platform/aggregation', component: AggregationComponent },
   { path: 'platform/formula', component: FormulaComponent },
   { path: 'platform/query', component: QueryComponent },
   { path: 'platform/cosmosDB', component: CosmosDBComponent },

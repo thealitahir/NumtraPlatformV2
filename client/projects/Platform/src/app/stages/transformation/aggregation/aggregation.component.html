@@ -1,0 +1,81 @@
+<div class="canvas-right-col width-md">
+  <h3>Aggregation Transformation</h3>
+
+  <form  #aggregationForm="ngForm" (submit)="saveAggregation(aggregationForm)" fxLayout="column">
+
+    <div>
+      <mat-form-field>
+        <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
+            required>
+      </mat-form-field>
+      <div >
+        <button type='button' (click)="addAggregateField()">Add</button>
+        <label>Aggregate on</label>
+      </div>
+
+      <div *ngFor="let item of stage.stage_attributes.aggregate_on ; let idx= index">
+
+        <mat-form-field>
+          <mat-label>Select Filed</mat-label>
+          <mat-select name="field{{idx}}"  [(ngModel)]='item.input_field' required>
+            <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'  (click)='setAlias1(item)'>
+              {{ sSchema.field }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-label>Select Method</mat-label>
+          <mat-select name="method{{idx}}"  [(ngModel)]='item.method' (selectionChange)='setAlias2(item)' required>
+
+            <mat-optgroup label="Method" >
+              <ng-container *ngFor='let m of method'>
+                <mat-option *ngIf='m.type === "Method"'  [value]='m.function'>
+                  {{ m.function }} </mat-option>
+              </ng-container>
+            </mat-optgroup>
+
+            <mat-optgroup label="Count" >
+              <ng-container *ngFor='let m of method'>
+                <mat-option *ngIf='m.type === "Count"'  [value]='m.function'>
+                  {{ m.function }} </mat-option>
+              </ng-container>
+            </mat-optgroup>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="item.value_to_count=='custom'">
+          <mat-form-field  *ngIf="item.value_to_count=='custom'">
+            <input matInput type="text" name="custom_value{{idx}}" [(ngModel)]='item.count_custom_value'
+              placeholder="Value.." #Value="ngModel" required>
+          </mat-form-field>
+        </div>
+
+        <mat-form-field >
+          <input matInput type="text" name="output_field{{idx}}" [(ngModel)]='item.output_field'
+            placeholder="Output field alias" #Value="ngModel" required>
+        </mat-form-field>
+
+
+        <div class="column-2" *ngIf="idx > 0">
+          <button type="button" (click)="removeAggregateField(idx)" >Remove</button>
+        </div>
+      </div>
+    </div>
+
+    <div >
+      <mat-form-field  >
+        <mat-label>Group By</mat-label>
+        <mat-select name="group_by"  [(ngModel)]='stage.stage_attributes.group_by' required multiple>
+          <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
+            {{ sSchema.field }} </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+
+    <div class="property-form-button">
+      <button mat-stroked-button color="accent" type="submit">Save</button>
+      <!-- <button type="button" class="btn btn-danger" ng-disabled="angular.equals(copy_stage_attributes, stage.stage_attributes)" ng-click="cancel()">Cancel</button> -->
+    </div>
+
+  </form>
+</div>
