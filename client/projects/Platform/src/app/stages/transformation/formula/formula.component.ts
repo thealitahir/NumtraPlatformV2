@@ -15,6 +15,8 @@ export class FormulaComponent implements OnInit {
   operators = ['+', '-', '*', '/', '%'];
   stage: any = {
     name: '',
+    original_schema: [],
+    selected_schema: [],
     stage_attributes: {
         output_fields : {
           field: '',
@@ -32,6 +34,7 @@ export class FormulaComponent implements OnInit {
   datatypes: any;
   datatyp: any;
   data: any;
+  schema: {original_schema: ''};
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService) {
     this.stageService.getDataTypes().subscribe(datatype => {
@@ -41,7 +44,19 @@ export class FormulaComponent implements OnInit {
 
     this.stageService.getStageSchema('5808ce3ad220bf0f0386f180').subscribe(schemadata => {
       this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
+     // this.stageSchema = schemadata.data.original_schema;
+    console.log(this.stage);
+      for (let i = 0; i === 1; i++) {
+        // console.log(this.stage.in[i]);
+        this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
+          // console.log(schdata.data);
+          this.schema = schdata.data.original_schema;
+          this.stageSchema = this.schema;
+          // console.log(this.stageSchema);
+          this.stage.original_schema = this.stageSchema;
+          this.stage.selected_schema = this.stageSchema;
+        });
+      }
     });
    }
 
@@ -99,52 +114,16 @@ export class FormulaComponent implements OnInit {
     this.stage.stage_attributes.expression.splice(index, 1);
   }
 
-  // setType(item, index , type) {
-  //   console.log(typeof(type));
-  //   if (type === 'toCompare') {
-  //     console.log('to comparer');
-  //     if (item.to_compare_field_type === 'stream') {
-  //       console.log(item.to_compare_field_type);
-  //       this.stage.stage_attributes.expression[index].activeCustom1 = 'stream';
-  //       console.log(this.stage.stage_attributes.expression[index].activeCustom1);
-  //     }
-  //     if (item.to_compare_field_type === 'custom') {
-  //       console.log(item.to_compare_field_type);
-  //       this.stage.stage_attributes.expression[index].activeCustom1 = 'custom';
-  //       console.log(this.stage.stage_attributes.expression[index].activeCustom1);
-  //      }
-
-  //     item.to_compare_field_name = '';
-  //   }
-  //   if (type == 'withCompare') {
-  //     if (item.with_compare_field_type === 'stream') { this.stage.stage_attributes.expression[index].activeCustom2 = 'stream';}
-  //     if (item.with_compare_field_type === 'custom') { this.stage.stage_attributes.expression[index].activeCustom2 = 'custom';}
-
-  //     item.with_compare_field_name = '';
-  //   }
-
-
-  // }
-
-  //  setDataType(selected_field, index, type) {
-  //   if (type === 'toComapre') {
-  //     if (selected_field) {
-  //         this.stage.stage_attributes.expression[index].to_compare_field_dataType = selected_field.type;
-  //     }
-  //   }
-  //   if (type === 'withCompare') {
-  //     if (selected_field) {
-  //         this.stage.stage_attributes.expression[index].with_compare_field_dataType = selected_field.type;
-  //     }
-  //   }
-  // }
 
   saveFormula(form: NgForm) {
     if (form.invalid) {
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
-    this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
+    this.stage.original_schema.push(this.stage.stage_attributes.output_fields);
+    this.stage.selected_schema.push(this.stage.stage_attributes.output_fields);
+    this.data = {updatedata: {'name': this.stage.name, 'original_schema': this.stage.original_schema,
+    'selected_schema': this.stage.selected_schema, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

@@ -17,8 +17,8 @@
 
         <mat-form-field>
           <mat-label>Select Filed</mat-label>
-          <mat-select name="field{{idx}}"  [(ngModel)]='item.input_field' required>
-            <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'  (click)='setAlias1(item)'>
+          <mat-select name="field{{idx}}"  [(ngModel)]='item.input_field' (selectionChange)='setAlias1(item)' required>
+            <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'  >
               {{ sSchema.field }} </mat-option>
           </mat-select>
         </mat-form-field>

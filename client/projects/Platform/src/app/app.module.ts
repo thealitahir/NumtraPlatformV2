@@ -60,6 +60,8 @@ import { MinComponent } from './stages/transformation/min/min.component';
 import { QueryComponent } from './stages/transformation/query/query.component';
 import { FilterComponent } from './stages/transformation/filter/filter.component';
 import { FormulaComponent } from './stages/transformation/formula/formula.component';
+import { UnionComponent } from './stages/transformation/union/union.component';
+import { JoinComponent } from './stages/transformation/join/join.component';
 import { AggregationComponent } from './stages/transformation/aggregation/aggregation.component';
 import { DiscoverDataComponent } from './stages/sources/discover-data-dialog/discover-data-dialog.component';
 import { EditorComponent } from './stages/sources/editor-dialog/editor-dialog.component';
@@ -99,6 +101,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     FilterComponent,
     AggregationComponent,
     FormulaComponent,
+    UnionComponent,
+    JoinComponent,
     DiscoverDataComponent,
     EditorComponent,
     AddProjectComponent,
