@@ -1,0 +1,42 @@
+<div class="canvas-right-col">
+  <h3>Execution</h3>
+
+  <form #bottomForm="ngForm" fxLayout="column">
+
+    <mat-radio-group class="execution-option" fxLayout fxLayoutGap="20px" name="execution" [(ngModel)]="execution">
+      <mat-radio-button [value]="true">Existing</mat-radio-button>
+      <mat-radio-button [value]="false">New</mat-radio-button>
+    </mat-radio-group>
+
+    <div *ngIf="execution">
+      <mat-form-field>
+        <mat-label>Select Option</mat-label>
+        <mat-select name="field" required>
+          <mat-option>OPtion - 1</mat-option>
+          <mat-option>OPtion - 2</mat-option>
+          <mat-option>OPtion - 3</mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+    
+    <div *ngIf="!execution">
+      <mat-form-field>
+        <input matInput type="text" name="name" placeholder="Name - 1" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" name="name" placeholder="Name - 2" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" name="name" placeholder="Name - 3" required>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="text" name="name" placeholder="Name - 4" required>
+      </mat-form-field>
+    </div>
+
+    <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
+      <button mat-stroked-button color="accent" type="submit">Execute</button>
+    </div>
+
+  </form>
+</div>
