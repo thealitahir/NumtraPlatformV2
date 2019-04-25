@@ -2,7 +2,9 @@
   <h3>Union Transformation</h3>
 
   <form #unionForm="ngForm" (submit)="saveUnion(unionForm)" fxLayout="column">
-
+      <mat-form-field>
+          <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name' required>
+        </mat-form-field>
           <div class="form-group">
               <span *ngIf="!stages" class="alert-danger">Please attach at least two sources</span>
 
@@ -12,17 +14,28 @@
                       {{head.name}}
                   </th>
 
-                  <tr *ngFor="let row of original_unions">
+                  <tr *ngFor="let row of original_unions; let indx= index">
                       <td class="union-column-1">
                           <!-- <input ng-model="row[0].checked" type="checkbox" style="margin-top: 11px;"> -->
-                          <mat-checkbox color="primary" [(ngModel)]="row[0].checked" name='checkbox'></mat-checkbox>
+                          <mat-checkbox color="primary" [(ngModel)]="row[0].checked" name='checkbox{{indx}}'></mat-checkbox>
 
                       </td>
 
                       <td class="union-column" *ngFor="let col of row; let idx = index" >
-                          <select name="field_{{idx}}" class="form-control" ng-model="col.field" ng-options="item.field as item.field for item in stages[idx].selected_schema" required>
-                              <option [value]='opt.filed' *ngFor='let opt of row' >{{opt.field}}</option>
-                          </select>
+                        <!-- <mat-form-field >
+                            <mat-select name ="field_{{idx}}" [(ngModel)]="col.field" required>
+                                <mat-option [value]='opt.filed' *ngFor='let opt of stages[idx].selected_schema' >{{opt.field}}</mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
+
+
+                              <select name ="field_{{idx}}" ng-model="col.field" required>
+                                  <option [value]='opt.filed' *ngFor='let opt of stages[idx].selected_schema' >{{opt.field}}</option>
+                              </select>
+
+
+
+
                       </td>
                   </tr>
               </table>
