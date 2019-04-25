@@ -1,0 +1,100 @@
+<div class="canvas-right-col">
+    <h3>Join Transformation</h3>
+  <form #joinForm="ngForm" (submit)="saveJoin(joinForm)" fxLayout="column">
+
+        <!-- <div class="form-group" ng-class="{'has-error':joinForm.type.$error.required && joinForm.type.$dirty}">
+            <label>
+                Join type<small style="color:red;font-size:17px">*</small>
+            </label>
+
+            <select name="type" class="form-control" ng-model="stage.stage_attributes.join_type" required>
+                <option value="" selected>Select Join</option>
+                <option value="inner">Inner</option>
+                <option value="left outer">Left outer</option>
+                <option value="right outer">Right outer</option>
+            </select>
+            <span ng-show="joinForm.type.$error.required && joinForm.type.$dirty" class="help-block">Please select join type</span>
+        </div> -->
+
+        <mat-form-field fxFlex="42">
+          <mat-label>Select Join</mat-label>
+          <mat-select name="type" [(ngModel)]='stage.stage_attributes.join_type' required>
+              <mat-option value="" selected>Select Join</mat-option>
+              <mat-option value="inner">Inner</mat-option>
+              <mat-option value="leftouter">Left outer</mat-option>
+              <mat-option value="rightouter">Right outer</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div class="columns">
+            <div class="form-group noMargins">
+                <label *ngIf="!joinStages">
+                    <strong>Select source-1 ...</strong>
+                </label>
+                <label *ngIf="!joinStages">
+                    <strong>Select source-2 ...</strong>
+                </label>
+                <label class="column" *ngFor="let head of joinStages">
+                    <strong>{{head.name}}</strong>
+                </label>
+            </div>
+        </div>
+
+
+
+        <!-- <div class="form-group join-columns">
+            <div *ngFor="let row of stage.stage_attributes.keys; let idx = index">
+                <div class="column-1">
+                    <select name="fieldA_{{idx}}"  class="form-control" ng-model="row.fieldA" ng-options="item.field as item.field for item in stageA_fields" required>
+                        <option value="">Select field</option>
+                    </select>
+                </div>
+                <div class="column-1" >
+                    <select name="fieldB_{{idx}}"  class="form-control" ng-model="row.fieldB" ng-options="item.field as item.field for item in stageB_fields" required>
+                        <option value="">Select field</option>
+                    </select>
+                </div>
+                <div class="column-2" ng-if="idx<=0">
+                    <span class="glyphicons glyphicons-plus-sign pull-right add-button" ng-click="addKey()" style="position: relative; top: 7px;"></span>
+                </div>
+                <div class="column-2" ng-if="$index>0">
+                    <span class="glyphicons glyphicons-minus-sign pull-right" ng-click="removeKey($index)" style="font-size: 20px;color: #3cbfe8; position: relative; top: 7px; cursor:pointer;"></span>
+                </div>
+            </div>
+        </div> -->
+
+        <div *ngFor="let row of stage.stage_attributes.keys; let idx = index">
+
+          <mat-form-field fxFlex="42" >
+            <mat-label>Select field</mat-label>
+            <mat-select name="fieldA_{{idx}}" [(ngModel)]='row.fieldA' required>
+              <mat-option *ngFor='let sA of stageA_fields' [value]="sA.field" selected>{{sA.field}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field fxFlex="42">
+            <mat-label>Select field</mat-label>
+            <mat-select name="fieldB_{{idx}}" [(ngModel)]='row.fieldB' required>
+              <mat-option *ngFor='let sB of stageB_fields' [value]="sB.field" selected>{{sB.field}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <div *ngIf="idx<=0">
+            <button type='button' (click)="addKey()">Add</button>
+          </div>
+          <div *ngIf="idx > 0">
+              <button type='button' (click)="removeKey(idx)">Remove</button>
+          </div>
+
+        </div>
+
+
+
+
+        <div class="property-form-button">
+            <button mat-stroked-button color="accent" type="submit">Save</button>
+            <!-- <button type="button" class="btn btn-danger" ng-disabled="angular.equals(copy_stage_attributes, stage.stage_attributes)" ng-click="cancel()">Cancel</button> -->
+        </div>
+
+  </form>
+</div>

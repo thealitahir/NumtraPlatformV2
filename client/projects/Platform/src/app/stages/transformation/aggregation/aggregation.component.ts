@@ -42,9 +42,14 @@ export class AggregationComponent implements OnInit {
     this.stageService.getStageSchema('5811b4195b2686b20192a349').subscribe(schemadata => {
 
       this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
+      //this.stageSchema = schemadata.data.original_schema;
       // this.aggregate = this.stage.stage_attributes.aggregate_on;
-      console.log(this.stage);
+      for (let i = 0; i < this.stage.in.length; i++) {
+        this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
+          let schema = schdata.data;
+          this.stageSchema = schema.original_schema;
+        });
+      }
     });
    }
 
@@ -87,13 +92,13 @@ export class AggregationComponent implements OnInit {
   }
   setAlias1(item) {
     item.method = '';
-    item.output_field = item.input_field + '_' + item.method;
+    item.aggregate_field = item.input_field + '_' + item.method;
   }
 
   setAlias2(item) {
 
     if (item.input_field !== '') {
-      item.output_field = item.input_field + '_' + item.method;
+      item.aggregate_field = item.input_field + '_' + item.method;
       const obj = this.method.find( obj => obj.function === item.method).type;
       item.method_type =  obj;
       if(item.method === 'custom'){
@@ -108,7 +113,25 @@ export class AggregationComponent implements OnInit {
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
-    this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
+    this.stage.orignal_schema = [];
+    this.stage.selected_schema = [];
+
+    for ( let i = 0; i < this.stage.stage_attributes.aggregate_on.length; i++) {
+      const obj = {field: this.stage.stage_attributes.aggregate_on[i].aggregate_field,
+        alias: this.stage.stage_attributes.aggregate_on[i].aggregate_field };
+      this.stage.orignal_schema.push(obj);
+      this.stage.selected_schema.push(obj);
+    }
+    for ( let i = 0; i < this.stage.stage_attributes.group_by.length; i++) {
+      const obj = {field: this.stage.stage_attributes.group_by[i],
+        alias: this.stage.stage_attributes.group_by[i] };
+      this.stage.orignal_schema.push(obj);
+      this.stage.selected_schema.push(obj);
+    }
+
+
+    this.data = {updatedata: {'name': this.stage.name, 'original_schema': this.stage.orignal_schema,
+    'selected_schema': this.stage.selected_schema, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

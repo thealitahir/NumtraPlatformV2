@@ -11,7 +11,7 @@ import { FilterComponent } from './stages/transformation/filter/filter.component
 import { FormulaComponent } from './stages/transformation/formula/formula.component';
 import { AuthGuard } from '../../../../src/app/guards/index';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
-import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
+import { JoinComponent } from './stages/transformation/join/join.component';
 import { BlobStorageComponent } from './stages/sources/blob-storage/blob-storage.component';
 import { BlobStorageSinkComponent } from './stages/sinks/blob-storage-sink/blob-storage-sink.component';
 import { CosmosDBSinkComponent } from './stages/sinks/cosmosDB-sink/cosmosDB-sink.component';
@@ -26,7 +26,7 @@ const APP_ROUTES: Routes = [
   { path: 'platform/aggregation', component: AggregationComponent },
   { path: 'platform/formula', component: FormulaComponent },
   { path: 'platform/query', component: QueryComponent },
-  { path: 'platform/cosmosDB', component: CosmosDBComponent },
+  { path: 'platform/join', component: JoinComponent },
   { path: 'platform/cosmosDBSink', component: CosmosDBSinkComponent },
   { path: 'platform/blobstorage', component: BlobStorageComponent },
   { path: 'platform/blobstoragesink', component: BlobStorageSinkComponent },
