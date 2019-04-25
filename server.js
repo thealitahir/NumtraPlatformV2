@@ -27,7 +27,7 @@ var project= require('./routes/project');
 var application= require('./routes/application');
 var dataSourceRoute = require('./routes/datasource');
 var modelDataRoute = require('./routes/modelsroute');
-
+var pipeline = require('./routes/pipelineController');
 
 const port = 3100;
 
@@ -114,6 +114,7 @@ app.use('/cosmos',cosmos);
 app.use('/stage',stage);
 app.use('/project',project);
 app.use('/application',application);
+app.use('/pipeline', pipeline);
 
 
 app.use('/dataSourceApi', dataSourceRoute);
@@ -169,6 +170,10 @@ app.get('/project', (req, res) => res.json({
 }));
 
 app.get('/application', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/pipeline', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 

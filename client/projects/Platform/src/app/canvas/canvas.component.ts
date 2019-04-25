@@ -14,6 +14,7 @@ import RappidService from '../../rappid/services/kitchensink-service';
 //import KitchenSinkService from 'dist/numtraPlatformV2/rappid/services/kitchensink-service';
 import { CanvasService } from '../services/canvas.service';
 import { StageService } from '../services/stage.service';
+import { ValueTransformer } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-canvas',
@@ -218,10 +219,23 @@ export class CanvasComponent implements OnInit {
 
   executePipeline() {
     this.data = { process_id: this.pipeline_id };
-
-    this.stageService.executePipeline(this.data).subscribe(schemadata => {
+    var value = {
+      model: {
+        attributes: {
+          attrs: {
+            label: {
+              text: ''
+            }, _id: ''
+          }
+        }
+      }
+    };
+    value.model.attributes.attrs.label.text = "executePipeline";
+    value.model.attributes.attrs._id = this.pipeline_id;
+    this.onSearch.emit(value);
+    /* this.stageService.executePipeline(this.data).subscribe(schemadata => {
       console.log(schemadata);
-    });
+    }); */
   }
 
   dataExplorer() {

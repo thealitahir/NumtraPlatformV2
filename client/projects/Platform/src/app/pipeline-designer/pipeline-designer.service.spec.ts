@@ -1,6 +1,6 @@
 import { TestBed, inject } from '@angular/core/testing';
 
-import { PipelineDesignerService } from './pipeline-designer.service';
+import { PipelineDesignerService } from '../services/pipeline-designer.service';
 
 describe('PipelineDesigner.ServiceService', () => {
   beforeEach(() => {

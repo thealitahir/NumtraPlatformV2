@@ -1,5 +1,5 @@
 <div class="canvas-right-col">
-  <h3>Execution</h3>
+  <h3>Select Profile</h3>
 
   <form #bottomForm="ngForm" fxLayout="column">
 
@@ -8,35 +8,40 @@
       <mat-radio-button [value]="false">New</mat-radio-button>
     </mat-radio-group>
 
+
     <div *ngIf="execution">
       <mat-form-field>
-        <mat-label>Select Option</mat-label>
-        <mat-select name="field" required>
-          <mat-option>OPtion - 1</mat-option>
-          <mat-option>OPtion - 2</mat-option>
-          <mat-option>OPtion - 3</mat-option>
+        <mat-select placeholder="Select me" name=selected_profile (ngModelChange)="fetchClusters($event)" [(ngModel)]="selected_profile" required>
+          <mat-option *ngFor="let profile of credentialProfiles" [value]="profile">{{profile.name}}</mat-option>
         </mat-select>
+        <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
       </mat-form-field>
     </div>
-    
+
+  </form>
+
+  <form #profileForm="ngForm" fxLayout="column">
     <div *ngIf="!execution">
       <mat-form-field>
-        <input matInput type="text" name="name" placeholder="Name - 1" required>
+        <label class="error-message">{{error}}</label>
+        <input matInput type="text" name="name" placeholder="Profile Name" #url="ngModel" [(ngModel)]='profile.name'
+          required>
       </mat-form-field>
+
       <mat-form-field>
-        <input matInput type="text" name="name" placeholder="Name - 2" required>
+        <input matInput type="text" name="domain" placeholder="Domain" #url="ngModel" [(ngModel)]='profile.domain'
+          required>
       </mat-form-field>
+
       <mat-form-field>
-        <input matInput type="text" name="name" placeholder="Name - 3" required>
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="text" name="name" placeholder="Name - 4" required>
+        <input matInput type="password" name="token" placeholder="Token" #dbfs_token="ngModel"
+          [(ngModel)]='profile.token' required>
       </mat-form-field>
     </div>
 
     <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
-      <button mat-stroked-button color="accent" type="submit">Execute</button>
+      <button mat-stroked-button color="accent" (click)="saveProfile(profileForm)" type="submit">Save</button>
     </div>
-
   </form>
+
 </div>
