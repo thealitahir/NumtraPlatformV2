@@ -72,6 +72,7 @@ import { DbfsSinkComponent } from './stages/sinks/dbfs-sink/dbfs-sink.component'
 import { CosmosDBSinkComponent } from './stages/sinks/cosmosDB-sink/cosmosDB-sink.component';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
 import { FileExplorerComponent } from './file-explorer/file-explorer.component';
+import { PipelineExecutionComponent } from './right-nav/pipeline-execution/pipeline-execution.component';
 
 const DEFAULT_ACE_CONFIG: AceConfigInterface = {
   tabSize: 2
@@ -113,7 +114,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     DbfsSinkComponent,
     CosmosDBSinkComponent,
     DataExplorerComponent,
-    FileExplorerComponent
+    FileExplorerComponent,
+    PipelineExecutionComponent,
 
   ],
   imports: [

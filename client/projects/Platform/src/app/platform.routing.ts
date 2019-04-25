@@ -18,6 +18,7 @@ import { CosmosDBSinkComponent } from './stages/sinks/cosmosDB-sink/cosmosDB-sin
 import { AddStageComponent } from './stages/add-stage/add-stage.component';
 import { EditStageComponent } from './stages/edit-stage/edit-stage.component';
 import { ShowStageComponent } from './stages/show-stage/show-stage.component';
+import { PipelineExecutionComponent } from './right-nav/pipeline-execution/pipeline-execution.component';
 
 import { from } from 'rxjs';
 const APP_ROUTES: Routes = [
@@ -37,7 +38,9 @@ const APP_ROUTES: Routes = [
   { path: 'platform/stages/new', component: AddStageComponent },
   { path: 'platform/stages/:id', component: EditStageComponent },
   { path: 'platform/stages', component: ShowStageComponent },
-  { path: 'platform', redirectTo: 'platform/dashboard', canActivate: [AuthGuard] }
+  { path: 'platform/right-nav', component: PipelineExecutionComponent },
+  { path: 'platform', redirectTo: 'platform/dashboard', canActivate: [AuthGuard] },
+  
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);

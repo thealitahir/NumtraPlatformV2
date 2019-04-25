@@ -142,6 +142,10 @@
 .error-message{
   color: #ff0000;
 }
+.mandatory-filed{
+  color: #ff0000;
+  font-size: 17px;
+}
 /* ---- END - Stage property ---- */
 
 /* main{
