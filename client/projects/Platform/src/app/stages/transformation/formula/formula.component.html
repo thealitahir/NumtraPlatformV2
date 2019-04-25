@@ -1,141 +1,139 @@
 <div class="canvas-right-col width-md">
   <h3>Formula Transformation</h3>
 
-<form #formulaForm="ngForm" (submit)="saveFormula(formulaForm)" fxLayout="column" >
+  <form #formulaForm="ngForm" (submit)="saveFormula(formulaForm)" fxLayout="column">
 
-      <div class="form-group">
+    <mat-form-field>
+      <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name' required>
+    </mat-form-field>
 
-          <button type="button" *ngIf="stage.stage_attributes.use_expression" (click)="addExp()">Add Exp</button>
+    <div class="select-block" fxLayout fxLayoutAlign="space-between center">
+      <mat-radio-group color="primary" name="use_expression" [(ngModel)]="stage.stage_attributes.use_expression">
+        <mat-radio-button [value]="true" (click)='add(stage.stage_attributes.use_expression)'>Add fields
+        </mat-radio-button>
+        <!-- <mat-radio-button [value]="false">Formula expression</mat-radio-button> -->
+      </mat-radio-group>
 
-          <div >
-              <mat-form-field>
-                  <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
-                    required>
-              </mat-form-field>
+      <mat-icon color="primary" *ngIf="stage.stage_attributes.use_expression" (click)="addExp()" matTooltip="Add exp">
+        add_circle_outline
+      </mat-icon>
+    </div>
 
-              <mat-radio-group fxLayoutAlign="space-evenly center" name="use_expression" [(ngModel)]="stage.stage_attributes.use_expression">
-                <mat-radio-button [value]="true" (click)='add(stage.stage_attributes.use_expression)'>Add fields</mat-radio-button>
-                <mat-radio-button [value]="false">Formula expression</mat-radio-button>
-              </mat-radio-group>
+    <div *ngIf="stage.stage_attributes.use_expression">
+      <div *ngFor='let item of stage.stage_attributes.expression; let idx = index'>
 
-              <div *ngIf="stage.stage_attributes.use_expression">
-                  <div *ngFor='let item of stage.stage_attributes.expression; let idx = index'>
+        <div class="logical-operator" *ngIf="idx > 0">
+          <mat-form-field>
+            <mat-label>Select Operator</mat-label>
+            <mat-select name="operator1{{idx}}" [(ngModel)]='item.combinator' required>
+              <mat-option *ngFor='let opr of operators' [value]='opr'>{{ opr }} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
 
-                      <div *ngIf="idx > 0" >
-                          <mat-form-field>
-                              <mat-label>Select Operator</mat-label>
-                              <mat-select name="operator1{{idx}}" [(ngModel)]='item.combinator' required>
-                                <mat-option *ngFor='let opr of operators' [value]='opr'>{{ opr }} </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-                      </div>
+        <div class="fields-block" fxLayout="column">
 
-                      <div >
-                          <div >
-                              <mat-form-field >
-                                <mat-label>Select Type</mat-label>
-                                <mat-select name="type1{{idx}}" [(ngModel)]='item.value1_type' required>
-                                  <mat-option *ngFor='let typ of Types'  [value]='typ'>
-                                    {{ typ }} </mat-option>
-                                </mat-select>
-                              </mat-form-field>
+          <div fxLayoutAlign="space-between center">
+            <mat-form-field fxFlex="42">
+              <mat-label>Select Type 1</mat-label>
+              <mat-select name="type1{{idx}}" [(ngModel)]='item.value1_type' required>
+                <mat-option *ngFor='let typ of Types' [value]='typ'>
+                  {{ typ }} </mat-option>
+              </mat-select>
+            </mat-form-field>
 
+            <mat-form-field fxFlex="42" *ngIf="item.value1_type=='stream'">
+              <mat-label>Select Filed</mat-label>
+              <mat-select name="field1{{idx}}" [(ngModel)]='item.value1' required>
+                <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
+                  {{ sSchema.field }} </mat-option>
+              </mat-select>
+            </mat-form-field>
 
+            <mat-form-field fxFlex="42" *ngIf="item.value1_type=='custom'">
+              <input matInput type="text" name="value1{{idx}}" [(ngModel)]='item.value1' placeholder="Value.."
+                #Value="ngModel" required>
+            </mat-form-field>
 
-                              <mat-form-field *ngIf="item.value1_type=='stream'">
-                                <mat-label>Select Filed</mat-label>
-                                <mat-select name="field1{{idx}}"  [(ngModel)]='item.value1' required>
-                                 <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
-                                    {{ sSchema.field }} </mat-option>
-                                </mat-select>
-                              </mat-form-field>
-
-                              <mat-form-field  *ngIf="item.value1_type=='custom'">
-                                  <input matInput type="text" name="value1{{idx}}" [(ngModel)]='item.value1'
-                                    placeholder="Value.." #Value="ngModel" required>
-                                </mat-form-field>
-
-                              <mat-form-field>
-                                  <mat-label>Select Operator</mat-label>
-                                  <mat-select name="operator2{{idx}}" [(ngModel)]='item.operator' required>
-                                    <mat-option *ngFor='let opr of operators' [value]='opr'>{{ opr }} </mat-option>
-                                  </mat-select>
-                                </mat-form-field>
-
-                          <mat-form-field >
-                              <mat-label>Select Type</mat-label>
-                              <mat-select name="type2{{idx}}" [(ngModel)]='item.value2_type' required>
-                                <mat-option *ngFor='let typ of Types' [value]='typ' >
-                                  {{ typ }} </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-
-
-
-                          <mat-form-field *ngIf="item.value2_type =='stream'">
-                              <mat-label>Select Filed</mat-label>
-                              <mat-select name="field2{{idx}}"  [(ngModel)]='item.value2' required>
-                                 <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field' >
-                                  {{ sSchema.field }} </mat-option>
-                              </mat-select>
-                            </mat-form-field>
-
-                            <mat-form-field  *ngIf="item.value2_type =='custom'">
-                                <input matInput type="text" name="value2{{idx}}" [(ngModel)]='item.value2'
-                                  placeholder="Value.." #Value="ngModel" required>
-                              </mat-form-field>
-
-                          <div class="column-2" *ngIf="idx > 0">
-                              <button type="button" (click)="removeExp(idx)" style="font-size: 20px;color: #3cbfe8; position: relative; right: -3px; top: 7px; cursor:pointer;">Remove Exp</button>
-                          </div>
-
-                          </div>
-                      </div>
-
-                  </div>
-              </div>
+            <div fxFlex="6" *ngIf="idx == 0"></div>
+            <mat-icon class="remove-icon" fxFlex="6" color="warn" *ngIf="idx > 0" (click)="removeExp(idx)"
+              matTooltip="Remove exp">
+              highlight_off
+            </mat-icon>
           </div>
 
-          <div >
-
-              <div *ngIf="!stage.stage_attributes.use_expression" >
-
-                  <mat-form-field>
-                      <textarea matInput type="text" name="formula" placeholder="Formula"
-                        [(ngModel)]='stage.stage_attributes.formula' required style="min-height: 100px"></textarea>
-                    </mat-form-field>
-
-                </div>
-
-
-
+          <div fxLayoutAlign="space-between center">
+            <mat-form-field fxFlex="89.25">
+              <mat-label>Select Field</mat-label>
+              <mat-select name="operator2{{idx}}" [(ngModel)]='item.operator' required>
+                <mat-option *ngFor='let opr of operators' [value]='opr'>{{ opr }} </mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
+
+          <div fxLayoutAlign="space-between center">
+            <mat-form-field fxFlex="42">
+              <mat-label>Select Type</mat-label>
+              <mat-select name="type2{{idx}}" [(ngModel)]='item.value2_type' required>
+                <mat-option *ngFor='let typ of Types' [value]='typ'>
+                  {{ typ }} </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="42" *ngIf="item.value2_type =='stream'">
+              <mat-label>Select Filed</mat-label>
+              <mat-select name="field2{{idx}}" [(ngModel)]='item.value2' required>
+                <mat-option *ngFor='let sSchema of stageSchema' [value]='sSchema.field'>
+                  {{ sSchema.field }} </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field fxFlex="42" *ngIf="item.value2_type =='custom'">
+              <input matInput type="text" name="value2{{idx}}" [(ngModel)]='item.value2' placeholder="Value.."
+                #Value="ngModel" required>
+            </mat-form-field>
+
+            <div fxFlex="6"></div>
+          </div>
+
+        </div>
+
       </div>
+    </div>
 
-      <div class="clearfix"></div>
+    <div class="select-block" fxLayout>
+      <mat-radio-group color="primary" name="use_expression" [(ngModel)]="stage.stage_attributes.use_expression">
+        <mat-radio-button [value]="false">Formula expression</mat-radio-button>
+      </mat-radio-group>
+    </div>
 
-      <div >
-          <label>
-              Resultant Column<small style="color:red;font-size:17px">*</small>
-          </label>
+    <div *ngIf="!stage.stage_attributes.use_expression">
+      <div class="fields-block" fxLayout="column">
+        <div fxLayoutAlign="space-between center">
+          <mat-form-field fxFlex="89.25">
+            <textarea matInput type="text" name="formula" placeholder="Formula"
+              [(ngModel)]='stage.stage_attributes.formula' required style="min-height: 100px"></textarea>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
 
-
-          <div >
-
-              <!-- <input name="newField" type="text" class="form-control" ng-model="stage.stage_attributes.output_fields[0].field" placeholder="Column Name" style='text-transform:uppercase' ng-pattern="/^[a-zA-Z0-9_-]*$/" ng-trim="false" required>
+    <div fxLayout fxLayoutAlign=" center" fxLayoutGap="20px">
+      <!-- <input name="newField" type="text" class="form-control" ng-model="stage.stage_attributes.output_fields[0].field" placeholder="Column Name" style='text-transform:uppercase' ng-pattern="/^[a-zA-Z0-9_-]*$/" ng-trim="false" required>
               <span ng-show="formulaForm.newField.$error.pattern" class="alert-danger">Invalid character in column name(use _ or -)</span>
               <span ng-show="formulaForm.newField.$error.required && formulaForm.newField.$dirty" class="help-block">Resultant column name is required</span>
               <span class="alert-danger" ng-show="$root.keywords.indexOf(stage.stage_attributes.output_fields[0].field.toUpperCase())>-1"> Please donot enter sql keywords</span> -->
+      <label>
+        Resultant Column:
+        <small class="mandatory-filed">*</small>
+      </label>
+      <mat-form-field>
+        <input matInput type="text" name='newField' [(ngModel)]='stage.stage_attributes.output_fields.field'
+          placeholder="Column Name" style='text-transform:uppercase' required>
+      </mat-form-field>
+    </div>
 
-
-              <mat-form-field  >
-                  <input matInput type="text" name='newField' [(ngModel)]='stage.stage_attributes.output_fields.field'
-                  placeholder="Column Name" style='text-transform:uppercase'  required>
-              </mat-form-field>
-
-            </div>
-
-          <!-- <mat-form-field  >
+    <!-- <mat-form-field  >
               <mat-label>Select Type</mat-label>
               <mat-select name="type"  [(ngModel)]='stage.stage_attributes.output_fields.type' required>
                 <mat-option *ngFor='let dt of datatypes' [value]='dt.value'>
@@ -143,19 +141,14 @@
               </mat-select>
             </mat-form-field> -->
 
-          <div >
+    <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.output_fields.absolute"
+      name='stage.stage_attributes.output_fields.absolute'>
+      Take mode of resultant values
+    </mat-checkbox>
 
-              <mat-checkbox color="primary" [(ngModel)]="stage.stage_attributes.output_fields.absolute"
-        name='stage.stage_attributes.output_fields.absolute'>
-        Take mode of resultant values</mat-checkbox>
-          </div>
+    <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
+      <button mat-stroked-button color="accent" type="submit">Save</button>
+    </div>
 
-          <div class="property-form-button">
-              <button mat-stroked-button color="accent" type="submit">Save</button>
-              <!-- <button type="button" class="btn btn-danger" ng-disabled="angular.equals(copy_stage_attributes, stage.stage_attributes)" ng-click="cancel()">Cancel</button> -->
-          </div>
-
-      </div>
-
-</form>
+  </form>
 </div>

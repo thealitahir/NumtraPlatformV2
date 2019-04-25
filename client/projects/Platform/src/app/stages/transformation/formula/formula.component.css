@@ -6,12 +6,13 @@ mat-icon{
 }
 .fields-block{
   background: #fafafa;
-  padding: 0px 10px;
+  padding: 1rem 1rem 0;
   border-radius: 4px;
 }
 
 .logical-operator{
   text-align: center;
+  margin: 1rem 0 0 0;
 }
 .remove-icon{
   text-align: right;
