@@ -7,7 +7,7 @@ import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { AggregationComponent } from './stages/transformation/aggregation/aggregation.component';
 import { QueryComponent } from './stages/transformation/query/query.component';
-import { FilterComponent } from './stages/transformation/filter/filter.component';
+import { UnionComponent } from './stages/transformation/union/union.component';
 import { FormulaComponent } from './stages/transformation/formula/formula.component';
 import { AuthGuard } from '../../../../src/app/guards/index';
 import { DataExplorerComponent } from './data-explorer/data-explorer.component';
@@ -22,7 +22,7 @@ import { PipelineExecutionComponent } from './right-nav/pipeline-execution/pipel
 
 import { from } from 'rxjs';
 const APP_ROUTES: Routes = [
-  { path: 'platform/dbfs', component: DbfsComponent, canActivate: [AuthGuard] },
+  { path: 'platform/union', component: UnionComponent },
   { path: 'platform/max', component: MaxComponent },
   { path: 'platform/aggregation', component: AggregationComponent },
   { path: 'platform/formula', component: FormulaComponent },
@@ -40,7 +40,7 @@ const APP_ROUTES: Routes = [
   { path: 'platform/stages', component: ShowStageComponent },
   { path: 'platform/right-nav', component: PipelineExecutionComponent },
   { path: 'platform', redirectTo: 'platform/dashboard', canActivate: [AuthGuard] },
-  
+
 ];
 
 export const routing = RouterModule.forRoot(APP_ROUTES);
