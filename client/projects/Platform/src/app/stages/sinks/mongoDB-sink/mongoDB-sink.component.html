@@ -1,0 +1,44 @@
+<div class="canvas-right-col">
+  <h3>Mongo DB Sink</h3>
+
+  <form #mongodbForm="ngForm" fxLayout="column">
+    <mat-form-field>
+        <label class="error-message">{{error}}</label>
+        <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name'
+          required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" name="hostaddress" placeholder="MongoDB Host Address" [(ngModel)]='stage.stage_attributes.hostaddress'
+        required>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput type="text" name="port" placeholder="MongoDB Port" [(ngModel)]='stage.stage_attributes.port' required>
+    </mat-form-field>
+
+    <mat-form-field>
+        <input matInput type="text" name="username" placeholder="Username" [(ngModel)]='stage.stage_attributes.username'
+          required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="password" name="password" placeholder="Password" [(ngModel)]='stage.stage_attributes.password' required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" name="database" placeholder="Database" [(ngModel)]='stage.stage_attributes.database' required>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input matInput type="text" name="collection" placeholder="Collection" [(ngModel)]='stage.stage_attributes.collection' required>
+      </mat-form-field>
+
+    <br />
+
+    <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="space-between center">
+      <button mat-stroked-button color="accent" (click)="getSchemaAndSave(mongodbForm)" type="submit">Save</button>
+    </div>
+  </form>
+</div>
+
