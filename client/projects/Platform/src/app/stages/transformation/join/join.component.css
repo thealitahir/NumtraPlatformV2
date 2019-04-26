@@ -1,3 +1,17 @@
-.lable{
-    margin-bottom: 1rem;
-}
+mat-icon{
+    cursor: pointer;
+  }
+  .select-block{
+    margin: 0.5rem 0;
+  }
+  .fields-block{
+    background: #fafafa;
+    padding: 1rem 1rem 0;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .remove-icon{
+    text-align: right;
+  }
+  
