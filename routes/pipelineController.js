@@ -41,7 +41,7 @@ router.post('/getClusters', function(req,res) {
     // var url= CONFIGURATIONS.dbfsDomain +'/api/2.0/dbfs/read';
     console.log("in get clusters");
     console.log(req.body);
-    var url= req.body.domain +'/api/2.0/clusters/list';
+    var url= 'https://'+req.body.domain +'/api/2.0/clusters/list';
     request({
         url: url,
         method: 'GET',
@@ -63,7 +63,7 @@ router.post('/getClusters', function(req,res) {
     });
 });
 
-router.post('/executeWithNewCluster', function (req, res) {
+router.post('/executePipeline', function (req, res) {
     var data = req.body;
     console.log("execute pipeline : ", data);
     var url = CONFIGURATIONS.platformRequestApi + '/api/start/codegen';

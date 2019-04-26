@@ -18,6 +18,7 @@ export class PipelineExecutionComponent implements OnInit, OnChanges {
   selected_profile: any = null;
   clusters: any = [];
   selected_cluster: any = null;
+  keep_cluster_persistent:boolean = false;
   profile: any = {
     name:'',
     domain:'',
@@ -26,11 +27,11 @@ export class PipelineExecutionComponent implements OnInit, OnChanges {
   cluster_data: any = {
     cluster_name:'',
     spark_version:'',
-    autotermination_minutes:'',
+    autotermination_minutes:0,
     node_type_id:'',
     autoscale:{
-      min_workers:'',
-      max_workers:''
+      min_workers:0,
+      max_workers:0
     },
     spark_env_vars:{
       PYSPARK_PYTHON:''
@@ -93,8 +94,14 @@ export class PipelineExecutionComponent implements OnInit, OnChanges {
     }
     var data = {
       clusterInfo:{},
-      new: true,
-      pipeline_id:''
+      cluster_id:'',
+      is_new_cluster: true,
+      process_id:'',
+      domain_profile:{
+        domain:'',
+        token:''
+      },
+      keep_cluster_persistent:false
     };
     this.cluster_data.cluster_name = form.value.name;
     this.cluster_data.spark_version = form.value.spark_version;
@@ -105,14 +112,38 @@ export class PipelineExecutionComponent implements OnInit, OnChanges {
     this.cluster_data.spark_env_vars.PYSPARK_PYTHON = form.value.spark_env_vars;
 
     data.clusterInfo = this.cluster_data;
-    data.pipeline_id = this.pipeline_id;
-    this.pipelineExecutionService.executeWithNewCluster(data).subscribe(record => {
+    data.keep_cluster_persistent = this.keep_cluster_persistent;
+    data.process_id = this.pipeline_id;
+
+    data.domain_profile.domain = this.selected_profile.domain;
+    data.domain_profile.token = this.selected_profile.token;
+    console.log(data);
+    this.pipelineExecutionService.executePipeline(data).subscribe(record => {
 
     });
   }
 
   execute(cluster){
     console.log("existing execution ", cluster);
+    var data = {
+      clusterInfo:{},
+      cluster_id:'',
+      is_new_cluster: false,
+      process_id:'',
+      domain_profile:{
+        domain:'',
+        token:''
+      },
+      keep_cluster_persistent:false
+    };
+    data.cluster_id = cluster.cluster_id;
+    data.process_id = this.pipeline_id;
+    data.domain_profile.domain = this.selected_profile.domain;
+    data.domain_profile.token = this.selected_profile.token;
+    console.log(data);
+    this.pipelineExecutionService.executePipeline(data).subscribe(record => {
+
+    });
   }
 
 }
