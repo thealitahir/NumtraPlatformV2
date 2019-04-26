@@ -71,11 +71,8 @@ export interface Template {
 export class StencilService {
     component : Stage[] =[];
     constructor(public stageService?: StageService) {
-        console.log(this.stageService);
         this.stageService.getComponents().subscribe(data =>{
             this.component = data.data;
-            console.log("in stencil service");
-            console.log(this.component);
         }); 
     }
     
@@ -144,7 +141,14 @@ export class StencilService {
             "stage_id" : ""
          }
         },
-        { name: 'aggregation', label: 'Aggregation' },
+        { name: 'aggregation', label: 'Aggregation', type:'operation',
+          stage_attributes:{
+            "group_by" : [
+            ], 
+            "aggregate_on" : [
+            ]
+          }
+        },
         { name: 'timezone', label: 'Date Time' },
         { name: 'top', label: 'Top', type:'operation',
           stage_attributes:{
@@ -181,9 +185,35 @@ export class StencilService {
             "use_expression" : true
           }
         },
-        { name: 'formula', label: 'Formula' },
+        { name: 'formula', label: 'Formula', type:'operation',
+          stage_attributes:{
+            "formula" : "", 
+            "output_fields" : {
+                "type" : "", 
+                "alias" : "", 
+                "field" : "", 
+                "position" : "", 
+                "created_in" : "", 
+                "inherited" : true, 
+                "checked" : true, 
+                "absolute" : true
+            }, 
+            "expression" : [
+            ], 
+            "use_expression" : true
+          }
+        },
         { name: 'findreplace', label: 'Find &amp; Replace' },
-        { name: 'join-1', label: 'Block Join' },
+        { name: 'join-1', label: 'Join', type:'operation',
+          stage_attributes:{
+            "user_comment" : "", 
+            "stageB" : "", 
+            "stageA" : "", 
+            "keys" : [
+            ], 
+            "join_type" : ""
+          }
+        },
         { name: 'merge', label: 'Merge' },
         { name: 'split', label: 'Split' },
         { name: 'tag', label: 'Tag' },

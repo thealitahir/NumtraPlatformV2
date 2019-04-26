@@ -9,4 +9,7 @@
 <app-blob-storage [stage_id]="showBlobSourceId" *ngIf="showBlobSource"></app-blob-storage>
 <app-blob-storage-sink [stage_id]="showBlobSinkId" *ngIf="showBlobSink"></app-blob-storage-sink>
 <app-cosmosdb-sink [stage_id]="showCosmosSinkId" *ngIf="showCosmosSink"></app-cosmosdb-sink>
+<app-formula [stage_id]="showFormulaId" *ngIf="showFormula"></app-formula>
+<app-join [stage_id]="showJoinId" *ngIf="showJoin"></app-join>
+<app-aggregation [stage_id]="showAggregationId" *ngIf="showAggregation"></app-aggregation>
 <app-pipeline-execution [pipeline_id]="executePipelineId" *ngIf="executePipeline"></app-pipeline-execution>

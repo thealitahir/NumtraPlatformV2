@@ -18,6 +18,9 @@ export class PipelineDesignerComponent implements OnInit {
   showBlobSource: boolean = false; showBlobSourceId: string;
   showBlobSink: boolean = false; showBlobSinkId: string;
   showCosmosSink: boolean = false; showCosmosSinkId: string;
+  showFormula: boolean = false; showFormulaId: string;
+  showAggregation: boolean = false; showAggregationId: string;
+  showJoin: boolean = false; showJoinId: string;
   executePipeline: boolean = false; executePipelineId: string;
   pipeline_id: string =''
   constructor(public router: Router, public route:ActivatedRoute) { }
@@ -48,6 +51,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
     else if(value && value.model.attributes.attrs.label.type == "source" &&
     value.model.attributes.attrs.label.text == "DBFS" && !this.showSource){
@@ -62,6 +68,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
     else if(value && value.model.attributes.attrs.label.type == "source" &&
     value.model.attributes.attrs.label.text == "DBFS" && this.showSource){
@@ -80,6 +89,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
     else if(value && value.model.attributes.attrs.label.type == "source" &&
     value.model.attributes.attrs.label.text == "CosmosDB" && this.showCosmos){
@@ -98,6 +110,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false; 
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
     else if(value && value.model.attributes.attrs.label.type == "source" &&
     value.model.attributes.attrs.label.text == "BlobStorage" && this.showBlobSource){
@@ -116,6 +131,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
       
     else if(value && value.model.attributes.attrs.label.type == "operation" &&
@@ -136,6 +154,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
       
     else if(value && value.model.attributes.attrs.label.type == "operation" &&
@@ -156,6 +177,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
       
     else if(value && value.model.attributes.attrs.label.type == "operation" &&
@@ -176,11 +200,83 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
       
     else if(value && value.model.attributes.attrs.label.type == "operation" &&
     value.model.attributes.attrs.label.text == "Query" && this.showQuery){
       this.showQuery = false;
+    }
+
+    else if(value && value.model.attributes.attrs.label.type == "operation" &&
+    value.model.attributes.attrs.label.text == "Aggregation" && !this.showAggregation){
+      this.showTop = false;
+      this.showSource = false;
+      this.showSink = false;
+      this.showCosmos = false;
+      this.showFilter = false;
+      this.showBottom = false;
+      this.showQuery = false; 
+      this.showBlobSource = false;
+      this.showBlobSink = false;
+      this.showCosmosSink = false;
+      this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = true; this.showAggregationId = mongoId;
+      this.showJoin = false;
+    }
+      
+    else if(value && value.model.attributes.attrs.label.type == "operation" &&
+    value.model.attributes.attrs.label.text == "Aggregation" && this.showAggregation){
+      this.showAggregation = false;
+    }
+
+    else if(value && value.model.attributes.attrs.label.type == "operation" &&
+    value.model.attributes.attrs.label.text == "Formula" && !this.showFormula){
+      this.showTop = false;
+      this.showSource = false;
+      this.showSink = false;
+      this.showCosmos = false;
+      this.showFilter = false;
+      this.showBottom = false;
+      this.showQuery = false; 
+      this.showBlobSource = false;
+      this.showBlobSink = false;
+      this.showCosmosSink = false;
+      this.executePipeline = false;
+      this.showFormula = true; this.showFormulaId = mongoId;
+      this.showAggregation = false;
+      this.showJoin = false;
+    }
+      
+    else if(value && value.model.attributes.attrs.label.type == "operation" &&
+    value.model.attributes.attrs.label.text == "Formula" && this.showFormula){
+      this.showFormula = false;
+    }
+
+    else if(value && value.model.attributes.attrs.label.type == "operation" &&
+    value.model.attributes.attrs.label.text == "Join" && !this.showJoin){
+      this.showTop = false;
+      this.showSource = false;
+      this.showSink = false;
+      this.showCosmos = false;
+      this.showFilter = false;
+      this.showBottom = false;
+      this.showQuery = false; 
+      this.showBlobSource = false;
+      this.showBlobSink = false;
+      this.showCosmosSink = false;
+      this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = true; this.showJoinId = mongoId;
+    }
+      
+    else if(value && value.model.attributes.attrs.label.type == "operation" &&
+    value.model.attributes.attrs.label.text == "Join" && this.showJoin){
+      this.showJoin = false;
     }
       
     else if(value && value.model.attributes.attrs.label.type == "sink" &&
@@ -196,6 +292,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = false;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
       
     else if(value && value.model.attributes.attrs.label.type == "sink" &&
@@ -216,6 +315,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false;
       this.showCosmosSink = true; this.showCosmosSinkId = mongoId;
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
     else if(value && value.model.attributes.attrs.label.type == "sink" &&
     value.model.attributes.attrs.label.text == "CosmosDB" && this.showCosmosSink){
@@ -234,6 +336,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = true; this.showBlobSinkId = mongoId;
       this.showCosmosSink = false; 
       this.executePipeline = false;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
     else if(value && value.model.attributes.attrs.label.type == "sink" &&
     value.model.attributes.attrs.label.text == "BlobStorage" && this.showBlobSink){
@@ -251,6 +356,9 @@ export class PipelineDesignerComponent implements OnInit {
       this.showBlobSink = false; this.executePipelineId = mongoId;
       this.showCosmosSink = false; 
       this.executePipeline = true;
+      this.showFormula = false;
+      this.showAggregation = false;
+      this.showJoin = false;
     }
     else if(value && value.model.attributes.attrs.label.text == "executePipeline" && this.executePipeline){
       this.executePipeline = false;
