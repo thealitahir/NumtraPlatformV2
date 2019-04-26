@@ -93,7 +93,6 @@ export class JoinComponent implements OnInit, OnChanges {
       }
       this.stage.original_schema = [];
       this.stage.selected_schema = [];
-<<<<<<< HEAD
       this.stage.original_schema = obj;
       this.stage.selected_schema = obj;
       console.log(this.stage.original_schema);
@@ -110,43 +109,6 @@ export class JoinComponent implements OnInit, OnChanges {
       });
     // }, 3000);
 
-=======
-      this.stage.orignal_schema.push(obj);
-      this.stage.selected_schema.push(obj);
-      console.log(this.stage.orignal_schema);
-    }
-
-    if (this.stage.stage_attributes.join_type === 'leftouter') {
-      console.log('left');
-      this.stage.orignal_schema = [];
-      this.stage.selected_schema = [];
-      this.stage.orignal_schema = this.stageA_fields;
-      this.stage.selected_schema = this.stageA_fields;
-      console.log(this.stage.orignal_schema);
-    }
-
-    if (this.stage.stage_attributes.join_type === 'rightouter') {
-      console.log('right');
-      this.stage.orignal_schema = [];
-      this.stage.selected_schema = [];
-      this.stage.orignal_schema = this.stageB_fields;
-      this.stage.selected_schema = this.stageB_fields;
-      console.log(this.stage.orignal_schema);
-    }
-    this.data = {
-      updatedata: {
-        'name': this.stage.name, 'original_schema': this.stage.orignal_schema,
-        'selected_schema': this.stage.selected_schema, 'stage_attributes': this.stage.stage_attributes
-      }, stage_id: this.stage_id
-    };
-    this.stageService.updateStage(this.data).subscribe(data => {
-      if (data.data.nModified === 1) {
-        this.openSnackBar('Success:', 'Stage Saved Successfully!');
-      } else {
-        this.openSnackBar('Error:', 'Try Again!');
-      }
-    });
->>>>>>> 4154e4d499a0ca972f4601edca1bbd78f6ae7832
   }
 
   addKey() {

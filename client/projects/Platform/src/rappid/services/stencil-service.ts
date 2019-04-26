@@ -189,12 +189,8 @@ export class StencilService {
           stage_attributes:{
             "formula" : "", 
             "output_fields" : {
-                "type" : "", 
                 "alias" : "", 
-                "field" : "", 
-                "position" : "", 
-                "created_in" : "", 
-                "inherited" : true, 
+                "field" : "",
                 "checked" : true, 
                 "absolute" : true
             }, 

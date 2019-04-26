@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ɵConsole } from '@angular/core';
 import { NgForm, CheckboxControlValueAccessor } from '@angular/forms';
 import { StageService } from '../../../services/stage.service';
 import { MatSnackBar } from '@angular/material';
@@ -19,8 +19,15 @@ export class FormulaComponent implements OnInit, OnChanges {
     selected_schema: [],
     stage_attributes: {
       output_fields: {
-        field: '',
-        type: ''
+        checked : true, 
+        inherited : true, 
+        is_categorical : false, 
+        bad_values : "", 
+        nullable : "true", 
+        _id : "5cc3064e3d2272329c7352f8", 
+        field : "", 
+        alias : "", 
+        position : ""
       },
       formula: '',
       expression: [],
@@ -57,10 +64,10 @@ export class FormulaComponent implements OnInit, OnChanges {
             this.stage = schemadata.data;
             // this.stageSchema = schemadata.data.original_schema;
             console.log(this.stage);
-            for (let i = 0; i === 1; i++) {
-              // console.log(this.stage.in[i]);
+            for (let i = 0; i < 1; i++) {
+              console.log(this.stage.in[i]);
               this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
-                // console.log(schdata.data);
+                console.log(schdata.data);
                 this.schema = schdata.data.original_schema;
                 this.stageSchema = this.schema;
                 // console.log(this.stageSchema);
@@ -117,9 +124,10 @@ export class FormulaComponent implements OnInit, OnChanges {
     this.data = {
       updatedata: {
         'name': this.stage.name, 'original_schema': this.stage.original_schema,
-        'selected_schema': this.stage.selected_schema, 'stage_attributes': this.stage.stage_attributes
+         'stage_attributes': this.stage.stage_attributes
       }, stage_id: this.stage_id
     };
+    console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');
