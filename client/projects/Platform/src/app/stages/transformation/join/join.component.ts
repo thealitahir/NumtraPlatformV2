@@ -84,16 +84,33 @@ export class JoinComponent implements OnInit, OnChanges {
     const obj = [];
     this.stage.stage_attributes.stageA = this.joinStages[0]._id;
     this.stage.stage_attributes.stageB = this.joinStages[1]._id;
-    if (this.stage.stage_attributes.join_type === 'inner') {
-      console.log('inner');
+
       for (let i = 0; i < this.stageA_fields.length; i++) {
         obj.push(this.stageA_fields[i]);
       }
       for (let j = 0; j < this.stageB_fields.length; j++) {
         obj.push(this.stageB_fields[j]);
       }
-      this.stage.orignal_schema = [];
+      this.stage.original_schema = [];
       this.stage.selected_schema = [];
+<<<<<<< HEAD
+      this.stage.original_schema = obj;
+      this.stage.selected_schema = obj;
+      console.log(this.stage.original_schema);
+
+    // setTimeout(() => {
+      this.data = {updatedata: {'name': this.stage.name,  'original_schema': this.stage.original_schema,
+    'selected_schema': this.stage.selected_schema, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
+      this.stageService.updateStage(this.data).subscribe(data => {
+        if (data.data.nModified === 1) {
+          this.openSnackBar('Success:', 'Stage Saved Successfully!');
+        } else {
+          this.openSnackBar('Error:', 'Try Again!');
+        }
+      });
+    // }, 3000);
+
+=======
       this.stage.orignal_schema.push(obj);
       this.stage.selected_schema.push(obj);
       console.log(this.stage.orignal_schema);
@@ -129,6 +146,7 @@ export class JoinComponent implements OnInit, OnChanges {
         this.openSnackBar('Error:', 'Try Again!');
       }
     });
+>>>>>>> 4154e4d499a0ca972f4601edca1bbd78f6ae7832
   }
 
   addKey() {

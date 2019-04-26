@@ -27,6 +27,17 @@ export class AggregationComponent implements OnInit, OnChanges {
   items = [];
 
   method = [
+<<<<<<< HEAD
+      {type: 'Method', function: 'sum', value: 'SUM' ,active : true},
+      {type: 'Method', function: 'average', value: 'AVG' , active : true},
+      {type: 'Method', function: 'min', value: 'MIN', active : true},
+      {type: 'Method', function: 'max', value: 'MAX', active : true},
+      {type: 'Count' , function: 'all', value: 'all', active : true},
+      {type: 'Count' , function: 'empty', value: 'empty' ,active : true},
+      {type: 'Count' , function: 'non empty', value: 'non empty' ,active : true},
+      {type: 'Count' , function: 'unique', value: 'unique' , active : true},
+      {type: 'Count' , function: 'custom', value: 'custom' , active : true},
+=======
     { type: 'Method', function: 'sum', active: true },
     { type: 'Method', function: 'average', active: true },
     { type: 'Method', function: 'min', active: true },
@@ -36,6 +47,7 @@ export class AggregationComponent implements OnInit, OnChanges {
     { type: 'Count', function: 'non empty', active: true },
     { type: 'Count', function: 'unique', active: true },
     { type: 'Count', function: 'custom', active: true },
+>>>>>>> 4154e4d499a0ca972f4601edca1bbd78f6ae7832
   ];
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService) {
