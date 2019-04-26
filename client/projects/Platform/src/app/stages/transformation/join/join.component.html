@@ -15,19 +15,6 @@
             </select>
             <span ng-show="joinForm.type.$error.required && joinForm.type.$dirty" class="help-block">Please select join type</span>
         </div> -->
-<<<<<<< HEAD
-        <mat-form-field>
-            <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name' required>
-          </mat-form-field>
-        <mat-form-field fxFlex="42">
-          <mat-label>Select Join</mat-label>
-          <mat-select name="type" [(ngModel)]='stage.stage_attributes.join_type' required>
-              <mat-option value="" selected>Select Join</mat-option>
-              <mat-option value="inner">Inner</mat-option>
-              <mat-option value="leftouter">Left outer</mat-option>
-              <mat-option value="rightouter">Right outer</mat-option>
-          </mat-select>
-=======
 
         <mat-form-field>
             <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name' required>
@@ -41,7 +28,6 @@
                 <mat-option value="leftouter">Left outer</mat-option>
                 <mat-option value="rightouter">Right outer</mat-option>
             </mat-select>
->>>>>>> ccbedb663eb40e941effcd37b9062ffcd66c49f1
         </mat-form-field>
 
 
