@@ -84,7 +84,7 @@ export class DbfsComponent implements OnInit, OnChanges{
      console.log(form.value);
     this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fileheader, 'stage_attributes.url': form.value.url,
 
-     'stage_attributes.source_delimeter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
+     'stage_attributes.delimiter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
      'stage_attributes.dbfs_token': form.value.dbfstoken, 'stage_attributes.dbfs_domain':  form.value.dbfsdomain,
      'stage_attributes.is_header': 'Use Header Line' },
      stage_id: this.stage_id};
