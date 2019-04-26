@@ -1,53 +1,57 @@
-<div class="canvas-right-col width-md">
-  <h3>Union Transformation</h3>
+<div class="canvas-right-col width-lg">
+    <h3>Union Transformation</h3>
 
-  <form #unionForm="ngForm" (submit)="saveUnion(unionForm)" fxLayout="column">
-      <mat-form-field>
-          <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name' required>
+    <form #unionForm="ngForm" (submit)="saveUnion(unionForm)" fxLayout="column">
+        <mat-form-field>
+            <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name' required>
         </mat-form-field>
-          <div class="form-group">
-              <span *ngIf="!stages" class="alert-danger">Please attach at least two sources</span>
 
-              <table *ngIf="stages.length > 1" class="table table-responsive table-striped noMargins">
-                  <th class="union-column-1"></th>
-                  <th class="union-column-2 text-center" *ngFor="let head of stages">
-                      {{head.name}}
-                  </th>
+        <span *ngIf="!stages" class="alert-danger">Please attach at least two sources</span>
 
-                  <tr *ngFor="let row of original_unions; let indx= index">
-                      <td class="union-column-1">
-                          <!-- <input ng-model="row[0].checked" type="checkbox" style="margin-top: 11px;"> -->
-                          <mat-checkbox color="primary" [(ngModel)]="row[0].checked" name='checkbox{{indx}}'></mat-checkbox>
+        <table *ngIf="stages.length > 1">
+            <thead>
+                <tr>
+                    <th class="first"></th>
+                    <th *ngFor="let head of stages">
+                        {{head.name}}
+                    </th>
+                </tr>
+            </thead>
 
-                      </td>
+            <tbody>
+                <tr *ngFor="let row of original_unions; let indx= index">
+                    <td class="first">
+                        <!-- <input ng-model="row[0].checked" type="checkbox" style="margin-top: 11px;"> -->
+                        <mat-checkbox color="primary" [(ngModel)]="row[0].checked" name='checkbox{{indx}}'>
+                        </mat-checkbox>
+                    </td>
 
-                      <td class="union-column" *ngFor="let col of row; let idx = index" >
-                        <!-- <mat-form-field >
-                            <mat-select name ="field_{{idx}}" [(ngModel)]="col.field" required>
-                                <mat-option [value]='opt.filed' *ngFor='let opt of stages[idx].selected_schema' >{{opt.field}}</mat-option>
+                    <td *ngFor="let col of row; let idx = index">
+
+                        <!-- <mat-form-field>
+                            <mat-label>Select Filed</mat-label>
+                            <mat-select name="field_{{idy}}{{idx}}" [(ngModel)]="col.field" required>
+                                <mat-option *ngFor="let opt of row" [value]="opt.filed">
+                                    {{opt.field}}
+                                </mat-option>
                             </mat-select>
                         </mat-form-field> -->
 
+                        <select name="field_{{idx}}" ng-model="col.field" required>
+                            <option [value]='opt.filed' *ngFor='let opt of stages[idx].selected_schema'>{{opt.field}}
+                            </option>
+                        </select>
 
-                              <select name ="field_{{idx}}" ng-model="col.field" required>
-                                  <option [value]='opt.filed' *ngFor='let opt of stages[idx].selected_schema' >{{opt.field}}</option>
-                              </select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
 
+        <!-- <span ng-show="error_message.checked" class="alert-danger">Please check at least one of the attributes</span> -->
 
+        <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
+            <button mat-stroked-button color="accent" type="submit">Save</button>
+        </div>
 
-
-                      </td>
-                  </tr>
-              </table>
-
-              <!-- <span ng-show="error_message.checked" class="alert-danger">Please check at least one of the attributes</span> -->
-          </div>
-
-          <div class="property-form-button">
-              <button mat-stroked-button color="accent" type="submit">Save</button>
-              <!-- <button type="button" class="btn btn-danger" ng-disabled="angular.equals(copy_stage_attributes, stage.stage_attributes)" ng-click="cancel()">Cancel</button> -->
-          </div>
-
-
-  </form>
+    </form>
 </div>

@@ -122,6 +122,9 @@
 .canvas-right-col.width-md {
   width: 400px;
 }
+.canvas-right-col.width-lg {
+  width: 650px;
+}
 
 .canvas-right-col.width-lg {
   width: 650px;
