@@ -35,14 +35,14 @@
 
               <mat-optgroup label="Method">
                 <ng-container *ngFor='let m of method'>
-                  <mat-option *ngIf='m.type === "Method"' [value]='m.function'>
+                  <mat-option *ngIf='m.type === "Method"' [value]='m.value'>
                     {{ m.function }} </mat-option>
                 </ng-container>
               </mat-optgroup>
 
               <mat-optgroup label="Count">
                 <ng-container *ngFor='let m of method'>
-                  <mat-option *ngIf='m.type === "Count"' [value]='m.function'>
+                  <mat-option *ngIf='m.type === "Count"' [value]='m.value'>
                     {{ m.function }} </mat-option>
                 </ng-container>
               </mat-optgroup>

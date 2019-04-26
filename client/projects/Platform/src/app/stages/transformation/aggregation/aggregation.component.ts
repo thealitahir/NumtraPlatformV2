@@ -27,15 +27,15 @@ export class AggregationComponent implements OnInit {
   items = [];
 
   method = [
-      {type: 'Method', function: 'sum', active : true},
-      {type: 'Method', function: 'average', active : true},
-      {type: 'Method', function: 'min', active : true},
-      {type: 'Method', function: 'max', active : true},
-      {type: 'Count' , function: 'all', active : true},
-      {type: 'Count' , function: 'empty', active : true},
-      {type: 'Count' , function: 'non empty', active : true},
-      {type: 'Count' , function: 'unique', active : true},
-      {type: 'Count' , function: 'custom', active : true},
+      {type: 'Method', function: 'sum', value: 'SUM' ,active : true},
+      {type: 'Method', function: 'average', value: 'AVG' , active : true},
+      {type: 'Method', function: 'min', value: 'MIN', active : true},
+      {type: 'Method', function: 'max', value: 'MAX', active : true},
+      {type: 'Count' , function: 'all', value: 'all', active : true},
+      {type: 'Count' , function: 'empty', value: 'empty' ,active : true},
+      {type: 'Count' , function: 'non empty', value: 'non empty' ,active : true},
+      {type: 'Count' , function: 'unique', value: 'unique' , active : true},
+      {type: 'Count' , function: 'custom', value: 'custom' , active : true},
   ];
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService) {

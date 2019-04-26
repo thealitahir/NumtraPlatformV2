@@ -73,47 +73,31 @@ export class JoinComponent implements OnInit {
     const obj = [];
     this.stage.stage_attributes.stageA = this.joinStages[0]._id;
     this.stage.stage_attributes.stageB = this.joinStages[1]._id;
-    if (this.stage.stage_attributes.join_type === 'inner') {
-      console.log('inner');
+
       for (let i = 0; i < this.stageA_fields.length; i++) {
         obj.push(this.stageA_fields[i]);
       }
       for (let j = 0; j < this.stageB_fields.length; j++) {
         obj.push(this.stageB_fields[j]);
       }
-      this.stage.orignal_schema = [];
+      this.stage.original_schema = [];
       this.stage.selected_schema = [];
-      this.stage.orignal_schema.push(obj);
-      this.stage.selected_schema.push(obj);
-      console.log(this.stage.orignal_schema);
-    }
+      this.stage.original_schema = obj;
+      this.stage.selected_schema = obj;
+      console.log(this.stage.original_schema);
 
-    if (this.stage.stage_attributes.join_type === 'leftouter') {
-      console.log('left');
-      this.stage.orignal_schema = [];
-      this.stage.selected_schema = [];
-      this.stage.orignal_schema =  this.stageA_fields;
-      this.stage.selected_schema = this.stageA_fields;
-      console.log(this.stage.orignal_schema);
-    }
-
-    if (this.stage.stage_attributes.join_type === 'rightouter') {
-      console.log('right');
-      this.stage.orignal_schema = [];
-      this.stage.selected_schema = [];
-      this.stage.orignal_schema =  this.stageB_fields;
-      this.stage.selected_schema =  this.stageB_fields;
-      console.log(this.stage.orignal_schema);
-    }
-    this.data = {updatedata: {'name': this.stage.name,  'original_schema': this.stage.orignal_schema,
+    // setTimeout(() => {
+      this.data = {updatedata: {'name': this.stage.name,  'original_schema': this.stage.original_schema,
     'selected_schema': this.stage.selected_schema, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
-    this.stageService.updateStage(this.data).subscribe(data => {
-      if (data.data.nModified === 1) {
-        this.openSnackBar('Success:', 'Stage Saved Successfully!');
-      } else {
-        this.openSnackBar('Error:', 'Try Again!');
-      }
-    });
+      this.stageService.updateStage(this.data).subscribe(data => {
+        if (data.data.nModified === 1) {
+          this.openSnackBar('Success:', 'Stage Saved Successfully!');
+        } else {
+          this.openSnackBar('Error:', 'Try Again!');
+        }
+      });
+    // }, 3000);
+
   }
 
   addKey() {
