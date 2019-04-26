@@ -46,9 +46,9 @@ const allowedExt = [
 
 // Configurations
 global.CONFIGURATIONS ={ 
-  dbHost: '10.0.5.53',
+  dbHost: '216.168.41.41',
   dbPort: 9876,
-  db: 'test',
+  db: 'numtraplatform',
   username: 'dev',
   password: 'Balderdash2019',
   authdb: 'numtraplatform',
@@ -230,8 +230,6 @@ db.once('open', function () {
 //     io = require('socket.io').listen(server);
 //   }
 // });
-
-
 
 
 
