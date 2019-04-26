@@ -19,4 +19,7 @@ export class PipelineExecutionService {
   getClusters(selected_profile): Observable<any>{
     return this.http.post(GLOBAL.serviceUrl + '/pipeline/getClusters' , selected_profile);
   }
+  executeWithNewCluster(data): Observable<any>{
+    return this.http.post(GLOBAL.serviceUrl + '/pipeline/executeWithNewCluster' , data);
+  }
 }

@@ -11,12 +11,30 @@ import { PipelineExecutionService } from '../../services/pipeline-execution.serv
 export class PipelineExecutionComponent implements OnInit, OnChanges {
 
   execution: boolean = true;
+  addProfileForm: boolean = false;
+  selectedIndex: number = 0;
+  credentialGate: boolean = true;
   credentialProfiles: any = [];
   selected_profile: any = null;
+  clusters: any = [];
+  selected_cluster: any = null;
   profile: any = {
     name:'',
     domain:'',
     token:''
+  }
+  cluster_data: any = {
+    cluster_name:'',
+    spark_version:'',
+    autotermination_minutes:'',
+    node_type_id:'',
+    autoscale:{
+      min_workers:'',
+      max_workers:''
+    },
+    spark_env_vars:{
+      PYSPARK_PYTHON:''
+    }
   };
   @Input() pipeline_id: any;
 
@@ -54,6 +72,7 @@ export class PipelineExecutionComponent implements OnInit, OnChanges {
       console.log("profile saved");
       console.log(data);
       this.credentialProfiles.push(data.data);
+      this.addProfileForm = false;
     });
   }
 
@@ -61,8 +80,39 @@ export class PipelineExecutionComponent implements OnInit, OnChanges {
     console.log("fetch clusters");
     console.log(selected_profile);
     this.pipelineExecutionService.getClusters(selected_profile).subscribe(data => {
+      console.log("clusters");
+      this.clusters = data.clusters;
+      console.log(this.clusters);
+    });
+  }
+
+  saveAndExecute(form){
+    if (form.invalid) {
+      //this.openSnackBar('Error:', 'Fill all Fields!');
+      return;
+    }
+    var data = {
+      clusterInfo:{},
+      new: true,
+      pipeline_id:''
+    };
+    this.cluster_data.cluster_name = form.value.name;
+    this.cluster_data.spark_version = form.value.spark_version;
+    this.cluster_data.autotermination_minutes = form.value.autotermination_minutes;
+    this.cluster_data.node_type_id = form.value.node_type_id;
+    this.cluster_data.autoscale.min_workers = form.value.min_workers;
+    this.cluster_data.autoscale.max_workers = form.value.max_workers;
+    this.cluster_data.spark_env_vars.PYSPARK_PYTHON = form.value.spark_env_vars;
+
+    data.clusterInfo = this.cluster_data;
+    data.pipeline_id = this.pipeline_id;
+    this.pipelineExecutionService.executeWithNewCluster(data).subscribe(record => {
 
     });
+  }
+
+  execute(cluster){
+    console.log("existing execution ", cluster);
   }
 
 }

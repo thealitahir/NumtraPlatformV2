@@ -1,6 +1,35 @@
+mat-icon {
+  cursor: pointer;
+  transform: rotate(0deg);
+  transition-duration: 0.25s;
+  transition-property: transform;
+}
+
+.profile-close-icon {
+  transform: rotate(45deg);
+}
+
+.select-block {
+  margin: 0.5rem 0;
+}
+
+.profile-row {
+  border-bottom: solid 1px #eee;
+  padding: 3px;
+  margin-bottom: 3px;
+}
+
+.profile-row i {
+  font-size: 18px;
+  color: #3272a0;
+  cursor: pointer;
+  padding: 10px 5px;
+}
+
 .execution-option .mat-radio-button {
   margin: 0.5rem 0 0.5rem 0;
 }
-.error-message{
+
+.error-message {
   margin: 1rem 0 1.35rem;
 }

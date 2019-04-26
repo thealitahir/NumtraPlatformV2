@@ -51,13 +51,33 @@ router.post('/getClusters', function(req,res) {
         json: {"path": req.body.path}
     }, function(error, response, body) {
             var nodesData = [];
-            if(body.files){
-                var data = body.files;          
-                console.log(body);''
+            if(body.clusters){
+                var data = body.clusters;          
+                console.log(data);
+                res.send({clusters:data})
             }
-            
-            //res.send({files:nodesData})
-            
+            if(error){
+                console.log(error);
+                res.send(error);
+            }
+    });
+});
+
+router.post('/executeWithNewCluster', function (req, res) {
+    var data = req.body;
+    console.log("execute pipeline : ", data);
+    var url = CONFIGURATIONS.platformRequestApi + '/api/start/codegen';
+    request({
+        url: 'http://192.168.23.44:2020/api/start/codegen',
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        json: data
+    }, function (error, response, body) {
+        console.log('add data response');
+        res.send(body);
+
     });
 });
 

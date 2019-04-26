@@ -9,4 +9,4 @@
 <app-blob-storage [stage_id]="showBlobSourceId" *ngIf="showBlobSource"></app-blob-storage>
 <app-blob-storage-sink [stage_id]="showBlobSinkId" *ngIf="showBlobSink"></app-blob-storage-sink>
 <app-cosmosdb-sink [stage_id]="showCosmosSinkId" *ngIf="showCosmosSink"></app-cosmosdb-sink>
-<app-pipeline-execution *ngIf="executePipeline"></app-pipeline-execution>
+<app-pipeline-execution [pipeline_id]="executePipelineId" *ngIf="executePipeline"></app-pipeline-execution>
