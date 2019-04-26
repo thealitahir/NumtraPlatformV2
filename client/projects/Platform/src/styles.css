@@ -26,6 +26,10 @@
 /* START - Tabs Custom Header
 ------------------------------------------- */
 
+.sub-nav-tab .mat-tab-body-content{
+  overflow: inherit;
+}
+
 .sub-nav-tab .mat-tab-label-container {
   display: none;
 }
@@ -122,6 +126,7 @@
 .canvas-right-col.width-md {
   width: 400px;
 }
+
 .canvas-right-col.width-lg {
   width: 650px;
 }
@@ -136,6 +141,10 @@
 
 .canvas-right-col-actions {
   margin-top: 1rem;
+}
+
+.canvas-right-col-actions button {
+  margin-left: 0.5rem;
 }
 
 .error-message {
@@ -156,7 +165,7 @@
   box-shadow: none;
 }
 
-.add-profile-expansion-panel .mat-expansion-panel-body{
+.add-profile-expansion-panel .mat-expansion-panel-body {
   padding: 15px;
   background: #fafafa;
 }

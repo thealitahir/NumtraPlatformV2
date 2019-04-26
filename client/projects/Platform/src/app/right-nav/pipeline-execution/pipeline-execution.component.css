@@ -1,3 +1,7 @@
+h4 {
+  font-weight: normal;
+}
+
 mat-icon {
   cursor: pointer;
   transform: rotate(0deg);
@@ -11,23 +15,27 @@ mat-icon {
 
 .select-block {
   margin: 0.5rem 0;
+  overflow: hidden;
 }
 
 .profile-row {
   border-bottom: solid 1px #eee;
-  padding: 3px;
-  margin-bottom: 3px;
+  padding: 10px;
 }
 
 .profile-row i {
   font-size: 18px;
   color: #3272a0;
   cursor: pointer;
-  padding: 10px 5px;
+  padding: 3px;
 }
 
-.execution-option .mat-radio-button {
-  margin: 0.5rem 0 0.5rem 0;
+.credential-option {
+  padding: 10px;
+}
+
+.credential-option .mat-radio-button {
+  margin: 8px 0 8px 0;
 }
 
 .error-message {

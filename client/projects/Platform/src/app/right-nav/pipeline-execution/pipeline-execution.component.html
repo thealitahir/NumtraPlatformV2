@@ -46,8 +46,8 @@
         </mat-accordion>
 
         <div class="profile-row" fxLayout fxLayoutAlign=" center" *ngFor="let profile of credentialProfiles">
-          <!-- <mat-radio-group name="selected_profile" fxFlex="none" (ngModelChange)="fetchClusters($event)" [(ngModel)]="selected_profile"> -->
-          <mat-radio-group name="selected_profile" fxFlex="none" [(ngModel)]="selected_profile">
+          <mat-radio-group name="selected_profile" fxFlex="none" (ngModelChange)="fetchClusters($event)"
+            [(ngModel)]="selected_profile">
             <mat-radio-button [value]="profile"></mat-radio-button>
           </mat-radio-group>
           <span class="profile-label" fxFlex>{{profile.name}}</span>
@@ -65,76 +65,87 @@
 
       <mat-tab>
 
-          <form #clusterForm="ngForm" fxLayout="column">
+        <form #clusterForm="ngForm" fxLayout="column">
 
-              <mat-radio-group class="credential-option" fxLayout fxLayoutGap="20px" name="credentialGate" [(ngModel)]="credentialGate">
-                <mat-radio-button [value]="true">Existing Cluster</mat-radio-button>
-                <mat-radio-button [value]="false">New Cluster</mat-radio-button>
-              </mat-radio-group>
-          
-          
-              <div *ngIf="credentialGate">
-                <mat-form-field>
+          <mat-radio-group class="credential-option" fxLayout="column" color="accent" name="credentialGate"
+            [(ngModel)]="credentialGate">
+            <mat-radio-button [value]="true">Existing Cluster</mat-radio-button>
+            <mat-radio-button [value]="false">New Cluster</mat-radio-button>
+          </mat-radio-group>
+
+          <!-- <mat-form-field>
                   <mat-select placeholder="Select me" name=selected_cluster [(ngModel)]="selected_cluster" required>
                     <mat-option *ngFor="let cluster of clusters" [value]="cluster">{{cluster.cluster_name}}</mat-option>
                   </mat-select>
                   <mat-hint align="end">Here's the dropdown arrow ^</mat-hint>
-                </mat-form-field>
-          
-                <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
-                  <button mat-stroked-button color="accent" (click)="execute(selected_cluster)" type="submit">Execute</button>
-                </div>
-              </div>
-          
-            </form>
-          
-            <form #saveClusterForm="ngForm" fxLayout="column" *ngIf="!credentialGate">
-              <div >
-                <mat-form-field>
-                  <label class="error-message">{{error}}</label>
-                  <input matInput type="text" name="name" placeholder="Cluster Name" #name="ngModel" [(ngModel)]='cluster_data.cluster_name'
-                    required>
-                </mat-form-field>
-          
-                <mat-form-field>
-                  <input matInput type="text" name="spark_version" placeholder="Spark Version" #spark_version="ngModel" [(ngModel)]='cluster_data.spark_version'
-                    required>
-                </mat-form-field>
-          
-                <mat-form-field>
-                  <input matInput type="text" name="autotermination_minutes" placeholder="Autotermination Minutes" #autotermination_minutes="ngModel"
-                    [(ngModel)]='cluster_data.autotermination_minutes' required>
-                </mat-form-field>
-          
-                <mat-form-field>
-                  <input matInput type="text" name="node_type_id" placeholder="Node Type ID" #node_type_id="ngModel" 
-                  [(ngModel)]='cluster_data.node_type_id'
-                    required>
-                </mat-form-field>
-          
-                <mat-form-field>
-                  <input matInput type="text" name="min_workers" placeholder="Min Workers" #min_workers="ngModel" 
-                  [(ngModel)]='cluster_data.autoscale.min_workers'
-                    required>
-                </mat-form-field>
-          
-                <mat-form-field>
-                  <input matInput type="text" name="max_workers" placeholder="Max Workers" #max_workers="ngModel" 
-                  [(ngModel)]='cluster_data.autoscale.max_workers'
-                    required>
-                </mat-form-field>
-          
-                <mat-form-field>
-                  <input matInput type="text" name="spark_env_vars" placeholder="Spark Environment Variable" #spark_env_vars="ngModel" 
-                  [(ngModel)]='cluster_data.spark_env_vars.PYSPARK_PYTHON'
-                    required>
-                </mat-form-field>
-              </div>
-          
-              <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
-                <button mat-stroked-button color="accent" (click)="saveAndExecute(saveClusterForm)" type="submit">Save & Execute</button>
-              </div>
-            </form>
+                </mat-form-field> -->
+
+          <div *ngIf="credentialGate">
+
+          <h3>Clusters</h3>
+
+            <div class="profile-row" fxLayout fxLayoutAlign=" center" *ngFor="let cluster of clusters">
+              <mat-radio-group name="selected_cluster" fxFlex="none" [(ngModel)]="selected_cluster">
+                <mat-radio-button [value]="cluster"></mat-radio-button>
+              </mat-radio-group>
+              <span class="profile-label" fxFlex>{{cluster.cluster_name}}</span>
+            </div>
+
+            <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
+              <button mat-stroked-button color="primary" (click)="selectedIndex = 0">Back</button>
+              <button mat-stroked-button color="accent" (click)="execute(selected_cluster)"
+                type="submit">Execute</button>
+            </div>
+          </div>
+
+        </form>
+
+        <form #saveClusterForm="ngForm" fxLayout="column" *ngIf="!credentialGate">
+
+            <h3>Add New Clusters</h3>
+
+          <mat-form-field>
+            <label class="error-message">{{error}}</label>
+            <input matInput type="text" name="name" placeholder="Cluster Name" #name="ngModel"
+              [(ngModel)]='cluster_data.cluster_name' required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="text" name="spark_version" placeholder="Spark Version" #spark_version="ngModel"
+              [(ngModel)]='cluster_data.spark_version' required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="text" name="autotermination_minutes" placeholder="Autotermination Minutes"
+              #autotermination_minutes="ngModel" [(ngModel)]='cluster_data.autotermination_minutes' required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="text" name="node_type_id" placeholder="Node Type ID" #node_type_id="ngModel"
+              [(ngModel)]='cluster_data.node_type_id' required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="text" name="min_workers" placeholder="Min Workers" #min_workers="ngModel"
+              [(ngModel)]='cluster_data.autoscale.min_workers' required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="text" name="max_workers" placeholder="Max Workers" #max_workers="ngModel"
+              [(ngModel)]='cluster_data.autoscale.max_workers' required>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput type="text" name="spark_env_vars" placeholder="Spark Environment Variable"
+              #spark_env_vars="ngModel" [(ngModel)]='cluster_data.spark_env_vars.PYSPARK_PYTHON' required>
+          </mat-form-field>
+
+          <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
+            <button mat-stroked-button color="primary" (click)="selectedIndex = 0">Back</button>
+            <button mat-stroked-button color="accent" (click)="saveAndExecute(saveClusterForm)" type="submit">Save &
+              Execute</button>
+          </div>
+        </form>
 
       </mat-tab>
     </mat-tab-group>
