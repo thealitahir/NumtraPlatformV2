@@ -2,34 +2,49 @@
     <h3>Union Transformation</h3>
 
     <form #unionForm="ngForm" (submit)="saveUnion(unionForm)" fxLayout="column">
+        <mat-form-field>
+            <input matInput type="text" name="name" placeholder="Name" #url="ngModel" [(ngModel)]='stage.name' required>
+        </mat-form-field>
 
-        <span *ngIf="!stages" class="error-message">Please attach at least two sources</span>
+        <span *ngIf="!stages" class="alert-danger">Please attach at least two sources</span>
 
         <table *ngIf="stages.length > 1">
-            <th class="first"></th>
-            <th *ngFor="let head of stages">
-                {{head.name}}
-            </th>
+            <thead>
+                <tr>
+                    <th class="first"></th>
+                    <th *ngFor="let head of stages">
+                        {{head.name}}
+                    </th>
+                </tr>
+            </thead>
 
-            <tr *ngFor="let row of original_unions; let idy = index">
-                <td class="first">
-                    <!-- <input ng-model="row[0].checked" type="checkbox" style="margin-top: 11px;"> -->
-                    <mat-checkbox color="primary" [(ngModel)]="row[0].checked" name='checkbox'></mat-checkbox>
-                </td>
+            <tbody>
+                <tr *ngFor="let row of original_unions; let indx= index">
+                    <td class="first">
+                        <!-- <input ng-model="row[0].checked" type="checkbox" style="margin-top: 11px;"> -->
+                        <mat-checkbox color="primary" [(ngModel)]="row[0].checked" name='checkbox{{indx}}'>
+                        </mat-checkbox>
+                    </td>
 
-                <td *ngFor="let col of row; let idx = index">
+                    <td *ngFor="let col of row; let idx = index">
 
-                    <mat-form-field>
-                        <mat-label>Select Filed</mat-label>
-                        <mat-select name="field_{{idy}}{{idx}}" [(ngModel)]="col.field" required>
-                            <mat-option *ngFor="let opt of row" [value]="opt.filed">
-                                {{opt.field}}
-                            </mat-option>
-                        </mat-select>
-                    </mat-form-field>
+                        <!-- <mat-form-field>
+                            <mat-label>Select Filed</mat-label>
+                            <mat-select name="field_{{idy}}{{idx}}" [(ngModel)]="col.field" required>
+                                <mat-option *ngFor="let opt of row" [value]="opt.filed">
+                                    {{opt.field}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field> -->
 
-                </td>
-            </tr>
+                        <select name="field_{{idx}}" ng-model="col.field" required>
+                            <option [value]='opt.filed' *ngFor='let opt of stages[idx].selected_schema'>{{opt.field}}
+                            </option>
+                        </select>
+
+                    </td>
+                </tr>
+            </tbody>
         </table>
 
         <!-- <span ng-show="error_message.checked" class="alert-danger">Please check at least one of the attributes</span> -->
@@ -37,7 +52,6 @@
         <div class="canvas-right-col-actions" fxLayout fxLayoutAlign="end center">
             <button mat-stroked-button color="accent" type="submit">Save</button>
         </div>
-
 
     </form>
 </div>

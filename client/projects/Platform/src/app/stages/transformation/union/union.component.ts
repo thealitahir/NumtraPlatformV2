@@ -34,6 +34,7 @@ export class UnionComponent implements OnInit{
         this.stage = schemadata.data;
         // this.stageSchema = schemadata.data.original_schema;
        // console.log(this.stage);
+
         for (let i = 0; i < this.stage.in.length ; i++) {
           // console.log(this.stage.in[i]);
           this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
@@ -70,27 +71,47 @@ export class UnionComponent implements OnInit{
               //     });
               // });
               this.original_unions.push(row);
-              //$scope.stage.stage_attributes.unions.push(row);
+              //this.stage.stage_attributes.unions.push(row);
           }
         console.log( this.original_unions);
+
+
+      //   if(this.stage.stage_attributes.unions.length !== 0 ){
+      //     console.log('kamal h');
+      //     for(var i=0 ; i<this.stage.stage_attributes.unions.length ; i++){
+      //         if(typeof this.original_unions[i] !== 'undefined'){
+      //           console.log('kamal h 12334');
+      //             for(var j=0 ; j< this.stage.stage_attributes.unions[i].length ; j++){
+      //                 this.original_unions[i][j].field = this.stage.stage_attributes.unions[i][j].field;
+      //                 this.original_unions[i][j].checked = this.stage.stage_attributes.unions[i][j].checked;
+      //             }
+      //         }
+      //     }
+      //     console.log( this.original_unions);
+      // }
             }
           });
         }
+
       });
     }
   }
 
   createSchema() {
+    console.log('create schema');
     var selected_unions = [];
-
+    // console.log(this.original_unions[0][0].checked);
     //Get the selected fields
-    for (let i = 0; i < this.original_unions; i++) {
+    for (let i = 0; i < this.original_unions.length; i++) {
         if (this.original_unions[i][0].checked === true) {
-            selected_unions.push(this.original_unions[i]);
+          console.log('value = true');
+          selected_unions.push(this.original_unions[i]);
+          // console.log(this.stage.stage_attributes.selected_unions);
         }
     }
 
     this.stage.stage_attributes.selected_unions = selected_unions;
+    console.log(this.stage.stage_attributes.selected_unions);
 
     //set the schema
     let schema = [];
@@ -121,6 +142,9 @@ export class UnionComponent implements OnInit{
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
+    this.createSchema();
+    this.stage.stage_attributes.unions = this.original_unions;
+    console.log(this.stage.stage_attributes.unions);
     this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
