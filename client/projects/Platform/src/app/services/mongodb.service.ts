@@ -12,7 +12,7 @@ export class MongodbService {
     }
 
     getDataSource(data): Observable<any> {
-        return this.http.post(GLOBAL.serviceUrl + '/mongodb/getdataSource', data);
+        return this.http.post(GLOBAL.serviceUrl + '/mongo/getdataSource', data);
     }
 
 }

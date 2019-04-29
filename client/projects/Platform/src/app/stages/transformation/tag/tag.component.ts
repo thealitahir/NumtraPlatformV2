@@ -1,18 +1,17 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { MongodbService } from '../../../services/mongodb.service';
 import { StageService } from '../../../services/stage.service';
 
 import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
 import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
-  selector: 'app-mongodb-sink',
-  templateUrl: './mongoDB-sink.component.html',
-  styleUrls: ['./mongoDB-sink.component.css']
+  selector: 'app-tag',
+  templateUrl: './tag.component.html',
+  styleUrls: ['./tag.component.css']
 })
-export class MongoDBSinkComponent implements OnInit, OnChanges {
-  @Input() stage_id: any ="5a31312d18e429f37b7d925e";
+export class TagComponent implements OnInit, OnChanges {
+  @Input() stage_id: any ="5889b67d5b92022375a39c0b";
   fileheader: any;
   addquery: any = false;
   data: any ;
@@ -32,18 +31,18 @@ export class MongoDBSinkComponent implements OnInit, OnChanges {
   fileExplorer:any;
   fileExplorerView:any = 0;
   stageSchema: any;
-  stage_subtype: any = 'MongoDB';
+  stage_subtype: any = 'Tag';
   stagetype: any = 'sink';
   error: any;
   dbdata: any;
   head: any;
   fhead: any;
-  constructor(public snackBar: MatSnackBar, public mongodbService: MongodbService, public stageService: StageService, public dialog: MatDialog) {
+  constructor(public snackBar: MatSnackBar, public stageService: StageService, public dialog: MatDialog) {
 
   }
 
   ngOnInit(){
-    this.stageService.getStageSchema("5a31312d18e429f37b7d925e").subscribe(schemadata => {
+    this.stageService.getStageSchema("5889b67d5b92022375a39c0b").subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;
@@ -66,7 +65,7 @@ export class MongoDBSinkComponent implements OnInit, OnChanges {
   }
 
 
-  saveMongoDBSink(form) {
+  saveTag(form) {
     if (form.invalid) {
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;

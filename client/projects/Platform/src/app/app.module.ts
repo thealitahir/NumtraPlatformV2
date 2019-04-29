@@ -55,6 +55,9 @@ import { DbfsComponent } from './stages/sources/DBFS/DBFS.component';
 import { BlobStorageComponent } from './stages/sources/blob-storage/blob-storage.component';
 import { BlobStorageSinkComponent } from './stages/sinks/blob-storage-sink/blob-storage-sink.component';
 import { CosmosDBComponent } from './stages/sources/cosmosDB/cosmosDB.component';
+import { MongoDBComponent } from './stages/sources/mongoDB/mongoDB.component';
+import { TagComponent } from './stages/transformation/tag/tag.component';
+import { MongoDBSinkComponent } from './stages/sinks/mongoDB-sink/mongoDB-sink.component';
 import { MaxComponent } from './stages/transformation/max/max.component';
 import { MinComponent } from './stages/transformation/min/min.component';
 import { QueryComponent } from './stages/transformation/query/query.component';
@@ -93,6 +96,9 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     ShowStageComponent,
     DbfsComponent,
     CosmosDBComponent,
+    MongoDBComponent,
+    TagComponent,
+    MongoDBSinkComponent,
     BlobStorageComponent,
     BlobStorageSinkComponent,
     MaxComponent,

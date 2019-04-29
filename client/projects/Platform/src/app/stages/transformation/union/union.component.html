@@ -28,19 +28,19 @@
 
                     <td *ngFor="let col of row; let idx = index">
 
-                        <!-- <mat-form-field>
+                        <mat-form-field>
                             <mat-label>Select Filed</mat-label>
-                            <mat-select name="field_{{idy}}{{idx}}" [(ngModel)]="col.field" required>
-                                <mat-option *ngFor="let opt of row" [value]="opt.filed">
+                            <mat-select name="field_{{col.field}}{{idx}}{{col.stage_id}}{{indx}}" [(ngModel)]="col.field" required>
+                                <mat-option *ngFor='let opt of stages[idx].selected_schema' [value]="opt.field">
                                     {{opt.field}}
                                 </mat-option>
                             </mat-select>
-                        </mat-form-field> -->
+                        </mat-form-field>
 
-                        <select name="field_{{idx}}" ng-model="col.field" required>
-                            <option [value]='opt.filed' *ngFor='let opt of stages[idx].selected_schema'>{{opt.field}}
+                        <!-- <select name="field_{{idx}}" [(ngmodel)]="col.field" required>
+                            <option [value]='opt.field' *ngFor='let opt of stages[idx].selected_schema'>{{opt.field}}
                             </option>
-                        </select>
+                        </select> -->
 
                     </td>
                 </tr>

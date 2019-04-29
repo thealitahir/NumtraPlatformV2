@@ -8,15 +8,14 @@ var DataTypeModel = require("../models/datatypesModel");
 var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage', function (req, res) {
-  console.log("update stage", req.body.stage_id);
   var stagedata = req.body;
-  console.log(stagedata);
   //StageVersionModel.update({"name":stagedata.stageName, "user_id":req.user._id}, {$set: stagedata['updatedata'] }, function (err, sdata) {
   StageVersionModel.update({ "_id": stagedata.stage_id, "user_id": "567a95c8ca676c1d07d5e3e7" }, { $set: stagedata['updatedata'] }, function (err, sdata) {
     if (!err) {
       res.send({ status: true, msg: 'stage updated successfully.', data: sdata });
     }
     else {
+      console.log('err');
       console.log(err);
       res.send({ status: false, msg: 'stage not saved.' });
     }

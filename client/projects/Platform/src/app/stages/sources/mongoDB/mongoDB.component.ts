@@ -111,10 +111,11 @@ export class MongoDBComponent implements OnInit, OnChanges {
     console.log(this.fhead);
     console.log(this.stage.stage_attributes);
     //  this.data = {formdata: form.value, fileheader: this.fileheader};
-     this.data = {updatedata: { 'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes },
+     this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fhead , 'selected_schema': this.fhead , 'stage_attributes': this.stage.stage_attributes },
      stage_id: this.stage_id};
      console.log(this.data);
      this.stageService.updateStage(this.data).subscribe(data => {
+       console.log(data);
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');
       } else {
