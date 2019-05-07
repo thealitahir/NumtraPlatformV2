@@ -9,7 +9,7 @@ import { comparer } from 'mobx';
   templateUrl: './aggregation.component.html',
   styleUrls: ['./aggregation.component.css']
 })
-export class AggregationComponent implements OnInit, OnChanges {
+export class AggregationComponent implements OnInit {
   @Input() stage_id: any;
   stage: any = {
     name: '',
@@ -43,30 +43,20 @@ export class AggregationComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
-  }
-
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            this.stage = schemadata.data;
-            //this.stageSchema = schemadata.data.original_schema;
-            // this.aggregate = this.stage.stage_attributes.aggregate_on;
-            for (let i = 0; i < this.stage.in.length; i++) {
-              this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
-                let schema = schdata.data;
-                this.stageSchema = schema.original_schema;
-              });
-            }
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        for (let i = 0; i < this.stage.in.length; i++) {
+          this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
+            let schema = schdata.data;
+            this.stageSchema = schema.original_schema;
           });
         }
-      }
+      });
     }
   }
+
+  
 
   addAggregateField() {
 

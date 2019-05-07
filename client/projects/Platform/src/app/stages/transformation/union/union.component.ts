@@ -10,7 +10,7 @@ import { EditorComponent } from '../../sources/editor-dialog/editor-dialog.compo
   styleUrls: ['./union.component.css']
 })
 export class UnionComponent implements OnInit{
-  @Input() stage_id: any = '58b41cbf8b9979a5e034c971';
+  @Input() stage_id: any;
   data: any ;
   stage: any = {
     stage_attributes: {

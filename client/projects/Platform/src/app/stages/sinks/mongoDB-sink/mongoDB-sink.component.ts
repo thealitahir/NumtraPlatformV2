@@ -12,7 +12,7 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
   styleUrls: ['./mongoDB-sink.component.css']
 })
 export class MongoDBSinkComponent implements OnInit, OnChanges {
-  @Input() stage_id: any ="5a31312d18e429f37b7d925e";
+  @Input() stage_id: any;
   fileheader: any;
   addquery: any = false;
   data: any ;
@@ -43,7 +43,7 @@ export class MongoDBSinkComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(){
-    this.stageService.getStageSchema("5a31312d18e429f37b7d925e").subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;

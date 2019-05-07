@@ -66,6 +66,8 @@ export class CanvasComponent implements OnInit {
       var stagesArray = [];
       var linksArray = []
       //drawing all stages
+      console.log('All stages');
+      console.log(stages);
       for(var i = 0; i < stages.length; i++){
         var stage = new joint.shapes.standard.Image();
         stage.attr(stages[i].shape_attributes);

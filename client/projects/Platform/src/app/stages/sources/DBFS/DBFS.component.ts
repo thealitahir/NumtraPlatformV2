@@ -12,8 +12,9 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
   templateUrl: './DBFS.component.html',
   styleUrls: ['./DBFS.component.css'],
 })
-export class DbfsComponent implements OnInit, OnChanges{
+export class DbfsComponent implements OnInit{
   @Input() stage_id: any;
+  
   fileheader: any;
   data: any ;
   stage: any = {
@@ -40,21 +41,14 @@ export class DbfsComponent implements OnInit, OnChanges{
   }
 
   ngOnInit(){
-  }
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            console.log(schemadata);
-            this.stage = schemadata.data;
-          });
-        }
-      }
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        console.log(schemadata);
+        this.stage = schemadata.data;
+      });
     }
   }
+  
   getSchemahenSave(form: NgForm) {
     if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
