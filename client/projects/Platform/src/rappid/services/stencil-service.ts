@@ -23,7 +23,8 @@ import { Stage } from '../../app/stages/stage.model';
 export interface Source {
     name: string,
     label: string,
-    type?: any
+    type?: any,
+    facets?: any,
     stage_attributes?: any
 }
 
@@ -73,39 +74,39 @@ export class StencilService {
     constructor(public stageService?: StageService) {
         this.stageService.getComponents().subscribe(data =>{
             this.component = data.data;
-        }); 
+        });
     }
-    
+
     sources: Source[] = [
-        { name: 'dbfs-source', label: 'DBFS', type:'source',
+        { name: 'dbfs-source', label: 'DBFS', type:'source', facets:{},
           stage_attributes:{
-            "url" : "", 
-            "file_type" : "", 
-            "dbfs_token" : "", 
-            "dbfs_domain" : "", 
+            "url" : "",
+            "file_type" : "",
+            "dbfs_token" : "",
+            "dbfs_domain" : "",
             " delimiter" : "",
             "is_header" : "Use Header Line"
           }
         },
-        { name: 'cosmos-source', label: 'CosmosDB', type:'source',
+        { name: 'cosmos-source', label: 'CosmosDB', type:'source', facets:{},
           stage_attributes:{
             "query" : "",
-            "Endpoint" : "", 
-            "Database" : "", 
-            "Collection" : "", 
+            "Endpoint" : "",
+            "Database" : "",
+            "Collection" : "",
             "Masterkey" : "",
             "upsert" : true
           }
         },
-        { name: 'blob-source', label: 'BlobStorage', type:'source',
+        { name: 'blob-source', label: 'BlobStorage', type:'source',facets:{},
           stage_attributes:{
-            "url" : "", 
-            "file_type" : "", 
-            "accountname" : "", 
+            "url" : "",
+            "file_type" : "",
+            "accountname" : "",
             "accountkey" : "",
-            "containername" : "", 
-            "blobname" : "", 
-            "delimiter" : "", 
+            "containername" : "",
+            "blobname" : "",
+            "delimiter" : "",
             "is_header" : ""
           }
         },
@@ -133,18 +134,18 @@ export class StencilService {
         { name: 'bottom', label: 'Bottom', type:'operation',
          stage_attributes:{
             "attributes" : {
-                "topResults" : 0, 
-                "dataType" : "", 
+                "topResults" : 0,
+                "dataType" : "",
                 "columnName" : ""
-            }, 
-            "parameter" : false, 
+            },
+            "parameter" : false,
             "stage_id" : ""
          }
         },
         { name: 'aggregation', label: 'Aggregation', type:'operation',
           stage_attributes:{
             "group_by" : [
-            ], 
+            ],
             "aggregate_on" : [
             ]
           }
@@ -152,10 +153,10 @@ export class StencilService {
         { name: 'timezone', label: 'Date Time' },
         { name: 'top', label: 'Top', type:'operation',
           stage_attributes:{
-            "stage_id" : "", 
-            "parameter" : false, 
+            "stage_id" : "",
+            "parameter" : false,
             "attributes" : {
-                "values" : 0, 
+                "values" : 0,
                 "columnName" : ""
             }
           }
@@ -166,47 +167,47 @@ export class StencilService {
           }
         },
         { name: 'filter', label: 'Filter', type:'operation',
-          stage_attributes:{ 
+          stage_attributes:{
             "regex" : [
-            ], 
-            "use_regex" : false, 
+            ],
+            "use_regex" : false,
             "expression" : [
                 {
-                    "column1_name" : "", 
-                    "operator" : "", 
-                    "column2_name" : "", 
-                    "custom" : false, 
-                    "custom_value" : "", 
-                    "value_type" : "", 
-                    "combinator" : "", 
+                    "column1_name" : "",
+                    "operator" : "",
+                    "column2_name" : "",
+                    "custom" : false,
+                    "custom_value" : "",
+                    "value_type" : "",
+                    "combinator" : "",
                     "showOptions" : true
                 }
-            ], 
+            ],
             "use_expression" : true
           }
         },
         { name: 'formula', label: 'Formula', type:'operation',
           stage_attributes:{
-            "formula" : "", 
+            "formula" : "",
             "output_fields" : {
-                "alias" : "", 
+                "alias" : "",
                 "field" : "",
-                "checked" : true, 
+                "checked" : true,
                 "absolute" : true
-            }, 
+            },
             "expression" : [
-            ], 
+            ],
             "use_expression" : true
           }
         },
         { name: 'findreplace', label: 'Find &amp; Replace' },
         { name: 'join-1', label: 'Join', type:'operation',
           stage_attributes:{
-            "user_comment" : "", 
-            "stageB" : "", 
-            "stageA" : "", 
+            "user_comment" : "",
+            "stageB" : "",
+            "stageA" : "",
             "keys" : [
-            ], 
+            ],
             "join_type" : ""
           }
         },
@@ -239,33 +240,33 @@ export class StencilService {
     sinks: Sink[] = [
         { name: 'cosmos-sink', label: 'CosmosDB', type:'sink',
           stage_attributes:{
-            "query" : "", 
-            "Endpoint" : "", 
-            "Database" : "", 
-            "Collection" : "", 
-            "Masterkey" : "", 
+            "query" : "",
+            "Endpoint" : "",
+            "Database" : "",
+            "Collection" : "",
+            "Masterkey" : "",
             "upsert" : true
           }
         },
         { name: 'dbfs-sink', label: 'DBFS', type:'sink',
           stage_attributes:{
-            "url" : "", 
-            "delimiter" : "", 
-            "file_type" : "", 
-            "dbfs_token" : "", 
-            "dbfs_domain" : "", 
+            "url" : "",
+            "delimiter" : "",
+            "file_type" : "",
+            "dbfs_token" : "",
+            "dbfs_domain" : "",
             "is_header" : "Use Header Line"
           }
         },
-        { name: 'blob-sink', label: 'BlobStorage', type:'sink', 
+        { name: 'blob-sink', label: 'BlobStorage', type:'sink',
           stage_attributes:{
-            "url" : "", 
-            "file_type" : "", 
-            "accountname" : "", 
-            "accountkey" : "", 
-            "containername" : "", 
-            "blobname" : "", 
-            "delimiter" : "", 
+            "url" : "",
+            "file_type" : "",
+            "accountname" : "",
+            "accountkey" : "",
+            "containername" : "",
+            "blobname" : "",
+            "delimiter" : "",
             "is_header" : "Use Header Line"
           }
         },

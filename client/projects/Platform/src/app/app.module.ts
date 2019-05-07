@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,ModuleWithProviders } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -171,7 +171,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
       useValue: DEFAULT_ACE_CONFIG
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 })
 export class AppModule { }
 
@@ -181,6 +182,7 @@ export class PlatformSharedModule{
     return {
       ngModule: AppModule,
       providers: []
+
     }
   }
 }

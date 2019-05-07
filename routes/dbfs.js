@@ -34,7 +34,7 @@ router.post('/getDataSource', function(req,res) {
             var fileheader=[];
             fileheader = filedata[0].split(",");
             filedata.shift();
-            filedata.length =10;
+            filedata.length =100;
             var fh=[];
             var fd=[];
             

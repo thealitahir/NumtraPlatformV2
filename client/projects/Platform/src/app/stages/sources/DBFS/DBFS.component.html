@@ -68,3 +68,7 @@
   {{fileExplorer}}
   <app-file-explorer [fileExplorer]='fileExplorer' (selectedNodesEvent)='getSelectedFiles($event)'></app-file-explorer>
 </div>
+
+<div *ngIf="dataExplorerView === 1">
+  <app-data-explorer [dataExplorer]='dataExplorer'></app-data-explorer>
+</div>

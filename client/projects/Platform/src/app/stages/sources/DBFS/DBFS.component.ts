@@ -3,8 +3,10 @@ import { NgForm } from '@angular/forms';
 import { DbfsService } from '../../../services/dbfs.service';
 import { StageService } from '../../../services/stage.service';
 import { DiscoverDataComponent } from '../discover-data-dialog/discover-data-dialog.component';
+import { DataExplorerComponent } from '../../../data-explorer/data-explorer.component';
 import { FileExplorerComponent } from '../../../file-explorer/file-explorer.component';
 import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
+import { CreateFileService } from '../../../services/createFile.service';
 import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
@@ -33,9 +35,11 @@ export class DbfsComponent implements OnInit, OnChanges{
   stageSchema: any;
   stage_subtype: any = 'DBFS';
   stagetype: any = 'source';
-  fileExplorerSource:any;
+  fileExplorerSource: any;
+  dataExplorerView: any;
+  dataExplorer: any;
   error: any;
-  constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
+  constructor(public snackBar: MatSnackBar, public createfileService : CreateFileService, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
 
   }
 
@@ -108,13 +112,19 @@ export class DbfsComponent implements OnInit, OnChanges{
       this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
       this.dbfsService.getDataSource(this.data).subscribe(data => {
         console.log(data);
-        this.openDialog(data);
+       // this.openDialog(data);
         this.fileheader = data.fileheader;
+        this.createfileService.writeFile(data).subscribe(file => {
+          console.log(file);
+          if (file.status === true) {
+            this.dataExplorerView = 1;
+            this.dataExplorer = {stage_id: this.stage_id, file: file};
+          }
+        });
       });
-
     }
-
   }
+
   chooseFile(form: NgForm){
     if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.fileExplorer = {type: 'Dbfs', cred: {token: form.value.dbfstoken , domain: form.value.dbfsdomain}};
