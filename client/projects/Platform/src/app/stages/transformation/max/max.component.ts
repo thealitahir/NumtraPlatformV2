@@ -9,7 +9,7 @@ import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
   templateUrl: './max.component.html',
   styleUrls: ['./max.component.css']
 })
-export class MaxComponent implements OnInit, OnChanges {
+export class MaxComponent implements OnInit {
   @Input() stage_id: any;
   fileheader: any;
   data: any ;
@@ -31,23 +31,14 @@ export class MaxComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(){
-  }
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed 
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            console.log(schemadata);
-            this.stage = schemadata.data;
-            this.stageSchema = schemadata.data.original_schema;
-          });
-        }
-      }
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        console.log(schemadata);
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+      });
     }
   }
-
   selectFieldType(fieldType) {
     this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , columnName: fieldType.field };
   }

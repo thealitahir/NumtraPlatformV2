@@ -13,7 +13,7 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
   styleUrls: ['./mongoDB.component.css']
 })
 export class MongoDBComponent implements OnInit, OnChanges {
-  @Input() stage_id: any ="5931acd3b33dca6c0bc3a456";
+  @Input() stage_id: any;
   fileheader: any;
   addquery: any = false;
   data: any ;
@@ -42,7 +42,7 @@ export class MongoDBComponent implements OnInit, OnChanges {
   }
 
   ngOnInit(){
-    this.stageService.getStageSchema("5931acd3b33dca6c0bc3a456").subscribe(schemadata => {
+    this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
       console.log(schemadata);
       this.stage = schemadata.data;
       this.stageSchema = schemadata.data.original_schema;

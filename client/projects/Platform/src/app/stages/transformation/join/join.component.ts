@@ -8,8 +8,8 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './join.component.html',
   styleUrls: ['./join.component.css']
 })
-export class JoinComponent implements OnInit, OnChanges {
-  @Input() stage_id: any = '5811f77c76aa9615b896d89c';
+export class JoinComponent implements OnInit {
+  @Input() stage_id: any;
   Types = ['stream', 'custom'];
   operators = ['+', '-', '*', '/', '%'];
   stage: any = {
@@ -39,42 +39,34 @@ export class JoinComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-  }
-
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            this.stage = schemadata.data;
-            this.stageSchema = schemadata.data.original_schema;
-            console.log(this.stageSchema);
-            this.joinStages = [];
-            for (let i = 0; i < this.stage.in.length; i++) {
-              this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
-                const schema = schdata.data;
-                this.joinStages.push(schema);
-                if (this.joinStages.length === 1) {
-                  this.stageA = this.joinStages[0];
-                  this.stageA_fields = this.stageA.original_schema;
-                  //console.log(this.stageA_fields);
-                }
-                if (this.joinStages.length > 1) {
-                  this.stageB = this.joinStages[1];
-                  this.stageB_fields = this.stageB.original_schema;
-                  // console.log(this.stageB_fields);
-                }
-              });
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+        console.log(this.stageSchema);
+        this.joinStages = [];
+        for (let i = 0; i < this.stage.in.length; i++) {
+          this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
+            const schema = schdata.data;
+            this.joinStages.push(schema);
+            if (this.joinStages.length === 1) {
+              this.stageA = this.joinStages[0];
+              this.stageA_fields = this.stageA.original_schema;
+              //console.log(this.stageA_fields);
             }
-            // console.log(this.joinStages);
-
+            if (this.joinStages.length > 1) {
+              this.stageB = this.joinStages[1];
+              this.stageB_fields = this.stageB.original_schema;
+              // console.log(this.stageB_fields);
+            }
           });
         }
-      }
+        // console.log(this.joinStages);
+
+      });
     }
   }
+
 
   saveJoin(form: NgForm) {
     if (form.invalid) {
