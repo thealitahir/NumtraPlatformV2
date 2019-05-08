@@ -50,6 +50,10 @@ export class StageService {
       return observable;
     }
 
+    getFacetsData(stage: any): Observable<any> {
+      return this.http.post(GLOBAL.serviceUrl + '/stage/getFacets', stage);
+    }
+
     getDataTypes() {
       return this.http.get(GLOBAL.serviceUrl + '/stage/getDataTypes');
     }

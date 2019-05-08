@@ -9,7 +9,7 @@ import { comparer } from 'mobx';
   templateUrl: './formula.component.html',
   styleUrls: ['./formula.component.css']
 })
-export class FormulaComponent implements OnInit, OnChanges {
+export class FormulaComponent implements OnInit {
   @Input() stage_id: any;
   Types = ['stream', 'custom'];
   operators = ['+', '-', '*', '/', '%'];
@@ -51,35 +51,26 @@ export class FormulaComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
-
-  }
-
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            this.stage = schemadata.data;
-            // this.stageSchema = schemadata.data.original_schema;
-            console.log(this.stage);
-            for (let i = 0; i < 1; i++) {
-              console.log(this.stage.in[i]);
-              this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
-                console.log(schdata.data);
-                this.schema = schdata.data.original_schema;
-                this.stageSchema = this.schema;
-                // console.log(this.stageSchema);
-                this.stage.original_schema = this.stageSchema;
-                this.stage.selected_schema = this.stageSchema;
-              });
-            }
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        // this.stageSchema = schemadata.data.original_schema;
+        console.log(this.stage);
+        for (let i = 0; i < 1; i++) {
+          console.log(this.stage.in[i]);
+          this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
+            console.log(schdata.data);
+            this.schema = schdata.data.original_schema;
+            this.stageSchema = this.schema;
+            // console.log(this.stageSchema);
+            this.stage.original_schema = this.stageSchema;
+            this.stage.selected_schema = this.stageSchema;
           });
         }
-      }
+      });
     }
   }
+
   add(value) {
     if (value) {
       if (this.stage.stage_attributes.expression.length === 0) {

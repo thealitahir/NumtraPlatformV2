@@ -10,7 +10,7 @@ import { MatSnackBar, MatDialog } from '@angular/material';
   templateUrl: './cosmosDB-sink.component.html',
   styleUrls: ['./cosmosDB-sink.component.css']
 })
-export class CosmosDBSinkComponent implements OnInit, OnChanges{
+export class CosmosDBSinkComponent implements OnInit{
   @Input() stage_id: any;
   fileheader: any;
   data: any ;
@@ -37,22 +37,15 @@ export class CosmosDBSinkComponent implements OnInit, OnChanges{
   constructor(public snackBar: MatSnackBar, public cosmosdbService: CosmosdbService, public stageService: StageService, public dialog: MatDialog) {
   }
 
-  ngOnInit(){}
+  ngOnInit(){
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+      });
+    }
+  }
 
-  ngOnChanges(changes: any) { 
-    for (let propName in changes) {
-      // only run when property "task" changed 
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            this.stage = schemadata.data;
-            this.stageSchema = schemadata.data.original_schema;
-          });
-        }
-      }
-    } 
-  } 
 
   getSchemahenSave(form: NgForm) {
     if (form.invalid) {

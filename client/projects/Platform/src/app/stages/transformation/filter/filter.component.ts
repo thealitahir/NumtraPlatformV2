@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.css']
 })
-export class FilterComponent implements OnInit, OnChanges {
+export class FilterComponent implements OnInit {
   @Input() stage_id: any;
   data: any ;
   date_time_fields = [];
@@ -28,31 +28,20 @@ export class FilterComponent implements OnInit, OnChanges {
   };
 
   stage_subtype: any = 'Filter';
-  stagetype: any = 'transformation';
+  stagetype: any = 'operation';
   stageSchema: any;
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService) {  }
 
   ngOnInit(){
-  }
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            this.stage = schemadata.data;
-            this.stageSchema = schemadata.data.original_schema;
-            // console.log(this.stage.stage_attributes.parameter);
-            // console.log(typeof(this.stage.stage_attributes.parameter));
-
-          });
-        }
-      }
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+      });
     }
   }
-
+  
   addFilter(type) {
     if (type === 'exp') {
       this.stage.stage_attributes.expression.push(

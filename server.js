@@ -29,6 +29,7 @@ var dataSourceRoute = require('./routes/datasource');
 var modelDataRoute = require('./routes/modelsroute');
 var pipeline = require('./routes/pipelineController');
 var mongo = require('./routes/mongodb');
+var file = require('./routes/writeFile');
 
 const port = 3100;
 
@@ -124,6 +125,7 @@ app.use('/project',project);
 app.use('/application',application);
 app.use('/pipeline', pipeline);
 app.use('/mongo', mongo);
+app.use("/fwrite", file);
 
 
 app.use('/dataSourceApi', dataSourceRoute);
@@ -171,6 +173,10 @@ app.get('/cosmos', (req, res) => res.json({
 }));
 
 app.get('/mongo', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/fwrite', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 

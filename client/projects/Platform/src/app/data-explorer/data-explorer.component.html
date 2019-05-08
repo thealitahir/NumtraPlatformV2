@@ -1,14 +1,84 @@
+<link rel="import" href="https://raw.githubusercontent.com/PAIR-code/facets/master/facets-dist/facets-jupyter.html" />
 
 <div style="position:fixed; z-index: 10000000; right: 50px; top:90px; left: 50px; height:500px; overflow: auto; background: #fff;">
-  <h3>Pipline processed Sink</h3>
-  <!-- <table>
-    <thead>
-      <th *ngFor="let datakey of stage[0] | keyvalue"> {{ datakey.key }}</th>
-    </thead>
-    <tbody>
-      <tr *ngFor ='let data of stage'>
-        <td *ngFor = 'let datakey of stage[0] | keyvalue'>{{ data[datakey.key] }} </td>
-      </tr>
-    </tbody>
-  </table> -->
+    <div *ngIf="mainloader == 1">
+        <div class="loader-gloabl">
+          <mat-spinner></mat-spinner>
+            <div style="z-index: 9999; text-align: center; margin-top: 100px">
+              <h3>Please wait!</h3>
+            </div>
+        </div>
+      </div>
+  <div class="facets-container" *ngIf="mainloader == 0">
+      <mat-drawer-container>
+        <mat-drawer mode="side" opened>
+          <ul class="left-col">
+            <li [ngClass]="{ activeTab: selectedIndex == 0 }" (click)="selectTab(0)">
+                Sample Data
+            </li>
+            <li [ngClass]="{ activeTab: selectedIndex == 1 }" (click)="selectTab(1)">
+              Stats
+            </li>
+            <li [ngClass]="{ activeTab: selectedIndex == 2 }" (click)="selectTab(2)">
+              Features Overview
+            </li>
+            <li [ngClass]="{ activeTab: selectedIndex == 3 }" (click)="selectTab(3)">
+              Visualization
+            </li>
+          </ul>
+        </mat-drawer>
+
+        <mat-drawer-content>
+          <mat-tab-group [selectedIndex]="selectedIndex" class="custom-tabs-content">
+
+            <mat-tab>
+              <div class="tab-content">
+                <h3>Sample Data</h3>
+                <table>
+                  <thead>
+                    <th *ngFor="let datakey of dataExplorer.file.data[0] | keyvalue"> {{ datakey.key }}</th>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor ='let datas of dataExplorer.file.data'>
+                      <td *ngFor = 'let datakey of dataExplorer.file.data[0] | keyvalue'>{{ datas[datakey.key] }} </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </mat-tab>
+
+            <mat-tab>
+              <div class="tab-content">
+                <h3>Stats</h3>
+                <facets-overview id="elem" [protoInput]="protoInput"></facets-overview>
+              </div>
+            </mat-tab>
+
+            <mat-tab>
+              <div class="tab-content">
+                <h3>Features Overview</h3>
+                <facets-dive style="height:500px" id="element" [data]="facetdata"></facets-dive>
+              </div>
+            </mat-tab>
+
+            <mat-tab>
+              <div class="tab-content">
+                <h3>Visualization</h3>
+                <img [src]="graphFile" />
+              </div>
+            </mat-tab>
+
+          </mat-tab-group>
+        </mat-drawer-content>
+      </mat-drawer-container>
+    </div>
+
 </div>
+
+
+
+
+
+
+
+

@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { NgModule, ModuleWithProviders } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA ,ModuleWithProviders } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -90,10 +90,22 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     CanvasComponent,
     SubNavComponent,
     RolesComponent,
-
     AddStageComponent,
     EditStageComponent,
-    ShowStageComponent,
+    ShowStageComponent,    
+    DiscoverDataComponent,
+    EditorComponent,
+    AddProjectComponent,
+    ApplicationComponent,
+    FileReadComponent,
+    ProjectFilterPipe,
+    ApplicationFilterPipe,
+    ModelCategoryFilterPipe,
+    PipelineDesignerComponent,
+    DataExplorerComponent,
+    FileExplorerComponent,
+    PipelineExecutionComponent,
+
     DbfsComponent,
     CosmosDBComponent,
     MongoDBComponent,
@@ -109,21 +121,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     FormulaComponent,
     UnionComponent,
     JoinComponent,
-    DiscoverDataComponent,
-    EditorComponent,
-    AddProjectComponent,
-    ApplicationComponent,
-    FileReadComponent,
-
-    ProjectFilterPipe,
-    ApplicationFilterPipe,
-    ModelCategoryFilterPipe,
-    PipelineDesignerComponent,
     DbfsSinkComponent,
-    CosmosDBSinkComponent,
-    DataExplorerComponent,
-    FileExplorerComponent,
-    PipelineExecutionComponent,
+    CosmosDBSinkComponent
 
   ],
   imports: [
@@ -164,14 +163,33 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     TreeModule.forRoot(),
     routing
   ],
-  entryComponents: [ DiscoverDataComponent, EditorComponent, AddProjectComponent, ApplicationComponent, FileReadComponent],
+  entryComponents: [ DiscoverDataComponent, EditorComponent, AddProjectComponent, ApplicationComponent, FileReadComponent,
+    DbfsComponent,
+    CosmosDBComponent,
+    MongoDBComponent,
+    TagComponent,
+    MongoDBSinkComponent,
+    BlobStorageComponent,
+    BlobStorageSinkComponent,
+    MaxComponent,
+    MinComponent,
+    QueryComponent,
+    FilterComponent,
+    AggregationComponent,
+    FormulaComponent,
+    UnionComponent,
+    JoinComponent,
+    DbfsSinkComponent,
+    CosmosDBSinkComponent
+  ],
   providers: [
     {
       provide: ACE_CONFIG,
       useValue: DEFAULT_ACE_CONFIG
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [ CUSTOM_ELEMENTS_SCHEMA ],
 })
 export class AppModule { }
 
@@ -181,6 +199,7 @@ export class PlatformSharedModule{
     return {
       ngModule: AppModule,
       providers: []
+
     }
   }
 }
