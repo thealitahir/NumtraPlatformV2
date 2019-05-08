@@ -1,10 +1,10 @@
 <link rel="import" href="https://raw.githubusercontent.com/PAIR-code/facets/master/facets-dist/facets-jupyter.html" />
 
-<div style="position:fixed; z-index: 10000000; right: 50px; top:90px; left: 50px; height:500px; overflow: auto; background: #fff;">
+<div class="explorer-container">
     <div *ngIf="mainloader == 1">
         <div class="loader-gloabl">
           <mat-spinner></mat-spinner>
-            <div style="z-index: 9999; text-align: center; margin-top: 100px">
+            <div class="loader-text">
               <h3>Please wait!</h3>
             </div>
         </div>
@@ -64,7 +64,7 @@
             <mat-tab>
               <div class="tab-content">
                 <h3>Visualization</h3>
-                <img [src]="graphFile" />
+                <img class="pair-plot" [src]="graphFile" />
               </div>
             </mat-tab>
 

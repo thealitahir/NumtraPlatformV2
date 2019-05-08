@@ -75,3 +75,11 @@ h3 {
   border-bottom: solid 5px #3272a0;
 }
 /* ---- END - Modal Box Classes ---- */
+
+
+/* Facets Graph Classes
+------------------------------------------------------------*/
+.selectedboxes rect:nth-child(2){
+  stroke: #bbd976 !important;
+}
+/* ---- END - Facets Graph Classes ---- */
