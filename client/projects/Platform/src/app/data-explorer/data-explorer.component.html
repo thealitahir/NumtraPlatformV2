@@ -3,7 +3,15 @@
 <div style="position:fixed; z-index: 10000000; right: 50px; top:90px; left: 50px; height:500px; overflow: auto; background: #fff;">
     <div *ngIf="mainloader == 1">
         <div class="loader-gloabl">
-          <mat-spinner></mat-spinner>
+          <!-- <mat-spinner></mat-spinner> -->
+          <content-loader>
+            <svg:rect x="0" y="0" rx="3" ry="3" width="250" height="10" />
+            <svg:rect x="20" y="20" rx="3" ry="3" width="220" height="10" />
+            <svg:rect x="20" y="40" rx="3" ry="3" width="170" height="10" />
+            <svg:rect x="0" y="60" rx="3" ry="3" width="250" height="10" />
+            <svg:rect x="20" y="80" rx="3" ry="3" width="200" height="10" />
+            <svg:rect x="20" y="100" rx="3" ry="3" width="80" height="10" />
+          </content-loader>
             <div style="z-index: 9999; text-align: center; margin-top: 100px">
               <h3>Please wait!</h3>
             </div>
