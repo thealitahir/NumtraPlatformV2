@@ -48,13 +48,12 @@ const allowedExt = [
 
 // Configurations
 global.CONFIGURATIONS ={ 
-  // dbHost: '192.168.23.108',
-  // dbPort: 9876,
-  // db: 'test',
-  // username: 'root',
-  // password: '',
-  // authdb: '',
-
+  /* dbHost: '192.168.23.108',
+  dbPort: 9876,
+  db: 'test',
+  username: 'root',
+  password: '',
+  authdb: '', */
   dbHost: '216.168.41.41',
   dbPort: 9876,
   db: 'numtraplatform',
@@ -99,13 +98,12 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
-// app.use(session({ secret: 'keyboard cat', store : new MongoStore(
-//   {
-//       url: 'mongodb://'+CONFIGURATIONS.dbHost + ':'+CONFIGURATIONS.dbPort
-//   }),
-//   resave: true, saveUninitialized: true }));
-
 app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized: true }));
+/* app.use(session({ secret: 'keyboard cat', store : new MongoStore(
+  {
+      url: 'mongodb://'+CONFIGURATIONS.dbHost + ':'+CONFIGURATIONS.dbPort
+  }),
+  resave: true, saveUninitialized: true })); */
 
 app.use(flash());
 app.use(passport.initialize());
@@ -212,16 +210,13 @@ var uri = 'mongodb://'+CONFIGURATIONS.dbHost +':'+CONFIGURATIONS.dbPort+'/' + CO
 console.log("Connecting to mongodb at '" + uri + "'" );
 
 var opt = {
-    db:{numberOfRetries:10},
     user: CONFIGURATIONS.username,
     pass: CONFIGURATIONS.password,
-    server: {
-        ssl: CONFIGURATIONS.ssl
-    },
     auth: {
         authdb: CONFIGURATIONS.authdb
-    }
-};
+    },
+    useNewUrlParser: true
+}; 
 
 
 mongoose.connect(uri, opt);
@@ -236,21 +231,21 @@ db.once('open', function () {
 });
 
 
-// mongoose.connect(uri,{ useNewUrlParser: true }, function(err, database) {
-//   if(err){ 
-//     console.log('Could not connect to mongodb.');
-//     throw err;
-//   } else {
-//     var db = database;
-//   //console.log(db);
-//     // Start the application after the database connection is ready
+/* mongoose.connect(uri,{ useNewUrlParser: true }, function(err, database) {
+  if(err){ 
+    console.log('Could not connect to mongodb.');
+    throw err;
+  } else {
+    var db = database;
+  //console.log(db);
+    // Start the application after the database connection is ready
 
-//     var server = app.listen(port,'0.0.0.0',function(){
-//         console.log('Server started on port :'+port);
-//     });  
-//     io = require('socket.io').listen(server);
-//   }
-// });
+    var server = app.listen(port,'0.0.0.0',function(){
+        console.log('Server started on port :'+port);
+    });  
+    io = require('socket.io').listen(server);
+  }
+}); */
 
 
 
