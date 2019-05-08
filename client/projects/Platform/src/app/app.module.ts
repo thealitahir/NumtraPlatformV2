@@ -12,10 +12,10 @@ import { HttpModule } from '@angular/http';
 import { HttpClientModule } from '@angular/common/http';
 import { AceModule, AceConfigInterface, ACE_CONFIG  } from 'ngx-ace-wrapper';
 import {A11yModule} from '@angular/cdk/a11y';
+import { ContentLoaderModule } from '@netbasal/ngx-content-loader';
+
 
 import { TreeModule } from 'angular-tree-component';
-
-
 
 import {
   MatToolbarModule,
@@ -92,7 +92,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     RolesComponent,
     AddStageComponent,
     EditStageComponent,
-    ShowStageComponent,    
+    ShowStageComponent,
     DiscoverDataComponent,
     EditorComponent,
     AddProjectComponent,
@@ -126,6 +126,7 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
 
   ],
   imports: [
+
     BrowserModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -161,7 +162,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     AceModule,
     A11yModule,
     TreeModule.forRoot(),
-    routing
+    routing,
+    ContentLoaderModule,
   ],
   entryComponents: [ DiscoverDataComponent, EditorComponent, AddProjectComponent, ApplicationComponent, FileReadComponent,
     DbfsComponent,
