@@ -68,7 +68,7 @@ router.post('/executePipeline', function (req, res) {
     console.log("execute pipeline : ", data);
     //var url = CONFIGURATIONS.platformRequestApi + '/api/start/codegen';
     request({
-        url: 'http://10.0.5.53/api/start/codegen',
+        url: 'http://10.0.5.53:2020/api/start/codegen',
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
