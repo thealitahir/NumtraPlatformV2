@@ -24,9 +24,9 @@ export class DataExplorerComponent implements OnInit {
   constructor(public stageService: StageService, public snackBar: MatSnackBar, private domSanitizer: DomSanitizer,) { }
 
   ngOnInit() {
-    // this.data = {mongoObjectID: this.dataExplorer.stage_id, Sample_data_location: this.dataExplorer.file.filepath};
+     this.filedata = {mongoObjectID: this.dataExplorer.stage_id, location: this.dataExplorer.file.filepath};
     // console.log(this.dataExplorer);
-    this.filedata = { mongoObjectID: this.dataExplorer.stage_id, location: 'E:\\data\\sampleData\\1557210343967.csv'}
+   // this.filedata = { mongoObjectID: this.dataExplorer.stage_id, location: 'E:\\data\\sampleData\\1557210343967.csv'}
     this.data = {Sample_data: this.filedata};
     console.log(typeof(this.data));
      this.stageService.getFacetsData(this.data).subscribe(facetdata => {
