@@ -26,10 +26,11 @@ export class CanvasComponent implements OnInit {
   selectedMode = 'development';
   dataExplorerView = 0;
   data: any;
+  selected_stage: string;
 
   @Output() onSearch: EventEmitter<any> = new EventEmitter();
   @Input() pipeline_id: any;
-  
+
   private rappid: any;
   paper: any;
   selection: any;
@@ -123,6 +124,7 @@ export class CanvasComponent implements OnInit {
         this.selection.collection.add(elementView.model);
       }
       this.onSearch.emit(elementView);
+      this.selected_stage = elementView.model.attributes.attrs._id;
       this.canvasService.saveCanvasModel(
         this.pipeline_id,
         elementView.model.attributes.attrs._id,elementView.model.id,

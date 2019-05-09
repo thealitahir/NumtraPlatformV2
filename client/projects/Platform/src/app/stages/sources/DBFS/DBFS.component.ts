@@ -16,7 +16,7 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
 })
 export class DbfsComponent implements OnInit{
   @Input() stage_id: any;
-  
+
   fileheader: any;
   data: any ;
   stage: any = {
@@ -52,7 +52,7 @@ export class DbfsComponent implements OnInit{
       });
     }
   }
-  
+
   getSchemahenSave(form: NgForm) {
     if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
@@ -136,6 +136,11 @@ export class DbfsComponent implements OnInit{
 
     this.fileExplorerView = 0;
   }
+
+  closeDataExplorer(event){
+    this.dataExplorerView = event;
+  }
+
   openDialog(sampledata): void {
     const dialogRef = this.dialog.open(DiscoverDataComponent, {
       width: '900px',

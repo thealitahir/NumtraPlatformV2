@@ -30,6 +30,7 @@ var modelDataRoute = require('./routes/modelsroute');
 var pipeline = require('./routes/pipelineController');
 var mongo = require('./routes/mongodb');
 var file = require('./routes/writeFile');
+var Versioning = require('./routes/pipelineVersioningController');
 
 const port = 3100;
 
@@ -48,13 +49,8 @@ const allowedExt = [
 
 // Configurations
 global.CONFIGURATIONS ={ 
-  /* dbHost: '192.168.23.108',
-  dbPort: 9876,
-  db: 'test',
-  username: 'root',
-  password: '',
-  authdb: '', */
-  dbHost: '216.168.41.41',
+  //dbHost: '216.168.41.41',
+  dbHost: '10.0.5.53',
   dbPort: 9876,
   db: 'numtraplatform',
   username: 'dev',
@@ -64,7 +60,9 @@ global.CONFIGURATIONS ={
   bFAIrequestApi: 'http://24.16.119.69:7799',
   dbfsToken: 'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
   dbfsDomain: 'https://westus.azuredatabricks.net',
-  requestApi: '"http://192.168.23.180:2020'
+  // requestApi: '"http://192.168.23.180:2020',
+  requestApi: '"http://216.168.41.41:2020',
+  projectpath: '/home/platformFrontend/numtraplatformv2',
 }
 
 // Add headers
@@ -126,7 +124,7 @@ app.use('/application',application);
 app.use('/pipeline', pipeline);
 app.use('/mongo', mongo);
 app.use("/fwrite", file);
-
+app.use('/pipelineVersioning',Versioning);
 
 app.use('/dataSourceApi', dataSourceRoute);
 app.use('/modelApi', modelDataRoute);
@@ -231,21 +229,6 @@ db.once('open', function () {
 });
 
 
-/* mongoose.connect(uri,{ useNewUrlParser: true }, function(err, database) {
-  if(err){ 
-    console.log('Could not connect to mongodb.');
-    throw err;
-  } else {
-    var db = database;
-  //console.log(db);
-    // Start the application after the database connection is ready
-
-    var server = app.listen(port,'0.0.0.0',function(){
-        console.log('Server started on port :'+port);
-    });  
-    io = require('socket.io').listen(server);
-  }
-}); */
 
 
 

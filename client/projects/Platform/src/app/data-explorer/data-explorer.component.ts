@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { StageService } from '../services/stage.service';
 import { MatSnackBar } from '@angular/material';
@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class DataExplorerComponent implements OnInit {
   @Input() dataExplorer;
+  @Output() closeEvent = new EventEmitter();
   data: any ;
   facet: any ;
   selectedIndex: any = 0;
@@ -23,9 +24,9 @@ export class DataExplorerComponent implements OnInit {
   constructor(public stageService: StageService, public snackBar: MatSnackBar, private domSanitizer: DomSanitizer,) { }
 
   ngOnInit() {
-    // this.data = {mongoObjectID: this.dataExplorer.stage_id, Sample_data_location: this.dataExplorer.file.filepath};
+     this.filedata = {mongoObjectID: this.dataExplorer.stage_id, location: this.dataExplorer.file.filepath};
     // console.log(this.dataExplorer);
-    this.filedata = { mongoObjectID: this.dataExplorer.stage_id, location: 'E:\\data\\sampleData\\1557210343967.csv'}
+   // this.filedata = { mongoObjectID: this.dataExplorer.stage_id, location: 'E:\\data\\sampleData\\1557210343967.csv'}
     this.data = {Sample_data: this.filedata};
     console.log(typeof(this.data));
      this.stageService.getFacetsData(this.data).subscribe(facetdata => {
@@ -44,6 +45,11 @@ export class DataExplorerComponent implements OnInit {
 
   selectTab(index: number): void {
     this.selectedIndex = index;
+  }
+
+  closeDataExplorer() {
+    var dataExplorerView= 0;
+    this.closeEvent.emit(dataExplorerView);
   }
 
 }

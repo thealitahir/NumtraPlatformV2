@@ -107,7 +107,7 @@ router.post('/executePipeline', function (req, res, next) {
   }, function (error, response, body) {
     console.log('add data response');
     res.send(body);
-    res.send(error);
+    //res.send(error);
 
   });
 });
@@ -271,9 +271,9 @@ function removeOuts(outs, stage_id, res) {
 router.post('/getFacets', function(req,res) {
   var data = req.body;
   console.log("getFacets : ", data);
-  // var url = CONFIGURATIONS.platformRequestApi + '/data/stats/creation';
+  // var uri = CONFIGURATIONS.requestApi+'/data/stats/creation';
   request({
-    url: 'http://192.168.23.180:2020/data/stats/creation',
+    url: 'http://216.168.41.41:2020/data/stats/creation',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
