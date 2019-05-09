@@ -1,18 +1,16 @@
 /* You can add global styles to this file, and also import other style files */
 
-
 /* START - Comment
 ------------------------------------------- */
-/* ---- END - Comment ---- */
 
+/* ---- END - Comment ---- */
 
 * {
   margin: 0;
   padding: 0;
 }
 
-html,
-body {
+html, body {
   margin: 0;
   padding: 0;
   height: 100%;
@@ -31,6 +29,7 @@ body {
 
 /* START - General Classes
 ------------------------------------------- */
+
 a {
   color: #3272a0;
 }
@@ -59,19 +58,58 @@ h3 {
 
 /* ---- END - General Classes ---- */
 
-
 /* custom styling for custom button
 ------------------------------------------------------------*/
+
 .custom-upload-button input[type="file"] {
   position: fixed;
   top: -1000px;
 }
-/* ---- END - Custom Custom Classes ---- */
 
+/* ---- END - Custom Custom Classes ---- */
 
 /* Modal Box Classes
 ------------------------------------------------------------*/
-.mat-dialog-container{
+
+.mat-dialog-container {
   border-bottom: solid 5px #3272a0;
 }
+
 /* ---- END - Modal Box Classes ---- */
+
+/* Facets Graph Classes
+------------------------------------------------------------*/
+
+.selectedboxes rect:nth-child(2) {
+  stroke: #bbd976 !important;
+}
+
+/* ---- END - Facets Graph Classes ---- */
+
+/* Content Loader Classes
+------------------------------------------------------------*/
+
+.content-loader {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  text-align: center;
+}
+
+.content-loader svg {
+  width: 100%;
+  height: 100%;
+}
+
+.content-loader-text{
+  position: absolute;
+  z-index: 1000;
+  font-size: 20px;
+  left: 0;
+  right: 0;
+  top: calc(50% - 30px);
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+/* ---- END - Content Loader Classes ---- */

@@ -70,5 +70,5 @@
 </div>
 
 <div *ngIf="dataExplorerView === 1">
-  <app-data-explorer [dataExplorer]='dataExplorer'></app-data-explorer>
+  <app-data-explorer [dataExplorer]='dataExplorer' (closeEvent)='closeDataExplorer($event)'></app-data-explorer>
 </div>
