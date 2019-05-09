@@ -218,9 +218,9 @@ export class CanvasComponent implements OnInit {
     value.model.attributes.attrs.label.text = "executePipeline";
     value.model.attributes.attrs._id = this.pipeline_id;
     this.onSearch.emit(value);
-    this.stageService.executePipeline(this.data).subscribe(schemadata => {
+    /* this.stageService.executePipeline(this.data).subscribe(schemadata => {
       console.log(schemadata);
-    });
+    }); */
   }
 
   dataExplorer() {
