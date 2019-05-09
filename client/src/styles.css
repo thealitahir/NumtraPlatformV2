@@ -108,6 +108,7 @@ h3 {
   left: 0;
   right: 0;
   top: calc(50% - 30px);
+  color: #3272a0;
   font-weight: bold;
   text-transform: uppercase;
 }
