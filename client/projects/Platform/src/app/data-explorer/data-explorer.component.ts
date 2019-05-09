@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Output, Input, EventEmitter } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { StageService } from '../services/stage.service';
 import { MatSnackBar } from '@angular/material';
@@ -11,6 +11,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 })
 export class DataExplorerComponent implements OnInit {
   @Input() dataExplorer;
+  @Output() closeEvent = new EventEmitter();
   data: any ;
   facet: any ;
   selectedIndex: any = 0;
@@ -44,6 +45,11 @@ export class DataExplorerComponent implements OnInit {
 
   selectTab(index: number): void {
     this.selectedIndex = index;
+  }
+
+  closeDataExplorer() {
+    var dataExplorerView= 0;
+    this.closeEvent.emit(dataExplorerView);
   }
 
 }
