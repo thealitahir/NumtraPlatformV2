@@ -1,7 +1,7 @@
 var express = require('express');
 var router =  express.Router();
 var request = require("request");
-var ProjectModel = require('../models/projectModel');
+var ProjectModel = require('../models/ProjectModel');
 
 router.post('/createNewProject',function(req, res) {
    // var project = new ProjectModel({name: req.body.projectName, user_id:req.user._id});
