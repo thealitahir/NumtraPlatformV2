@@ -1,0 +1,53 @@
+[1mdiff --git a/client/projects/Platform/src/app/canvas/canvas.component.ts b/client/projects/Platform/src/app/canvas/canvas.component.ts[m
+[1mindex 4bef254..d6aaeac 100644[m
+[1m--- a/client/projects/Platform/src/app/canvas/canvas.component.ts[m
+[1m+++ b/client/projects/Platform/src/app/canvas/canvas.component.ts[m
+[36m@@ -26,6 +26,7 @@[m [mexport class CanvasComponent implements OnInit {[m
+   selectedMode = 'development';[m
+   dataExplorerView = 0;[m
+   data: any;[m
+[32m+[m[32m  selected_stage: string;[m
+ [m
+   @Output() onSearch: EventEmitter<any> = new EventEmitter();[m
+   @Input() pipeline_id: any;[m
+[36m@@ -123,6 +124,7 @@[m [mexport class CanvasComponent implements OnInit {[m
+         this.selection.collection.add(elementView.model);[m
+       }[m
+       this.onSearch.emit(elementView);[m
+[32m+[m[32m      this.selected_stage = elementView.model.attributes.attrs._id;[m
+       this.canvasService.saveCanvasModel([m
+         this.pipeline_id,[m
+         elementView.model.attributes.attrs._id,elementView.model.id,[m
+[1mdiff --git a/package.json b/package.json[m
+[1mindex 065ae31..296fae6 100644[m
+[1m--- a/package.json[m
+[1m+++ b/package.json[m
+[36m@@ -17,6 +17,7 @@[m
+     "express": "^4.16.4",[m
+     "express-session": "^1.15.6",[m
+     "fs": "0.0.1-security",[m
+[32m+[m[32m    "github-api": "^3.2.0",[m
+     "jsonexport": "^2.4.1",[m
+     "moment": "^2.24.0",[m
+     "mongoose": "^5.5.1",[m
+[1mdiff --git a/server.js b/server.js[m
+[1mindex 013c360..1c0b1b3 100644[m
+[1m--- a/server.js[m
+[1m+++ b/server.js[m
+[36m@@ -30,6 +30,7 @@[m [mvar modelDataRoute = require('./routes/modelsroute');[m
+ var pipeline = require('./routes/pipelineController');[m
+ var mongo = require('./routes/mongodb');[m
+ var file = require('./routes/writeFile');[m
+[32m+[m[32mvar Versioning = require('./routes/pipelineVersioningController');[m
+ [m
+ const port = 3100;[m
+ [m
+[36m@@ -126,7 +127,7 @@[m [mapp.use('/application',application);[m
+ app.use('/pipeline', pipeline);[m
+ app.use('/mongo', mongo);[m
+ app.use("/fwrite", file);[m
+[31m-[m
+[32m+[m[32mapp.use('/pipelineVersioning',Versioning);[m
+ [m
+ app.use('/dataSourceApi', dataSourceRoute);[m
+ app.use('/modelApi', modelDataRoute);[m
