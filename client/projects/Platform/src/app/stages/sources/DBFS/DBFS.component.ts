@@ -3,8 +3,10 @@ import { NgForm } from '@angular/forms';
 import { DbfsService } from '../../../services/dbfs.service';
 import { StageService } from '../../../services/stage.service';
 import { DiscoverDataComponent } from '../discover-data-dialog/discover-data-dialog.component';
+import { DataExplorerComponent } from '../../../data-explorer/data-explorer.component';
 import { FileExplorerComponent } from '../../../file-explorer/file-explorer.component';
 import { MatSnackBar, MatTableDataSource , MatDialog } from '@angular/material';
+import { CreateFileService } from '../../../services/createFile.service';
 import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_directives/form_group_name';
 
 @Component({
@@ -12,8 +14,9 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
   templateUrl: './DBFS.component.html',
   styleUrls: ['./DBFS.component.css'],
 })
-export class DbfsComponent implements OnInit, OnChanges{
+export class DbfsComponent implements OnInit{
   @Input() stage_id: any;
+
   fileheader: any;
   data: any ;
   stage: any = {
@@ -33,28 +36,23 @@ export class DbfsComponent implements OnInit, OnChanges{
   stageSchema: any;
   stage_subtype: any = 'DBFS';
   stagetype: any = 'source';
-  fileExplorerSource:any;
+  fileExplorerSource: any;
+  dataExplorerView: any;
+  dataExplorer: any;
   error: any;
-  constructor(public snackBar: MatSnackBar, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
+  constructor(public snackBar: MatSnackBar, public createfileService : CreateFileService, public dbfsService: DbfsService, public stageService: StageService, public dialog: MatDialog) {
 
   }
 
   ngOnInit(){
-  }
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            console.log(schemadata);
-            this.stage = schemadata.data;
-          });
-        }
-      }
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        console.log(schemadata);
+        this.stage = schemadata.data;
+      });
     }
   }
+
   getSchemahenSave(form: NgForm) {
     if (form.value.url !== '' && form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.error = '';
@@ -84,7 +82,7 @@ export class DbfsComponent implements OnInit, OnChanges{
      console.log(form.value);
     this.data = {updatedata: { 'name': this.stage.name, 'original_schema': this.fileheader, 'stage_attributes.url': form.value.url,
 
-     'stage_attributes.source_delimeter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
+     'stage_attributes.delimiter': form.value.fileDelimeter, 'stage_attributes.file_type':  form.value.fileType,
      'stage_attributes.dbfs_token': form.value.dbfstoken, 'stage_attributes.dbfs_domain':  form.value.dbfsdomain,
      'stage_attributes.is_header': 'Use Header Line' },
      stage_id: this.stage_id};
@@ -108,13 +106,19 @@ export class DbfsComponent implements OnInit, OnChanges{
       this.openSnackBar('SUCCESS:', 'Rrequested sample data.');
       this.dbfsService.getDataSource(this.data).subscribe(data => {
         console.log(data);
-        this.openDialog(data);
+       // this.openDialog(data);
         this.fileheader = data.fileheader;
+        this.createfileService.writeFile(data).subscribe(file => {
+          console.log(file);
+          if (file.status === true) {
+            this.dataExplorerView = 1;
+            this.dataExplorer = {stage_id: this.stage_id, file: file};
+          }
+        });
       });
-
     }
-
   }
+
   chooseFile(form: NgForm){
     if (form.value.dbfstoken !== '' && form.value.dbfsdomain !== '' ) {
       this.fileExplorer = {type: 'Dbfs', cred: {token: form.value.dbfstoken , domain: form.value.dbfsdomain}};
@@ -132,6 +136,11 @@ export class DbfsComponent implements OnInit, OnChanges{
 
     this.fileExplorerView = 0;
   }
+
+  closeDataExplorer(event){
+    this.dataExplorerView = event;
+  }
+
   openDialog(sampledata): void {
     const dialogRef = this.dialog.open(DiscoverDataComponent, {
       width: '900px',

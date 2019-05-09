@@ -101,7 +101,7 @@
 
         <mat-grid-tile *ngFor="let application of applications
       | applicationFilter:applicationSearchQuery">
-          <div *ngIf='application.app_type==="pipeline"'>
+          <div *ngIf='application.app_type==="application"'>
             <div class="project-action">
               <button mat-fab color="accent" (click)='openAppDialog("edit",application)' matTooltip="edit"
                 matTooltipPosition="right">

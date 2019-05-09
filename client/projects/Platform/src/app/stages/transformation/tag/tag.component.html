@@ -1,0 +1,31 @@
+<div class="canvas-right-col">
+  <h3>Tag Transformation</h3>
+
+  <form #tagForm="ngForm" fxLayout="column">
+
+      <div class="form-group columns tag-form">
+          <span ng-show="!attributes" class="alert-danger">Please attach required data source</span>
+
+          <div class="column">
+              <div class="sidebar-form-sub-heading">Field Name</div>
+          </div>
+          <div class="column">
+              <div class="sidebar-form-sub-heading">Field Tags</div>
+          </div>
+
+          <div ng-repeat="item in attributes">
+              <!-- <div class="column tag-fields" title="{{item.field.field}}">{{item.field.field}}</div> -->
+              <div class="column">
+                  <!-- <ng-dropdown-multiselect class="angular-custom-select" selected-model="item.tags" options="tags" extra-settings="custom_settings" translation-texts="customTexts" search-filter="customFilter" checkboxes="true" required></ng-dropdown-multiselect> -->
+              </div>
+          </div>
+
+          <span ng-show="error_message.tags" class="alert-danger">Please select tag(s) for at least one field</span>
+      </div>
+
+      <div class="property-form-button">
+        <button mat-stroked-button color="accent" (click)="saveTag(tagForm)" type="submit">Save</button>
+         </div>
+
+</form>
+</div>

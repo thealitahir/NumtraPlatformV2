@@ -8,7 +8,7 @@ import { MatSnackBar , MatDialog } from '@angular/material';
   templateUrl: './min.component.html',
   styleUrls: ['./min.component.css']
 })
-export class MinComponent implements OnInit, OnChanges {
+export class MinComponent implements OnInit {
   @Input() stage_id: any;
   fileheader: any;
   data: any ;
@@ -27,39 +27,19 @@ export class MinComponent implements OnInit, OnChanges {
   fileType: any;
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService, public dialog: MatDialog) {
-    console.log("stage Id : " + this.stage_id);
-    if(this.stage_id){
+    
+  }
+
+  ngOnInit(){
+    if (this.stage_id) {
       this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
         console.log(schemadata);
         this.stage = schemadata.data;
         this.stageSchema = schemadata.data.original_schema;
-        // console.log(this.stage.stage_attributes.parameter);
-        // console.log(typeof(this.stage.stage_attributes.parameter));
-        
       });
     }
   }
-
-  ngOnInit(){
-  }
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed 
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            console.log(schemadata);
-            this.stage = schemadata.data;
-            this.stageSchema = schemadata.data.original_schema;
-            // console.log(this.stage.stage_attributes.parameter);
-            // console.log(typeof(this.stage.stage_attributes.parameter));
-
-          });
-        }
-      }
-    }
-  }
+ 
 
   selectFieldType(fieldType) {
     this.stage.stage_attributes.attributes = {topResults: '' , dataType: fieldType.type , columnName: fieldType.field };

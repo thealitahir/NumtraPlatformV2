@@ -20,7 +20,8 @@ var upload = multer({storage:store}).single('file');
 
 router.post('/createApplication',function(req, res) {
     // var application = new ApplicationModel({name:req.body.appName ,parent_id:ObjectId(req.body.parentId),user_id:'567a95c8ca676c1d07d5e3e7' ,app_type: req.body.option ,app_data:{cores_per_node:4,ram_per_node:4,end_time:'',start_time:'', recurrence:'2',backEndHost:'',backEndPort:'', debug:true}});
-   if(req.body.option === 'pipeline'){
+    console.log(req.body);
+    if(req.body.option === 'application'){
        var application = new ApplicationModel({name:req.body.appName ,parent_id:ObjectId(req.body.parentId),user_id:'567a95c8ca676c1d07d5e3e7' ,app_type: req.body.option ,pipeline:{cores_per_node:4,ram_per_node:4,end_time:'',start_time:'', recurrence:'2',backEndHost:'',backEndPort:'', debug:true}});
     }
    if(req.body.option === 'folder'){

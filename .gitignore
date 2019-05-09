@@ -38,6 +38,10 @@
 /client/nohup.out
 /client/relationFiles
 
+#uploaded or created files
+
+/sampleData
+
 # System Files
 .DS_Store
 Thumbs.db

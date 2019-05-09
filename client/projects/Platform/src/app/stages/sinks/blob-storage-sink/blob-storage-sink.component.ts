@@ -11,7 +11,7 @@ import { splitAtColon } from '@angular/compiler/src/util';
   templateUrl: './blob-storage-sink.component.html',
   styleUrls: ['./blob-storage-sink.component.css']
 })
-export class BlobStorageSinkComponent implements OnInit, OnChanges{
+export class BlobStorageSinkComponent implements OnInit{
   @Input() stage_id: any;
   fileheader: any;
   data: any ;
@@ -42,28 +42,19 @@ export class BlobStorageSinkComponent implements OnInit, OnChanges{
   constructor(public snackBar: MatSnackBar, public blobService: BlobService, public stageService: StageService, public dialog: MatDialog) {
   }
 
-  ngOnInit() {}
-
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            this.stage = schemadata.data;
-
-            if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' ){
-              this.getContainers();
-            }
-
-            if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' && this.stage.stage_attributes.containername !== '' ){
-              this.getBlobs();
-            }
-
-          });
+  ngOnInit() {
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' ){
+          this.getContainers();
         }
-      }
+
+        if(this.stage.stage_attributes.accountname !== '' && this.stage.stage_attributes.accountkey !== '' && this.stage.stage_attributes.containername !== '' ){
+          this.getBlobs();
+        }
+
+      });
     }
   }
 

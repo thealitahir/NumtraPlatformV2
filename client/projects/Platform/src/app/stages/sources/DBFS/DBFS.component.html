@@ -46,7 +46,7 @@
         <mat-option value='\t'>tab \t</mat-option>
         <mat-option value='/'>forward slash /</mat-option>
         <mat-option value=';'>semi-colon ;</mat-option>
-        <mat-option value='%'>percent ,</mat-option>
+        <mat-option value='%'>percent %</mat-option>
         <mat-option value='-'>minus -</mat-option>
         <mat-option value='\'>back slash \</mat-option>
         <mat-option value=':'>colon :</mat-option>
@@ -67,4 +67,8 @@
 <div *ngIf="fileExplorerView === 1">
   {{fileExplorer}}
   <app-file-explorer [fileExplorer]='fileExplorer' (selectedNodesEvent)='getSelectedFiles($event)'></app-file-explorer>
+</div>
+
+<div *ngIf="dataExplorerView === 1">
+  <app-data-explorer [dataExplorer]='dataExplorer' (closeEvent)='closeDataExplorer($event)'></app-data-explorer>
 </div>

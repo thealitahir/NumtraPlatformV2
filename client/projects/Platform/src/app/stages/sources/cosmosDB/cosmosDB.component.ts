@@ -12,7 +12,7 @@ import { formArrayNameProvider } from '@angular/forms/src/directives/reactive_di
   templateUrl: './cosmosDB.component.html',
   styleUrls: ['./cosmosDB.component.css']
 })
-export class CosmosDBComponent implements OnInit, OnChanges{
+export class CosmosDBComponent implements OnInit{
   @Input() stage_id: any;
   fileheader: any;
   data: any ;
@@ -40,20 +40,12 @@ export class CosmosDBComponent implements OnInit, OnChanges{
     
   }
 
-  ngOnInit(){}
-
-  ngOnChanges(changes: any) {
-    for (let propName in changes) {
-      // only run when property "task" changed 
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            this.stage = schemadata.data;
-            this.stageSchema = schemadata.data.original_schema;
-          });
-        }
-      }
+  ngOnInit(){
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        this.stageSchema = schemadata.data.original_schema;
+      });
     }
   }
 

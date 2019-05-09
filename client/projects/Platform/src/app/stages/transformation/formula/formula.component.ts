@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ɵConsole } from '@angular/core';
 import { NgForm, CheckboxControlValueAccessor } from '@angular/forms';
 import { StageService } from '../../../services/stage.service';
 import { MatSnackBar } from '@angular/material';
@@ -10,19 +10,28 @@ import { comparer } from 'mobx';
   styleUrls: ['./formula.component.css']
 })
 export class FormulaComponent implements OnInit {
-  @Input() stage_id: any = '5808ce3ad220bf0f0386f180';
+  @Input() stage_id: any;
   Types = ['stream', 'custom'];
   operators = ['+', '-', '*', '/', '%'];
   stage: any = {
     name: '',
+    original_schema: [],
+    selected_schema: [],
     stage_attributes: {
-        output_fields : [{
-          field: '',
-          type: ''
-        }],
-        formula : '',
-        expression : [],
-        use_expression : false
+      output_fields: {
+        checked : true, 
+        inherited : true, 
+        is_categorical : false, 
+        bad_values : "", 
+        nullable : "true", 
+        _id : "5cc3064e3d2272329c7352f8", 
+        field : "", 
+        alias : "", 
+        position : ""
+      },
+      formula: '',
+      expression: [],
+      use_expression: false
     },
   };
 
@@ -32,127 +41,84 @@ export class FormulaComponent implements OnInit {
   datatypes: any;
   datatyp: any;
   data: any;
+  schema: { original_schema: '' };
 
   constructor(public snackBar: MatSnackBar, public stageService: StageService) {
     this.stageService.getDataTypes().subscribe(datatype => {
       this.datatyp = datatype;
       this.datatypes = this.datatyp.data;
     });
-
-    this.stageService.getStageSchema('5808ce3ad220bf0f0386f180').subscribe(schemadata => {
-      this.stage = schemadata.data;
-      this.stageSchema = schemadata.data.original_schema;
-    });
-   }
-
-  ngOnInit() {
-
   }
 
-  // ngOnChanges(changes: any) {
-  //   for (let propName in changes) {
-  //     // only run when property "task" changed
-  //     if (propName === 'stage_id') {
-  //       console.log("stage Id : " + this.stage_id);
-  //       if (this.stage_id) {
-  //         this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-  //           this.stage = schemadata.data;
-  //           this.stageSchema = schemadata.data.original_schema;
-  //           // console.log(this.stage.stage_attributes.parameter);
-  //           // console.log(typeof(this.stage.stage_attributes.parameter));
+  ngOnInit() {
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        this.stage = schemadata.data;
+        // this.stageSchema = schemadata.data.original_schema;
+        console.log(this.stage);
+        for (let i = 0; i < 1; i++) {
+          console.log(this.stage.in[i]);
+          this.stageService.getStageSchema(this.stage.in[i]).subscribe(schdata => {
+            console.log(schdata.data);
+            this.schema = schdata.data.original_schema;
+            this.stageSchema = this.schema;
+            // console.log(this.stageSchema);
+            this.stage.original_schema = this.stageSchema;
+            this.stage.selected_schema = this.stageSchema;
+          });
+        }
+      });
+    }
+  }
 
-  //         });
-  //       }
-  //     }
-  //   }
-  // }
   add(value) {
     if (value) {
-        if (this.stage.stage_attributes.expression.length === 0) {
-            this.stage.stage_attributes.expression.push(
-                {
-                    to_compare_field_type: '',
-                    to_compare_field_name: '',
-                    to_compare_field_dataType: '',
-                    operator: '',
-                    with_compare_field_type: '',
-                    with_compare_field_name: '',
-                    with_compare_field_dataType: '',
-                    activeCustom1: 'custom',
-                    activeCustom2: 'custom',
-                    join_operator: ''
-                });
-        }
+      if (this.stage.stage_attributes.expression.length === 0) {
+        this.stage.stage_attributes.expression.push(
+          {
+            value1_type: '',
+            value1: '',
+            operator: '',
+            value2_type: '',
+            value2: '',
+            combinator: ''
+          });
       }
+    }
   }
 
   addExp() {
     this.stage.stage_attributes.expression.push(
-        {
-            to_compare_field_type: '',
-            to_compare_field_name: '',
-            to_compare_field_dataType: '',
-            operator: '',
-            with_compare_field_type: '',
-            with_compare_field_name: '',
-            with_compare_field_dataType: '',
-            activeCustom1: 'custom',
-            activeCustom2: 'custom',
-            join_operator: ''
-        }
+      {
+        value1_type: '',
+        value1: '',
+        operator: '',
+        value2_type: '',
+        value2: '',
+        combinator: ''
+      }
     )
   }
 
-  removeExp(index){
+  removeExp(index) {
     this.stage.stage_attributes.expression.splice(index, 1);
   }
 
-  setType(item, index , type) {
-    console.log(typeof(type));
-    if (type === 'toCompare') {
-      console.log('to comparer');
-      if (item.to_compare_field_type === 'stream') {
-        console.log(item.to_compare_field_type);
-        this.stage.stage_attributes.expression[index].activeCustom1 = 'stream';
-        console.log(this.stage.stage_attributes.expression[index].activeCustom1);
-      }
-      if (item.to_compare_field_type === 'custom') {
-        console.log(item.to_compare_field_type);
-        this.stage.stage_attributes.expression[index].activeCustom1 = 'custom';
-        console.log(this.stage.stage_attributes.expression[index].activeCustom1);
-       }
-
-      item.to_compare_field_name = '';
-    }
-    if (type == 'withCompare') {
-      if (item.with_compare_field_type === 'stream') { this.stage.stage_attributes.expression[index].activeCustom2 = 'stream';}
-      if (item.with_compare_field_type === 'custom') { this.stage.stage_attributes.expression[index].activeCustom2 = 'custom';}
-
-      item.with_compare_field_name = '';
-    }
-
-
-  }
-
-   setDataType(selected_field, index, type) {
-    if (type === 'toComapre') {
-      if (selected_field) {
-          this.stage.stage_attributes.expression[index].to_compare_field_dataType = selected_field.type;
-      }
-    }
-    if (type === 'withCompare') {
-      if (selected_field) {
-          this.stage.stage_attributes.expression[index].with_compare_field_dataType = selected_field.type;
-      }
-    }
-  }
 
   saveFormula(form: NgForm) {
     if (form.invalid) {
       this.openSnackBar('Error:', 'Fill all Fields!');
       return;
     }
-    this.data = {updatedata: {'name': this.stage.name, 'stage_attributes': this.stage.stage_attributes}, stage_id: this.stage_id};
+    this.stage.original_schema.push(this.stage.stage_attributes.output_fields);
+    this.stage.selected_schema.push(this.stage.stage_attributes.output_fields);
+    this.data = {
+      updatedata: {
+        'name': this.stage.name, 'original_schema': this.stage.original_schema,
+         'stage_attributes': this.stage.stage_attributes
+      }, stage_id: this.stage_id
+    };
+    console.log(this.data);
     this.stageService.updateStage(this.data).subscribe(data => {
       if (data.data.nModified === 1) {
         this.openSnackBar('Success:', 'Stage Saved Successfully!');

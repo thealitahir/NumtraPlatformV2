@@ -8,7 +8,7 @@ import { MatSnackBar } from '@angular/material';
   templateUrl: './dbfs-sink.component.html',
   styleUrls: ['./dbfs-sink.component.css']
 })
-export class DbfsSinkComponent implements OnInit, OnChanges {
+export class DbfsSinkComponent implements OnInit {
   data: any ;
   @Input() stage_id: any;
   stage: any = {
@@ -26,22 +26,13 @@ export class DbfsSinkComponent implements OnInit, OnChanges {
    }
 
   ngOnInit() {
+    if (this.stage_id) {
+      this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
+        console.log(schemadata);
+        this.stage = schemadata.data;
+      });
+    }
   }
-
-  ngOnChanges(changes: any) { 
-    for (let propName in changes) {
-      // only run when property "task" changed 
-      if (propName === 'stage_id') {
-        console.log("stage Id : " + this.stage_id);
-        if (this.stage_id) {
-          this.stageService.getStageSchema(this.stage_id).subscribe(schemadata => {
-            console.log(schemadata);
-            this.stage = schemadata.data;
-          });
-        }
-      }
-    } 
-  } 
 
   saveSinkDbfs(form: NgForm) {
     this.data = {formdata: form.value};

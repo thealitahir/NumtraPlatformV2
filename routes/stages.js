@@ -8,7 +8,6 @@ var DataTypeModel = require("../models/datatypesModel");
 var ObjectId = require("mongoose").Types.ObjectId;
 
 router.post('/updateStage', function (req, res) {
-  console.log("update stage", req.body.stage_id);
   var stagedata = req.body;
   //StageVersionModel.update({"name":stagedata.stageName, "user_id":req.user._id}, {$set: stagedata['updatedata'] }, function (err, sdata) {
   StageVersionModel.update({ "_id": stagedata.stage_id, "user_id": "567a95c8ca676c1d07d5e3e7" }, { $set: stagedata['updatedata'] }, function (err, sdata) {
@@ -16,6 +15,7 @@ router.post('/updateStage', function (req, res) {
       res.send({ status: true, msg: 'stage updated successfully.', data: sdata });
     }
     else {
+      console.log('err');
       console.log(err);
       res.send({ status: false, msg: 'stage not saved.' });
     }
@@ -98,7 +98,7 @@ router.post('/executePipeline', function (req, res, next) {
   console.log("execute pipeline : ", data);
   var url = CONFIGURATIONS.platformRequestApi + '/api/start/codegen';
   request({
-    url: 'http://192.168.23.44:2020/api/start/codegen',
+    url: 'http://216.168.41.41:2020/api/start/codegen',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -107,6 +107,7 @@ router.post('/executePipeline', function (req, res, next) {
   }, function (error, response, body) {
     console.log('add data response');
     res.send(body);
+    res.send(error);
 
   });
 });
@@ -197,11 +198,9 @@ router.get('/getCanvasModel/:pipeline_id', function (req, res) {
 });
 
 router.get('/getDataTypes', function (req, res) {
-  console.log('hello data types ..................');
   DataTypeModel.find().exec(function (err, data) {
     if (err) {
-      console.log('Unable to get datatypes');
-      res.send({ status: false, msg: 'Unable to get stages' });
+      res.send({ status: false, msg: 'Unable to get datatypes' });
     }
     else {
       console.log('datatypes found');
@@ -268,5 +267,31 @@ function removeOuts(outs, stage_id, res) {
   }
   
 }
+
+router.post('/getFacets', function(req,res) {
+  var data = req.body;
+  console.log("getFacets : ", data);
+  var uri = CONFIGURATIONS.requestApi+'/data/stats/creation';
+  request({
+    url: uri, //'http://192.168.23.180:2020/data/stats/creation',
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    json: data
+  }, function (error, response, body) {
+    console.log('facet data response');
+    if(!error){
+      console.log(body);
+      res.send(body);
+    }
+    else{
+      console.log(error);
+      res.send({status:false, message: 'error'});
+    }
+    
+
+  });
+});
 
 module.exports = router;

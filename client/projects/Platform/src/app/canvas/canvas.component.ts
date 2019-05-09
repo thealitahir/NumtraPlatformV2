@@ -14,6 +14,7 @@ import RappidService from '../../rappid/services/kitchensink-service';
 //import KitchenSinkService from 'dist/numtraPlatformV2/rappid/services/kitchensink-service';
 import { CanvasService } from '../services/canvas.service';
 import { StageService } from '../services/stage.service';
+import { ValueTransformer } from '@angular/compiler/src/util';
 
 @Component({
   selector: 'app-canvas',
@@ -65,6 +66,8 @@ export class CanvasComponent implements OnInit {
       var stagesArray = [];
       var linksArray = []
       //drawing all stages
+      console.log('All stages');
+      console.log(stages);
       for(var i = 0; i < stages.length; i++){
         var stage = new joint.shapes.standard.Image();
         stage.attr(stages[i].shape_attributes);
@@ -111,8 +114,6 @@ export class CanvasComponent implements OnInit {
         this.selection.collection.add(elementView.model);
       }
       this.onSearch.emit(elementView);
-      console.log("this is graph");
-      console.log(this.graph);
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
 
@@ -138,8 +139,6 @@ export class CanvasComponent implements OnInit {
       if (keyboard.isActive('ctrl meta', evt)) {
         this.selection.collection.add(elementView.model);
       }
-      console.log("this element deleted");
-      console.log(elementView);
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
     });
 
@@ -148,8 +147,6 @@ export class CanvasComponent implements OnInit {
       var source_id,target_id;
       var array = this.graph.attributes.cells.models;
       if (cell.isLink() && cell.attributes.target.id != null && cell.attributes.target.id != cell.attributes.source.id) {
-        console.log("delete link");
-        console.log(cell);
         source_id = array[array.findIndex(array => array.id == cell.attributes.source.id)].attributes.attrs._id;
         target_id = array[array.findIndex(array => array.id == cell.attributes.target.id)].attributes.attrs._id;
         this.canvasService.removeLink(source_id, target_id).subscribe(data => {
@@ -159,25 +156,17 @@ export class CanvasComponent implements OnInit {
         // a link was removed  (cell.id contains the ID of the removed link)
       }
       else if (!cell.isLink()) {
-        console.log("element deleted");
-        console.log(cell);
         this.canvasService.removeStage(cell.attributes.attrs._id).subscribe(data => {
 
         });
         cell.remove();
-        console.log("graph after deletion");
-        console.log(this.paper);
       }
     });
     this.graph.on('add', (cell, collection, opt) => {
       if (cell.isLink()) {
-        console.log("link added");
-        console.log(cell);
         // a link was removed  (cell.id contains the ID of the removed link)
       }
       else if (!cell.isLink()) {
-        console.log("element added");
-        console.log(cell);
         this.canvasService.saveCanvasModel(
           this.pipeline_id,
           cell.attributes.attrs._id,cell.id,
@@ -186,8 +175,6 @@ export class CanvasComponent implements OnInit {
           cell.attributes.position, cell.attributes.size,
           cell.attributes.type).subscribe(data => {
             cell.attributes.attrs._id = data.data._id;
-            console.log("graph value after service");
-            console.log(this.graph);
           });
       }
     });
@@ -202,10 +189,7 @@ export class CanvasComponent implements OnInit {
         elementView.model.attributes.target.id != elementView.model.attributes.source.id) {
         source_id = array[array.findIndex(array => array.id == elementView.sourceView.model.id)].attributes.attrs._id;
         target_id = array[array.findIndex(array => array.id == elementView.targetView.model.id)].attributes.attrs._id;
-        console.log(source_id);
-        console.log(target_id);
         this.canvasService.addLink(source_id,target_id).subscribe(data => {
-            console.log(data);
           });
       }
       // Select an element if CTRL/Meta key is pressed while the element is clicked.
@@ -218,10 +202,23 @@ export class CanvasComponent implements OnInit {
 
   executePipeline() {
     this.data = { process_id: this.pipeline_id };
-
-    this.stageService.executePipeline(this.data).subscribe(schemadata => {
+    var value = {
+      model: {
+        attributes: {
+          attrs: {
+            label: {
+              text: ''
+            }, _id: ''
+          }
+        }
+      }
+    };
+    value.model.attributes.attrs.label.text = "executePipeline";
+    value.model.attributes.attrs._id = this.pipeline_id;
+    this.onSearch.emit(value);
+    /* this.stageService.executePipeline(this.data).subscribe(schemadata => {
       console.log(schemadata);
-    });
+    }); */
   }
 
   dataExplorer() {

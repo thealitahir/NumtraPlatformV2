@@ -27,7 +27,9 @@ var project= require('./routes/project');
 var application= require('./routes/application');
 var dataSourceRoute = require('./routes/datasource');
 var modelDataRoute = require('./routes/modelsroute');
-
+var pipeline = require('./routes/pipelineController');
+var mongo = require('./routes/mongodb');
+var file = require('./routes/writeFile');
 
 const port = 3100;
 
@@ -46,17 +48,22 @@ const allowedExt = [
 
 // Configurations
 global.CONFIGURATIONS ={ 
+  // dbHost: '216.168.41.41',
+
   dbHost: '10.0.5.53',
   dbPort: 9876,
   db: 'numtraplatform',
   username: 'dev',
-  password: 'Balderdash@2019',
+  password: 'Balderdash2019',
+
   authdb: 'numtraplatform',
   ssl: false,
   bFAIrequestApi: 'http://24.16.119.69:7799',
   dbfsToken: 'dapi743e2d3cc92a32916f8c2fa9bd7d0606',
   dbfsDomain: 'https://westus.azuredatabricks.net',
-  requestApi: '"http://192.168.23.180:2020'
+  // requestApi: '"http://192.168.23.180:2020',
+  requestApi: '"http://216.168.41.41:2020',
+  projectpath: '/home/platformFrontend/numtraplatformv2',
 }
 
 // Add headers
@@ -90,11 +97,8 @@ app.use(bodyparser.urlencoded({
   extended: true
 }));
 app.use(cookieParser());
-/* app.use(session({ secret: 'keyboard cat', store : new MongoStore(
-  {
-      url: 'mongodb://'+CONFIGURATIONS.dbHost + ':'+CONFIGURATIONS.dbPort
-  }),
-  resave: true, saveUninitialized: true })); */
+
+app.use(session({ secret: 'keyboard cat',resave: true, saveUninitialized: true }));
 
 app.use(flash());
 app.use(passport.initialize());
@@ -114,6 +118,9 @@ app.use('/cosmos',cosmos);
 app.use('/stage',stage);
 app.use('/project',project);
 app.use('/application',application);
+app.use('/pipeline', pipeline);
+app.use('/mongo', mongo);
+app.use("/fwrite", file);
 
 
 app.use('/dataSourceApi', dataSourceRoute);
@@ -160,6 +167,14 @@ app.get('/cosmos', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 
+app.get('/mongo', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/fwrite', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
 app.get('/stage', (req, res) => res.json({
   application: 'Reibo collection'
 }));
@@ -169,6 +184,10 @@ app.get('/project', (req, res) => res.json({
 }));
 
 app.get('/application', (req, res) => res.json({
+  application: 'Reibo collection'
+}));
+
+app.get('/pipeline', (req, res) => res.json({
   application: 'Reibo collection'
 }));
 
@@ -190,8 +209,11 @@ var opt = {
     pass: CONFIGURATIONS.password,
     auth: {
         authdb: CONFIGURATIONS.authdb
-    }
-};
+    },
+    useNewUrlParser: true
+}; 
+
+
 mongoose.connect(uri, opt);
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -202,30 +224,4 @@ db.once('open', function () {
   });
   io = require('socket.io').listen(server);
 });
-/* mongoose.connect(uri,opt, function(err, database) {
-  if(err){ 
-    console.log('Could not connect to mongodb.');
-    throw err;
-  } else {
-    var db = database;
-  //console.log(db);
-    // Start the application after the database connection is ready
-
-    var server = app.listen(port,'0.0.0.0',function(){
-        console.log('Server started on port :'+port);
-    });  
-    io = require('socket.io').listen(server);
-  }
-}); */
-
-
-
-
-
-
-
-
-
-
-
 
