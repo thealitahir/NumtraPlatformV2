@@ -48,13 +48,8 @@ const allowedExt = [
 
 // Configurations
 global.CONFIGURATIONS ={ 
-  /* dbHost: '192.168.23.108',
-  dbPort: 9876,
-  db: 'test',
-  username: 'root',
-  password: '',
-  authdb: '', */
-  dbHost: '216.168.41.41',
+  // dbHost: '216.168.41.41',
+  dbHost: '10.0.5.53',
   dbPort: 9876,
   db: 'numtraplatform',
   username: 'dev',
