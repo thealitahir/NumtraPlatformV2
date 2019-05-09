@@ -30,7 +30,7 @@ import { MinComponent } from '../stages/transformation/min/min.component';
 import { QueryComponent } from '../stages/transformation/query/query.component';
 import { TagComponent } from '../stages/transformation/tag/tag.component';
 import { UnionComponent } from '../stages/transformation/union/union.component';
-
+import { PipelineExecutionComponent } from '../right-nav/pipeline-execution/pipeline-execution.component';
 
 
 
@@ -106,7 +106,8 @@ export class PipelineDesignerComponent implements OnInit {
       'Wrangler':null,
       'Max':MaxComponent,
       'Min':MinComponent
-    }
+    },
+    "executePipeline":PipelineExecutionComponent
   }
   
   
@@ -149,6 +150,12 @@ export class PipelineDesignerComponent implements OnInit {
           this.componentRef.instance.stage_id = value.model.attributes.attrs._id;
           this.componentRef.changeDetectorRef.detectChanges();
         }
+      }
+      else{
+        var factory = this.componentFactoryResolver.resolveComponentFactory(this.childComponents[stageName]);
+          this.componentRef = this.viewContainerRef.createComponent(factory);
+          this.componentRef.instance.pipeline_id = value.model.attributes.attrs._id;
+          this.componentRef.changeDetectorRef.detectChanges();
       }  
     }
       

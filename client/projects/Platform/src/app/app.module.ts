@@ -182,7 +182,8 @@ const DEFAULT_ACE_CONFIG: AceConfigInterface = {
     UnionComponent,
     JoinComponent,
     DbfsSinkComponent,
-    CosmosDBSinkComponent
+    CosmosDBSinkComponent,
+    PipelineExecutionComponent
   ],
   providers: [
     {
