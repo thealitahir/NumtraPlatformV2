@@ -273,7 +273,7 @@ router.post('/getFacets', function(req,res) {
   console.log("getFacets : ", data);
   // var uri = CONFIGURATIONS.requestApi+'/data/stats/creation';
   request({
-    url: 'http://10.0.5.53/data/stats/creation',
+    url: 'http://10.0.5.53:2020/data/stats/creation',
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
