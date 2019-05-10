@@ -25,14 +25,18 @@ router.post('/getDataSource', function(req,res) {
         json: {"path": req.body.path}
         }, function(error, response, body) {
             //console.log('read file response');
-            //console.log(body);
+            // console.log(body);
             let data = body.data;  
             let buff = Buffer.from(data, 'base64');  
             let text = buff.toString('ascii');
+            
             var filedata =[];
             filedata = text.split("\n");
+            //console.log(filedata);
             var fileheader=[];
-            fileheader = filedata[0].split(",");
+            var filerow = filedata[0].replace('\r','') ;
+            fileheader = filerow.split(",");
+            
             filedata.shift();
             filedata.length =100;
             var fh=[];
@@ -55,11 +59,12 @@ router.post('/getDataSource', function(req,res) {
                 var fdobj={};
                 for(var i=0 ; i < fh.length; i++){
                     var head = fh[i];
-                    fdobj[head.field]= filedata[j].split(",")[i] ;  
+                    var filerow = filedata[j].replace('\r','') ;
+                    fdobj[head.field]= filerow.split(",")[i] ;  
                 }
                 fd.push(fdobj);               
             }
-            var fdata={fileheader:fh, filedata:fd}    
+            var fdata={fileheader:fh, filedata:fd}  ;
                 res.send(fdata);
     });
 });
