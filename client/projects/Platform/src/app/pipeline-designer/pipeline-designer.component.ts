@@ -1,9 +1,9 @@
-import { 
+import {
   Component,
    OnInit,
    ViewChild,
    ViewContainerRef,
-   ComponentFactoryResolver 
+   ComponentFactoryResolver
   } from '@angular/core';
 import { ActivatedRoute,Router } from '@angular/router';
 //Sources Component imports
@@ -40,8 +40,8 @@ import { PipelineExecutionComponent } from '../right-nav/pipeline-execution/pipe
   styleUrls: ['./pipeline-designer.component.css']
 })
 export class PipelineDesignerComponent implements OnInit {
-  @ViewChild('componentContainer', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;    
-  
+  @ViewChild('componentContainer', { read: ViewContainerRef }) viewContainerRef: ViewContainerRef;
+
   childComponents = {
     "source":{
       'DBFS':DbfsComponent,
@@ -64,8 +64,8 @@ export class PipelineDesignerComponent implements OnInit {
       'Redshift' :null,
       'Rss Feeds' :null,
       'Streaming Lake':null,
-      'K-MEANS Streaming':null    
-    },    
+      'K-MEANS Streaming':null
+    },
     "sink":{
       'CosmosDB':CosmosDBSinkComponent,
       'MongoDB':MongoDBSinkComponent,
@@ -87,13 +87,13 @@ export class PipelineDesignerComponent implements OnInit {
     },
     "operation":{
       'Encryption':null,
-      'Bottom':null,        
-      'Aggregation':AggregationComponent, 
+      'Bottom': MinComponent,
+      'Aggregation':AggregationComponent,
       'Date Time' :null,
-      'Top':null,
+      'Top': MaxComponent,
       'Query':QueryComponent,
       'Filter':FilterComponent,
-      'Formula':FormulaComponent,          
+      'Formula':FormulaComponent,
       'Find &amp; Replace':null,
       'Join':JoinComponent,
       'Merge' :null,
@@ -103,17 +103,15 @@ export class PipelineDesignerComponent implements OnInit {
       'Optimized Join' :null,
       'Rename' :null,
       'Sort' :null,
-      'Wrangler':null,
-      'Max':MaxComponent,
-      'Min':MinComponent
+      'Wrangler':null
     },
     "executePipeline":PipelineExecutionComponent
   }
-  
-  
+
+
   // showSource: boolean = false; showSourceId: string;
   // showSink: boolean = false; showSinkId: string;
-  // showTop: boolean = false; showTopId: string; 
+  // showTop: boolean = false; showTopId: string;
   // showCosmos: boolean = false; showCosmosId: string;
   // showFilter: boolean = false; showFilterId: string;
   // showBottom: boolean = false; showBottomId: string;
@@ -156,14 +154,14 @@ export class PipelineDesignerComponent implements OnInit {
           this.componentRef = this.viewContainerRef.createComponent(factory);
           this.componentRef.instance.pipeline_id = value.model.attributes.attrs._id;
           this.componentRef.changeDetectorRef.detectChanges();
-      }  
+      }
     }
-      
-      
+
+
   }
   ngOnDestroy() {
     if(this.componentRef){
-      this.componentRef.destroy(); 
-    }    
+      this.componentRef.destroy();
+    }
    }
 }
