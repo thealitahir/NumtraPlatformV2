@@ -23,7 +23,7 @@ router.post('/writeCsv', function(req,res) {
         res.send({status: false, messaage:'file not saved'});
     } else{
         console.log('file saved');
-        res.send({filepath:CONFIGURATIONS.projectpath+'/sampleData/'+file ,data:req.body.filedata , status:true, messaage:'file saved'});
+        res.send({filepath:CONFIGURATIONS.projectpath+'/sampleData/'+file+'.csv' ,data:req.body.filedata , status:true, messaage:'file saved'});
     }
     });
 });
