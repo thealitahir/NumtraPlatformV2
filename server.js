@@ -30,6 +30,7 @@ var modelDataRoute = require('./routes/modelsroute');
 var pipeline = require('./routes/pipelineController');
 var mongo = require('./routes/mongodb');
 var file = require('./routes/writeFile');
+var Versioning = require('./routes/pipelineVersioningController');
 
 const port = 3100;
 
@@ -48,7 +49,7 @@ const allowedExt = [
 
 // Configurations
 global.CONFIGURATIONS ={ 
-  // dbHost: '216.168.41.41',
+  //dbHost: '216.168.41.41',
   dbHost: '10.0.5.53',
   dbPort: 9876,
   db: 'numtraplatform',
@@ -123,7 +124,7 @@ app.use('/application',application);
 app.use('/pipeline', pipeline);
 app.use('/mongo', mongo);
 app.use("/fwrite", file);
-
+app.use('/pipelineVersioning',Versioning);
 
 app.use('/dataSourceApi', dataSourceRoute);
 app.use('/modelApi', modelDataRoute);

@@ -107,7 +107,7 @@ router.post('/executePipeline', function (req, res, next) {
   }, function (error, response, body) {
     console.log('add data response');
     res.send(body);
-    res.send(error);
+    //res.send(error);
 
   });
 });
